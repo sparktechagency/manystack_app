@@ -3,12 +3,13 @@ import React, { useEffect } from 'react'
 import { StatusBar, StyleSheet, useColorScheme } from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
+import GlobalContextProvider from '../providers/GlobalContextProvider'
 import StackLayout from './StackLayout'
 const Root = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: isDarkMode ? Colors.lighter : Colors.darker,
   };
   useEffect(() => {
     SplashScreen.hide()
@@ -17,10 +18,12 @@ const Root = () => {
   return (
     <NavigationContainer>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        barStyle={isDarkMode ? 'dark-content' : 'light-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <StackLayout />
+      <GlobalContextProvider>
+        <StackLayout />
+      </GlobalContextProvider>
     </NavigationContainer>
   )
 }

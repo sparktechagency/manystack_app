@@ -7,7 +7,7 @@ import TabLayout from './TabLayout'
 const Stack = createNativeStackNavigator()
 const StackLayout = () => {
   return (
-    <Stack.Navigator initialRouteName="Tabs">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
       <Stack.Screen options={{ headerShown: false }} name="SignUp" component={SignUp} />
       <Stack.Screen options={{ headerShown: false }} name="Tabs" component={TabLayout} />
