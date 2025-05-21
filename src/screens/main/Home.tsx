@@ -1,21 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import WellCome from '../../components/Home/WellCome';
 
 const Home = () => {
+  const elements = [<WellCome key={1} />];
   return (
-    <View>
-      <SafeAreaView >
-        <Text>Home</Text>
-        <Text>Home</Text>
-        <Text>Home</Text>
-        <Text>Home</Text>
-        <Text>Home</Text>
-        <Text>Home</Text>
-        <Text>Home</Text>
-        <Text>Home</Text>
-      </SafeAreaView>
-    </View>
+    <SafeAreaView >
+      <FlatList
+        keyExtractor={(item, index) => index.toString()}
+        data={elements}
+        renderItem={({ item }) => item}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ gap: 10, paddingHorizontal: 20 }}
+      />
+    </SafeAreaView>
   );
 };
 
