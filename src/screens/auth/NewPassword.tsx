@@ -1,3 +1,4 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -13,7 +14,9 @@ import GradientButton from '../../components/sheard/GradientButton';
 import { eye, eyeSlash, logo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { INewPassword } from '../../types/loginType';
+import { StackTypes } from '../../types/ScreenPropsTypes';
 const NewPassword = () => {
+  const navigate = useNavigation<NavigationProp<StackTypes>>();
   const [passShow, setPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
   const [error, setError] = React.useState({
@@ -34,6 +37,7 @@ const NewPassword = () => {
         setError((prev) => ({ ...prev, [key]: false }));
       }
     });
+    navigate.navigate('Tabs');
   }
   return (
     <SafeAreaView
@@ -87,7 +91,7 @@ const NewPassword = () => {
           paddingHorizontal: 25,
         }}>
           <GradientButton handler={() => submitHandler()}>
-            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 700, fontSize: 18, }}>Login</Text>
+            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 700, fontSize: 18, }}>Submit</Text>
           </GradientButton>
         </View>
       </View>
