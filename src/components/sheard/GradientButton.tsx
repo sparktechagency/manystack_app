@@ -11,7 +11,7 @@ const GradientButton = ({ children, handler }: { children: React.ReactNode, hand
         colors={[hexToRGBA(Colors.light.primary as string, 1), hexToRGBA(Colors.light.primary as string, .5)]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        style={{ padding: 15, borderRadius: 5 }}
+        style={{ padding: 15, borderRadius: 10 }}
       >
         {children}
       </LinearGradient>

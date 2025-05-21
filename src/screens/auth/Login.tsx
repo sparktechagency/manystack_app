@@ -17,11 +17,26 @@ import { ILogin } from '../../types/loginType';
 
 const Login = () => {
   const [passShow, setPassShow] = React.useState(true);
+
+  const [error, setError] = React.useState({
+    email: false,
+    password: false,
+  });
+
   const [inputValue, setInputValue] = React.useState<ILogin>({
     email: 'siyamoffice0273@gmail.com',
     password: '123456',
   });
 
+  const submitHandler = () => {
+    Object.keys(inputValue).forEach((key) => {
+      if (inputValue[key as keyof ILogin] === '') {
+        setError((prev) => ({ ...prev, [key]: true }));
+      } else {
+        setError((prev) => ({ ...prev, [key]: false }));
+      }
+    });
+  }
   return (
     <SafeAreaView
       style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -38,13 +53,16 @@ const Login = () => {
             <View style={{ position: 'relative' }}>
               <TextInput
                 value={inputValue[key as keyof ILogin]}
-                onChangeText={text =>
+                onChangeText={text => {
                   setInputValue({ ...inputValue, [key]: text })
+                  setError({ ...error, [key]: false })
+                }
+
                 }
                 placeholder={`Enter your ${key}`}
                 secureTextEntry={key === 'password' ? passShow : false}
                 placeholderTextColor={globalStyles.inputPlaceholder.color}
-                style={globalStyles.input}
+                style={[globalStyles.input, error[key as keyof ILogin] ? globalStyles.inputError : {}]}
               />
               {key === 'password' && (
                 <TouchableOpacity
@@ -62,13 +80,18 @@ const Login = () => {
           </View>
         ))}
 
-        <Link style={{ textAlign: 'right', marginBottom: 20 }} screen="Tabs" params={{}}>
+        <Link style={{ textAlign: 'right', marginBottom: 20 }} screen="Forget" params={{}}>
           <Text>Forgot password?</Text>
         </Link>
 
-        <GradientButton handler={() => { console.log(inputValue) }}>
-          <Text style={{ color: 'white', textAlign: 'center' }}>Login</Text>
-        </GradientButton>
+
+        <View style={{
+          paddingHorizontal: 25,
+        }}>
+          <GradientButton handler={() => submitHandler()}>
+            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 700, fontSize: 18, }}>Login</Text>
+          </GradientButton>
+        </View>
 
         <View style={[globalStyles.flex, { marginTop: 20 }]}>
           <Text style={globalStyles.text}>Don't have an account? </Text>
