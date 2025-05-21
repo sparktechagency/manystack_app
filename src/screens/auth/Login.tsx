@@ -1,4 +1,4 @@
-import { Link } from '@react-navigation/native';
+import { Link, NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -14,8 +14,11 @@ import GradientButton from '../../components/sheard/GradientButton';
 import { eye, eyeSlash, logo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { ILogin } from '../../types/loginType';
+import { StackTypes } from '../../types/ScreenPropsTypes';
 
 const Login = () => {
+  const navigate = useNavigation<NavigationProp<StackTypes>>();
+
   const [passShow, setPassShow] = React.useState(true);
 
   const [error, setError] = React.useState({
@@ -36,6 +39,9 @@ const Login = () => {
         setError((prev) => ({ ...prev, [key]: false }));
       }
     });
+    if (inputValue.email !== '' && inputValue.password !== '') {
+      navigate.navigate("Tabs");
+    }
   }
   return (
     <SafeAreaView

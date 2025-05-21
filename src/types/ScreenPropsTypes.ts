@@ -13,4 +13,5 @@ export interface StackTypes {
   Forget: undefined;
   Otp: { params: { from: string } };
   NewPassword: undefined;
+  Tabs: {} | undefined
 }

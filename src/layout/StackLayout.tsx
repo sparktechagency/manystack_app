@@ -32,7 +32,7 @@ const StackLayout = () => {
         component={Otp}
       />
       <Stack.Screen
-        options={{ headerShown: true, title: 'Verify Code', headerTitleAlign: 'center', headerBackground: () => null, }}
+        options={{ headerShown: true, title: 'New Password', headerTitleAlign: 'center', headerBackground: () => null, }}
         name="NewPassword"
         component={NewPassword}
       />
