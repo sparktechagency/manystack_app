@@ -23,6 +23,7 @@ import { IAddress, ILogin, ISignUp } from '../../types/loginType';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 const SignUp = () => {
   const [passShow, setPassShow] = React.useState(true);
+  const [cPassShow, setCPassShow] = React.useState(true);
   const [countryCode, setCountryCode] = React.useState('BD');
   const [callingCode, setCallingCode] = React.useState('880');
   const { width } = Dimensions.get('window')
@@ -79,10 +80,9 @@ const SignUp = () => {
     });
 
   }
-  console.log(error)
+
   return (
     <SafeAreaView>
-
       <ScrollView style={{ width: '100%', height: "100%", paddingHorizontal: 20, paddingVertical: 20 }}>
         {Object.keys(inputValue).map((key, index, arr) => {
           if (key === 'last name' && arr[index - 1] === 'first name') {
@@ -223,7 +223,6 @@ const SignUp = () => {
             return <Address address={address} setAddress={setAddress} error={error} key={key} />
           }
 
-
           return (
             <View key={key} style={{}}>
               <Text style={globalStyles.inputLabel}>
@@ -237,20 +236,26 @@ const SignUp = () => {
                     setError({ ...error, [key]: false });
                   }}
                   placeholder={`Enter your ${key}`}
-                  secureTextEntry={key === 'password' ? passShow : false}
+                  secureTextEntry={key === 'password' ? passShow : key === 'confirmPassword' ? cPassShow : false}
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
                     globalStyles.input,
                     error[key as keyof ILogin] ? globalStyles.inputError : {},
                   ]}
                 />
-                {key === 'password' && (
+                {(key === 'password' || key === 'confirmPassword') && (
                   <TouchableOpacity
                     style={{ position: 'absolute', right: 10, top: 15 }}
-                    onPress={() => setPassShow(!passShow)}
+                    onPress={() => {
+                      if (key === 'password') {
+                        setPassShow(!passShow);
+                      } else {
+                        setCPassShow(!cPassShow);
+                      }
+                    }}
                   >
                     <Image
-                      source={passShow ? eye as ImageSourcePropType : eyeSlash as ImageSourcePropType}
+                      source={key === 'password' ? (passShow ? eye as ImageSourcePropType : eyeSlash as ImageSourcePropType) : (cPassShow ? eye as ImageSourcePropType : eyeSlash as ImageSourcePropType)}
                       style={{ width: 20, height: 20 }}
                     />
                   </TouchableOpacity>
