@@ -1,6 +1,9 @@
 import { Link } from '@react-navigation/native';
 import React from 'react';
+import CountryPicker from 'react-native-country-picker-modal';
+
 import {
+  Dimensions,
   Image,
   ImageSourcePropType,
   ScrollView,
@@ -10,14 +13,20 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Address from '../../components/sheard/Address';
 import GradientButton from '../../components/sheard/GradientButton';
+import { Colors } from '../../constant/colors';
 import { eye, eyeSlash } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { ILogin, ISignUp } from '../../types/loginType';
-
+import { hexToRGBA } from '../../utils/hexToRGBA';
 const SignUp = () => {
   const [passShow, setPassShow] = React.useState(true);
+  const [countryCode, setCountryCode] = React.useState('BD');
+  const [callingCode, setCallingCode] = React.useState('880');
+  const { width } = Dimensions.get('window')
 
   const [error, setError] = React.useState({
     "first name": false,
@@ -111,6 +120,92 @@ const SignUp = () => {
             );
           }
 
+          if (key === 'gender') {
+            const genderData = [
+              { label: 'Male', value: 'male' },
+              { label: 'Female', value: 'female' },
+              { label: 'Others', value: 'others' },
+            ];
+
+            return (
+              <View key={key} >
+                <Text style={globalStyles.inputLabel}>Gender</Text>
+                <Dropdown
+                  style={[
+                    globalStyles.input,
+                    error[key as keyof ILogin] ? globalStyles.inputError : {},
+                  ]}
+                  data={genderData}
+                  labelField="label"
+                  valueField="value"
+                  placeholder="Select Gender"
+                  value={inputValue.gender}
+                  onChange={item => {
+                    setInputValue({ ...inputValue, gender: item.value });
+                    setError({ ...error, gender: false });
+                  }}
+                  placeholderStyle={{ color: globalStyles.inputPlaceholder.color }}
+                  selectedTextStyle={{ color: '#000' }}
+                  containerStyle={{ borderRadius: 5 }}
+                  dropdownPosition="auto"
+                />
+              </View>
+            );
+          }
+          if (key === 'contact') {
+            return (
+              <View key={key} >
+                <Text style={globalStyles.inputLabel}>Contact</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <CountryPicker
+                    countryCode={countryCode as any}
+                    withFlag
+                    withCallingCode
+                    withFilter
+                    withCallingCodeButton
+                    onSelect={country => {
+                      setCountryCode(country.cca2);
+                      setCallingCode(country.callingCode[0]);
+                    }}
+                    containerButtonStyle={{
+                      width: 110,
+                      height: 50,
+                      paddingHorizontal: 10,
+                      justifyContent: 'center',
+                      backgroundColor: hexToRGBA(Colors.light.white as string, 0.4),
+                    }}
+                  />
+
+                  <TextInput
+                    value={inputValue.contact}
+                    onChangeText={text => {
+                      setInputValue({ ...inputValue, contact: text });
+                      setError({ ...error, contact: false });
+                    }}
+                    placeholder="Enter your contact number"
+                    keyboardType="phone-pad"
+                    placeholderTextColor={globalStyles.inputPlaceholder.color}
+                    style={[
+                      globalStyles.input,
+                      {
+                        paddingHorizontal: 12,
+                        borderBottomRightRadius: 8,
+                        borderWidth: 1,
+                        width: width - 150,
+                        marginBottom: 0
+                      },
+                      error.contact ? globalStyles.inputError : {},
+                    ]}
+                  />
+                </View>
+              </View>
+            );
+          }
+          if (key === 'address') {
+            return <Address key={key} />
+          }
+
+
           return (
             <View key={key} style={{}}>
               <Text style={globalStyles.inputLabel}>
@@ -157,15 +252,15 @@ const SignUp = () => {
                 fontSize: 18,
               }}
             >
-              Login
+              Sign Up
             </Text>
           </GradientButton>
         </View>
 
         <View style={[globalStyles.flex, { marginTop: 20, marginBottom: 100 }]}>
-          <Text style={globalStyles.text}>Don't have an account? </Text>
-          <Link screen="Register" params={{}}>
-            <Text style={[{ marginLeft: 5 }, globalStyles.text]}> Sign up now</Text>
+          <Text style={globalStyles.text}>Already have an account? </Text>
+          <Link screen="Login" params={{}}>
+            <Text style={[{ marginLeft: 5 }, globalStyles.text]}>Login</Text>
           </Link>
         </View>
       </ScrollView>
