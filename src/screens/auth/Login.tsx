@@ -40,7 +40,7 @@ const Login = () => {
   return (
     <SafeAreaView
       style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <View>
+      <View style={{ marginTop: - 60 }}>
         <Image source={logo as ImageSourcePropType} height={100} width={100} />
       </View>
       {/* form */}
@@ -95,7 +95,7 @@ const Login = () => {
 
         <View style={[globalStyles.flex, { marginTop: 20 }]}>
           <Text style={globalStyles.text}>Don't have an account? </Text>
-          <Link screen="Register" params={{}}>
+          <Link screen="SignUp" params={{}}>
             <Text style={[{ marginLeft: 5 }, globalStyles.text]}> Sign up now</Text>
           </Link>
         </View>

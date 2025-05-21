@@ -10,12 +10,12 @@ const StackLayout = () => {
   return (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
-        options={{ headerShown: false }}
+        options={{ headerShown: true, title: 'Login', headerTitleAlign: 'center', headerBackground: () => null, }}
         name="Login"
         component={Login}
       />
       <Stack.Screen
-        options={{ headerShown: false }}
+        options={{ headerShown: true, title: 'Create Account', headerTitleAlign: 'center', headerBackground: () => null, }}
         name="SignUp"
         component={SignUp}
       />
