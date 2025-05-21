@@ -12,4 +12,5 @@ export interface StackTypes {
   SignUp: undefined;
   Forget: undefined;
   Otp: { params: { from: string } };
+  NewPassword: undefined;
 }

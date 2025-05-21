@@ -22,4 +22,9 @@ export interface IAddress {
   city: string;
   postalCode: string;
   country: string;
-} 
+}
+
+export interface INewPassword {
+  password: string;
+  confirmPassword: string;
+}

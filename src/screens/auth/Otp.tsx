@@ -1,3 +1,4 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 import { OtpInput } from "react-native-otp-entry";
@@ -5,8 +6,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import GradientButton from '../../components/sheard/GradientButton';
 import { Colors } from '../../constant/colors';
 import { logo } from '../../constant/images';
+import { StackTypes } from '../../types/ScreenPropsTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 const Otp = () => {
+  const navigate = useNavigation<NavigationProp<StackTypes>>();
   return (
     <SafeAreaView
       style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -67,7 +70,7 @@ const Otp = () => {
           paddingHorizontal: 25,
           marginTop: 40,
         }}>
-          <GradientButton handler={() => { }}>
+          <GradientButton handler={() => { navigate.navigate('NewPassword') }}>
             <Text style={{ color: 'white', textAlign: 'center', fontWeight: 700, fontSize: 18, }}>Submit</Text>
           </GradientButton>
         </View>
