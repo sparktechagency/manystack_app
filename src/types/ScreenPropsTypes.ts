@@ -1,9 +1,9 @@
 export interface TabsTypes {
-  Home: undefined
+  Home: undefined;
   Drawer: {
     screen: string;
     params: {
       screen: string;
-    }
-  }
+    };
+  };
 }

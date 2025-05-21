@@ -1,10 +1,10 @@
-import { NavigationContainer } from '@react-navigation/native'
-import React, { useEffect } from 'react'
-import { StatusBar, StyleSheet, useColorScheme } from 'react-native'
-import SplashScreen from 'react-native-splash-screen'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
-import GlobalContextProvider from '../providers/GlobalContextProvider'
-import StackLayout from './StackLayout'
+import {NavigationContainer} from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {StatusBar, StyleSheet, useColorScheme} from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import GlobalContextProvider from '../providers/GlobalContextProvider';
+import StackLayout from './StackLayout';
 const Root = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -12,8 +12,8 @@ const Root = () => {
     backgroundColor: isDarkMode ? Colors.lighter : Colors.darker,
   };
   useEffect(() => {
-    SplashScreen.hide()
-  }, [])
+    SplashScreen.hide();
+  }, []);
 
   return (
     <NavigationContainer>
@@ -25,9 +25,9 @@ const Root = () => {
         <StackLayout />
       </GlobalContextProvider>
     </NavigationContainer>
-  )
-}
+  );
+};
 
-export default Root
+export default Root;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

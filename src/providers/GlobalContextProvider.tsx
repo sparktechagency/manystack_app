@@ -1,6 +1,6 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
-import { useColorScheme } from 'react-native';
-import { Colors } from '../constant/colors';
+import React, {createContext, ReactNode, useContext, useState} from 'react';
+import {useColorScheme} from 'react-native';
+import {Colors} from '../constant/colors';
 // import { Provider } from 'react-redux';
 // import { Colors, ITheme } from '../constant/colors';
 // import { store } from '../Redux/store';
@@ -17,8 +17,7 @@ interface GlobalProviderProps {
   children: ReactNode;
 }
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
-const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
-
+const GlobalContextProvider = ({children}: GlobalProviderProps) => {
   const colorScheme = useColorScheme();
   const [search, setSearch] = useState<string>('');
   const [modalOpen, setModalOpen] = useState<boolean>(false);

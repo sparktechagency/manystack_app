@@ -52,12 +52,11 @@ export const globalStyles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    fontSize: 20,
-    color: '#333',
+    fontSize: 16,
   },
   button: {
     backgroundColor: '#007BFF',
-    padding: 10,
+    padding: 14,
     borderRadius: 5,
   },
   buttonText: {
