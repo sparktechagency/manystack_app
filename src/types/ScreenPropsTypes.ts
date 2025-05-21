@@ -7,3 +7,9 @@ export interface TabsTypes {
     };
   };
 }
+export interface StackTypes {
+  Login: undefined;
+  SignUp: undefined;
+  Forget: undefined;
+  Otp: { params: { from: string } };
+}

@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import ForgetPassword from '../screens/auth/ForgetPassword';
 import Login from '../screens/auth/Login';
+import Otp from '../screens/auth/Otp';
 import SignUp from '../screens/auth/SignUp';
 import TabLayout from './TabLayout';
 const Stack = createNativeStackNavigator();
@@ -23,6 +24,11 @@ const StackLayout = () => {
         options={{ headerShown: true, title: 'Forget Password', headerTitleAlign: 'center', headerBackground: () => null, }}
         name="Forget"
         component={ForgetPassword}
+      />
+      <Stack.Screen
+        options={{ headerShown: true, title: 'Verify Code', headerTitleAlign: 'center', headerBackground: () => null, }}
+        name="Otp"
+        component={Otp}
       />
       <Stack.Screen
         options={{ headerShown: false }}

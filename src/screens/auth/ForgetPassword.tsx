@@ -1,3 +1,4 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -12,10 +13,10 @@ import GradientButton from '../../components/sheard/GradientButton';
 import { logo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { IForget } from '../../types/loginType';
+import { StackTypes } from '../../types/ScreenPropsTypes';
 
 const ForgetPassword = () => {
-  const [passShow, setPassShow] = React.useState(true);
-
+  const navigate = useNavigation<NavigationProp<StackTypes>>();
   const [error, setError] = React.useState({
     email: false,
   });
@@ -32,6 +33,7 @@ const ForgetPassword = () => {
         setError((prev) => ({ ...prev, [key]: false }));
       }
     });
+    navigate.navigate('Otp', { params: { from: 'forget' } });
   }
 
   return (
