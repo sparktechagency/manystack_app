@@ -40,7 +40,8 @@ const Login = () => {
       }
     });
     if (inputValue.email !== '' && inputValue.password !== '') {
-      navigate.navigate("Tabs");
+      navigate.navigate('Tabs');
+
     }
   }
   return (

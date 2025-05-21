@@ -1,50 +1,75 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import ForgetPassword from '../screens/auth/ForgetPassword';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from '../screens/auth/Login';
-import NewPassword from '../screens/auth/NewPassword';
-import Otp from '../screens/auth/Otp';
 import SignUp from '../screens/auth/SignUp';
+import ForgetPassword from '../screens/auth/ForgetPassword';
+import Otp from '../screens/auth/Otp';
+import NewPassword from '../screens/auth/NewPassword';
 import TabLayout from './TabLayout';
+
 const Stack = createNativeStackNavigator();
+
 const StackLayout = () => {
   return (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
-        options={{ headerShown: true, title: 'Login', headerTitleAlign: 'center', headerBackground: () => null, }}
         name="Login"
         component={Login}
+        options={{
+          headerShown: true,
+          title: 'Login',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
       />
       <Stack.Screen
-        options={{ headerShown: true, title: 'Create Account', headerTitleAlign: 'center', headerBackground: () => null, }}
         name="SignUp"
         component={SignUp}
+        options={{
+          headerShown: true,
+          title: 'Create Account',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
       />
       <Stack.Screen
-        options={{ headerShown: true, title: 'Forget Password', headerTitleAlign: 'center', headerBackground: () => null, }}
         name="Forget"
         component={ForgetPassword}
+        options={{
+          headerShown: true,
+          title: 'Forget Password',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
       />
       <Stack.Screen
-        options={{ headerShown: true, title: 'Verify Code', headerTitleAlign: 'center', headerBackground: () => null, }}
         name="Otp"
         component={Otp}
+        options={{
+          headerShown: true,
+          title: 'Verify Code',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
       />
       <Stack.Screen
-        options={{ headerShown: true, title: 'New Password', headerTitleAlign: 'center', headerBackground: () => null, }}
         name="NewPassword"
         component={NewPassword}
+        options={{
+          headerShown: true,
+          title: 'New Password',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
       />
+      {/* Main app tabs */}
       <Stack.Screen
-        options={{ headerShown: false }}
         name="Tabs"
         component={TabLayout}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
 };
 
 export default StackLayout;
-
-const styles = StyleSheet.create({});
