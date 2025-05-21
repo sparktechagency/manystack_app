@@ -1,4 +1,3 @@
-import { Link } from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -13,24 +12,23 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import GradientButton from '../../components/sheard/GradientButton';
 import { eye, eyeSlash, logo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
-import { ILogin } from '../../types/loginType';
-
-const Login = () => {
+import { INewPassword } from '../../types/loginType';
+const NewPassword = () => {
   const [passShow, setPassShow] = React.useState(true);
-
+  const [cPassShow, setCPassShow] = React.useState(true);
   const [error, setError] = React.useState({
-    email: false,
     password: false,
+    confirmPassword: false,
   });
 
-  const [inputValue, setInputValue] = React.useState<ILogin>({
-    email: 'siyamoffice0273@gmail.com',
+  const [inputValue, setInputValue] = React.useState<INewPassword>({
     password: '123456',
+    confirmPassword: '123456',
   });
 
   const submitHandler = () => {
     Object.keys(inputValue).forEach((key) => {
-      if (inputValue[key as keyof ILogin] === '') {
+      if (inputValue[key as keyof INewPassword] === '') {
         setError((prev) => ({ ...prev, [key]: true }));
       } else {
         setError((prev) => ({ ...prev, [key]: false }));
@@ -52,7 +50,7 @@ const Login = () => {
             </Text>
             <View style={{ position: 'relative' }}>
               <TextInput
-                value={inputValue[key as keyof ILogin]}
+                value={inputValue[key as keyof INewPassword]}
                 onChangeText={text => {
                   setInputValue({ ...inputValue, [key]: text })
                   setError({ ...error, [key]: false })
@@ -60,18 +58,23 @@ const Login = () => {
 
                 }
                 placeholder={`Enter your ${key}`}
-                secureTextEntry={key === 'password' ? passShow : false}
+                secureTextEntry={key === 'password' ? passShow : key === 'confirmPassword' ? cPassShow : false}
                 placeholderTextColor={globalStyles.inputPlaceholder.color}
-                style={[globalStyles.input, error[key as keyof ILogin] ? globalStyles.inputError : {}]}
+                style={[globalStyles.input, error[key as keyof INewPassword] ? globalStyles.inputError : {}]}
               />
-              {key === 'password' && (
+              {(key === 'password' || key === 'confirmPassword') && (
                 <TouchableOpacity
-                  style={[{
-                    position: 'absolute', right: 10, top: 15
-                  }]}
-                  onPress={() => setPassShow(!passShow)}>
+                  style={{ position: 'absolute', right: 10, top: 15 }}
+                  onPress={() => {
+                    if (key === 'password') {
+                      setPassShow(!passShow);
+                    } else {
+                      setCPassShow(!cPassShow);
+                    }
+                  }}
+                >
                   <Image
-                    source={passShow ? eye as ImageSourcePropType : eyeSlash as ImageSourcePropType}
+                    source={key === 'password' ? (passShow ? eye as ImageSourcePropType : eyeSlash as ImageSourcePropType) : (cPassShow ? eye as ImageSourcePropType : eyeSlash as ImageSourcePropType)}
                     style={{ width: 20, height: 20 }}
                   />
                 </TouchableOpacity>
@@ -80,24 +83,12 @@ const Login = () => {
           </View>
         ))}
 
-        <Link style={{ textAlign: 'right', marginBottom: 20 }} screen="Forget" params={{}}>
-          <Text>Forgot password?</Text>
-        </Link>
-
-
         <View style={{
           paddingHorizontal: 25,
         }}>
           <GradientButton handler={() => submitHandler()}>
             <Text style={{ color: 'white', textAlign: 'center', fontWeight: 700, fontSize: 18, }}>Login</Text>
           </GradientButton>
-        </View>
-
-        <View style={[globalStyles.flex, { marginTop: 20 }]}>
-          <Text style={globalStyles.text}>Don't have an account? </Text>
-          <Link screen="SignUp" params={{}}>
-            <Text style={[{ marginLeft: 5 }, globalStyles.text]}> Sign up now</Text>
-          </Link>
         </View>
       </View>
 
@@ -106,6 +97,6 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default NewPassword
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})

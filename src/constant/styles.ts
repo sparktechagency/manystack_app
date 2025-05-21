@@ -26,7 +26,7 @@ export const globalStyles = StyleSheet.create({
     borderColor: hexToRGBA(Colors.light.black as string, 0.6),
     borderRadius: 8,
     paddingHorizontal: 10,
-    marginBottom: 20,
+    marginBottom: 15,
     color: Colors.light.black as string,
     fontSize: 16,
     fontWeight: 400,
