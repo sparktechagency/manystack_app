@@ -34,6 +34,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     width,
     height,
   };
+  console.log(values)
   return (
     <GlobalContext.Provider value={values}>
       {/* <Provider store={store}> */}

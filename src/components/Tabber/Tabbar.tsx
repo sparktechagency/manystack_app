@@ -11,7 +11,7 @@ const Tabbar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   const { buildHref } = useLinkBuilder();
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: 'row', height: 50 }}>
       {state.routes.map((route: any, index: any) => {
         const { options } = descriptors[route.key];
         const label =

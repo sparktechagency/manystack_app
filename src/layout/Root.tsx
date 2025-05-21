@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar, useColorScheme, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { Modal, StatusBar, StyleSheet, useColorScheme } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import GlobalContextProvider from '../providers/GlobalContextProvider';
@@ -14,7 +14,7 @@ const Root = () => {
   }, []);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer >
       <StatusBar
         barStyle={isDarkMode ? 'dark-content' : 'light-content'}
         backgroundColor={isDarkMode ? Colors.lighter : Colors.darker}
