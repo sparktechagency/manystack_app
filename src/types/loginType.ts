@@ -16,3 +16,10 @@ export interface ISignUp {
   password: string;
   confirmPassword: string;
 }
+export interface IAddress {
+  streetNo: string;
+  streetName: string;
+  city: string;
+  postalCode: string;
+  country: string;
+} 

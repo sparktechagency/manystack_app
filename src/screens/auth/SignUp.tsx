@@ -7,7 +7,6 @@ import {
   Image,
   ImageSourcePropType,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -20,13 +19,21 @@ import GradientButton from '../../components/sheard/GradientButton';
 import { Colors } from '../../constant/colors';
 import { eye, eyeSlash } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
-import { ILogin, ISignUp } from '../../types/loginType';
+import { IAddress, ILogin, ISignUp } from '../../types/loginType';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 const SignUp = () => {
   const [passShow, setPassShow] = React.useState(true);
   const [countryCode, setCountryCode] = React.useState('BD');
   const [callingCode, setCallingCode] = React.useState('880');
   const { width } = Dimensions.get('window')
+
+  const [address, setAddress] = React.useState<IAddress>({
+    streetName: '',
+    city: '',
+    streetNo: '',
+    country: '',
+    postalCode: '',
+  })
 
   const [error, setError] = React.useState({
     "first name": false,
@@ -38,6 +45,11 @@ const SignUp = () => {
     address: false,
     password: false,
     confirmPassword: false,
+    streetName: false,
+    city: false,
+    streetNo: false,
+    country: false,
+    postalCode: false,
   });
 
   const [inputValue, setInputValue] = React.useState<ISignUp>({
@@ -53,19 +65,25 @@ const SignUp = () => {
   });
 
   const submitHandler = () => {
-    Object.keys(inputValue).forEach((key) => {
-      if (inputValue[key as keyof ISignUp] === '') {
+    type Combined = ISignUp & IAddress;
+    const combinedInputValue: Combined = {
+      ...inputValue,
+      ...address,
+    };
+    Object.keys(combinedInputValue).forEach((key) => {
+      if (combinedInputValue[key as keyof ISignUp] === '') {
         setError((prev) => ({ ...prev, [key]: true }));
       } else {
         setError((prev) => ({ ...prev, [key]: false }));
       }
     });
-  }
 
+  }
+  console.log(error)
   return (
     <SafeAreaView>
 
-      <ScrollView style={{ width: '100%', height: "100%", paddingHorizontal: 20 }}>
+      <ScrollView style={{ width: '100%', height: "100%", paddingHorizontal: 20, paddingVertical: 20 }}>
         {Object.keys(inputValue).map((key, index, arr) => {
           if (key === 'last name' && arr[index - 1] === 'first name') {
             return null;
@@ -202,7 +220,7 @@ const SignUp = () => {
             );
           }
           if (key === 'address') {
-            return <Address key={key} />
+            return <Address address={address} setAddress={setAddress} error={error} key={key} />
           }
 
 
@@ -257,7 +275,7 @@ const SignUp = () => {
           </GradientButton>
         </View>
 
-        <View style={[globalStyles.flex, { marginTop: 20, marginBottom: 100 }]}>
+        <View style={[globalStyles.flex, { marginTop: 20, marginBottom: 120 }]}>
           <Text style={globalStyles.text}>Already have an account? </Text>
           <Link screen="Login" params={{}}>
             <Text style={[{ marginLeft: 5 }, globalStyles.text]}>Login</Text>
@@ -271,4 +289,4 @@ const SignUp = () => {
 
 export default SignUp;
 
-const styles = StyleSheet.create({});
+
