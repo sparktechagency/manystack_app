@@ -1,22 +1,30 @@
-import { Link } from '@react-navigation/native';
 import React from 'react';
 import {
   Dimensions,
+  Image,
+  ImageSourcePropType,
   ScrollView,
   Text,
   TextInput,
   View
 } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import GradientButton from '../../components/sheard/GradientButton';
+import ImageUpload from '../../components/sheard/ImageUpload';
+import SingleSelectDropDown from '../../components/sheard/SingleSelectDropDown';
+import { paymentStatus } from '../../constant/data';
+import { Camera } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { ICreateInterVention } from '../../types/DataTypes';
+import { ICreateInterVentionError } from '../../types/ErrorTypes';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const CreateIntervention = () => {
-  const { width } = Dimensions.get('window')
-
-  const [error, setError] = React.useState({
+  const { width, height } = Dimensions.get('window')
+  const { themeColors } = useGlobalContext()
+  const [images, setImages] = React.useState<string[]>([])
+  const [error, setError] = React.useState<ICreateInterVentionError>({
     interventionId: false,
     category: false,
     price: false,
@@ -43,39 +51,42 @@ const CreateIntervention = () => {
     });
 
   }
-
   return (
     <SafeAreaView>
-      <ScrollView style={{ width: '100%', height: "100%", paddingHorizontal: 20, paddingVertical: 20 }}>
+      <ScrollView style={{ width: '100%', height: "100%", paddingHorizontal: 20, paddingVertical: 20, }}>
         {Object.keys(inputValue).map((key, index, arr) => {
           if (key === 'status') {
-            const genderData = [
-              { label: 'Male', value: 'male' },
-              { label: 'Female', value: 'female' },
-              { label: 'Others', value: 'others' },
-            ];
-
             return (
-              <View key={key} >
-                <Text style={globalStyles.inputLabel}>Gender</Text>
-                <Dropdown
-                  style={[
-                    globalStyles.input,
-                    error[key as keyof ICreateInterVention] ? globalStyles.inputError : {},
+              <View key={key}>
+                <Text style={globalStyles.inputLabel}>Status</Text>
+                <SingleSelectDropDown
+                  name={key}
+                  data={paymentStatus}
+                  value={inputValue[key as keyof ICreateInterVention]}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  setError={setError}
+                  error={error}
+                />
+              </View>
+            );
+          }
+          if (key === 'category') {
+            return (
+              <View key={key}>
+                <Text style={globalStyles.inputLabel}>Select Category</Text>
+                <SingleSelectDropDown
+                  name={key}
+                  data={[
+                    { label: 'category', value: 'category' },
+                    { label: 'category', value: 'category' },
+                    { label: 'category', value: 'category' },
                   ]}
-                  data={genderData}
-                  labelField="label"
-                  valueField="value"
-                  placeholder="Select Gender"
-                  value={inputValue.status}
-                  onChange={item => {
-                    setInputValue({ ...inputValue, status: item.value });
-                    setError({ ...error, status: false });
-                  }}
-                  placeholderStyle={{ color: globalStyles.inputPlaceholder.color }}
-                  selectedTextStyle={{ color: '#000' }}
-                  containerStyle={{ borderRadius: 5 }}
-                  dropdownPosition="auto"
+                  value={inputValue[key as keyof ICreateInterVention]}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  setError={setError}
+                  error={error}
                 />
               </View>
             );
@@ -92,6 +103,8 @@ const CreateIntervention = () => {
                     setInputValue({ ...inputValue, [key]: text });
                     setError({ ...error, [key]: false });
                   }}
+                  keyboardType={
+                    key === 'price' ? 'numeric' : 'default'}
                   placeholder={`Enter your ${key}`}
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
@@ -104,7 +117,36 @@ const CreateIntervention = () => {
           );
         })}
 
-        <View style={{ paddingHorizontal: 25 }}>
+
+        <ImageUpload
+          images={images}
+          setImages={setImages}
+          maxNumber={5}
+
+        >
+          <Text style={[globalStyles.inputLabel]}>Add Image</Text>
+          <View style={[globalStyles.flex, { justifyContent: "flex-start", gap: 10, borderColor: hexToRGBA(themeColors.black as string, .2), paddingVertical: 14, paddingHorizontal: 14, borderRadius: 5, borderWidth: 1 }]}>
+            <Image
+              source={Camera as ImageSourcePropType}
+              style={{ width: 30, height: 30, }}
+            />
+            <View>
+              <Text style={[globalStyles.inputLabel, { fontSize: 16 }]}>Select image</Text>
+            </View>
+          </View>
+          {
+            images?.length > 0 && <Image
+              source={{ uri: images[0] }}
+              style={{
+                marginTop: 6,
+                width: 200,
+                height: 100,
+                resizeMode: 'contain'
+              }}
+            />
+          }
+        </ImageUpload>
+        <View style={{ paddingHorizontal: 25, marginTop: 50 }}>
           <GradientButton handler={() => submitHandler()}>
             <Text
               style={{
@@ -114,19 +156,12 @@ const CreateIntervention = () => {
                 fontSize: 18,
               }}
             >
-              Sign Up
+              Save
             </Text>
           </GradientButton>
         </View>
 
-        <View style={[globalStyles.flex, { marginTop: 20, marginBottom: 120 }]}>
-          <Text style={globalStyles.text}>Already have an account? </Text>
-          <Link screen="Login" params={{}}>
-            <Text style={[{ marginLeft: 5 }, globalStyles.text]}>Login</Text>
-          </Link>
-        </View>
       </ScrollView>
-
     </SafeAreaView>
   );
 };

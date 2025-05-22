@@ -21,6 +21,7 @@ import { eye, eyeSlash } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { IAddress, ILogin, ISignUp } from '../../types/loginType';
 import { hexToRGBA } from '../../utils/hexToRGBA';
+import { genderData } from '../../constant/data';
 const SignUp = () => {
   const [passShow, setPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
@@ -139,11 +140,6 @@ const SignUp = () => {
           }
 
           if (key === 'gender') {
-            const genderData = [
-              { label: 'Male', value: 'male' },
-              { label: 'Female', value: 'female' },
-              { label: 'Others', value: 'others' },
-            ];
 
             return (
               <View key={key} >

@@ -18,14 +18,15 @@ export const globalStyles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: Colors.light.black as string,
+    marginBottom: 5
   },
   input: {
-    height: 50,
+    height: 56,
     width: '100%',
     borderWidth: 1,
-    borderColor: hexToRGBA(Colors.light.black as string, 0.6),
+    borderColor: hexToRGBA(Colors.light.black as string, 0.3),
     borderRadius: 8,
-    paddingHorizontal: 10,
+    paddingHorizontal: 14,
     marginBottom: 15,
     color: Colors.light.black as string,
     fontSize: 16,
