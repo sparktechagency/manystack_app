@@ -1,12 +1,12 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { Dimensions, useColorScheme } from 'react-native';
-import { Colors } from '../constant/colors';
+import { Colors, ITheme } from '../constant/colors';
 // import { Provider } from 'react-redux';
 // import { Colors, ITheme } from '../constant/colors';
 // import { store } from '../Redux/store';
 
 interface GlobalContextType {
-  // themeColors: ITheme;
+  themeColors: ITheme;
   setSearch: (arg1: string) => void;
   search: string;
   setModalOpen: (arg1: boolean) => void;
@@ -34,6 +34,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     width,
     height,
   };
+  console.log(values)
   return (
     <GlobalContext.Provider value={values}>
       {/* <Provider store={store}> */}

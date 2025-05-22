@@ -1,17 +1,23 @@
-export interface TabsTypes {
+// Tabs navigator params (Bottom Tabs inside Stack)
+export type TabsTypes = {
   Home: undefined;
-  Drawer: {
-    screen: string;
-    params: {
-      screen: string;
-    };
-  };
-}
-export interface StackTypes {
+  Expanses: undefined;
+  InterVention: undefined;
+  Invoice: undefined;
+};
+
+// Stack navigator params (inside Drawer)
+export type StackTypes = {
   Login: undefined;
   SignUp: undefined;
   Forget: undefined;
-  Otp: { params: { from: string } };
+  Otp: { from: string }; // direct param, no nested params object
   NewPassword: undefined;
-  Tabs: {} | undefined
-}
+  Tabs: undefined; // tabs screen inside stack
+};
+
+// Drawer navigator params (root)
+export type DrawerTypes = {
+  MainStack: undefined; // stack navigator inside drawer
+  Profile: undefined;
+};
