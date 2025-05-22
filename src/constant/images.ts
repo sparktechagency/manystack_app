@@ -8,6 +8,7 @@ import Invoice from '../asset/icon/Invoice.png';
 import Plus from '../asset/plus.png';
 import Profile from '../asset/profile.png';
 import Profit from '../asset/profit.png';
+import Camera from '../asset/Camera.png';
 export const TabIcons = {
   Home,
   InterVention,
@@ -23,6 +24,6 @@ export {
   Close, eye,
   eyeSlash,
   logo, Plus, Profile,
-  Profit
+  Profit, Camera
 };
 
