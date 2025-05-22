@@ -90,7 +90,7 @@ const FloatingPlus = () => {
         </TouchableOpacity>
       </Animated.View>
 
-      <Animated.View
+      {/* <Animated.View
         style={[
           styles.floatingButton,
           {
@@ -113,7 +113,7 @@ const FloatingPlus = () => {
             <Image source={Plus as ImageSourcePropType} style={[styles.icon, { tintColor: themeColors.white as string }]} />
           </View>
         </TouchableOpacity>
-      </Animated.View>
+      </Animated.View> */}
 
       <TouchableOpacity
         style={[styles.mainButton, { backgroundColor: themeColors.primary as string }]}
@@ -135,8 +135,8 @@ export default FloatingPlus;
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    bottom: 4,
-    right: 4,
+    bottom: 10,
+    right: 10,
     alignItems: 'flex-end',
   },
   floatingButton: {
