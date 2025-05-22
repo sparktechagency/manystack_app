@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native'
 import { Colors } from '../../constant/colors'
-import { logo } from '../../constant/images'
+import { logo, Profile } from '../../constant/images'
 import { globalStyles } from '../../constant/styles'
 import { hexToRGBA } from '../../utils/hexToRGBA'
 
@@ -18,7 +18,10 @@ const WellCome = () => {
           <Text style={[globalStyles.inputLabel,]}>Many Stake</Text>
         </View>
       </View>
-      <Text>WellCome</Text>
+      <Image
+        source={Profile as ImageSourcePropType}
+        style={{ width: 50, height: 50, }}
+      />
     </View>
   )
 }

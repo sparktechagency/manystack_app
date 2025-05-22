@@ -4,7 +4,8 @@ import Expanses from '../asset/icon/Expanses.png';
 import Home from '../asset/icon/Home.png';
 import InterVention from '../asset/icon/InterVention.png';
 import Invoice from '../asset/icon/Invoice.png';
-
+import Profile from '../asset/profile.png';
+import Profit from '../asset/profit.png';
 export const TabIcons = {
   Home,
   InterVention,
@@ -19,6 +20,8 @@ import logo from '../asset/logo.png';
 export {
   eye,
   eyeSlash,
-  logo
+  logo,
+  Profile,
+  Profit
 };
 
