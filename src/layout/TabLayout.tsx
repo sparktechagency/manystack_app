@@ -17,8 +17,8 @@ const TabLayout = () => {
       screenOptions={{ headerShown: false }}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Expanses" component={Expanses} />
       <Tab.Screen name="InterVention" component={InterVention} />
+      <Tab.Screen name="Expanses" component={Expanses} />
       <Tab.Screen name="Invoice" component={Invoice} />
       <Tab.Screen name="Drawer" component={() => <View></View>} />
     </Tab.Navigator>

@@ -53,7 +53,9 @@ const ImageUpload = ({ images, setImages, maxNumber, children }: IImageUploadPro
     }
     try {
       const result = await ImagePicker.openPicker({
+        cropping: false,
       });
+
       setImages([result.path]);
     } catch (error: any) {
       if (error.code !== 'E_PICKER_CANCELLED') {
@@ -61,31 +63,7 @@ const ImageUpload = ({ images, setImages, maxNumber, children }: IImageUploadPro
       }
     }
   };
-  const takePhoto = async () => {
-    const hasCameraPermission = await requestCameraPermission();
-    const hasStoragePermission = await requestStoragePermission();
 
-    if (!hasCameraPermission) {
-      Alert.alert('Permission denied', 'Camera permission is required to take photos');
-      return;
-    }
-
-    if (!hasStoragePermission) {
-      Alert.alert('Permission denied', 'Storage permission is required to save photos');
-      return;
-    }
-
-    try {
-      const result = await ImagePicker.openCamera({
-        cropping: false,
-      });
-      setImages([result.path]);
-    } catch (error: any) {
-      if (error.code !== 'E_PICKER_CANCELLED') {
-        Alert.alert('Error', 'Failed to take photo');
-      }
-    }
-  };
 
   return (
     <TouchableOpacity onPress={pickImage}>
