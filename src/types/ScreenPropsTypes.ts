@@ -14,6 +14,7 @@ export type StackTypes = {
   Otp: { from: string }; // direct param, no nested params object
   NewPassword: undefined;
   Tabs: undefined; // tabs screen inside stack
+  CreateIntervention: undefined;
 };
 
 // Drawer navigator params (root)

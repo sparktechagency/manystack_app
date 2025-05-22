@@ -1,10 +1,11 @@
-import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from '../screens/auth/Login';
-import SignUp from '../screens/auth/SignUp';
+import React from 'react';
 import ForgetPassword from '../screens/auth/ForgetPassword';
-import Otp from '../screens/auth/Otp';
+import Login from '../screens/auth/Login';
 import NewPassword from '../screens/auth/NewPassword';
+import Otp from '../screens/auth/Otp';
+import SignUp from '../screens/auth/SignUp';
+import CreateIntervention from '../screens/stacks/CreateIntervention';
 import TabLayout from './TabLayout';
 
 const Stack = createNativeStackNavigator();
@@ -58,6 +59,16 @@ const StackLayout = () => {
         options={{
           headerShown: true,
           title: 'New Password',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="CreateIntervention"
+        component={CreateIntervention}
+        options={{
+          headerShown: true,
+          title: 'Create Intervention',
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}

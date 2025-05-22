@@ -1,3 +1,4 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
 import {
   Animated,
@@ -11,12 +12,15 @@ import {
 } from 'react-native';
 import { Close, Plus } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { StackTypes } from '../../types/ScreenPropsTypes';
 
 const FloatingPlus = () => {
   const [open, setOpen] = useState(false);
   const { themeColors } = useGlobalContext();
   const anim1 = useRef(new Animated.Value(0)).current;
   const anim2 = useRef(new Animated.Value(0)).current;
+
+  const navigation = useNavigation<NavigationProp<StackTypes>>();
 
   const toggleButtons = () => {
     if (open) {
@@ -73,7 +77,12 @@ const FloatingPlus = () => {
           },
         ]}
       >
-        <TouchableOpacity style={[styles.pillButton, { backgroundColor: themeColors.white as string, borderColor: themeColors.primary as string, borderWidth: 1 }]}>
+        <TouchableOpacity
+          onPress={() => {
+            toggleButtons();
+            navigation.navigate('CreateIntervention')
+          }}
+          style={[styles.pillButton, { backgroundColor: themeColors.white as string, borderColor: themeColors.primary as string, borderWidth: 1 }]}>
           <Text style={[styles.pillButtonText, { color: themeColors.primary as string }]}>Create Intervention</Text>
           <View style={[styles.iconCircle, { backgroundColor: themeColors.primary as string, }]}>
             <Image source={Plus as ImageSourcePropType} style={[styles.icon, { tintColor: themeColors.white as string }]} />
