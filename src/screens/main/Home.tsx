@@ -1,10 +1,15 @@
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ProfitCard from '../../components/Home/ProfitCard';
 import WellCome from '../../components/Home/WellCome';
 
 const Home = () => {
-  const elements = [<WellCome key={1} />];
+  const elements = [
+    <WellCome key={1} />,
+    <ProfitCard title="Profit" count="$23,787" percentage="+14%" key={2} />,
+    <ProfitCard title="Intervention" count="100" percentage="+14%" key={3} />,
+  ];
   return (
     <SafeAreaView >
       <FlatList
@@ -12,7 +17,7 @@ const Home = () => {
         data={elements}
         renderItem={({ item }) => item}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ gap: 10, paddingHorizontal: 20 }}
+        contentContainerStyle={{ gap: 20, paddingHorizontal: 20 }}
       />
     </SafeAreaView>
   );
