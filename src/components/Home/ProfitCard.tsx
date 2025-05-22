@@ -8,7 +8,7 @@ import { hexToRGBA } from '../../utils/hexToRGBA'
 const ProfitCard = ({ title, count, percentage }: { title: string, count: string, percentage: string }) => {
   const { themeColors } = useGlobalContext()
   return (
-    <View style={[globalStyles.flex, { justifyContent: "space-between", backgroundColor: hexToRGBA(themeColors.black as string, .04), padding: 20, borderRadius: 10, }]}>
+    <View style={[globalStyles.flex, { justifyContent: "space-between", backgroundColor: hexToRGBA(themeColors.black as string, .04), padding: 20, paddingVertical: 30, borderRadius: 10, }]}>
       <View>
         <Text style={[globalStyles.inputLabel, { fontSize: 18, color: themeColors.black as string, fontWeight: 700 }]}>{title}</Text>
         <View style={[globalStyles.flex, { justifyContent: "flex-start", gap: 5, marginTop: 5 }]}>

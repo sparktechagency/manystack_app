@@ -4,7 +4,6 @@ import { Colors } from '../../constant/colors'
 import { TabIcons } from '../../constant/images'
 
 const TabItems = ({ route, label, isFocused }: { route: string, label: string, isFocused: boolean }) => {
-  console.log(route, label, isFocused)
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', height: 50, borderTopWidth: isFocused ? 3 : 0, borderColor: isFocused ? Colors.light.primary as string : 'transparent' }}>
       <Image
