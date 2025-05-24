@@ -14,7 +14,7 @@ const Home = () => {
     <ProfitCard title="Intervention" count="100" percentage="+14%" key={3} />,
     <OverviewChart key={4} />,
     <Highlights key={5} />,
-    <FloatingPlus key={6} />,
+
   ];
   return (
     <SafeAreaView >
@@ -25,6 +25,7 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ gap: 15, paddingHorizontal: 20 }}
       />
+      <FloatingPlus key={6} />
     </SafeAreaView>
   );
 };
