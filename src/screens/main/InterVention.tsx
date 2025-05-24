@@ -1,11 +1,24 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Heading from '../../components/Intervention/Heading';
 
 const InterVention = () => {
+  const elements = [
+    <View></View>,
+
+  ];
   return (
-    <View>
-      <Text>InterVention</Text>
-    </View>
+    <SafeAreaView >
+      <Heading key={1} />
+      <FlatList
+        keyExtractor={(item, index) => index.toString()}
+        data={elements}
+        renderItem={({ item }) => item}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ gap: 15, paddingHorizontal: 20 }}
+      />
+    </SafeAreaView>
   )
 }
 
