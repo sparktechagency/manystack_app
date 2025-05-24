@@ -23,7 +23,7 @@ const Home = () => {
         data={elements}
         renderItem={({ item }) => item}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ gap: 15, paddingHorizontal: 20 }}
+        contentContainerStyle={{ gap: 15, paddingHorizontal: 20, marginBottom: 100 }}
       />
       <FloatingPlus key={6} />
     </SafeAreaView>

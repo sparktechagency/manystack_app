@@ -1,11 +1,16 @@
 import DateTimePicker from '@react-native-community/datetimepicker'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { Image, ImageSourcePropType, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Calender } from '../../constant/images'
+import { globalStyles } from '../../constant/styles'
 import { useGlobalContext } from '../../providers/GlobalContextProvider'
+import { StackTypes } from '../../types/ScreenPropsTypes'
 import { hexToRGBA } from '../../utils/hexToRGBA'
+import GradientButton from '../sheard/GradientButton'
 
 const FilterByDate = () => {
+  const navigate = useNavigation<NavigationProp<StackTypes>>()
   const { themeColors } = useGlobalContext()
 
   const [fromDate, setFromDate] = useState<Date | undefined>()
@@ -126,6 +131,20 @@ const FilterByDate = () => {
           )}
         </View>
       </View>
+      <View style={[globalStyles.flex, {
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginTop: 16
+      }]}>
+        <Text style={{
+          fontSize: 16,
+          fontWeight: 600,
+          marginBottom: 6
+        }}>All Intervention</Text>
+        <GradientButton handler={() => navigate.navigate('CreateIntervention')}>
+          <Text style={{ color: 'white', textAlign: 'center', fontWeight: 700, fontSize: 18, }}>Add An Intervention</Text>
+        </GradientButton>
+      </View>
     </View>
   )
 }
@@ -161,6 +180,7 @@ const styles = StyleSheet.create({
   inputText: {
     flex: 1,
     fontSize: 14,
+    paddingVertical: 6
   },
 
 })
