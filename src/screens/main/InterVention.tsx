@@ -1,11 +1,13 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Heading from '../../components/Intervention/Heading';
+import Search from '../../components/sheard/Search';
 
 const InterVention = () => {
+  const [search, setSearch] = React.useState<string>('');
   const elements = [
-    <View></View>,
+    <Search search={search} setSearch={setSearch} key={1} />,
 
   ];
   return (

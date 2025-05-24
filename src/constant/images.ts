@@ -10,6 +10,7 @@ import Invoice from '../asset/icon/Invoice.png';
 import Plus from '../asset/plus.png';
 import Profile from '../asset/profile.png';
 import Profit from '../asset/profit.png';
+import SearchIcon from '../asset/Search.png';
 export const TabIcons = {
   Home,
   InterVention,
@@ -24,6 +25,6 @@ import logo from '../asset/logo.png';
 export {
   Camera, Close, eye,
   eyeSlash, Filter, logo, Plus, Profile,
-  Profit
+  Profit, SearchIcon
 };
 
