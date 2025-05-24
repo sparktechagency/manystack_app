@@ -1,11 +1,27 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import { FlatList, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import FilterByDate from '../../components/Intervention/FilterByDate';
+import Heading from '../../components/Intervention/Heading';
+import Search from '../../components/sheard/Search';
 
 const InterVention = () => {
+  const [search, setSearch] = React.useState<string>('');
+  const elements = [
+    <Search search={search} setSearch={setSearch} key={1} />,
+    <FilterByDate key={2} />
+  ];
   return (
-    <View>
-      <Text>InterVention</Text>
-    </View>
+    <SafeAreaView >
+      <Heading key={1} />
+      <FlatList
+        keyExtractor={(item, index) => index.toString()}
+        data={elements}
+        renderItem={({ item }) => item}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ gap: 15, paddingHorizontal: 20 }}
+      />
+    </SafeAreaView>
   )
 }
 
