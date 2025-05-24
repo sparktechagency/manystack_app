@@ -1,3 +1,5 @@
+import { IIntervention } from '../types/DataTypes';
+
 export const genderData = [
   { label: 'Male', value: 'male' },
   { label: 'Female', value: 'female' },
@@ -10,4 +12,51 @@ export const paymentStatus = [
 export const interventionFilter = [
   { label: 'PLP', value: 'PLP' },
   { label: 'After sell service', value: 'After sell service' },
+]
+export const intervention: IIntervention[] = [
+  {
+    "invoice_id": "INT-20250507-001",
+    "status": "Unpaid",
+    "date": "25,Feb 2025",
+    "service": "After sales service",
+    "amount": 350.00,
+    "description": "Rich with spices, memories, and the",
+    "images": []
+  },
+  {
+    "invoice_id": "INT-20250507-002",
+    "status": "Unpaid",
+    "date": "25,Feb 2025",
+    "service": "After sales service",
+    "amount": 350.00,
+    "description": "Rich with spices, memories, and the",
+    "images": []
+  },
+  {
+    "invoice_id": "INT-20250507-003",
+    "status": "Unpaid",
+    "date": "25,Feb 2025",
+    "service": "After sales service",
+    "amount": 350.00,
+    "description": "Rich with spices, memories, and the",
+    "images": []
+  },
+  {
+    "invoice_id": "INT-20250507-004",
+    "status": "Unpaid",
+    "date": "25,Feb 2025",
+    "service": "After sales service",
+    "amount": 350.00,
+    "description": "Rich with spices, memories, and the",
+    "images": []
+  },
+  {
+    "invoice_id": "INT-20250507-005",
+    "status": "Paid",
+    "date": "25,Feb 2025",
+    "service": "After sales service",
+    "amount": 350.00,
+    "description": "Rich with spices, memories, and the",
+    "images": []
+  }
 ]
