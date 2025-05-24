@@ -3,27 +3,27 @@ import { Alert, PermissionsAndroid, Platform, TouchableOpacity } from 'react-nat
 import ImagePicker from 'react-native-image-crop-picker';
 import { IImageUploadProps } from '../../types/PropsType';
 
-const ImageUpload = ({ images, setImages, maxNumber, children }: IImageUploadProps) => {
-  const requestCameraPermission = async () => {
-    if (Platform.OS !== 'android') return true;
+export const requestCameraPermission = async () => {
+  if (Platform.OS !== 'android') return true;
 
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: 'Camera Permission',
-          message: 'App needs access to your camera',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
-      return granted === PermissionsAndroid.RESULTS.GRANTED;
-    } catch (err) {
-      console.warn(err);
-      return false;
-    }
-  };
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: 'Camera Permission',
+        message: 'App needs access to your camera',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  } catch (err) {
+    console.warn(err);
+    return false;
+  }
+};
+const ImageUpload = ({ images, setImages, maxNumber, children }: IImageUploadProps) => {
 
   const requestStoragePermission = async () => {
     if (Platform.OS !== 'android') return true;
@@ -63,7 +63,6 @@ const ImageUpload = ({ images, setImages, maxNumber, children }: IImageUploadPro
       }
     }
   };
-
 
   return (
     <TouchableOpacity onPress={pickImage}>

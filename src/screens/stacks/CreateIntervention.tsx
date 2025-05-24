@@ -22,8 +22,7 @@ import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const CreateIntervention = () => {
   const { width, height } = Dimensions.get('window')
-  const { themeColors } = useGlobalContext()
-  const [images, setImages] = React.useState<string[]>([])
+  const { themeColors, setImages, images } = useGlobalContext()
   const [error, setError] = React.useState<ICreateInterVentionError>({
     interventionId: false,
     category: false,

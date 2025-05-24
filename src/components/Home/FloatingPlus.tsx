@@ -1,6 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
 import {
+  Alert,
   Animated,
   Easing,
   Image,
@@ -10,17 +11,20 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import ImageCropPicker from 'react-native-image-crop-picker';
 import { Close, Plus } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { StackTypes } from '../../types/ScreenPropsTypes';
+import { requestCameraPermission } from '../sheard/ImageUpload';
 
 const FloatingPlus = () => {
   const [open, setOpen] = useState(false);
-  const { themeColors } = useGlobalContext();
+  const { themeColors, setImages } = useGlobalContext();
   const anim1 = useRef(new Animated.Value(0)).current;
   const anim2 = useRef(new Animated.Value(0)).current;
 
   const navigation = useNavigation<NavigationProp<StackTypes>>();
+
 
   const toggleButtons = () => {
     if (open) {
@@ -58,6 +62,24 @@ const FloatingPlus = () => {
     }
   };
 
+  const captureImage = async () => {
+    const hasCameraPermission = await requestCameraPermission();
+    if (!hasCameraPermission) {
+      Alert.alert('Permission denied', 'Camera permission is required to capture images');
+      return;
+    }
+    try {
+      const result = await ImageCropPicker.openCamera({
+        cropping: false,
+      });
+      setImages([result.path]);
+      navigation.navigate('CreateIntervention')
+    } catch (error: any) {
+      if (error.code !== 'E_PICKER_CANCELLED') {
+        Alert.alert('Error', 'Failed to capture image');
+      }
+    }
+  };
   return (
     <View style={styles.container}>
       <Animated.View
@@ -90,7 +112,7 @@ const FloatingPlus = () => {
         </TouchableOpacity>
       </Animated.View>
 
-      {/* <Animated.View
+      <Animated.View
         style={[
           styles.floatingButton,
           {
@@ -107,13 +129,15 @@ const FloatingPlus = () => {
           },
         ]}
       >
-        <TouchableOpacity style={[styles.pillButton, { backgroundColor: themeColors.white as string, borderColor: themeColors.primary as string, borderWidth: 1 }]}>
+        <TouchableOpacity
+          onPress={captureImage}
+          style={[styles.pillButton, { backgroundColor: themeColors.white as string, borderColor: themeColors.primary as string, borderWidth: 1 }]}>
           <Text style={[styles.pillButtonText, { color: themeColors.primary as string }]}>Take Image</Text>
           <View style={[styles.iconCircle, { backgroundColor: themeColors.primary as string, }]}>
             <Image source={Plus as ImageSourcePropType} style={[styles.icon, { tintColor: themeColors.white as string }]} />
           </View>
         </TouchableOpacity>
-      </Animated.View> */}
+      </Animated.View>
 
       <TouchableOpacity
         style={[styles.mainButton, { backgroundColor: themeColors.primary as string }]}
