@@ -46,7 +46,8 @@ const Heading = () => {
       alignItems: "center",
       paddingHorizontal: 20
     }]}>
-      <Text style={globalStyles.inputLabel}>Intervention</Text>
+      <Text></Text>
+      <Text style={[globalStyles.inputLabel, { fontWeight: 700, fontSize: 20, marginBottom: 10 }]}>Intervention</Text>
       <View>
         <TouchableOpacity
           activeOpacity={0.7}

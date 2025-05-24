@@ -1,4 +1,5 @@
 // tab icons 
+import Calender from '../asset/calendar.png';
 import Camera from '../asset/Camera.png';
 import Close from '../asset/close.png';
 import Filter from '../asset/filter.png';
@@ -23,7 +24,7 @@ import eye from '../asset/eye.png';
 import eyeSlash from '../asset/eyeSlash.png';
 import logo from '../asset/logo.png';
 export {
-  Camera, Close, eye,
+  Calender, Camera, Close, eye,
   eyeSlash, Filter, logo, Plus, Profile,
   Profit, SearchIcon
 };

@@ -33,7 +33,7 @@ const Search = ({ search, setSearch }: SearchProps) => {
         placeholderTextColor={hexToRGBA(themeColors.black as string, 0.3)}
         style={{
           padding: 16,
-          borderRadius: 5,
+          borderRadius: 8,
           paddingLeft: 40,
         }}
       // onSubmitEditing={() => { console.log('submit') }}

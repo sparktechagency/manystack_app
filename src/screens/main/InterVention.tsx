@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import FilterByDate from '../../components/Intervention/FilterByDate';
 import Heading from '../../components/Intervention/Heading';
 import Search from '../../components/sheard/Search';
 
@@ -8,7 +9,7 @@ const InterVention = () => {
   const [search, setSearch] = React.useState<string>('');
   const elements = [
     <Search search={search} setSearch={setSearch} key={1} />,
-
+    <FilterByDate key={2} />
   ];
   return (
     <SafeAreaView >
