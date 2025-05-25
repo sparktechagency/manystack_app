@@ -41,7 +41,9 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
         </Text>
 
         <View style={styles.actions}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => { navigation.navigate('InterventionDetails', { params: { id: item.invoice_id } }) }}
+          >
             <Image
               source={eye as ImageSourcePropType}
               style={[styles.icon, {
@@ -50,7 +52,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => { navigation.navigate('UpdateIntervention') }}
+            onPress={() => { navigation.navigate('UpdateIntervention', { params: { id: item.invoice_id } }) }}
           >
             <Image
               source={Edit as ImageSourcePropType}
@@ -180,6 +182,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '60%',
+    gap: 5
   },
   icon: {
     width: 20,

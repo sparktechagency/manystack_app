@@ -11,15 +11,16 @@ export type StackTypes = {
   Login: undefined;
   SignUp: undefined;
   Forget: undefined;
-  Otp: { from: string }; // direct param, no nested params object
+  Otp: { from: string };
   NewPassword: undefined;
-  Tabs: undefined; // tabs screen inside stack
+  Tabs: undefined;
   CreateIntervention: undefined;
-  UpdateIntervention: undefined;
+  UpdateIntervention: { params: { id: string } };
+  InterventionDetails: { params: { id: string } };
 };
 
 // Drawer navigator params (root)
 export type DrawerTypes = {
-  MainStack: undefined; // stack navigator inside drawer
+  MainStack: undefined;
   Profile: undefined;
 };
