@@ -1,11 +1,14 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Image, ImageSourcePropType, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import { DeleteIcon, Edit, eye, logo } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IIntervention } from '../../types/DataTypes';
+import { StackTypes } from '../../types/ScreenPropsTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const InterventionsCards = ({ item }: { item: IIntervention }) => {
+  const navigation = useNavigation<NavigationProp<StackTypes>>();
   const { themeColors } = useGlobalContext()
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -46,7 +49,9 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
               }]}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => { navigation.navigate('UpdateIntervention') }}
+          >
             <Image
               source={Edit as ImageSourcePropType}
               style={[styles.icon, {

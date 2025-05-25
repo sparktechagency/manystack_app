@@ -15,6 +15,7 @@ export type StackTypes = {
   NewPassword: undefined;
   Tabs: undefined; // tabs screen inside stack
   CreateIntervention: undefined;
+  UpdateIntervention: undefined;
 };
 
 // Drawer navigator params (root)

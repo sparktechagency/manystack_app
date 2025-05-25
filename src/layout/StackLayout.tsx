@@ -6,6 +6,7 @@ import NewPassword from '../screens/auth/NewPassword';
 import Otp from '../screens/auth/Otp';
 import SignUp from '../screens/auth/SignUp';
 import CreateIntervention from '../screens/stacks/CreateIntervention';
+import UpdateIntervention from '../screens/stacks/UpdateIntervention';
 import TabLayout from './TabLayout';
 
 const Stack = createNativeStackNavigator();
@@ -69,6 +70,16 @@ const StackLayout = () => {
         options={{
           headerShown: true,
           title: 'Create Intervention',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="UpdateIntervention"
+        component={UpdateIntervention}
+        options={{
+          headerShown: true,
+          title: 'Update Intervention',
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
