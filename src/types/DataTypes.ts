@@ -1,9 +1,9 @@
 export interface ICreateInterVention {
-  interventionId: string,
-  category: string,
-  price: string,
-  note: string
-  status: string,
+  interventionId: string;
+  category: string;
+  price: string;
+  note: string;
+  status: string;
 }
 export interface IIntervention {
   invoice_id: string;
@@ -13,4 +13,4 @@ export interface IIntervention {
   amount: number;
   description: string;
   images: string[];
-};
+}

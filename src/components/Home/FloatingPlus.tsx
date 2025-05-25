@@ -1,5 +1,5 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useRef, useState } from 'react';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import React, {useRef, useState} from 'react';
 import {
   Alert,
   Animated,
@@ -12,19 +12,18 @@ import {
   View,
 } from 'react-native';
 import ImageCropPicker from 'react-native-image-crop-picker';
-import { Close, Plus } from '../../constant/images';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { StackTypes } from '../../types/ScreenPropsTypes';
-import { requestCameraPermission } from '../sheard/ImageUpload';
+import {Close, Plus} from '../../constant/images';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {StackTypes} from '../../types/ScreenPropsTypes';
+import {requestCameraPermission} from '../sheard/ImageUpload';
 
 const FloatingPlus = () => {
   const [open, setOpen] = useState(false);
-  const { themeColors, setImages } = useGlobalContext();
+  const {themeColors, setImages} = useGlobalContext();
   const anim1 = useRef(new Animated.Value(0)).current;
   const anim2 = useRef(new Animated.Value(0)).current;
 
   const navigation = useNavigation<NavigationProp<StackTypes>>();
-
 
   const toggleButtons = () => {
     if (open) {
@@ -65,7 +64,10 @@ const FloatingPlus = () => {
   const captureImage = async () => {
     const hasCameraPermission = await requestCameraPermission();
     if (!hasCameraPermission) {
-      Alert.alert('Permission denied', 'Camera permission is required to capture images');
+      Alert.alert(
+        'Permission denied',
+        'Camera permission is required to capture images',
+      );
       return;
     }
     try {
@@ -73,7 +75,7 @@ const FloatingPlus = () => {
         cropping: false,
       });
       setImages([result.path]);
-      navigation.navigate('CreateIntervention')
+      navigation.navigate('CreateIntervention');
     } catch (error: any) {
       if (error.code !== 'E_PICKER_CANCELLED') {
         Alert.alert('Error', 'Failed to capture image');
@@ -94,20 +96,39 @@ const FloatingPlus = () => {
                   outputRange: [0, -70],
                 }),
               },
-              { scale: anim1 },
+              {scale: anim1},
             ],
           },
-        ]}
-      >
+        ]}>
         <TouchableOpacity
           onPress={() => {
             toggleButtons();
-            navigation.navigate('CreateIntervention')
+            navigation.navigate('CreateIntervention');
           }}
-          style={[styles.pillButton, { backgroundColor: themeColors.white as string, borderColor: themeColors.primary as string, borderWidth: 1 }]}>
-          <Text style={[styles.pillButtonText, { color: themeColors.primary as string }]}>Create Intervention</Text>
-          <View style={[styles.iconCircle, { backgroundColor: themeColors.primary as string, }]}>
-            <Image source={Plus as ImageSourcePropType} style={[styles.icon, { tintColor: themeColors.white as string }]} />
+          style={[
+            styles.pillButton,
+            {
+              backgroundColor: themeColors.white as string,
+              borderColor: themeColors.primary as string,
+              borderWidth: 1,
+            },
+          ]}>
+          <Text
+            style={[
+              styles.pillButtonText,
+              {color: themeColors.primary as string},
+            ]}>
+            Create Intervention
+          </Text>
+          <View
+            style={[
+              styles.iconCircle,
+              {backgroundColor: themeColors.primary as string},
+            ]}>
+            <Image
+              source={Plus as ImageSourcePropType}
+              style={[styles.icon, {tintColor: themeColors.white as string}]}
+            />
           </View>
         </TouchableOpacity>
       </Animated.View>
@@ -124,30 +145,55 @@ const FloatingPlus = () => {
                   outputRange: [0, -140],
                 }),
               },
-              { scale: anim2 },
+              {scale: anim2},
             ],
           },
-        ]}
-      >
+        ]}>
         <TouchableOpacity
           onPress={captureImage}
-          style={[styles.pillButton, { backgroundColor: themeColors.white as string, borderColor: themeColors.primary as string, borderWidth: 1 }]}>
-          <Text style={[styles.pillButtonText, { color: themeColors.primary as string }]}>Take Image</Text>
-          <View style={[styles.iconCircle, { backgroundColor: themeColors.primary as string, }]}>
-            <Image source={Plus as ImageSourcePropType} style={[styles.icon, { tintColor: themeColors.white as string }]} />
+          style={[
+            styles.pillButton,
+            {
+              backgroundColor: themeColors.white as string,
+              borderColor: themeColors.primary as string,
+              borderWidth: 1,
+            },
+          ]}>
+          <Text
+            style={[
+              styles.pillButtonText,
+              {color: themeColors.primary as string},
+            ]}>
+            Take Image
+          </Text>
+          <View
+            style={[
+              styles.iconCircle,
+              {backgroundColor: themeColors.primary as string},
+            ]}>
+            <Image
+              source={Plus as ImageSourcePropType}
+              style={[styles.icon, {tintColor: themeColors.white as string}]}
+            />
           </View>
         </TouchableOpacity>
       </Animated.View>
 
       <TouchableOpacity
-        style={[styles.mainButton, { backgroundColor: themeColors.primary as string }]}
+        style={[
+          styles.mainButton,
+          {backgroundColor: themeColors.primary as string},
+        ]}
         onPress={toggleButtons}
-        activeOpacity={0.8}
-      >
+        activeOpacity={0.8}>
         <Image
-          source={open ? Close as ImageSourcePropType : Plus as ImageSourcePropType}
+          source={
+            open
+              ? (Close as ImageSourcePropType)
+              : (Plus as ImageSourcePropType)
+          }
           tintColor="white"
-          style={{ width: 20, height: 20 }}
+          style={{width: 20, height: 20}}
         />
       </TouchableOpacity>
     </View>
@@ -180,7 +226,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
   },
   pillButtonText: {
     fontSize: 16,
@@ -196,7 +242,6 @@ const styles = StyleSheet.create({
   icon: {
     width: 16,
     height: 16,
-
   },
   mainButton: {
     width: 50,
@@ -209,6 +254,6 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
   },
 });

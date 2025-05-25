@@ -1,14 +1,14 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 
 const Expanses = () => {
   return (
     <View>
       <Text>Expanses</Text>
     </View>
-  )
-}
+  );
+};
 
-export default Expanses
+export default Expanses;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
