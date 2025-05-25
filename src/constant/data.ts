@@ -1,4 +1,4 @@
-import { IExpenses, IIntervention } from '../types/DataTypes';
+import { IExpenses, IIntervention, IInvoice } from '../types/DataTypes';
 
 export const genderData = [
   { label: 'Male', value: 'male' },
@@ -13,6 +13,7 @@ export const interventionFilter = [
   { label: 'PLP', value: 'PLP' },
   { label: 'After sell service', value: 'After sell service' },
 ];
+
 export const intervention: IIntervention[] = [
   {
     invoice_id: 'INT-20250507-001',
@@ -60,6 +61,7 @@ export const intervention: IIntervention[] = [
     images: [],
   },
 ];
+
 export const Expenses: IExpenses[] = [
   {
     name: 'Fuel Refill for Service Van',
@@ -105,5 +107,43 @@ export const Expenses: IExpenses[] = [
     amount: 350.0,
     description: 'Rich with spices, memories, and the',
     images: [],
+  },
+];
+
+export const InvoiceData: IInvoice[] = [
+  {
+    invoice_id: 'INT-20250507-003',
+    status: 'Unpaid',
+    date: '25,Feb 2025',
+    service: 'After sales service',
+    amount: 350.0,
+  },
+  {
+    invoice_id: 'INT-20250507-003',
+    status: 'Unpaid',
+    date: '25,Feb 2025',
+    service: 'After sales service',
+    amount: 350.0,
+  },
+  {
+    invoice_id: 'INT-20250507-003',
+    status: 'Unpaid',
+    date: '25,Feb 2025',
+    service: 'After sales service',
+    amount: 350.0,
+  },
+  {
+    invoice_id: 'INT-20250507-003',
+    status: 'Unpaid',
+    date: '25,Feb 2025',
+    service: 'After sales service',
+    amount: 350.0,
+  },
+  {
+    invoice_id: 'INT-20250507-003',
+    status: 'Paid',
+    date: '25,Feb 2025',
+    service: 'After sales service',
+    amount: 350.0,
   },
 ];

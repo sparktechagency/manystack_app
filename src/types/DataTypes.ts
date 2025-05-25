@@ -30,3 +30,10 @@ export interface IExpenses {
   description: string;
   images: string[];
 }
+export interface IInvoice {
+  invoice_id: string;
+  status: string;
+  date: string;
+  service: string;
+  amount: number;
+}
