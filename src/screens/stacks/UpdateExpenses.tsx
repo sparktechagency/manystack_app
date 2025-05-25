@@ -11,5 +11,3 @@ const UpdateExpenses = () => {
 }
 
 export default UpdateExpenses
-
-const styles = StyleSheet.create({})

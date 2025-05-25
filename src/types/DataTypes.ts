@@ -1,5 +1,5 @@
 export interface ICreateInterVention {
-  "intervention id": string;
+  "intervention id"?: string;
   category: string;
   price: string;
   note: string;

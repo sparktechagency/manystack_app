@@ -87,6 +87,7 @@ const Heading = ({ title }: { title?: string }) => {
               top: 40,
               right: 0,
               borderRadius: 5,
+              zIndex: 1000000,
               maxHeight,
               opacity,
               overflow: 'hidden',
