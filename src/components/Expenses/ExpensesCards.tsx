@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -18,8 +18,6 @@ import { CardStyles } from '../Intervention/InterventionsCards';
 const ExpensesCards = ({ item }: { item: IExpenses }) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
   const { themeColors } = useGlobalContext();
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
     <View style={[CardStyles.card, { backgroundColor: themeColors.white as string }]}>
       <View>
@@ -69,12 +67,7 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
         </Text>
 
         <View style={CardStyles.actions}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('InterventionDetails', {
-                params: { id: item.name },
-              });
-            }}>
+          <TouchableOpacity>
             <Image
               source={DownloadPdf as ImageSourcePropType}
               style={[
@@ -87,7 +80,7 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('UpdateIntervention', {
+              navigation.navigate('UpdateExpenses', {
                 params: { id: item.name },
               });
             }}>

@@ -8,6 +8,7 @@ import SignUp from '../screens/auth/SignUp';
 import CreateExpenses from '../screens/stacks/CreateExpenses';
 import CreateIntervention from '../screens/stacks/CreateIntervention';
 import InterventionDetails from '../screens/stacks/InterventionDetails';
+import UpdateExpenses from '../screens/stacks/UpdateExpenses';
 import UpdateIntervention from '../screens/stacks/UpdateIntervention';
 import TabLayout from './TabLayout';
 
@@ -92,6 +93,16 @@ const StackLayout = () => {
         options={{
           headerShown: true,
           title: 'Create Expenses',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="UpdateExpenses"
+        component={UpdateExpenses}
+        options={{
+          headerShown: true,
+          title: 'Update Expenses',
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
