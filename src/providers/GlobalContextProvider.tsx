@@ -26,7 +26,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
   const colorScheme = useColorScheme();
   const [search, setSearch] = useState<string>('');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [images, setImages] = React.useState<string[]>([])
+  const [images, setImages] = React.useState<string[]>([]);
   const themeColors = Colors.light;
   const values = {
     themeColors,
@@ -37,7 +37,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     width,
     height,
     images,
-    setImages
+    setImages,
   };
   return (
     <GlobalContext.Provider value={values}>

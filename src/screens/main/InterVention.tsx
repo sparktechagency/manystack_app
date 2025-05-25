@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import FilterByDate from '../../components/Intervention/FilterByDate';
 import Heading from '../../components/Intervention/Heading';
 import Interventions from '../../components/Intervention/Interventions';
@@ -13,21 +13,21 @@ const InterVention = () => {
     <Interventions key={3} />,
   ];
   return (
-    <SafeAreaView >
-      <View style={{ paddingBottom: 62 }}>
+    <SafeAreaView>
+      <View style={{paddingBottom: 62}}>
         <Heading key={1} />
         <FlatList
           keyExtractor={(item, index) => index.toString()}
           data={elements}
-          renderItem={({ item }) => item}
+          renderItem={({item}) => item}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ gap: 15, paddingHorizontal: 20 }}
+          contentContainerStyle={{gap: 15, paddingHorizontal: 20}}
         />
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default InterVention
+export default InterVention;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

@@ -11,12 +11,12 @@ export type StackTypes = {
   Login: undefined;
   SignUp: undefined;
   Forget: undefined;
-  Otp: { from: string };
+  Otp: {from: string};
   NewPassword: undefined;
   Tabs: undefined;
   CreateIntervention: undefined;
-  UpdateIntervention: { params: { id: string } };
-  InterventionDetails: { params: { id: string } };
+  UpdateIntervention: {params: {id: string}};
+  InterventionDetails: {params: {id: string}};
 };
 
 // Drawer navigator params (root)

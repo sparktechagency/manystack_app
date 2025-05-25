@@ -1,7 +1,12 @@
 import React from 'react';
-import { Alert, PermissionsAndroid, Platform, TouchableOpacity } from 'react-native';
+import {
+  Alert,
+  PermissionsAndroid,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import { IImageUploadProps } from '../../types/PropsType';
+import {IImageUploadProps} from '../../types/PropsType';
 
 export const requestCameraPermission = async () => {
   if (Platform.OS !== 'android') return true;
@@ -23,8 +28,12 @@ export const requestCameraPermission = async () => {
     return false;
   }
 };
-const ImageUpload = ({ images, setImages, maxNumber, children }: IImageUploadProps) => {
-
+const ImageUpload = ({
+  images,
+  setImages,
+  maxNumber,
+  children,
+}: IImageUploadProps) => {
   const requestStoragePermission = async () => {
     if (Platform.OS !== 'android') return true;
 
@@ -48,7 +57,10 @@ const ImageUpload = ({ images, setImages, maxNumber, children }: IImageUploadPro
   const pickImage = async () => {
     const hasStoragePermission = await requestStoragePermission();
     if (!hasStoragePermission) {
-      Alert.alert('Permission denied', 'Storage permission is required to select images');
+      Alert.alert(
+        'Permission denied',
+        'Storage permission is required to select images',
+      );
       return;
     }
     try {
@@ -64,13 +76,7 @@ const ImageUpload = ({ images, setImages, maxNumber, children }: IImageUploadPro
     }
   };
 
-  return (
-    <TouchableOpacity onPress={pickImage}>
-      {children}
-    </TouchableOpacity>
-  );
+  return <TouchableOpacity onPress={pickImage}>{children}</TouchableOpacity>;
 };
 
 export default ImageUpload;
-
-

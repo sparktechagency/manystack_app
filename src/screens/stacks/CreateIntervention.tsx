@@ -1,9 +1,8 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import InterventionCreateUpdateForm from '../../components/Intervention/InterventionCreateUpdateForm';
 
 const CreateIntervention = () => {
-
   return (
     <SafeAreaView>
       <InterventionCreateUpdateForm />
@@ -11,5 +10,4 @@ const CreateIntervention = () => {
   );
 };
 
-
-export default CreateIntervention
+export default CreateIntervention;

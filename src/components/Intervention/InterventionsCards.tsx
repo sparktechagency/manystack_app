@@ -1,106 +1,183 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { Image, ImageSourcePropType, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
-import { DeleteIcon, Edit, eye, logo } from '../../constant/images';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { IIntervention } from '../../types/DataTypes';
-import { StackTypes } from '../../types/ScreenPropsTypes';
-import { hexToRGBA } from '../../utils/hexToRGBA';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import React, {useState} from 'react';
+import {
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {DeleteIcon, Edit, eye, logo} from '../../constant/images';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {IIntervention} from '../../types/DataTypes';
+import {StackTypes} from '../../types/ScreenPropsTypes';
+import {hexToRGBA} from '../../utils/hexToRGBA';
 
-const InterventionsCards = ({ item }: { item: IIntervention }) => {
+const InterventionsCards = ({item}: {item: IIntervention}) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
-  const { themeColors } = useGlobalContext()
+  const {themeColors} = useGlobalContext();
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
-    <View style={[styles.card, { backgroundColor: themeColors.white as string }]}>
+    <View style={[styles.card, {backgroundColor: themeColors.white as string}]}>
       <View>
         <View style={styles.headerRow}>
-          <Text style={[styles.invoiceId, {
-            color: themeColors.primary as string
-          }]}>{item.invoice_id}</Text>
-          <View style={[styles.statusBadge, {
-            backgroundColor: item.status === 'Unpaid' ? hexToRGBA(themeColors.yellow as string, 0.4) : hexToRGBA(themeColors.green as string, 0.4)
-          }]}>
-            <Text style={[styles.statusText, {
-              color: hexToRGBA(themeColors.black as string, 0.6)
-            }]}>{item.status}</Text>
+          <Text
+            style={[
+              styles.invoiceId,
+              {
+                color: themeColors.primary as string,
+              },
+            ]}>
+            {item.invoice_id}
+          </Text>
+
+          <View
+            style={[
+              styles.statusBadge,
+              {
+                backgroundColor:
+                  item.status === 'Unpaid'
+                    ? hexToRGBA(themeColors.yellow as string, 0.4)
+                    : hexToRGBA(themeColors.green as string, 0.4),
+              },
+            ]}>
+            <Text
+              style={[
+                styles.statusText,
+                {
+                  color: hexToRGBA(themeColors.black as string, 0.6),
+                },
+              ]}>
+              {item.status}
+            </Text>
           </View>
         </View>
-        <Text style={[styles.date, {
-          color: hexToRGBA(themeColors.black as string, 0.7)
-        }]}>{item.date}</Text>
-        <Text style={[styles.service, {
-          color: hexToRGBA(themeColors.black as string, 0.7)
-        }]}>{item.service}</Text>
-        <Text style={[styles.amount, { color: themeColors.primary as string }]}>${item.amount.toFixed(2)}</Text>
-        <Text style={[styles.description, {
-          color: hexToRGBA(themeColors.black as string, 0.7)
-        }]} numberOfLines={1}>
-          {item.description?.slice(0, 35)}{item.description?.length > 35 ? '...' : ''}
+        <Text
+          style={[
+            styles.date,
+            {
+              color: hexToRGBA(themeColors.black as string, 0.7),
+            },
+          ]}>
+          {item.date}
+        </Text>
+        <Text
+          style={[
+            styles.service,
+            {
+              color: hexToRGBA(themeColors.black as string, 0.7),
+            },
+          ]}>
+          {item.service}
+        </Text>
+        <Text style={[styles.amount, {color: themeColors.primary as string}]}>
+          ${item.amount.toFixed(2)}
+        </Text>
+        <Text
+          style={[
+            styles.description,
+            {
+              color: hexToRGBA(themeColors.black as string, 0.7),
+            },
+          ]}
+          numberOfLines={1}>
+          {item.description?.slice(0, 35)}
+          {item.description?.length > 35 ? '...' : ''}
         </Text>
 
         <View style={styles.actions}>
           <TouchableOpacity
-            onPress={() => { navigation.navigate('InterventionDetails', { params: { id: item.invoice_id } }) }}
-          >
+            onPress={() => {
+              navigation.navigate('InterventionDetails', {
+                params: {id: item.invoice_id},
+              });
+            }}>
             <Image
               source={eye as ImageSourcePropType}
-              style={[styles.icon, {
-                tintColor: themeColors.primary as string
-              }]}
+              style={[
+                styles.icon,
+                {
+                  tintColor: themeColors.primary as string,
+                },
+              ]}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => { navigation.navigate('UpdateIntervention', { params: { id: item.invoice_id } }) }}
-          >
+            onPress={() => {
+              navigation.navigate('UpdateIntervention', {
+                params: {id: item.invoice_id},
+              });
+            }}>
             <Image
               source={Edit as ImageSourcePropType}
-              style={[styles.icon, {
-                tintColor: themeColors.primary as string
-              }]}
+              style={[
+                styles.icon,
+                {
+                  tintColor: themeColors.primary as string,
+                },
+              ]}
             />
           </TouchableOpacity>
           <TouchableOpacity>
             <Image
               source={DeleteIcon as ImageSourcePropType}
-              style={[styles.icon, {
-                tintColor: themeColors.red as string
-              }]}
+              style={[
+                styles.icon,
+                {
+                  tintColor: themeColors.red as string,
+                },
+              ]}
             />
           </TouchableOpacity>
           <Switch
-            trackColor={{ false: hexToRGBA(themeColors.black as string, 0.2), true: hexToRGBA(themeColors.primary as string, 0.2) }}
-            thumbColor={isEnabled ? themeColors.primary as string : themeColors.white as string}
+            trackColor={{
+              false: hexToRGBA(themeColors.black as string, 0.2),
+              true: hexToRGBA(themeColors.primary as string, 0.2),
+            }}
+            thumbColor={
+              isEnabled
+                ? (themeColors.primary as string)
+                : (themeColors.white as string)
+            }
             ios_backgroundColor={hexToRGBA(themeColors.black as string, 0.2)}
             onValueChange={toggleSwitch}
             value={isEnabled}
           />
         </View>
       </View>
-      <View style={[styles.imageContainer, {
-        backgroundColor: hexToRGBA(themeColors.primary as string, 0.1)
-      }]}>
+      <View
+        style={[
+          styles.imageContainer,
+          {
+            backgroundColor: hexToRGBA(themeColors.primary as string, 0.1),
+          },
+        ]}>
         {item.images && item.images.length > 0 ? (
           <>
             <Image
-              source={{ uri: item.images[0] }}
+              source={{uri: item.images[0]}}
               style={styles.image}
               resizeMode="cover"
             />
             {item.images.length > 1 && (
               <View style={styles.imageOverlay}>
-                <Text style={styles.imageOverlayText}>+{item.images.length - 1} image</Text>
+                <Text style={styles.imageOverlayText}>
+                  +{item.images.length - 1} image
+                </Text>
               </View>
             )}
           </>
-        ) : <Image
-          source={logo as ImageSourcePropType}
-          style={styles.image}
-          resizeMode="cover"
-        />}
+        ) : (
+          <Image
+            source={logo as ImageSourcePropType}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        )}
       </View>
-
     </View>
   );
 };
@@ -116,8 +193,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
     elevation: 5,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   headerRow: {
     flexDirection: 'row',
@@ -182,11 +259,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '60%',
-    gap: 5
+    gap: 5,
   },
   icon: {
     width: 20,
-    height: 20
+    height: 20,
   },
-
 });

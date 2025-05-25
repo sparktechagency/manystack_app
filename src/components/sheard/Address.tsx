@@ -1,38 +1,103 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { globalStyles } from '../../constant/styles';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { IAddress } from '../../types/loginType';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {globalStyles} from '../../constant/styles';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {IAddress} from '../../types/loginType';
 
-const Address = ({ address, setAddress, error }: { address: IAddress, setAddress: (arg0: IAddress) => void, error: any }) => {
-  const { width } = useGlobalContext()
+const Address = ({
+  address,
+  setAddress,
+  error,
+}: {
+  address: IAddress;
+  setAddress: (arg0: IAddress) => void;
+  error: any;
+}) => {
+  const {width} = useGlobalContext();
   return (
-    <View >
+    <View>
       <Text style={globalStyles.inputLabel}>Address</Text>
       <View style={styles.row}>
-        <TextInput onChangeText={(text) => setAddress({
-          ...address,
-          streetNo: text,
-        })} style={[globalStyles.input, error?.streetNo ? globalStyles.inputError : {}, { width: (width - 60) / 3 }]} placeholder="Street no" placeholderTextColor={globalStyles.inputPlaceholder.color} />
-        <TextInput onChangeText={(text) => setAddress({
-          ...address,
-          streetName: text,
-        })} style={[globalStyles.input, error?.streetName ? globalStyles.inputError : {}, { width: (width - 60) / 3 }, { marginHorizontal: 10 }]} placeholder="Street name" placeholderTextColor={globalStyles.inputPlaceholder.color} />
-        <TextInput onChangeText={(text) => setAddress({
-          ...address,
-          city: text,
-        })} style={[globalStyles.input, error?.city ? globalStyles.inputError : {}, { width: (width - 60) / 3 }]} placeholder="City" placeholderTextColor={globalStyles.inputPlaceholder.color} />
+        <TextInput
+          onChangeText={text =>
+            setAddress({
+              ...address,
+              streetNo: text,
+            })
+          }
+          style={[
+            globalStyles.input,
+            error?.streetNo ? globalStyles.inputError : {},
+            {width: (width - 60) / 3},
+          ]}
+          placeholder="Street no"
+          placeholderTextColor={globalStyles.inputPlaceholder.color}
+        />
+        <TextInput
+          onChangeText={text =>
+            setAddress({
+              ...address,
+              streetName: text,
+            })
+          }
+          style={[
+            globalStyles.input,
+            error?.streetName ? globalStyles.inputError : {},
+            {width: (width - 60) / 3},
+            {marginHorizontal: 10},
+          ]}
+          placeholder="Street name"
+          placeholderTextColor={globalStyles.inputPlaceholder.color}
+        />
+        <TextInput
+          onChangeText={text =>
+            setAddress({
+              ...address,
+              city: text,
+            })
+          }
+          style={[
+            globalStyles.input,
+            error?.city ? globalStyles.inputError : {},
+            {width: (width - 60) / 3},
+          ]}
+          placeholder="City"
+          placeholderTextColor={globalStyles.inputPlaceholder.color}
+        />
       </View>
 
       <View style={styles.row}>
-        <TextInput onChangeText={(text) => setAddress({
-          ...address,
-          postalCode: text,
-        })} style={[globalStyles.input, error?.postalCode ? globalStyles.inputError : {}, { width: (width - 50) / 2 }, { marginRight: 10 }]} placeholder="Postal code" placeholderTextColor={globalStyles.inputPlaceholder.color} />
-        <TextInput onChangeText={(text) => setAddress({
-          ...address,
-          country: text,
-        })} style={[globalStyles.input, error?.country ? globalStyles.inputError : {}, { width: (width - 50) / 2 }]} placeholderTextColor={globalStyles.inputPlaceholder.color} placeholder="Country" />
+        <TextInput
+          onChangeText={text =>
+            setAddress({
+              ...address,
+              postalCode: text,
+            })
+          }
+          style={[
+            globalStyles.input,
+            error?.postalCode ? globalStyles.inputError : {},
+            {width: (width - 50) / 2},
+            {marginRight: 10},
+          ]}
+          placeholder="Postal code"
+          placeholderTextColor={globalStyles.inputPlaceholder.color}
+        />
+        <TextInput
+          onChangeText={text =>
+            setAddress({
+              ...address,
+              country: text,
+            })
+          }
+          style={[
+            globalStyles.input,
+            error?.country ? globalStyles.inputError : {},
+            {width: (width - 50) / 2},
+          ]}
+          placeholderTextColor={globalStyles.inputPlaceholder.color}
+          placeholder="Country"
+        />
       </View>
     </View>
   );

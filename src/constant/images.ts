@@ -1,4 +1,4 @@
-// tab icons 
+// tab icons
 import Calender from '../asset/calendar.png';
 import Camera from '../asset/Camera.png';
 import Close from '../asset/close.png';
@@ -22,11 +22,20 @@ export const TabIcons = {
   InterVention,
   Invoice,
   Drawer,
-  Expanses
-}
-export {
-  Calender, Camera, Close, DeleteIcon, Edit, eye,
-  eyeSlash, Filter, logo, Plus, Profile,
-  Profit, SearchIcon
+  Expanses,
 };
-
+export {
+  Calender,
+  Camera,
+  Close,
+  DeleteIcon,
+  Edit,
+  eye,
+  eyeSlash,
+  Filter,
+  logo,
+  Plus,
+  Profile,
+  Profit,
+  SearchIcon,
+};

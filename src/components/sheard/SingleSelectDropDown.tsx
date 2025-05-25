@@ -1,12 +1,19 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
-import { globalStyles } from '../../constant/styles';
-import { ICreateInterVention } from '../../types/DataTypes';
-import { ISingleDropDownProps } from '../../types/PropsType';
+import {StyleSheet} from 'react-native';
+import {Dropdown} from 'react-native-element-dropdown';
+import {globalStyles} from '../../constant/styles';
+import {ICreateInterVention} from '../../types/DataTypes';
+import {ISingleDropDownProps} from '../../types/PropsType';
 
-
-const SingleSelectDropDown = ({ error, data, name, value, inputValue, setInputValue, setError }: ISingleDropDownProps) => {
+const SingleSelectDropDown = ({
+  error,
+  data,
+  name,
+  value,
+  inputValue,
+  setInputValue,
+  setError,
+}: ISingleDropDownProps) => {
   return (
     <Dropdown
       style={[
@@ -19,17 +26,17 @@ const SingleSelectDropDown = ({ error, data, name, value, inputValue, setInputVa
       placeholder="Select Gender"
       value={value}
       onChange={item => {
-        setInputValue({ ...inputValue, [name]: item.value });
-        setError({ ...error, [name]: false });
+        setInputValue({...inputValue, [name]: item.value});
+        setError({...error, [name]: false});
       }}
-      placeholderStyle={{ color: globalStyles.inputPlaceholder.color }}
-      selectedTextStyle={{ color: '#000' }}
-      containerStyle={{ borderRadius: 5 }}
+      placeholderStyle={{color: globalStyles.inputPlaceholder.color}}
+      selectedTextStyle={{color: '#000'}}
+      containerStyle={{borderRadius: 5}}
       dropdownPosition="auto"
     />
-  )
-}
+  );
+};
 
-export default SingleSelectDropDown
+export default SingleSelectDropDown;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
