@@ -1,6 +1,6 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -10,16 +10,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Calender} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {StackTypes} from '../../types/ScreenPropsTypes';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { Calender } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { StackTypes } from '../../types/ScreenPropsTypes';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 import GradientButton from '../sheard/GradientButton';
 
-const FilterByDate = () => {
+const FilterByDate = ({ title }: { title?: string }) => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
-  const {themeColors} = useGlobalContext();
+  const { themeColors } = useGlobalContext();
 
   const [fromDate, setFromDate] = useState<Date | undefined>();
   const [toDate, setToDate] = useState<Date | undefined>();
@@ -181,9 +181,15 @@ const FilterByDate = () => {
             fontWeight: 600,
             marginBottom: 6,
           }}>
-          All Intervention
+          All {title ? title : 'Intervention'}
         </Text>
-        <GradientButton handler={() => navigate.navigate('CreateIntervention')}>
+        <GradientButton handler={() => {
+          if (title == "Expanses") {
+            navigate.navigate('CreateExpenses')
+          } else {
+            navigate.navigate('CreateIntervention')
+          }
+        }}>
           <Text
             style={{
               color: 'white',
@@ -191,7 +197,7 @@ const FilterByDate = () => {
               fontWeight: 700,
               fontSize: 18,
             }}>
-            Add An Intervention
+            Add An {title ? title : 'Intervention'}
           </Text>
         </GradientButton>
       </View>

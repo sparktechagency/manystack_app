@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import {
   Animated,
   Easing,
@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {interventionFilter} from '../../constant/data';
-import {Filter} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
+import { interventionFilter } from '../../constant/data';
+import { Filter } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
 
 const DROPDOWN_MAX_HEIGHT = 200;
 
-const Heading = () => {
+const Heading = ({ title }: { title?: string }) => {
   const [open, setOpen] = React.useState(false);
   const animation = useRef(new Animated.Value(0)).current;
 
@@ -62,22 +62,22 @@ const Heading = () => {
       <Text
         style={[
           globalStyles.inputLabel,
-          {fontWeight: 700, fontSize: 20, marginBottom: 10},
+          { fontWeight: 700, fontSize: 20, marginBottom: 10 },
         ]}>
-        Intervention
+        {title ? title : "Intervention"}
       </Text>
       <View>
         <TouchableOpacity activeOpacity={0.7} onPress={toggleDropdown}>
           <Image
             source={Filter as ImageSourcePropType}
-            style={{width: 25, height: 25}}
+            style={{ width: 25, height: 25 }}
           />
         </TouchableOpacity>
         {open && (
           <Animated.View
             style={{
               shadowColor: '#0e1e25',
-              shadowOffset: {width: 0, height: 1},
+              shadowOffset: { width: 0, height: 1 },
               shadowOpacity: 0.2,
               shadowRadius: 10,
               backgroundColor: 'white',
@@ -87,13 +87,14 @@ const Heading = () => {
               top: 40,
               right: 0,
               borderRadius: 5,
+              zIndex: 1000000,
               maxHeight,
               opacity,
               overflow: 'hidden',
               // remove flex, gap and use padding/margin for spacing if needed
             }}>
             {interventionFilter.map(item => (
-              <Text key={item.value} style={{marginBottom: 10}}>
+              <Text key={item.value} style={{ marginBottom: 10 }}>
                 {item.label}
               </Text>
             ))}

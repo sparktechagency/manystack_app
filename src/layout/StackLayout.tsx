@@ -1,12 +1,14 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import ForgetPassword from '../screens/auth/ForgetPassword';
 import Login from '../screens/auth/Login';
 import NewPassword from '../screens/auth/NewPassword';
 import Otp from '../screens/auth/Otp';
 import SignUp from '../screens/auth/SignUp';
+import CreateExpenses from '../screens/stacks/CreateExpenses';
 import CreateIntervention from '../screens/stacks/CreateIntervention';
 import InterventionDetails from '../screens/stacks/InterventionDetails';
+import UpdateExpenses from '../screens/stacks/UpdateExpenses';
 import UpdateIntervention from '../screens/stacks/UpdateIntervention';
 import TabLayout from './TabLayout';
 
@@ -86,6 +88,26 @@ const StackLayout = () => {
         }}
       />
       <Stack.Screen
+        name="CreateExpenses"
+        component={CreateExpenses}
+        options={{
+          headerShown: true,
+          title: 'Create Expenses',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="UpdateExpenses"
+        component={UpdateExpenses}
+        options={{
+          headerShown: true,
+          title: 'Update Expenses',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
         name="InterventionDetails"
         component={InterventionDetails}
         options={{
@@ -99,7 +121,7 @@ const StackLayout = () => {
       <Stack.Screen
         name="Tabs"
         component={TabLayout}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

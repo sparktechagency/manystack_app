@@ -12,25 +12,25 @@ import { paymentStatus } from '../../constant/data';
 import { Camera } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { ICreateInterVention } from '../../types/DataTypes';
-import { ICreateInterVentionError } from '../../types/ErrorTypes';
+import { ICreateExpenses } from '../../types/DataTypes';
+import { IExpensesError } from '../../types/ErrorTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import GradientButton from '../sheard/GradientButton';
 import ImageUpload from '../sheard/ImageUpload';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 
-const InterventionCreateUpdateForm = () => {
+const ExpensesCreateUpdateForm = () => {
   const { themeColors, setImages, images } = useGlobalContext();
-  const [error, setError] = React.useState<ICreateInterVentionError>({
-    "intervention id": false,
+  const [error, setError] = React.useState<IExpensesError>({
+    "Expense Name": false,
     category: false,
     price: false,
     note: false,
     status: false,
   });
 
-  const [inputValue, setInputValue] = React.useState<ICreateInterVention>({
-    "intervention id": '',
+  const [inputValue, setInputValue] = React.useState<ICreateExpenses>({
+    "Expense Name": '',
     category: '',
     price: '',
     note: '',
@@ -39,7 +39,7 @@ const InterventionCreateUpdateForm = () => {
 
   const submitHandler = () => {
     Object.keys(inputValue).forEach(key => {
-      if (inputValue[key as keyof ICreateInterVention] === '') {
+      if (inputValue[key as keyof ICreateExpenses] === '') {
         setError(prev => ({ ...prev, [key]: true }));
       } else {
         setError(prev => ({ ...prev, [key]: false }));
@@ -62,7 +62,7 @@ const InterventionCreateUpdateForm = () => {
               <SingleSelectDropDown
                 name={key}
                 data={paymentStatus}
-                value={inputValue[key as keyof ICreateInterVention] as string}
+                value={inputValue[key as keyof ICreateExpenses]}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
                 setError={setError}
@@ -82,7 +82,7 @@ const InterventionCreateUpdateForm = () => {
                   { label: 'category', value: 'category' },
                   { label: 'category', value: 'category' },
                 ]}
-                value={inputValue[key as keyof ICreateInterVention] as string}
+                value={inputValue[key as keyof ICreateExpenses]}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
                 setError={setError}
@@ -98,7 +98,7 @@ const InterventionCreateUpdateForm = () => {
             </Text>
             <View style={{ position: 'relative' }}>
               <TextInput
-                value={inputValue[key as keyof ICreateInterVention]}
+                value={inputValue[key as keyof ICreateExpenses]}
                 onChangeText={text => {
                   setInputValue({ ...inputValue, [key]: text });
                   setError({ ...error, [key]: false });
@@ -108,7 +108,7 @@ const InterventionCreateUpdateForm = () => {
                 placeholderTextColor={globalStyles.inputPlaceholder.color}
                 style={[
                   globalStyles.input,
-                  error[key as keyof ICreateInterVention]
+                  error[key as keyof ICreateExpenses]
                     ? globalStyles.inputError
                     : {},
                 ]}
@@ -172,6 +172,6 @@ const InterventionCreateUpdateForm = () => {
   );
 };
 
-export default InterventionCreateUpdateForm;
+export default ExpensesCreateUpdateForm;
 
 const styles = StyleSheet.create({});
