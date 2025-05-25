@@ -1,14 +1,13 @@
-import {ICreateInterVention} from './DataTypes';
-import {ICreateInterVentionError} from './ErrorTypes';
+import { ICreateInterVention } from './DataTypes';
 
 export interface ISingleDropDownProps {
-  error: ICreateInterVentionError;
-  data: {label: string; value: string}[];
+  error: any;
+  data: { label: string; value: string }[];
   name: keyof ICreateInterVention;
   value: string;
   inputValue: ICreateInterVention;
-  setInputValue: React.Dispatch<React.SetStateAction<ICreateInterVention>>;
-  setError: React.Dispatch<React.SetStateAction<ICreateInterVentionError>>;
+  setInputValue: any;
+  setError: any;
 }
 
 export interface IImageUploadProps {

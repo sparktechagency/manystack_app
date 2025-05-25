@@ -1,5 +1,12 @@
 export interface ICreateInterVention {
-  interventionId: string;
+  "intervention id": string;
+  category: string;
+  price: string;
+  note: string;
+  status: string;
+}
+export interface ICreateExpenses {
+  "Expense Name": string;
   category: string;
   price: string;
   note: string;

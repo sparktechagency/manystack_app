@@ -183,7 +183,13 @@ const FilterByDate = ({ title }: { title?: string }) => {
           }}>
           All {title ? title : 'Intervention'}
         </Text>
-        <GradientButton handler={() => navigate.navigate('CreateIntervention')}>
+        <GradientButton handler={() => {
+          if (title == "Expanses") {
+            navigate.navigate('CreateExpenses')
+          } else {
+            navigate.navigate('CreateIntervention')
+          }
+        }}>
           <Text
             style={{
               color: 'white',

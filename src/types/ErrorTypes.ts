@@ -1,5 +1,12 @@
 export interface ICreateInterVentionError {
-  interventionId: boolean;
+  "intervention id": boolean;
+  category: boolean;
+  price: boolean;
+  note: boolean;
+  status: boolean;
+}
+export interface IExpensesError {
+  "Expense Name": boolean;
   category: boolean;
   price: boolean;
   note: boolean;
