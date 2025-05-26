@@ -114,7 +114,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('UpdateIntervention', {
+              navigation.navigate('UpdateInvoice', {
                 params: { id: item.invoice_id },
               });
             }}>

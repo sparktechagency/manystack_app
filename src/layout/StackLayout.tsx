@@ -12,6 +12,7 @@ import CreateInvoice from '../screens/stacks/CreateInvoice';
 import InterventionDetails from '../screens/stacks/InterventionDetails';
 import UpdateExpenses from '../screens/stacks/UpdateExpenses';
 import UpdateIntervention from '../screens/stacks/UpdateIntervention';
+import UpdateInvoice from '../screens/stacks/UpdateInvoice';
 import TabLayout from './TabLayout';
 
 const Stack = createNativeStackNavigator();
@@ -135,6 +136,16 @@ const StackLayout = () => {
         options={{
           headerShown: true,
           title: 'Create Invoice',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="UpdateInvoice"
+        component={UpdateInvoice}
+        options={{
+          headerShown: true,
+          title: 'Update Invoice',
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}

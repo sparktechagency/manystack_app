@@ -21,6 +21,7 @@ export type StackTypes = {
   UpdateExpenses: { params: { id: string } };
   InvoiceDetails: { params: { id: string } };
   CreateInvoice: undefined;
+  UpdateInvoice: { params: { id: string } };
 };
 
 // Drawer navigator params (root)
