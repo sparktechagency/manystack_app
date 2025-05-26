@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -18,8 +18,6 @@ import { CardStyles } from '../Intervention/InterventionsCards';
 const InvoiceCard = ({ item }: { item: IInvoice }) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
   const { themeColors } = useGlobalContext();
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
     <View style={[{
       padding: 12,
@@ -89,7 +87,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
         <View style={[CardStyles.actions, { width: "30%" }]}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('InterventionDetails', {
+              navigation.navigate('InvoiceDetails', {
                 params: { id: item.invoice_id },
               });
             }}>

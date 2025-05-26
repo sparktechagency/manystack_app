@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import InvoiceDetails from '../components/Invoice/InvoiceDetails';
 import ForgetPassword from '../screens/auth/ForgetPassword';
 import Login from '../screens/auth/Login';
 import NewPassword from '../screens/auth/NewPassword';
@@ -110,6 +111,16 @@ const StackLayout = () => {
       <Stack.Screen
         name="InterventionDetails"
         component={InterventionDetails}
+        options={{
+          headerShown: true,
+          title: 'Details',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="InvoiceDetails"
+        component={InvoiceDetails}
         options={{
           headerShown: true,
           title: 'Details',
