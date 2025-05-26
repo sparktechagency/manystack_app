@@ -1,3 +1,4 @@
+import { ImageSourcePropType } from 'react-native';
 
 export interface ISingleDropDownProps {
   error: any;
@@ -14,6 +15,11 @@ export interface ISingleDropDownProps {
 export interface IImageUploadProps {
   images: any;
   setImages: React.Dispatch<React.SetStateAction<string[]>>;
-  maxNumber: number;
+  maxNumber?: number;
   children: React.ReactNode;
+}
+export interface IDrawerLinksProps {
+  title: string;
+  href: string;
+  icon: ImageSourcePropType;
 }

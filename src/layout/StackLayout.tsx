@@ -10,6 +10,7 @@ import CreateExpenses from '../screens/stacks/CreateExpenses';
 import CreateIntervention from '../screens/stacks/CreateIntervention';
 import CreateInvoice from '../screens/stacks/CreateInvoice';
 import InterventionDetails from '../screens/stacks/InterventionDetails';
+import Profile from '../screens/stacks/Profile';
 import UpdateExpenses from '../screens/stacks/UpdateExpenses';
 import UpdateIntervention from '../screens/stacks/UpdateIntervention';
 import UpdateInvoice from '../screens/stacks/UpdateInvoice';
@@ -146,6 +147,16 @@ const StackLayout = () => {
         options={{
           headerShown: true,
           title: 'Update Invoice',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={Profile}
+        options={{
+          headerShown: true,
+          title: 'Edit Profile',
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}

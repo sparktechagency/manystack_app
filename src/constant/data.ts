@@ -1,4 +1,5 @@
 import { IExpenses, IIntervention, IInvoice } from '../types/DataTypes';
+import { DrawerIcons } from './images';
 
 export const genderData = [
   { label: 'Male', value: 'male' },
@@ -147,3 +148,12 @@ export const InvoiceData: IInvoice[] = [
     amount: 350.0,
   },
 ];
+export const DrawerLinksData = [
+  { name: 'Edit Profile', href: 'EditProfile', icon: DrawerIcons.UserEdit },
+  { name: 'Subscription', href: 'Subscription', icon: DrawerIcons.Crown },
+  { name: 'Intervention Category', href: 'Subscription', icon: DrawerIcons.Category },
+  { name: 'Contact Support', href: 'Support', icon: DrawerIcons.Support },
+  { name: 'Change Password', href: 'Change Password', icon: DrawerIcons.Shield },
+  { name: 'Terms & Conditions', href: 'TermsAndConditions', icon: DrawerIcons.Terms },
+  { name: 'Privacy Policy', href: 'PrivacyPolicy', icon: DrawerIcons.Privacy },
+]

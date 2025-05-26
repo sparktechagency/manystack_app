@@ -1,19 +1,18 @@
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import React from 'react';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import DrawerContent from '../components/Drawer/DrawerContent';
 import StackLayout from './StackLayout';
-import Profile from '../screens/drawer/Profile';
 
 const Drawer = createDrawerNavigator();
 
 const DrawerLayout = () => {
   return (
-    <Drawer.Navigator initialRouteName="MainStack">
+    <Drawer.Navigator initialRouteName="MainStack" drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen
         name="MainStack"
         component={StackLayout}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
-      <Drawer.Screen name="Profile" component={Profile} />
     </Drawer.Navigator>
   );
 };
