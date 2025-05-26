@@ -6,11 +6,17 @@ import Login from '../screens/auth/Login';
 import NewPassword from '../screens/auth/NewPassword';
 import Otp from '../screens/auth/Otp';
 import SignUp from '../screens/auth/SignUp';
+import ChangePassword from '../screens/stacks/ChangePassword';
 import CreateExpenses from '../screens/stacks/CreateExpenses';
 import CreateIntervention from '../screens/stacks/CreateIntervention';
 import CreateInvoice from '../screens/stacks/CreateInvoice';
+import InterventionCategory from '../screens/stacks/InterventionCategory';
 import InterventionDetails from '../screens/stacks/InterventionDetails';
+import PrivacyPolicy from '../screens/stacks/PrivacyPolicy';
 import Profile from '../screens/stacks/Profile';
+import Subscription from '../screens/stacks/Subscription';
+import Support from '../screens/stacks/Support';
+import TermsAndConditions from '../screens/stacks/TermsAndConditions';
 import UpdateExpenses from '../screens/stacks/UpdateExpenses';
 import UpdateIntervention from '../screens/stacks/UpdateIntervention';
 import UpdateInvoice from '../screens/stacks/UpdateInvoice';
@@ -157,6 +163,66 @@ const StackLayout = () => {
         options={{
           headerShown: true,
           title: 'Edit Profile',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="Subscription"
+        component={Subscription}
+        options={{
+          headerShown: true,
+          title: 'Subscription',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="InterventionCategory"
+        component={InterventionCategory}
+        options={{
+          headerShown: true,
+          title: 'Intervention Category',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="Support"
+        component={Support}
+        options={{
+          headerShown: true,
+          title: 'Contact Support',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={{
+          headerShown: true,
+          title: 'Change Password',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="TermsAndConditions"
+        component={TermsAndConditions}
+        options={{
+          headerShown: true,
+          title: 'Terms And Conditions',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+        options={{
+          headerShown: true,
+          title: 'Privacy Policy',
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}

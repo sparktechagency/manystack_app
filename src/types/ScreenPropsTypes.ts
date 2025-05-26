@@ -23,6 +23,12 @@ export type StackTypes = {
   CreateInvoice: undefined;
   UpdateInvoice: { params: { id: string } };
   EditProfile: undefined;
+  Subscription: undefined;
+  InterventionCategory: undefined;
+  Support: undefined;
+  ChangePassword: undefined;
+  TermsAndConditions: undefined;
+  PrivacyPolicy: undefined;
 };
 
 // Drawer navigator params (root)

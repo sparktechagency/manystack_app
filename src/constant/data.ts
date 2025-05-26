@@ -151,9 +151,9 @@ export const InvoiceData: IInvoice[] = [
 export const DrawerLinksData = [
   { name: 'Edit Profile', href: 'EditProfile', icon: DrawerIcons.UserEdit },
   { name: 'Subscription', href: 'Subscription', icon: DrawerIcons.Crown },
-  { name: 'Intervention Category', href: 'Subscription', icon: DrawerIcons.Category },
+  { name: 'Intervention Category', href: 'InterventionCategory', icon: DrawerIcons.Category },
   { name: 'Contact Support', href: 'Support', icon: DrawerIcons.Support },
-  { name: 'Change Password', href: 'Change Password', icon: DrawerIcons.Shield },
+  { name: 'Change Password', href: 'ChangePassword', icon: DrawerIcons.Shield },
   { name: 'Terms & Conditions', href: 'TermsAndConditions', icon: DrawerIcons.Terms },
   { name: 'Privacy Policy', href: 'PrivacyPolicy', icon: DrawerIcons.Privacy },
 ]
