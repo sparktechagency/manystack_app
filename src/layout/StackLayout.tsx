@@ -8,6 +8,7 @@ import Otp from '../screens/auth/Otp';
 import SignUp from '../screens/auth/SignUp';
 import CreateExpenses from '../screens/stacks/CreateExpenses';
 import CreateIntervention from '../screens/stacks/CreateIntervention';
+import CreateInvoice from '../screens/stacks/CreateInvoice';
 import InterventionDetails from '../screens/stacks/InterventionDetails';
 import UpdateExpenses from '../screens/stacks/UpdateExpenses';
 import UpdateIntervention from '../screens/stacks/UpdateIntervention';
@@ -124,6 +125,16 @@ const StackLayout = () => {
         options={{
           headerShown: true,
           title: 'Details',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="CreateInvoice"
+        component={CreateInvoice}
+        options={{
+          headerShown: true,
+          title: 'Create Invoice',
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}

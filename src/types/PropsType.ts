@@ -1,13 +1,14 @@
-import { ICreateInterVention } from './DataTypes';
 
 export interface ISingleDropDownProps {
   error: any;
   data: { label: string; value: string }[];
-  name: keyof ICreateInterVention;
+  name: any;
   value: string;
-  inputValue: ICreateInterVention;
+  inputValue: any;
   setInputValue: any;
   setError: any;
+  placeholder?: string;
+  handler?: (arg0?: any) => void;
 }
 
 export interface IImageUploadProps {
