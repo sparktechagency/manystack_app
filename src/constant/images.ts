@@ -8,6 +8,7 @@ import Edit from '../asset/Edit.png';
 import eye from '../asset/eye.png';
 import eyeSlash from '../asset/eyeSlash.png';
 import Filter from '../asset/filter.png';
+import FullLogo from '../asset/fullLogo.png';
 import Drawer from '../asset/icon/Drawer.png';
 import Expanses from '../asset/icon/Expanses.png';
 import Home from '../asset/icon/Home.png';
@@ -33,8 +34,7 @@ export {
   DeleteIcon, DownloadPdf, Edit,
   eye,
   eyeSlash,
-  Filter,
-  logo, Loss, Plus,
+  Filter, FullLogo, logo, Loss, Plus,
   Profile,
   Profit,
   SearchIcon

@@ -19,6 +19,7 @@ export type StackTypes = {
   InterventionDetails: { params: { id: string } };
   CreateExpenses: undefined;
   UpdateExpenses: { params: { id: string } };
+  InvoiceDetails: { params: { id: string } };
 };
 
 // Drawer navigator params (root)
