@@ -23,8 +23,25 @@ export interface IAddress {
   postalCode: string;
   country: string;
 }
+export interface IInvoiceService {
+  id: string;
+  service: string;
+  quantity: string;
+  price: string;
+}
 
 export interface INewPassword {
   password: string;
   confirmPassword: string;
+}
+export interface IInvoiceForm {
+  name: string;
+  email: string;
+  contact: string;
+  gender: string;
+  'N°SIREN': string;
+  address: string;
+  services: string;
+  date: string;
+  status: string;
 }

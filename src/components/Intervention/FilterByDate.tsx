@@ -186,7 +186,10 @@ const FilterByDate = ({ title }: { title?: string }) => {
         <GradientButton handler={() => {
           if (title == "Expanses") {
             navigate.navigate('CreateExpenses')
-          } else {
+          } else if (title == "Invoice") {
+            navigate.navigate('CreateInvoice')
+          }
+          else {
             navigate.navigate('CreateIntervention')
           }
         }}>
