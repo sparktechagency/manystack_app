@@ -7,7 +7,7 @@ import { useGlobalContext } from '../../providers/GlobalContextProvider'
 import { IDrawerLinksProps } from '../../types/PropsType'
 import { StackTypes } from '../../types/ScreenPropsTypes'
 
-const DrawerLinks = ({ title, href, icon }: IDrawerLinksProps) => {
+const DrawerLinks = ({ title, href, icon, showArrow = true }: IDrawerLinksProps) => {
   const { themeColors } = useGlobalContext()
   const navigate = useNavigation<NavigationProp<StackTypes>>()
   return (
@@ -38,14 +38,16 @@ const DrawerLinks = ({ title, href, icon }: IDrawerLinksProps) => {
         />
         <Text>{title}</Text>
       </View>
-      <Image
-        source={DrawerIcons.Arrow as ImageSourcePropType}
-        style={{
-          width: 16,
-          height: 16,
-          tintColor: themeColors.black as string,
-        }}
-      />
+      {showArrow && (
+        <Image
+          source={DrawerIcons.Arrow as ImageSourcePropType}
+          style={{
+            width: 16,
+            height: 16,
+            tintColor: themeColors.black as string,
+          }}
+        />
+      )}
     </TouchableOpacity>
   )
 }

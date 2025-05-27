@@ -4,9 +4,11 @@ import Camera from '../asset/Camera.png';
 import Close from '../asset/close.png';
 import DeleteIcon from '../asset/delete.png';
 import DownloadPdf from '../asset/DownloadPdf.png';
+import Arrow from '../asset/drawerIcon/Arrow.png';
 import Category from '../asset/drawerIcon/Category.png';
 import Crown from '../asset/drawerIcon/crown.png';
 import DeleteAccount from '../asset/drawerIcon/DeleteAccount.png';
+import LogOut from '../asset/drawerIcon/LogOut.png';
 import { default as Export, default as Privacy } from '../asset/drawerIcon/Privecy.png';
 import Shield from '../asset/drawerIcon/Shield.png';
 import Support from '../asset/drawerIcon/Support.png';
@@ -28,7 +30,6 @@ import Plus from '../asset/plus.png';
 import Profile from '../asset/profile.png';
 import Profit from '../asset/profit.png';
 import SearchIcon from '../asset/Search.png';
-import Arrow from '../asset/drawerIcon/Arrow.png';
 export const DrawerIcons = {
   Category,
   Crown,
@@ -40,6 +41,7 @@ export const DrawerIcons = {
   UserEdit,
   Privacy,
   Arrow,
+  LogOut
 };
 export const TabIcons = {
   Home,
