@@ -45,3 +45,18 @@ export interface IInvoiceForm {
   date: string;
   status: string;
 }
+export interface IUpdateProfile {
+  'first name': string;
+  'last name': string;
+  email: string;
+  contact: string;
+  gender: string;
+  'N°SIREN': string;
+  address: string;
+}
+
+export interface IChangePassword {
+  "current password": string;
+  "new password": string;
+  "confirm password": string;
+}
