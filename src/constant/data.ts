@@ -1,4 +1,4 @@
-import { IExpenses, IIntervention, IInvoice } from '../types/DataTypes';
+import { IExpenses, IIntervention, IInvoice, ISubscription } from '../types/DataTypes';
 import { DrawerIcons } from './images';
 
 export const genderData = [
@@ -156,4 +156,20 @@ export const DrawerLinksData = [
   { name: 'Change Password', href: 'ChangePassword', icon: DrawerIcons.Shield },
   { name: 'Terms & Conditions', href: 'TermsAndConditions', icon: DrawerIcons.Terms },
   { name: 'Privacy Policy', href: 'PrivacyPolicy', icon: DrawerIcons.Privacy },
+]
+
+export const subscriptionsData: ISubscription[] = [
+  {
+    name: 'Monthly',
+    type: 'Monthly',
+    price: '30$',
+    description: 'Cancel any time',
+  },
+  {
+    name: 'Annually',
+    type: 'Annually',
+    price: '100$',
+    description: 'Cancel any time',
+  },
+
 ]

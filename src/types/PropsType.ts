@@ -1,4 +1,6 @@
+import React from 'react';
 import { ImageSourcePropType } from 'react-native';
+import { ISubscription } from './DataTypes';
 
 export interface ISingleDropDownProps {
   error: any;
@@ -23,4 +25,9 @@ export interface IDrawerLinksProps {
   href: string;
   icon: ImageSourcePropType;
   showArrow?: boolean;
+}
+export interface ISubscriptionProps {
+  item: ISubscription;
+  selected: boolean;
+  setSelected: React.Dispatch<React.SetStateAction<string>>;
 }

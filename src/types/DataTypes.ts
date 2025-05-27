@@ -37,3 +37,9 @@ export interface IInvoice {
   service: string;
   amount: number;
 }
+export interface ISubscription {
+  name: string;
+  type: string;
+  price: string;
+  description: string;
+}
