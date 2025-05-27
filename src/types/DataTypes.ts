@@ -37,3 +37,18 @@ export interface IInvoice {
   service: string;
   amount: number;
 }
+export interface ISubscription {
+  name: string;
+  type: string;
+  price: string;
+  description: string;
+}
+export interface IInterventionCategoryData {
+  name: string;
+  price: string;
+  id: string;
+}
+export interface IInterventionCategory {
+  "category Name": string;
+  "category Price": string;
+}
