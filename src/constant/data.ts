@@ -1,4 +1,4 @@
-import { IExpenses, IIntervention, IInvoice, ISubscription } from '../types/DataTypes';
+import { IExpenses, IIntervention, IInterventionCategoryData, IInvoice, ISubscription } from '../types/DataTypes';
 import { DrawerIcons } from './images';
 
 export const genderData = [
@@ -172,4 +172,9 @@ export const subscriptionsData: ISubscription[] = [
     description: 'Cancel any time',
   },
 
+]
+
+export const InterventionCategoryData: IInterventionCategoryData[] = [
+  { name: 'PLP', price: "350.00$", id: '1' },
+  { name: 'After sell service', price: "350.00$", id: '2' },
 ]

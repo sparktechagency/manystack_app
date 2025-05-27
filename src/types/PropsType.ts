@@ -31,3 +31,8 @@ export interface ISubscriptionProps {
   selected: boolean;
   setSelected: React.Dispatch<React.SetStateAction<string>>;
 }
+export interface ICategoryListItem {
+  title: string;
+  price: string;
+  id: string;
+}

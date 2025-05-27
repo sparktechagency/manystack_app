@@ -43,3 +43,8 @@ export interface ISubscription {
   price: string;
   description: string;
 }
+export interface IInterventionCategoryData {
+  name: string;
+  price: string;
+  id: string;
+}
