@@ -15,7 +15,7 @@ const DrawerContent = (props: any) => {
           <DrawerLinks key={item.name} title={item.name} href={item.href} icon={item.icon as ImageSourcePropType} />
         ))
       }
-      <DrawerLinks showArrow={false} key={"Logout"} title={"Logout"} href={"/logout"} icon={DrawerIcons.LogOut as ImageSourcePropType} />
+      <DrawerLinks showArrow={false} key={"Logout"} title={"Logout"} href={"Login"} icon={DrawerIcons.LogOut as ImageSourcePropType} />
     </DrawerContentScrollView>
   )
 }
