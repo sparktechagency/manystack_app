@@ -48,3 +48,7 @@ export interface IInterventionCategoryData {
   price: string;
   id: string;
 }
+export interface IInterventionCategory {
+  "category Name": string;
+  "category Price": string;
+}

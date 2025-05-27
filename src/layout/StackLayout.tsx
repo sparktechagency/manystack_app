@@ -9,6 +9,7 @@ import SignUp from '../screens/auth/SignUp';
 import ChangePassword from '../screens/stacks/ChangePassword';
 import CreateExpenses from '../screens/stacks/CreateExpenses';
 import CreateIntervention from '../screens/stacks/CreateIntervention';
+import CreateInterventionCategory from '../screens/stacks/CreateInterventionCategory';
 import CreateInvoice from '../screens/stacks/CreateInvoice';
 import InterventionCategory from '../screens/stacks/InterventionCategory';
 import InterventionDetails from '../screens/stacks/InterventionDetails';
@@ -19,6 +20,7 @@ import Support from '../screens/stacks/Support';
 import TermsAndConditions from '../screens/stacks/TermsAndConditions';
 import UpdateExpenses from '../screens/stacks/UpdateExpenses';
 import UpdateIntervention from '../screens/stacks/UpdateIntervention';
+import UpdateInterventionCategory from '../screens/stacks/UpdateInterventionCategory';
 import UpdateInvoice from '../screens/stacks/UpdateInvoice';
 import TabLayout from './TabLayout';
 
@@ -183,6 +185,26 @@ const StackLayout = () => {
         options={{
           headerShown: true,
           title: 'Intervention Category',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="CreateInterventionCategory"
+        component={CreateInterventionCategory}
+        options={{
+          headerShown: true,
+          title: 'Create Intervention Category',
+          headerTitleAlign: 'center',
+          headerBackground: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="UpdateInterventionCategory"
+        component={UpdateInterventionCategory}
+        options={{
+          headerShown: true,
+          title: 'Update Intervention Category',
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
