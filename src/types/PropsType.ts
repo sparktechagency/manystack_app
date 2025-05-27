@@ -22,4 +22,5 @@ export interface IDrawerLinksProps {
   title: string;
   href: string;
   icon: ImageSourcePropType;
+  showArrow?: boolean;
 }
