@@ -8,21 +8,21 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { paymentStatus } from '../../constant/data';
-import { Camera } from '../../constant/images';
-import { globalStyles } from '../../constant/styles';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { ICreateInterVention } from '../../types/DataTypes';
-import { ICreateInterVentionError } from '../../types/ErrorTypes';
-import { hexToRGBA } from '../../utils/hexToRGBA';
+import {paymentStatus} from '../../constant/data';
+import {Camera} from '../../constant/images';
+import {globalStyles} from '../../constant/styles';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {ICreateInterVention} from '../../types/DataTypes';
+import {ICreateInterVentionError} from '../../types/ErrorTypes';
+import {hexToRGBA} from '../../utils/hexToRGBA';
 import GradientButton from '../sheard/GradientButton';
 import ImageUpload from '../sheard/ImageUpload';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 
 const InterventionCreateUpdateForm = () => {
-  const { themeColors, setImages, images } = useGlobalContext();
+  const {themeColors, setImages, images} = useGlobalContext();
   const [error, setError] = React.useState<ICreateInterVentionError>({
-    "intervention id": false,
+    'intervention id': false,
     category: false,
     price: false,
     note: false,
@@ -30,7 +30,7 @@ const InterventionCreateUpdateForm = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<ICreateInterVention>({
-    "intervention id": '',
+    'intervention id': '',
     category: '',
     price: '',
     note: '',
@@ -40,9 +40,9 @@ const InterventionCreateUpdateForm = () => {
   const submitHandler = () => {
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof ICreateInterVention] === '') {
-        setError(prev => ({ ...prev, [key]: true }));
+        setError(prev => ({...prev, [key]: true}));
       } else {
-        setError(prev => ({ ...prev, [key]: false }));
+        setError(prev => ({...prev, [key]: false}));
       }
     });
   };
@@ -78,9 +78,9 @@ const InterventionCreateUpdateForm = () => {
               <SingleSelectDropDown
                 name={key}
                 data={[
-                  { label: 'category', value: 'category' },
-                  { label: 'category', value: 'category' },
-                  { label: 'category', value: 'category' },
+                  {label: 'category', value: 'category'},
+                  {label: 'category', value: 'category'},
+                  {label: 'category', value: 'category'},
                 ]}
                 value={inputValue[key as keyof ICreateInterVention] as string}
                 inputValue={inputValue}
@@ -96,12 +96,12 @@ const InterventionCreateUpdateForm = () => {
             <Text style={globalStyles.inputLabel}>
               {key.charAt(0).toUpperCase() + key.slice(1)}
             </Text>
-            <View style={{ position: 'relative' }}>
+            <View style={{position: 'relative'}}>
               <TextInput
                 value={inputValue[key as keyof ICreateInterVention]}
                 onChangeText={text => {
-                  setInputValue({ ...inputValue, [key]: text });
-                  setError({ ...error, [key]: false });
+                  setInputValue({...inputValue, [key]: text});
+                  setError({...error, [key]: false});
                 }}
                 keyboardType={key === 'price' ? 'numeric' : 'default'}
                 placeholder={`Enter your ${key}`}
@@ -135,17 +135,17 @@ const InterventionCreateUpdateForm = () => {
           ]}>
           <Image
             source={Camera as ImageSourcePropType}
-            style={{ width: 30, height: 30 }}
+            style={{width: 30, height: 30}}
           />
           <View>
-            <Text style={[globalStyles.inputLabel, { fontSize: 16 }]}>
+            <Text style={[globalStyles.inputLabel, {fontSize: 16}]}>
               Select image
             </Text>
           </View>
         </View>
         {images?.length > 0 && (
           <Image
-            source={{ uri: images[0] }}
+            source={{uri: images[0]}}
             style={{
               marginTop: 6,
               width: 200,
@@ -155,7 +155,7 @@ const InterventionCreateUpdateForm = () => {
           />
         )}
       </ImageUpload>
-      <View style={{ paddingHorizontal: 25, marginTop: 50 }}>
+      <View style={{paddingHorizontal: 25, marginTop: 50}}>
         <GradientButton handler={() => submitHandler()}>
           <Text
             style={{

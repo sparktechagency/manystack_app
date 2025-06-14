@@ -1,14 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import GradientButton from '../../components/sheard/GradientButton';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
 
 const Support = () => {
-  const { height, width } = useGlobalContext();
+  const {height, width} = useGlobalContext();
   return (
-    <View style={[styles.container, {
-      height
-    }]}>
+    <View
+      style={[
+        styles.container,
+        {
+          height,
+        },
+      ]}>
       <Text style={styles.label}>Subject</Text>
       <TextInput
         style={styles.textArea}
@@ -24,7 +28,7 @@ const Support = () => {
           width: width,
           paddingVertical: 16,
         }}>
-        <GradientButton handler={() => { }}>
+        <GradientButton handler={() => {}}>
           <Text
             style={{
               color: 'white',
@@ -60,6 +64,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlignVertical: 'top',
     backgroundColor: '#fafafa',
-    color: "#000000"
+    color: '#000000',
   },
 });

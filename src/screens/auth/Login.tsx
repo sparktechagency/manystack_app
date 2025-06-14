@@ -16,9 +16,10 @@ import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { ILogin } from '../../types/loginType';
 import { StackTypes } from '../../types/ScreenPropsTypes';
+import { t } from '../../utils/translate';
 
 const Login = () => {
-  const { english } = useGlobalContext()
+  const { english } = useGlobalContext();
   const navigate = useNavigation<NavigationProp<StackTypes>>();
 
   const [passShow, setPassShow] = React.useState(true);
@@ -56,9 +57,11 @@ const Login = () => {
         {Object.keys(inputValue).map((key, index) => (
           <View key={index}>
             <Text style={[globalStyles.inputLabel]}>
-
-              {english ? key.charAt(0).toUpperCase() + key.slice(1) : key == 'email' ? 'Email' : 'Mot de passe'}
-
+              {english
+                ? key.charAt(0).toUpperCase() + key.slice(1)
+                : key == 'email'
+                  ? 'Email'
+                  : 'Mot de passe'}
             </Text>
             <View style={{ position: 'relative' }}>
               <TextInput
@@ -67,7 +70,7 @@ const Login = () => {
                   setInputValue({ ...inputValue, [key]: text });
                   setError({ ...error, [key]: false });
                 }}
-                placeholder={`Enter your ${key}`}
+                placeholder={`${t('enter', english)} ${t(key as any, english)}`}
                 secureTextEntry={key === 'password' ? passShow : false}
                 placeholderTextColor={globalStyles.inputPlaceholder.color}
                 style={[
@@ -118,13 +121,15 @@ const Login = () => {
                 fontWeight: 700,
                 fontSize: 18,
               }}>
-              Login
+              {english ? 'Login' : 'Connexion'}
             </Text>
           </GradientButton>
         </View>
 
         <View style={[globalStyles.flex, { marginTop: 20 }]}>
-          <Text style={globalStyles.text}>{english ? "Don't have an account" : "Vous n'avez pas de compte"}? </Text>
+          <Text style={globalStyles.text}>
+            {english ? "Don't have an account" : "Vous n'avez pas de compte"}?{' '}
+          </Text>
           <Link screen="SignUp" params={{}}>
             <Text style={[{ marginLeft: 5 }, globalStyles.text]}>
               {' '}

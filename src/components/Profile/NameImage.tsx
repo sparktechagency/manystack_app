@@ -1,24 +1,25 @@
-import React from 'react'
-import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native'
-import { Camera, Profile } from '../../constant/images'
-import { globalStyles } from '../../constant/styles'
-import { useGlobalContext } from '../../providers/GlobalContextProvider'
-import { hexToRGBA } from '../../utils/hexToRGBA'
-import ImageUpload from '../sheard/ImageUpload'
+import React from 'react';
+import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
+import {Camera, Profile} from '../../constant/images';
+import {globalStyles} from '../../constant/styles';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {hexToRGBA} from '../../utils/hexToRGBA';
+import ImageUpload from '../sheard/ImageUpload';
 
 const NameImage = () => {
-  const { themeColors } = useGlobalContext()
-  const [images, setImages] = React.useState<string[]>([])
+  const {themeColors} = useGlobalContext();
+  const [images, setImages] = React.useState<string[]>([]);
   return (
-    <View style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-
-    }}>
-      <View style={{
-        position: "relative"
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
       }}>
+      <View
+        style={{
+          position: 'relative',
+        }}>
         <Image
           source={Profile as ImageSourcePropType}
           style={{
@@ -27,15 +28,10 @@ const NameImage = () => {
             borderRadius: 50,
           }}
         />
-        <ImageUpload
-          images={images}
-          setImages={setImages}
-
-        >
-
+        <ImageUpload images={images} setImages={setImages}>
           <View
             style={{
-              position: "absolute",
+              position: 'absolute',
               bottom: 0,
               right: 0,
               backgroundColor: themeColors.white as string,
@@ -43,9 +39,7 @@ const NameImage = () => {
               borderColor: hexToRGBA(themeColors.black as string, 0.2),
               borderRadius: 50,
               padding: 5,
-            }}
-
-          >
+            }}>
             <Image
               source={Camera as ImageSourcePropType}
               style={{
@@ -57,14 +51,20 @@ const NameImage = () => {
           </View>
         </ImageUpload>
       </View>
-      <Text style={[globalStyles.inputLabel, {
-        marginTop: 10,
-        fontSize: 20,
-      }]}>Many Stake</Text>
-    </View >
-  )
-}
+      <Text
+        style={[
+          globalStyles.inputLabel,
+          {
+            marginTop: 10,
+            fontSize: 20,
+          },
+        ]}>
+        Many Stake
+      </Text>
+    </View>
+  );
+};
 
-export default NameImage
+export default NameImage;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

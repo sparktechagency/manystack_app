@@ -5,7 +5,7 @@ import {
   ImageSourcePropType,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { DeleteIcon, DownloadPdf, Edit, logo } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
@@ -14,15 +14,18 @@ import { StackTypes } from '../../types/ScreenPropsTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { CardStyles } from '../Intervention/InterventionsCards';
 
-
 const ExpensesCards = ({ item }: { item: IExpenses }) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
-  const { themeColors } = useGlobalContext();
+  const { themeColors, width } = useGlobalContext();
   return (
-    <View style={[CardStyles.card, { backgroundColor: themeColors.white as string }]}>
+    <View
+      style={[CardStyles.card, { backgroundColor: themeColors.white as string }]}>
       <View>
-        <View style={CardStyles.headerRow}>
+        <View style={[CardStyles.headerRow, {
+          maxWidth: "70%"
+        }]}>
           <Text
+            numberOfLines={1}
             style={[
               CardStyles.invoiceId,
               {
@@ -31,7 +34,6 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
             ]}>
             {item.name}
           </Text>
-
         </View>
         <Text
           style={[
@@ -51,7 +53,8 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
           ]}>
           {item.service}
         </Text>
-        <Text style={[CardStyles.amount, { color: themeColors.primary as string }]}>
+        <Text
+          style={[CardStyles.amount, { color: themeColors.primary as string }]}>
           ${item.amount.toFixed(2)}
         </Text>
         <Text
@@ -62,8 +65,7 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
             },
           ]}
           numberOfLines={1}>
-          {item.description?.slice(0, 35)}
-          {item.description?.length > 35 ? '...' : ''}
+          {item.description}
         </Text>
 
         <View style={CardStyles.actions}>
@@ -141,4 +143,4 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
   );
 };
 
-export default ExpensesCards
+export default ExpensesCards;

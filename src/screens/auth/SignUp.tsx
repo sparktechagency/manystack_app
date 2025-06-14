@@ -1,4 +1,4 @@
-import {Link} from '@react-navigation/native';
+import { Link } from '@react-navigation/native';
 import React from 'react';
 import CountryPicker from 'react-native-country-picker-modal';
 
@@ -12,23 +12,25 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Dropdown} from 'react-native-element-dropdown';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { Dropdown } from 'react-native-element-dropdown';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Address from '../../components/sheard/Address';
 import GradientButton from '../../components/sheard/GradientButton';
-import {Colors} from '../../constant/colors';
-import {eye, eyeSlash} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {IAddress, ILogin, ISignUp} from '../../types/loginType';
-import {hexToRGBA} from '../../utils/hexToRGBA';
-import {genderData} from '../../constant/data';
+import { Colors } from '../../constant/colors';
+import { genderData } from '../../constant/data';
+import { eye, eyeSlash } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { IAddress, ILogin, ISignUp } from '../../types/loginType';
+import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 const SignUp = () => {
   const [passShow, setPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
   const [countryCode, setCountryCode] = React.useState('BD');
   const [callingCode, setCallingCode] = React.useState('880');
-  const {width} = Dimensions.get('window');
-
+  const { width } = Dimensions.get('window');
+  const { english } = useGlobalContext();
   const [address, setAddress] = React.useState<IAddress>({
     streetName: '',
     city: '',
@@ -65,7 +67,7 @@ const SignUp = () => {
     password: '123456',
     confirmPassword: '123456',
   });
-
+  // t('login', english)
   const submitHandler = () => {
     type Combined = ISignUp & IAddress;
     const combinedInputValue: Combined = {
@@ -74,9 +76,9 @@ const SignUp = () => {
     };
     Object.keys(combinedInputValue).forEach(key => {
       if (combinedInputValue[key as keyof ISignUp] === '') {
-        setError(prev => ({...prev, [key]: true}));
+        setError(prev => ({ ...prev, [key]: true }));
       } else {
-        setError(prev => ({...prev, [key]: false}));
+        setError(prev => ({ ...prev, [key]: false }));
       }
     });
   };
@@ -102,16 +104,16 @@ const SignUp = () => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{flex: 1, marginRight: 10}}>
-                  <Text style={globalStyles.inputLabel}>First Name</Text>
-                  <View style={{position: 'relative'}}>
+                <View style={{ flex: 1, marginRight: 10 }}>
+                  <Text style={globalStyles.inputLabel}>{t("firstName", english)}</Text>
+                  <View style={{ position: 'relative' }}>
                     <TextInput
                       value={inputValue['first name']}
                       onChangeText={text => {
-                        setInputValue({...inputValue, ['first name']: text});
-                        setError({...error, ['first name']: false});
+                        setInputValue({ ...inputValue, ['first name']: text });
+                        setError({ ...error, ['first name']: false });
                       }}
-                      placeholder="Enter your first name"
+                      placeholder={`${t("enter", english)} ${t("firstName", english)}`}
                       placeholderTextColor={globalStyles.inputPlaceholder.color}
                       style={[
                         globalStyles.input,
@@ -121,16 +123,17 @@ const SignUp = () => {
                   </View>
                 </View>
 
-                <View style={{flex: 1, marginLeft: 10}}>
-                  <Text style={globalStyles.inputLabel}>Last Name</Text>
-                  <View style={{position: 'relative'}}>
+                <View style={{ flex: 1, marginLeft: 10 }}>
+                  <Text style={globalStyles.inputLabel}>{t("lastName", english)}</Text>
+                  <View style={{ position: 'relative' }}>
                     <TextInput
+
                       value={inputValue['last name']}
                       onChangeText={text => {
-                        setInputValue({...inputValue, ['last name']: text});
-                        setError({...error, ['last name']: false});
+                        setInputValue({ ...inputValue, ['last name']: text });
+                        setError({ ...error, ['last name']: false });
                       }}
-                      placeholder="Enter your last name"
+                      placeholder={`${t("enter", english)} ${t("lastName", english)}`.slice(0, 20)}
                       placeholderTextColor={globalStyles.inputPlaceholder.color}
                       style={[
                         globalStyles.input,
@@ -146,7 +149,7 @@ const SignUp = () => {
           if (key === 'gender') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>Gender</Text>
+                <Text style={globalStyles.inputLabel}>{t("gender", english)}</Text>
                 <Dropdown
                   style={[
                     globalStyles.input,
@@ -155,17 +158,17 @@ const SignUp = () => {
                   data={genderData}
                   labelField="label"
                   valueField="value"
-                  placeholder="Select Gender"
+                  placeholder={t("selectGender", english)}
                   value={inputValue.gender}
                   onChange={item => {
-                    setInputValue({...inputValue, gender: item.value});
-                    setError({...error, gender: false});
+                    setInputValue({ ...inputValue, gender: item.value });
+                    setError({ ...error, gender: false });
                   }}
                   placeholderStyle={{
                     color: globalStyles.inputPlaceholder.color,
                   }}
-                  selectedTextStyle={{color: '#000'}}
-                  containerStyle={{borderRadius: 5}}
+                  selectedTextStyle={{ color: '#000' }}
+                  containerStyle={{ borderRadius: 5 }}
                   dropdownPosition="auto"
                 />
               </View>
@@ -174,8 +177,8 @@ const SignUp = () => {
           if (key === 'contact') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>Contact</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={globalStyles.inputLabel}>{t("contact", english)}</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <CountryPicker
                     countryCode={countryCode as any}
                     withFlag
@@ -201,10 +204,10 @@ const SignUp = () => {
                   <TextInput
                     value={inputValue.contact}
                     onChangeText={text => {
-                      setInputValue({...inputValue, contact: text});
-                      setError({...error, contact: false});
+                      setInputValue({ ...inputValue, contact: text });
+                      setError({ ...error, contact: false });
                     }}
-                    placeholder="Enter your contact number"
+                    placeholder={`${t("enter", english)} ${t("contact", english)}`}
                     keyboardType="phone-pad"
                     placeholderTextColor={globalStyles.inputPlaceholder.color}
                     style={[
@@ -237,22 +240,33 @@ const SignUp = () => {
           return (
             <View key={key} style={{}}>
               <Text style={globalStyles.inputLabel}>
-                {key.charAt(0).toUpperCase() + key.slice(1)}
+                {/* {key.charAt(0).toUpperCase() + key.slice(1)} */}
+                {
+                  t(key === 'N°SIREN'
+                    ? "siren"
+                    : key == "password"
+                      ? "password" : "confirmPassword"
+                    , english)
+                }
               </Text>
-              <View style={{position: 'relative'}}>
+              <View style={{ position: 'relative' }}>
                 <TextInput
                   value={inputValue[key as keyof ILogin]}
                   onChangeText={text => {
-                    setInputValue({...inputValue, [key]: text});
-                    setError({...error, [key]: false});
+                    setInputValue({ ...inputValue, [key]: text });
+                    setError({ ...error, [key]: false });
                   }}
-                  placeholder={`Enter your ${key}`}
+                  placeholder={`${t("enter", english)} ${t(key === 'N°SIREN'
+                    ? "siren"
+                    : key == "password"
+                      ? "password" : "confirmPassword"
+                    , english)}`}
                   secureTextEntry={
                     key === 'password'
                       ? passShow
                       : key === 'confirmPassword'
-                      ? cPassShow
-                      : false
+                        ? cPassShow
+                        : false
                   }
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
@@ -262,7 +276,7 @@ const SignUp = () => {
                 />
                 {(key === 'password' || key === 'confirmPassword') && (
                   <TouchableOpacity
-                    style={{position: 'absolute', right: 10, top: 15}}
+                    style={{ position: 'absolute', right: 10, top: 15 }}
                     onPress={() => {
                       if (key === 'password') {
                         setPassShow(!passShow);
@@ -277,10 +291,10 @@ const SignUp = () => {
                             ? (eye as ImageSourcePropType)
                             : (eyeSlash as ImageSourcePropType)
                           : cPassShow
-                          ? (eye as ImageSourcePropType)
-                          : (eyeSlash as ImageSourcePropType)
+                            ? (eye as ImageSourcePropType)
+                            : (eyeSlash as ImageSourcePropType)
                       }
-                      style={{width: 20, height: 20}}
+                      style={{ width: 20, height: 20 }}
                     />
                   </TouchableOpacity>
                 )}
@@ -289,7 +303,7 @@ const SignUp = () => {
           );
         })}
 
-        <View style={{paddingHorizontal: 25}}>
+        <View style={{ paddingHorizontal: 25 }}>
           <GradientButton handler={() => submitHandler()}>
             <Text
               style={{
@@ -298,15 +312,15 @@ const SignUp = () => {
                 fontWeight: '700',
                 fontSize: 18,
               }}>
-              Sign Up
+              {t("signUp", english)}
             </Text>
           </GradientButton>
         </View>
 
-        <View style={[globalStyles.flex, {marginTop: 20, marginBottom: 120}]}>
-          <Text style={globalStyles.text}>Already have an account? </Text>
+        <View style={[globalStyles.flex, { marginTop: 20, marginBottom: 120 }]}>
+          <Text style={globalStyles.text}>{t("alreadyAccount", english)} </Text>
           <Link screen="Login" params={{}}>
-            <Text style={[{marginLeft: 5}, globalStyles.text]}>Login</Text>
+            <Text style={[{ marginLeft: 5 }, globalStyles.text]}>{t("login", english)}</Text>
           </Link>
         </View>
       </ScrollView>

@@ -9,7 +9,10 @@ import Category from '../asset/drawerIcon/Category.png';
 import Crown from '../asset/drawerIcon/crown.png';
 import DeleteAccount from '../asset/drawerIcon/DeleteAccount.png';
 import LogOut from '../asset/drawerIcon/LogOut.png';
-import { default as Export, default as Privacy } from '../asset/drawerIcon/Privecy.png';
+import {
+  default as Export,
+  default as Privacy,
+} from '../asset/drawerIcon/Privecy.png';
 import Shield from '../asset/drawerIcon/Shield.png';
 import Support from '../asset/drawerIcon/Support.png';
 import Terms from '../asset/drawerIcon/Terms.png';
@@ -41,7 +44,7 @@ export const DrawerIcons = {
   UserEdit,
   Privacy,
   Arrow,
-  LogOut
+  LogOut,
 };
 export const TabIcons = {
   Home,
@@ -54,12 +57,17 @@ export {
   Calender,
   Camera,
   Close,
-  DeleteIcon, DownloadPdf, Edit,
+  DeleteIcon,
+  DownloadPdf,
+  Edit,
   eye,
   eyeSlash,
-  Filter, FullLogo, logo, Loss, Plus,
+  Filter,
+  FullLogo,
+  logo,
+  Loss,
+  Plus,
   Profile,
   Profit,
-  SearchIcon
+  SearchIcon,
 };
-

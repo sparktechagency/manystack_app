@@ -16,10 +16,11 @@ import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { StackTypes } from '../../types/ScreenPropsTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import GradientButton from '../sheard/GradientButton';
+import { t } from '../../utils/translate';
 
 const FilterByDate = ({ title }: { title?: string }) => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
-  const { themeColors } = useGlobalContext();
+  const { themeColors, english } = useGlobalContext();
 
   const [fromDate, setFromDate] = useState<Date | undefined>();
   const [toDate, setToDate] = useState<Date | undefined>();
@@ -45,16 +46,24 @@ const FilterByDate = ({ title }: { title?: string }) => {
     return `${day}/${month}/${year}`;
   };
 
+  const getAllTitleKey = () => {
+    if (title === 'Expenses') return 'allExpenses';
+    if (title === 'Invoice') return 'allInvoice';
+    return 'allIntervention';
+  };
+
+  const getAddTitleKey = () => {
+    if (title === 'Expenses') return 'addExpenses';
+    if (title === 'Invoice') return 'addInvoice';
+    return 'addIntervention';
+  };
+
   return (
     <View>
-      <Text
-        style={{
-          fontSize: 16,
-          fontWeight: 600,
-          marginBottom: 6,
-        }}>
-        Filter by date
+      <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 6 }}>
+        {t('filterByDate', english)}
       </Text>
+
       <View style={styles.row}>
         <View style={styles.inputGroup}>
           <Text
@@ -66,7 +75,7 @@ const FilterByDate = ({ title }: { title?: string }) => {
                   : hexToRGBA(themeColors.black as string, 0.6),
               },
             ]}>
-            From
+            {t('from', english)}
           </Text>
           <TouchableOpacity
             activeOpacity={0.7}
@@ -91,13 +100,7 @@ const FilterByDate = ({ title }: { title?: string }) => {
                 ]}>
                 {formatDate(fromDate)}
               </Text>
-              <Image
-                source={Calender as ImageSourcePropType}
-                style={{
-                  height: 20,
-                  width: 20,
-                }}
-              />
+              <Image source={Calender as ImageSourcePropType} style={{ height: 20, width: 20 }} />
             </View>
           </TouchableOpacity>
           {showFromPicker && (
@@ -121,7 +124,7 @@ const FilterByDate = ({ title }: { title?: string }) => {
                   : hexToRGBA(themeColors.black as string, 0.6),
               },
             ]}>
-            To
+            {t('to', english)}
           </Text>
           <TouchableOpacity
             activeOpacity={0.7}
@@ -146,13 +149,7 @@ const FilterByDate = ({ title }: { title?: string }) => {
                 ]}>
                 {formatDate(toDate)}
               </Text>
-              <Image
-                source={Calender as ImageSourcePropType}
-                style={{
-                  height: 20,
-                  width: 20,
-                }}
-              />
+              <Image source={Calender as ImageSourcePropType} style={{ height: 20, width: 20 }} />
             </View>
           </TouchableOpacity>
           {showToPicker && (
@@ -161,11 +158,12 @@ const FilterByDate = ({ title }: { title?: string }) => {
               mode="date"
               display="default"
               onChange={onToChange}
-              minimumDate={fromDate} // optional: min is From date
+              minimumDate={fromDate}
             />
           )}
         </View>
       </View>
+
       <View
         style={[
           globalStyles.flex,
@@ -175,32 +173,27 @@ const FilterByDate = ({ title }: { title?: string }) => {
             marginTop: 16,
           },
         ]}>
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: 600,
-            marginBottom: 6,
-          }}>
-          All {title ? title : 'Intervention'}
+        <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 6 }}>
+          {t(getAllTitleKey(), english)}
         </Text>
-        <GradientButton handler={() => {
-          if (title == "Expanses") {
-            navigate.navigate('CreateExpenses')
-          } else if (title == "Invoice") {
-            navigate.navigate('CreateInvoice')
-          }
-          else {
-            navigate.navigate('CreateIntervention')
-          }
-        }}>
+        <GradientButton
+          handler={() => {
+            if (title === 'Expenses') {
+              navigate.navigate('CreateExpenses');
+            } else if (title === 'Invoice') {
+              navigate.navigate('CreateInvoice');
+            } else {
+              navigate.navigate('CreateIntervention');
+            }
+          }}>
           <Text
             style={{
               color: 'white',
               textAlign: 'center',
-              fontWeight: 700,
+              fontWeight: '700',
               fontSize: 18,
             }}>
-            Add An {title ? title : 'Intervention'}
+            {t(getAddTitleKey(), english)}
           </Text>
         </GradientButton>
       </View>

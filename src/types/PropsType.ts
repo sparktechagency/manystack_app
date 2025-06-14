@@ -1,10 +1,10 @@
 import React from 'react';
-import { ImageSourcePropType } from 'react-native';
-import { ISubscription } from './DataTypes';
+import {ImageSourcePropType} from 'react-native';
+import {ISubscription} from './DataTypes';
 
 export interface ISingleDropDownProps {
   error: any;
-  data: { label: string; value: string }[];
+  data: {label: string; value: string}[];
   name: any;
   value: string;
   inputValue: any;
