@@ -83,7 +83,11 @@ export const translations = {
   camera_permission_required: { en: 'Camera permission is required to capture images', fr: "L'autorisation de la caméra est requise pour prendre des photos" },
   failed_to_capture_image: { en: 'Failed to capture image', fr: "Échec de la capture de l'image" },
   take_image: { en: 'Take Image', fr: 'Prendre une photo' },
-  create_intervention: { en: 'Create Intervention', fr: 'Créer une intervention' }
+  create_intervention: { en: 'Create Intervention', fr: 'Créer une intervention' },
+  invoice: { en: 'Invoice', fr: 'Facture' },
+  after_sales_service: { en: 'After-Sales Service', fr: 'Service après-vente' },
+  PLP: { en: 'PLP', fr: 'PLP' },
+
 } as const;
 
 export type TranslationKey = keyof typeof translations;

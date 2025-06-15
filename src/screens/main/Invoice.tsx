@@ -1,11 +1,14 @@
 import React from 'react';
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 import FilterByDate from '../../components/Intervention/FilterByDate';
 import Heading from '../../components/Intervention/Heading';
 import Invoices from '../../components/Invoice/Invoices';
 import Search from '../../components/sheard/Search';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { t } from '../../utils/translate';
 
 const Invoice = () => {
+  const { english } = useGlobalContext();
   const [search, setSearch] = React.useState<string>('');
   const elements = [
     <Search search={search} setSearch={setSearch} key={1} />,
@@ -14,14 +17,14 @@ const Invoice = () => {
   ];
   return (
     <SafeAreaView>
-      <View style={{paddingBottom: 62}}>
-        <Heading title="Invoice" />
+      <View style={{ paddingBottom: 62 }}>
+        <Heading title={t("invoice", english)} />
         <FlatList
           keyExtractor={(item, index) => index.toString()}
           data={elements}
-          renderItem={({item}) => item}
+          renderItem={({ item }) => item}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{gap: 15, paddingHorizontal: 20}}
+          contentContainerStyle={{ gap: 15, paddingHorizontal: 20 }}
         />
       </View>
     </SafeAreaView>
