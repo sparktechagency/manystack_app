@@ -5,6 +5,7 @@ const categoryApi = baseApi.injectEndpoints({
     // get categories endpoint
     getCategories: builder.query({
       query: () => 'api/category/get-all',
+      providesTags: ['category'],
     }),
     // create category endpoint
     createCategory: builder.mutation({
@@ -13,6 +14,7 @@ const categoryApi = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      invalidatesTags: ['category'],
     }),
     // update category endpoint
     updateCategory: builder.mutation({
@@ -21,6 +23,7 @@ const categoryApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
+      invalidatesTags: ['category'],
     }),
     // delete category endpoint
     deleteCategory: builder.mutation({
@@ -28,6 +31,7 @@ const categoryApi = baseApi.injectEndpoints({
         url: `api/category/delete/${id}`,
         method: 'DELETE',
       }),
+      invalidatesTags: ['category'],
     }),
   }),
 })
