@@ -78,8 +78,12 @@ export const translations = {
   income: { en: 'Income', fr: 'Revenu' },
   today_highlights: { en: 'Today Highlights', fr: 'Faits saillants du jour' },
   total_intervention: { en: 'Total Intervention', fr: 'Intervention totale' },
-  total_price: { en: 'Total Price', fr: 'Prix total' }
-
+  total_price: { en: 'Total Price', fr: 'Prix total' },
+  permission_denied: { en: 'Permission denied', fr: 'Permission refusée' },
+  camera_permission_required: { en: 'Camera permission is required to capture images', fr: "L'autorisation de la caméra est requise pour prendre des photos" },
+  failed_to_capture_image: { en: 'Failed to capture image', fr: "Échec de la capture de l'image" },
+  take_image: { en: 'Take Image', fr: 'Prendre une photo' },
+  create_intervention: { en: 'Create Intervention', fr: 'Créer une intervention' }
 } as const;
 
 export type TranslationKey = keyof typeof translations;
