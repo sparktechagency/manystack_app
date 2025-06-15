@@ -1,12 +1,13 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {BarChart} from 'react-native-gifted-charts';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { Text, View } from 'react-native';
+import { BarChart } from 'react-native-gifted-charts';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 
 const OverviewChart = () => {
-  const {themeColors} = useGlobalContext();
+  const { themeColors, english } = useGlobalContext();
   const barData = [
     // Jan
     {
@@ -14,11 +15,11 @@ const OverviewChart = () => {
       label: 'Jan',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 20, frontColor: '#4CAF50', spacing: 2},
-    {value: 30, frontColor: '#F2C94C'},
+    { value: 20, frontColor: '#4CAF50', spacing: 2 },
+    { value: 30, frontColor: '#F2C94C' },
 
     // Feb
     {
@@ -26,11 +27,11 @@ const OverviewChart = () => {
       label: 'Feb',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 40, frontColor: '#4CAF50', spacing: 2},
-    {value: 35, frontColor: '#F2C94C'},
+    { value: 40, frontColor: '#4CAF50', spacing: 2 },
+    { value: 35, frontColor: '#F2C94C' },
 
     // Mar
     {
@@ -38,11 +39,11 @@ const OverviewChart = () => {
       label: 'Mar',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 25, frontColor: '#4CAF50', spacing: 2},
-    {value: 45, frontColor: '#F2C94C'},
+    { value: 25, frontColor: '#4CAF50', spacing: 2 },
+    { value: 45, frontColor: '#F2C94C' },
 
     // Apr
     {
@@ -50,11 +51,11 @@ const OverviewChart = () => {
       label: 'Apr',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 20, frontColor: '#4CAF50', spacing: 2},
-    {value: 28, frontColor: '#F2C94C'},
+    { value: 20, frontColor: '#4CAF50', spacing: 2 },
+    { value: 28, frontColor: '#F2C94C' },
 
     // May
     {
@@ -62,11 +63,11 @@ const OverviewChart = () => {
       label: 'May',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 40, frontColor: '#4CAF50', spacing: 2},
-    {value: 50, frontColor: '#F2C94C'},
+    { value: 40, frontColor: '#4CAF50', spacing: 2 },
+    { value: 50, frontColor: '#F2C94C' },
 
     // Jun
     {
@@ -74,75 +75,75 @@ const OverviewChart = () => {
       label: 'Jun',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 30, frontColor: '#4CAF50', spacing: 2},
-    {value: 40, frontColor: '#F2C94C'},
+    { value: 30, frontColor: '#4CAF50', spacing: 2 },
+    { value: 40, frontColor: '#F2C94C' },
     {
       value: 65,
       label: 'July',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 30, frontColor: '#4CAF50', spacing: 2},
-    {value: 40, frontColor: '#F2C94C'},
+    { value: 30, frontColor: '#4CAF50', spacing: 2 },
+    { value: 40, frontColor: '#F2C94C' },
     {
       value: 65,
       label: 'Aug',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 30, frontColor: '#4CAF50', spacing: 2},
-    {value: 40, frontColor: '#F2C94C'},
+    { value: 30, frontColor: '#4CAF50', spacing: 2 },
+    { value: 40, frontColor: '#F2C94C' },
     {
       value: 65,
       label: 'Sept',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 30, frontColor: '#4CAF50', spacing: 2},
-    {value: 40, frontColor: '#F2C94C'},
+    { value: 30, frontColor: '#4CAF50', spacing: 2 },
+    { value: 40, frontColor: '#F2C94C' },
     {
       value: 65,
       label: 'Oct',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 30, frontColor: '#4CAF50', spacing: 2},
-    {value: 40, frontColor: '#F2C94C'},
+    { value: 30, frontColor: '#4CAF50', spacing: 2 },
+    { value: 40, frontColor: '#F2C94C' },
     {
       value: 65,
       label: 'Nov',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 30, frontColor: '#4CAF50', spacing: 2},
-    {value: 40, frontColor: '#F2C94C'},
+    { value: 30, frontColor: '#4CAF50', spacing: 2 },
+    { value: 40, frontColor: '#F2C94C' },
     {
       value: 65,
       label: 'Dec',
       spacing: 2,
       labelWidth: 30,
-      labelTextStyle: {color: 'gray'},
+      labelTextStyle: { color: 'gray' },
       frontColor: '#017FF4',
     },
-    {value: 30, frontColor: '#4CAF50', spacing: 2},
-    {value: 40, frontColor: '#F2C94C'},
+    { value: 30, frontColor: '#4CAF50', spacing: 2 },
+    { value: 40, frontColor: '#F2C94C' },
   ];
 
   const renderTitle = () => (
-    <View style={{marginVertical: 10}}>
+    <View style={{ marginVertical: 10 }}>
       <View
         style={{
           flexDirection: 'row',
@@ -153,7 +154,7 @@ const OverviewChart = () => {
           borderRadius: 8,
         }}>
         {/* Point 01 */}
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
               height: 14,
@@ -163,11 +164,11 @@ const OverviewChart = () => {
               marginRight: 8,
             }}
           />
-          <Text style={globalStyles.inputLabel}>Profit</Text>
+          <Text style={globalStyles.inputLabel}>{t('profit', english)}</Text>
         </View>
 
         {/* Point 02 */}
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
               height: 14,
@@ -177,11 +178,11 @@ const OverviewChart = () => {
               marginRight: 8,
             }}
           />
-          <Text style={globalStyles.inputLabel}>Income</Text>
+          <Text style={globalStyles.inputLabel}>{t('income', english)}</Text>
         </View>
 
         {/* Point 03 */}
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
               height: 14,
@@ -191,7 +192,7 @@ const OverviewChart = () => {
               marginRight: 8,
             }}
           />
-          <Text style={globalStyles.inputLabel}>Expenses</Text>
+          <Text style={globalStyles.inputLabel}>{t('expanses', english)}</Text>
         </View>
       </View>
     </View>
@@ -216,7 +217,7 @@ const OverviewChart = () => {
         hideRules
         xAxisThickness={0}
         yAxisThickness={0}
-        yAxisTextStyle={{color: 'gray'}}
+        yAxisTextStyle={{ color: 'gray' }}
         noOfSections={3}
         maxValue={80}
       />

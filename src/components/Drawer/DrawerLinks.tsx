@@ -1,4 +1,4 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {DrawerIcons} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {IDrawerLinksProps} from '../../types/PropsType';
-import {StackTypes} from '../../types/ScreenPropsTypes';
+import { DrawerIcons } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { IDrawerLinksProps } from '../../types/PropsType';
+import { StackTypes } from '../../types/ScreenPropsTypes';
+import { t } from '../../utils/translate';
 
 const DrawerLinks = ({
   title,
@@ -20,8 +21,9 @@ const DrawerLinks = ({
   icon,
   showArrow = true,
 }: IDrawerLinksProps) => {
-  const {themeColors} = useGlobalContext();
+  const { themeColors, english } = useGlobalContext();
   const navigate = useNavigation<NavigationProp<StackTypes>>();
+  console.log(title)
   return (
     <TouchableOpacity
       onPress={() => navigate.navigate(href as any)}
@@ -52,7 +54,7 @@ const DrawerLinks = ({
             tintColor: themeColors.black as string,
           }}
         />
-        <Text>{title}</Text>
+        <Text>{t(title as any, english)}</Text>
       </View>
       {showArrow && (
         <Image

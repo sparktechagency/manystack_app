@@ -286,21 +286,21 @@ export const InvoiceData: IInvoice[] = [
   },
 ];
 export const DrawerLinksData = [
-  { name: 'Edit Profile', href: 'EditProfile', icon: DrawerIcons.UserEdit },
-  { name: 'Subscription', href: 'Subscription', icon: DrawerIcons.Crown },
+  { name: 'edit_profile', href: 'EditProfile', icon: DrawerIcons.UserEdit },
+  { name: 'subscription', href: 'Subscription', icon: DrawerIcons.Crown },
   {
-    name: 'Intervention Category',
+    name: 'intervention_category',
     href: 'InterventionCategory',
     icon: DrawerIcons.Category,
   },
-  { name: 'Contact Support', href: 'Support', icon: DrawerIcons.Support },
-  { name: 'Change Password', href: 'ChangePassword', icon: DrawerIcons.Shield },
+  { name: 'contact_support', href: 'Support', icon: DrawerIcons.Support },
+  { name: 'change_password', href: 'ChangePassword', icon: DrawerIcons.Shield },
   {
-    name: 'Terms & Conditions',
+    name: 'terms_and_conditions',
     href: 'TermsAndConditions',
     icon: DrawerIcons.Terms,
   },
-  { name: 'Privacy Policy', href: 'PrivacyPolicy', icon: DrawerIcons.Privacy },
+  { name: 'privacy_policy', href: 'PrivacyPolicy', icon: DrawerIcons.Privacy },
 ];
 
 export const subscriptionsData: ISubscription[] = [
