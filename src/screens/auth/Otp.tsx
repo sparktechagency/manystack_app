@@ -1,23 +1,26 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
-import {OtpInput} from 'react-native-otp-entry';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
+import { OtpInput } from 'react-native-otp-entry';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import GradientButton from '../../components/sheard/GradientButton';
-import {Colors} from '../../constant/colors';
-import {logo} from '../../constant/images';
-import {StackTypes} from '../../types/ScreenPropsTypes';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { Colors } from '../../constant/colors';
+import { logo } from '../../constant/images';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { StackTypes } from '../../types/ScreenPropsTypes';
+import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 const Otp = () => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
+  const { english } = useGlobalContext();
   return (
     <SafeAreaView
-      style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <View style={{marginTop: -60}}>
+      style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ marginTop: -60 }}>
         <Image source={logo as ImageSourcePropType} height={100} width={100} />
       </View>
       {/* form */}
-      <View style={{width: '100%', paddingHorizontal: 20}}>
+      <View style={{ width: '100%', paddingHorizontal: 20 }}>
         <Text
           style={{
             fontSize: 16,
@@ -27,7 +30,7 @@ const Otp = () => {
 
             color: Colors.light.primary as string,
           }}>
-          Enter Verification Code
+          {t("enter_verification_code", english)}
         </Text>
         <OtpInput
           numberOfDigits={6}

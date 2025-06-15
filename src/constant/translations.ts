@@ -63,7 +63,11 @@ export const translations = {
   addIntervention: { en: 'Add Intervention', fr: 'Ajouter intervention' },
   addExpenses: { en: 'Add Expenses', fr: 'Ajouter dépense' },
   addInvoice: { en: 'Add Invoice', fr: 'Ajouter facture' },
-  expanses: { en: 'Expanses', fr: 'Dépenses' }
+  expanses: { en: 'Expanses', fr: 'Dépenses' },
+  submit: { en: 'Submit', fr: 'Soumettre' },
+  enter_verification_code: { en: 'Enter Verification Code', fr: 'Entrez le code de vérification' }
+
+
 } as const;
 
 export type TranslationKey = keyof typeof translations;
