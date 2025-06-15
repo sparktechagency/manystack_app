@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {interventionFilter} from '../../constant/data';
-import {Close, Plus} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {IInvoiceService} from '../../types/loginType';
-import {generateRandom} from '../../utils/generateRandom';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { interventionFilter } from '../../constant/data';
+import { Close, Plus } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { IInvoiceService } from '../../types/loginType';
+import { generateRandom } from '../../utils/generateRandom';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 
 const InvoiceService = ({
@@ -28,8 +28,7 @@ const InvoiceService = ({
   error: any;
   setError: (arg0: any) => void;
 }) => {
-  const {width, themeColors} = useGlobalContext();
-  console.log(service);
+  const { width, themeColors } = useGlobalContext();
   return (
     <View>
       <Text style={globalStyles.inputLabel}>Add Service Details</Text>
@@ -75,7 +74,7 @@ const InvoiceService = ({
             style={[
               globalStyles.input,
               error?.streetName ? globalStyles.inputError : {},
-              {maxWidth: (width - 120) / 3.5},
+              { maxWidth: (width - 120) / 3.5 },
             ]}
             keyboardType="numeric"
             placeholder="quantity"
@@ -95,7 +94,7 @@ const InvoiceService = ({
             style={[
               globalStyles.input,
               error?.postalCode ? globalStyles.inputError : {},
-              {maxWidth: (width - 120) / 4},
+              { maxWidth: (width - 120) / 4 },
             ]}
             placeholder="price"
             keyboardType="numeric"
@@ -114,7 +113,7 @@ const InvoiceService = ({
               onPress={() => {
                 setService([
                   ...service,
-                  {id: generateRandom(), service: '', quantity: '', price: ''},
+                  { id: generateRandom(), service: '', quantity: '', price: '' },
                 ]);
               }}
               style={{
