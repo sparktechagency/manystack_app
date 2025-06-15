@@ -18,7 +18,7 @@ export const paymentStatus = [
 ];
 export const interventionFilter = [
   { label: 'PLP', value: 'PLP' },
-  { label: 'After sell service', value: 'After sell service' },
+  { label: 'after_sales_service', value: 'After sales service' },
 ];
 
 export const intervention: IIntervention[] = [

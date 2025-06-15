@@ -34,7 +34,7 @@ const Expanses = () => {
   return (
     <SafeAreaView>
       <View style={{ paddingBottom: 62 }}>
-        <Heading title="Expanses" />
+        <Heading title={t("expanses", english)} />
         <FlatList
           keyExtractor={(item, index) => index.toString()}
           data={elements}

@@ -23,7 +23,6 @@ const DrawerLinks = ({
 }: IDrawerLinksProps) => {
   const { themeColors, english } = useGlobalContext();
   const navigate = useNavigation<NavigationProp<StackTypes>>();
-  console.log(title)
   return (
     <TouchableOpacity
       onPress={() => navigate.navigate(href as any)}
