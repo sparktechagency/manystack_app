@@ -83,7 +83,7 @@ const Otp = () => {
                 fontWeight: 700,
                 fontSize: 18,
               }}>
-              Submit
+              {t('submit', english)}
             </Text>
           </GradientButton>
         </View>

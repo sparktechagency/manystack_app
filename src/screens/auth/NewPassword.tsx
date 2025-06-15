@@ -1,4 +1,4 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -9,16 +9,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import GradientButton from '../../components/sheard/GradientButton';
-import {eye, eyeSlash, logo} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {INewPassword} from '../../types/loginType';
-import {StackTypes} from '../../types/ScreenPropsTypes';
+import { eye, eyeSlash, logo } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { INewPassword } from '../../types/loginType';
+import { StackTypes } from '../../types/ScreenPropsTypes';
+import { t } from '../../utils/translate';
 const NewPassword = () => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const [passShow, setPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
+  const { english } = useGlobalContext();
   const [error, setError] = React.useState({
     password: false,
     confirmPassword: false,
@@ -32,40 +35,41 @@ const NewPassword = () => {
   const submitHandler = () => {
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof INewPassword] === '') {
-        setError(prev => ({...prev, [key]: true}));
+        setError(prev => ({ ...prev, [key]: true }));
       } else {
-        setError(prev => ({...prev, [key]: false}));
+        setError(prev => ({ ...prev, [key]: false }));
       }
     });
     navigate.navigate('Tabs');
   };
   return (
     <SafeAreaView
-      style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <View style={{marginTop: -60}}>
+      style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ marginTop: -60 }}>
         <Image source={logo as ImageSourcePropType} height={100} width={100} />
       </View>
       {/* form */}
-      <View style={{width: '100%', paddingHorizontal: 20}}>
+      <View style={{ width: '100%', paddingHorizontal: 20 }}>
         {Object.keys(inputValue).map((key, index) => (
           <View key={index}>
             <Text style={[globalStyles.inputLabel]}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
+              {/* {key.charAt(0).toUpperCase() + key.slice(1)} */}
+              {key === 'password' ? t('password', english) : t('confirmPassword', english)}
             </Text>
-            <View style={{position: 'relative'}}>
+            <View style={{ position: 'relative' }}>
               <TextInput
                 value={inputValue[key as keyof INewPassword]}
                 onChangeText={text => {
-                  setInputValue({...inputValue, [key]: text});
-                  setError({...error, [key]: false});
+                  setInputValue({ ...inputValue, [key]: text });
+                  setError({ ...error, [key]: false });
                 }}
-                placeholder={`Enter your ${key}`}
+                placeholder={`${t('enter', english)} ${t(key as any, english)}`}
                 secureTextEntry={
                   key === 'password'
                     ? passShow
                     : key === 'confirmPassword'
-                    ? cPassShow
-                    : false
+                      ? cPassShow
+                      : false
                 }
                 placeholderTextColor={globalStyles.inputPlaceholder.color}
                 style={[
@@ -77,7 +81,7 @@ const NewPassword = () => {
               />
               {(key === 'password' || key === 'confirmPassword') && (
                 <TouchableOpacity
-                  style={{position: 'absolute', right: 10, top: 15}}
+                  style={{ position: 'absolute', right: 10, top: 15 }}
                   onPress={() => {
                     if (key === 'password') {
                       setPassShow(!passShow);
@@ -92,10 +96,10 @@ const NewPassword = () => {
                           ? (eye as ImageSourcePropType)
                           : (eyeSlash as ImageSourcePropType)
                         : cPassShow
-                        ? (eye as ImageSourcePropType)
-                        : (eyeSlash as ImageSourcePropType)
+                          ? (eye as ImageSourcePropType)
+                          : (eyeSlash as ImageSourcePropType)
                     }
-                    style={{width: 20, height: 20}}
+                    style={{ width: 20, height: 20 }}
                   />
                 </TouchableOpacity>
               )}
@@ -115,7 +119,7 @@ const NewPassword = () => {
                 fontWeight: 700,
                 fontSize: 18,
               }}>
-              Submit
+              {t('submit', english)}
             </Text>
           </GradientButton>
         </View>
