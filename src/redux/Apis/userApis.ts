@@ -22,7 +22,7 @@ const userApi = baseApi.injectEndpoints({
     changePassword: builder.mutation({
       query: (data) => ({
         url: 'api/user/profile/change-password',
-        method: 'POST',
+        method: 'PUT',
         body: data,
       }),
       invalidatesTags: ['auth'],
@@ -44,6 +44,14 @@ const userApi = baseApi.injectEndpoints({
         method: 'DELETE',
       }),
       invalidatesTags: ['auth'],
+    }),
+    // support endpoint
+    support: builder.mutation({
+      query: (data) => ({
+        url: 'api/support/create',
+        method: 'POST',
+        body: data,
+      }),
     }),
 
   }),
