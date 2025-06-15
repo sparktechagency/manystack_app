@@ -65,8 +65,15 @@ export const translations = {
   addInvoice: { en: 'Add Invoice', fr: 'Ajouter facture' },
   expanses: { en: 'Expanses', fr: 'Dépenses' },
   submit: { en: 'Submit', fr: 'Soumettre' },
-  enter_verification_code: { en: 'Enter Verification Code', fr: 'Entrez le code de vérification' }
-
+  enter_verification_code: { en: 'Enter Verification Code', fr: 'Entrez le code de vérification' },
+  welcome_back: { en: 'Welcome Back', fr: 'Bon retour' },
+  edit_profile: { en: 'Edit Profile', fr: 'Modifier le profil' },
+  intervention_category: { en: 'Intervention Category', fr: 'Catégorie d’intervention' },
+  contact_support: { en: 'Contact Support', fr: 'Contacter le support' },
+  change_password: { en: 'Change Password', fr: 'Changer le mot de passe' },
+  terms_and_conditions: { en: 'Terms & Conditions', fr: 'Termes et conditions' },
+  privacy_policy: { en: 'Privacy Policy', fr: 'Politique de confidentialité' },
+  logout: { en: 'Logout', fr: 'Se déconnecter' }
 
 } as const;
 
