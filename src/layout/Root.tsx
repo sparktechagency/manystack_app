@@ -1,9 +1,11 @@
-import {NavigationContainer} from '@react-navigation/native';
-import React, {useEffect} from 'react';
-import {StatusBar, useColorScheme} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { StatusBar, useColorScheme } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Provider } from 'react-redux';
 import GlobalContextProvider from '../providers/GlobalContextProvider';
+import { store } from '../redux/store';
 import DrawerLayout from './DrawerLayout';
 
 const Root = () => {
@@ -19,9 +21,11 @@ const Root = () => {
         barStyle={isDarkMode ? 'dark-content' : 'light-content'}
         backgroundColor={isDarkMode ? Colors.lighter : Colors.darker}
       />
-      <GlobalContextProvider>
-        <DrawerLayout />
-      </GlobalContextProvider>
+      <Provider store={store}>
+        <GlobalContextProvider>
+          <DrawerLayout />
+        </GlobalContextProvider>
+      </Provider>
     </NavigationContainer>
   );
 };

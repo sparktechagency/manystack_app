@@ -1,0 +1,2 @@
+export const baseUrl = 'https://api.example.com/v1/';
+export const generateImageUrl = (imagePath: string): string => imagePath?.includes('http') ? imagePath : imagePath?.startsWith('/') ? `${baseUrl}${imagePath}` : `${baseUrl}/${imagePath}`;
