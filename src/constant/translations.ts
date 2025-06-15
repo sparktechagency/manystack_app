@@ -73,7 +73,12 @@ export const translations = {
   change_password: { en: 'Change Password', fr: 'Changer le mot de passe' },
   terms_and_conditions: { en: 'Terms & Conditions', fr: 'Termes et conditions' },
   privacy_policy: { en: 'Privacy Policy', fr: 'Politique de confidentialité' },
-  logout: { en: 'Logout', fr: 'Se déconnecter' }
+  logout: { en: 'Logout', fr: 'Se déconnecter' },
+  profit: { en: 'Profit', fr: 'Bénéfice' },
+  income: { en: 'Income', fr: 'Revenu' },
+  today_highlights: { en: 'Today Highlights', fr: 'Faits saillants du jour' },
+  total_intervention: { en: 'Total Intervention', fr: 'Intervention totale' },
+  total_price: { en: 'Total Price', fr: 'Prix total' }
 
 } as const;
 
