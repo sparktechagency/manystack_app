@@ -1,12 +1,12 @@
 export interface ICreateInterVention {
-  "intervention id"?: string;
+  'intervention id'?: string;
   category: string;
   price: string;
   note: string;
   status: string;
 }
 export interface ICreateExpenses {
-  "Expense Name": string;
+  'Expense Name': string;
   category: string;
   price: string;
   note: string;
@@ -49,6 +49,6 @@ export interface IInterventionCategoryData {
   id: string;
 }
 export interface IInterventionCategory {
-  "category Name": string;
-  "category Price": string;
+  'category Name': string;
+  'category Price': string;
 }

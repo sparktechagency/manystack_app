@@ -1,19 +1,19 @@
 import React from 'react';
-import {FlatList, StyleSheet} from 'react-native';
-import {intervention} from '../../constant/data';
-import {IIntervention} from '../../types/DataTypes';
+import { FlatList, StyleSheet } from 'react-native';
+import { interventionFr } from '../../constant/data';
+import { IIntervention } from '../../types/DataTypes';
 import InterventionsCards from './InterventionsCards';
 
 const Interventions = () => {
   return (
     <FlatList
-      data={intervention as IIntervention[]}
+      data={interventionFr as IIntervention[]}
       keyExtractor={(item: IIntervention) => item.invoice_id}
-      renderItem={({item}) => (
+      renderItem={({ item }) => (
         <InterventionsCards key={item.invoice_id} item={item} />
       )}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{gap: 15, padding: 0}}
+      contentContainerStyle={{ gap: 15, padding: 0 }}
     />
   );
 };

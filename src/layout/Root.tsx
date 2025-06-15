@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect} from 'react';
-import {Modal, StatusBar, StyleSheet, useColorScheme} from 'react-native';
+import {StatusBar, useColorScheme} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import GlobalContextProvider from '../providers/GlobalContextProvider';
@@ -27,5 +27,3 @@ const Root = () => {
 };
 
 export default Root;
-
-const styles = StyleSheet.create({});

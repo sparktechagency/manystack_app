@@ -1,15 +1,15 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import FlexTextOpacity from '../../components/InterventionDetails/FlexTextOpacity';
 import ImageCard from '../../components/InterventionDetails/ImageCard';
 import GradientButton from '../../components/sheard/GradientButton';
-import { intervention } from '../../constant/data';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { IIntervention } from '../../types/DataTypes';
-import { hexToRGBA } from '../../utils/hexToRGBA';
+import {intervention} from '../../constant/data';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {IIntervention} from '../../types/DataTypes';
+import {hexToRGBA} from '../../utils/hexToRGBA';
 
 const InterventionDetails = () => {
-  const { width, height, themeColors } = useGlobalContext();
+  const {width, height, themeColors} = useGlobalContext();
   const data = intervention?.[0] as IIntervention;
   return (
     <View
@@ -41,7 +41,7 @@ const InterventionDetails = () => {
         ]}
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <ImageCard key={item} item={item?.toString()} />
         )}
         showsVerticalScrollIndicator={false}
@@ -60,9 +60,9 @@ const InterventionDetails = () => {
           bottom: 56,
           width: width,
           paddingVertical: 16,
-          backgroundColor: hexToRGBA(themeColors.white as string, .9),
+          backgroundColor: hexToRGBA(themeColors.white as string, 0.9),
         }}>
-        <GradientButton handler={() => { }}>
+        <GradientButton handler={() => {}}>
           <Text
             style={{
               color: 'white',

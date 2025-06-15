@@ -1,8 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {IAddress} from '../../types/loginType';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { IAddress } from '../../types/loginType';
+import { t } from '../../utils/translate';
 
 const Address = ({
   address,
@@ -13,7 +14,7 @@ const Address = ({
   setAddress: (arg0: IAddress) => void;
   error: any;
 }) => {
-  const {width} = useGlobalContext();
+  const { width, english } = useGlobalContext();
   return (
     <View>
       <Text style={globalStyles.inputLabel}>Address</Text>
@@ -28,9 +29,9 @@ const Address = ({
           style={[
             globalStyles.input,
             error?.streetNo ? globalStyles.inputError : {},
-            {width: (width - 60) / 3},
+            { width: (width - 60) / 3 },
           ]}
-          placeholder="Street no"
+          placeholder={t('streetNo', english)}
           placeholderTextColor={globalStyles.inputPlaceholder.color}
         />
         <TextInput
@@ -43,10 +44,10 @@ const Address = ({
           style={[
             globalStyles.input,
             error?.streetName ? globalStyles.inputError : {},
-            {width: (width - 60) / 3},
-            {marginHorizontal: 10},
+            { width: (width - 60) / 3 },
+            { marginHorizontal: 10 },
           ]}
-          placeholder="Street name"
+          placeholder={t('streetName', english).slice(0, 10)}
           placeholderTextColor={globalStyles.inputPlaceholder.color}
         />
         <TextInput
@@ -59,9 +60,9 @@ const Address = ({
           style={[
             globalStyles.input,
             error?.city ? globalStyles.inputError : {},
-            {width: (width - 60) / 3},
+            { width: (width - 60) / 3 },
           ]}
-          placeholder="City"
+          placeholder={t('city', english)}
           placeholderTextColor={globalStyles.inputPlaceholder.color}
         />
       </View>
@@ -77,10 +78,10 @@ const Address = ({
           style={[
             globalStyles.input,
             error?.postalCode ? globalStyles.inputError : {},
-            {width: (width - 50) / 2},
-            {marginRight: 10},
+            { width: (width - 50) / 2 },
+            { marginRight: 10 },
           ]}
-          placeholder="Postal code"
+          placeholder={t('postalCode', english)}
           placeholderTextColor={globalStyles.inputPlaceholder.color}
         />
         <TextInput
@@ -93,10 +94,10 @@ const Address = ({
           style={[
             globalStyles.input,
             error?.country ? globalStyles.inputError : {},
-            {width: (width - 50) / 2},
+            { width: (width - 50) / 2 },
           ]}
           placeholderTextColor={globalStyles.inputPlaceholder.color}
-          placeholder="Country"
+          placeholder={t('country', english)}
         />
       </View>
     </View>

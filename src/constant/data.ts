@@ -1,4 +1,10 @@
-import { IExpenses, IIntervention, IInterventionCategoryData, IInvoice, ISubscription } from '../types/DataTypes';
+import {
+  IExpenses,
+  IIntervention,
+  IInterventionCategoryData,
+  IInvoice,
+  ISubscription,
+} from '../types/DataTypes';
 import { DrawerIcons } from './images';
 
 export const genderData = [
@@ -62,6 +68,53 @@ export const intervention: IIntervention[] = [
     images: [],
   },
 ];
+export const interventionFr: IIntervention[] = [
+  {
+    invoice_id: 'INT-20250507-001',
+    status: 'Impayé',
+    date: '25 février 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+    description: 'Riche en épices, souvenirs et... ',
+    images: [],
+  },
+  {
+    invoice_id: 'INT-20250507-002',
+    status: 'Impayé',
+    date: '25 février 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+    description: 'Riche en épices, souvenirs et... ',
+    images: [],
+  },
+  {
+    invoice_id: 'INT-20250507-003',
+    status: 'Impayé',
+    date: '25 février 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+    description: 'Riche en épices, souvenirs et... ',
+    images: [],
+  },
+  {
+    invoice_id: 'INT-20250507-004',
+    status: 'Impayé',
+    date: '25 février 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+    description: 'Riche en épices, souvenirs et... ',
+    images: [],
+  },
+  {
+    invoice_id: 'INT-20250507-005',
+    status: 'Payé',
+    date: '25 février 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+    description: 'Riche en épices, souvenirs et... ',
+    images: [],
+  },
+];
 
 export const Expenses: IExpenses[] = [
   {
@@ -110,6 +163,90 @@ export const Expenses: IExpenses[] = [
     images: [],
   },
 ];
+export const ExpensesFr: IExpenses[] = [
+  {
+    name: 'Remplissage de carburant pour le fourgon de service',
+    status: 'Non payé',
+    date: '25 févr. 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+    description: 'Riche en épices, souvenirs, et le reste',
+    images: [],
+  },
+  {
+    name: 'Remplissage de carburant pour le fourgon de service',
+    status: 'Non payé',
+    date: '25 févr. 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+    description: 'Riche en épices, souvenirs, et le reste',
+    images: [],
+  },
+  {
+    name: 'Remplissage de carburant pour le fourgon de service',
+    status: 'Non payé',
+    date: '25 févr. 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+    description: 'Riche en épices, souvenirs, et le reste',
+    images: [],
+  },
+  {
+    name: 'Remplissage de carburant pour le fourgon de service',
+    status: 'Non payé',
+    date: '25 févr. 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+    description: 'Riche en épices, souvenirs, et le reste',
+    images: [],
+  },
+  {
+    name: 'Remplissage de carburant pour le fourgon de service',
+    status: 'Payé',
+    date: '25 févr. 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+    description: 'Riche en épices, souvenirs, et le reste',
+    images: [],
+  },
+];
+export const InvoiceDataFr: IInvoice[] = [
+  {
+    invoice_id: 'INT-20250507-003',
+    status: 'Non payé',
+    date: '25 févr. 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+  },
+  {
+    invoice_id: 'INT-20250507-003',
+    status: 'Non payé',
+    date: '25 févr. 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+  },
+  {
+    invoice_id: 'INT-20250507-003',
+    status: 'Non payé',
+    date: '25 févr. 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+  },
+  {
+    invoice_id: 'INT-20250507-003',
+    status: 'Non payé',
+    date: '25 févr. 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+  },
+  {
+    invoice_id: 'INT-20250507-003',
+    status: 'Payé',
+    date: '25 févr. 2025',
+    service: 'Service après-vente',
+    amount: 350.0,
+  },
+];
 
 export const InvoiceData: IInvoice[] = [
   {
@@ -151,12 +288,20 @@ export const InvoiceData: IInvoice[] = [
 export const DrawerLinksData = [
   { name: 'Edit Profile', href: 'EditProfile', icon: DrawerIcons.UserEdit },
   { name: 'Subscription', href: 'Subscription', icon: DrawerIcons.Crown },
-  { name: 'Intervention Category', href: 'InterventionCategory', icon: DrawerIcons.Category },
+  {
+    name: 'Intervention Category',
+    href: 'InterventionCategory',
+    icon: DrawerIcons.Category,
+  },
   { name: 'Contact Support', href: 'Support', icon: DrawerIcons.Support },
   { name: 'Change Password', href: 'ChangePassword', icon: DrawerIcons.Shield },
-  { name: 'Terms & Conditions', href: 'TermsAndConditions', icon: DrawerIcons.Terms },
+  {
+    name: 'Terms & Conditions',
+    href: 'TermsAndConditions',
+    icon: DrawerIcons.Terms,
+  },
   { name: 'Privacy Policy', href: 'PrivacyPolicy', icon: DrawerIcons.Privacy },
-]
+];
 
 export const subscriptionsData: ISubscription[] = [
   {
@@ -171,10 +316,9 @@ export const subscriptionsData: ISubscription[] = [
     price: '100$',
     description: 'Cancel any time',
   },
-
-]
+];
 
 export const InterventionCategoryData: IInterventionCategoryData[] = [
-  { name: 'PLP', price: "350.00$", id: '1' },
-  { name: 'After sell service', price: "350.00$", id: '2' },
-]
+  { name: 'PLP', price: '350.00$', id: '1' },
+  { name: 'After sell service', price: '350.00$', id: '2' },
+];

@@ -1,4 +1,4 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -6,28 +6,32 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { DeleteIcon, DownloadPdf, Edit, eye } from '../../constant/images';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { IInvoice } from '../../types/DataTypes';
-import { StackTypes } from '../../types/ScreenPropsTypes';
-import { hexToRGBA } from '../../utils/hexToRGBA';
-import { CardStyles } from '../Intervention/InterventionsCards';
+import {DeleteIcon, DownloadPdf, Edit, eye} from '../../constant/images';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {IInvoice} from '../../types/DataTypes';
+import {StackTypes} from '../../types/ScreenPropsTypes';
+import {hexToRGBA} from '../../utils/hexToRGBA';
+import {CardStyles} from '../Intervention/InterventionsCards';
 
-const InvoiceCard = ({ item }: { item: IInvoice }) => {
+const InvoiceCard = ({item}: {item: IInvoice}) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
-  const { themeColors } = useGlobalContext();
+  const {themeColors} = useGlobalContext();
   return (
-    <View style={[{
-      padding: 12,
-      borderRadius: 8,
-      marginBottom: 10,
-      shadowColor: '#000',
-      shadowOpacity: 0.1,
-      shadowRadius: 10,
-      elevation: 5,
-    }, { backgroundColor: themeColors.white as string }]}>
+    <View
+      style={[
+        {
+          padding: 12,
+          borderRadius: 8,
+          marginBottom: 10,
+          shadowColor: '#000',
+          shadowOpacity: 0.1,
+          shadowRadius: 10,
+          elevation: 5,
+        },
+        {backgroundColor: themeColors.white as string},
+      ]}>
       <View>
         <View style={CardStyles.headerRow}>
           <Text
@@ -79,16 +83,16 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
           ]}>
           {item.service}
         </Text>
-        <Text style={[CardStyles.amount, { color: themeColors.primary as string }]}>
+        <Text
+          style={[CardStyles.amount, {color: themeColors.primary as string}]}>
           ${item.amount.toFixed(2)}
         </Text>
 
-
-        <View style={[CardStyles.actions, { width: "30%" }]}>
+        <View style={[CardStyles.actions, {width: '30%'}]}>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('InvoiceDetails', {
-                params: { id: item.invoice_id },
+                params: {id: item.invoice_id},
               });
             }}>
             <Image
@@ -115,7 +119,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('UpdateInvoice', {
-                params: { id: item.invoice_id },
+                params: {id: item.invoice_id},
               });
             }}>
             <Image
@@ -145,6 +149,6 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
   );
 };
 
-export default InvoiceCard
+export default InvoiceCard;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

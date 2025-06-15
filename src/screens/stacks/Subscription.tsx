@@ -1,48 +1,64 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FlexTextOpacity from '../../components/InterventionDetails/FlexTextOpacity';
 import GradientButton from '../../components/sheard/GradientButton';
 import SubscriptionCard from '../../components/Subscriptions/SubscriptionCard';
-import { subscriptionsData } from '../../constant/data';
-import { globalStyles } from '../../constant/styles';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { hexToRGBA } from '../../utils/hexToRGBA';
+import {subscriptionsData} from '../../constant/data';
+import {globalStyles} from '../../constant/styles';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {hexToRGBA} from '../../utils/hexToRGBA';
 
 const Subscription = () => {
-  const { themeColors, width, height } = useGlobalContext();
-  const [selected, setSelected] = React.useState("")
+  const {themeColors, width, height} = useGlobalContext();
+  const [selected, setSelected] = React.useState('');
   return (
-    <SafeAreaView style={{
-      paddingHorizontal: 20, position: 'relative',
-      height: height,
-    }}>
+    <SafeAreaView
+      style={{
+        paddingHorizontal: 20,
+        position: 'relative',
+        height: height,
+      }}>
       <ScrollView>
         <Text style={[globalStyles.inputLabel]}>Current Plan</Text>
-        <View style={{
-          width: '100%',
-          height: "auto",
-          backgroundColor: hexToRGBA(themeColors.primary as string, 0.1),
-          padding: 16,
-          borderRadius: 10,
-        }}>
-          <View style={[globalStyles.flex, {
-            justifyContent: 'space-between',
-          }]}>
-            <Text style={{
-              fontSize: 18,
-              fontWeight: '600',
-              color: themeColors.primary as string,
-            }}>
+        <View
+          style={{
+            width: '100%',
+            height: 'auto',
+            backgroundColor: hexToRGBA(themeColors.primary as string, 0.1),
+            padding: 16,
+            borderRadius: 10,
+          }}>
+          <View
+            style={[
+              globalStyles.flex,
+              {
+                justifyContent: 'space-between',
+              },
+            ]}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: '600',
+                color: themeColors.primary as string,
+              }}>
               Basic Plan
             </Text>
-            <Text style={{
-              fontSize: 18,
-              fontWeight: '600',
-              color: themeColors.white as string,
-              backgroundColor: hexToRGBA(themeColors.green as string, 0.6),
-              paddingHorizontal: 10,
-              borderRadius: 5,
-            }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: '600',
+                color: themeColors.white as string,
+                backgroundColor: hexToRGBA(themeColors.green as string, 0.6),
+                paddingHorizontal: 10,
+                borderRadius: 5,
+              }}>
               Active
             </Text>
           </View>
@@ -56,36 +72,42 @@ const Subscription = () => {
             text2="25 Nov,2024"
             color={hexToRGBA(themeColors.black as string, 0.6)}
           />
-          <TouchableOpacity style={{
-            flexDirection: 'row',
-            marginTop: 10,
-          }}>
-            <Text style={{
-              fontSize: 18,
-              fontWeight: '600',
-              color: themeColors.white as string,
-              backgroundColor: hexToRGBA(themeColors.red as string, 0.6),
-              paddingHorizontal: 10,
-              paddingVertical: 5,
-              borderRadius: 5,
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+              marginTop: 10,
             }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: '600',
+                color: themeColors.white as string,
+                backgroundColor: hexToRGBA(themeColors.red as string, 0.6),
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                borderRadius: 5,
+              }}>
               Cancel Request
             </Text>
           </TouchableOpacity>
         </View>
-        <Text style={[globalStyles.inputLabel, {
-          marginTop: 20,
-        }]}>Available Plan</Text>
-        {
-          subscriptionsData.map((item, index) => (
-            <SubscriptionCard
-              selected={selected === item.name}
-              setSelected={setSelected}
-              item={item}
-              key={index}
-            />
-          ))
-        }
+        <Text
+          style={[
+            globalStyles.inputLabel,
+            {
+              marginTop: 20,
+            },
+          ]}>
+          Available Plan
+        </Text>
+        {subscriptionsData.map((item, index) => (
+          <SubscriptionCard
+            selected={selected === item.name}
+            setSelected={setSelected}
+            item={item}
+            key={index}
+          />
+        ))}
       </ScrollView>
       <View
         style={{
@@ -95,7 +117,7 @@ const Subscription = () => {
           width: width,
           paddingVertical: 16,
         }}>
-        <GradientButton handler={() => { }}>
+        <GradientButton handler={() => {}}>
           <Text
             style={{
               color: 'white',
@@ -108,9 +130,9 @@ const Subscription = () => {
         </GradientButton>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default Subscription
+export default Subscription;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

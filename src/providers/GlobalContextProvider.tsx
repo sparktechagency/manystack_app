@@ -1,6 +1,6 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
-import { Dimensions, useColorScheme } from 'react-native';
-import { Colors, ITheme } from '../constant/colors';
+import React, {createContext, ReactNode, useContext, useState} from 'react';
+import {Dimensions, useColorScheme} from 'react-native';
+import {Colors, ITheme} from '../constant/colors';
 // import { Provider } from 'react-redux';
 // import { Colors, ITheme } from '../constant/colors';
 // import { store } from '../Redux/store';
@@ -15,16 +15,19 @@ interface GlobalContextType {
   modalOpen: boolean;
   height: number;
   width: number;
+  english: boolean;
+  setEnglish: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface GlobalProviderProps {
   children: ReactNode;
 }
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
-const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
-  const { width, height } = Dimensions.get('window');
+const GlobalContextProvider = ({children}: GlobalProviderProps) => {
+  const {width, height} = Dimensions.get('window');
   const colorScheme = useColorScheme();
   const [search, setSearch] = useState<string>('');
+  const [english, setEnglish] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [images, setImages] = React.useState<string[]>([]);
   const themeColors = Colors.light;
@@ -38,6 +41,8 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     height,
     images,
     setImages,
+    english,
+    setEnglish,
   };
   return (
     <GlobalContext.Provider value={values}>

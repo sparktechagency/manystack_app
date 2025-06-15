@@ -7,7 +7,7 @@ import {
   Switch,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { DeleteIcon, Edit, eye, logo } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
@@ -21,7 +21,8 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
-    <View style={[CardStyles.card, { backgroundColor: themeColors.white as string }]}>
+    <View
+      style={[CardStyles.card, { backgroundColor: themeColors.white as string }]}>
       <View>
         <View style={CardStyles.headerRow}>
           <Text
@@ -73,7 +74,8 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
           ]}>
           {item.service}
         </Text>
-        <Text style={[CardStyles.amount, { color: themeColors.primary as string }]}>
+        <Text
+          style={[CardStyles.amount, { color: themeColors.primary as string }]}>
           ${item.amount.toFixed(2)}
         </Text>
         <Text

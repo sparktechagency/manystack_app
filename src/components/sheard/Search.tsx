@@ -6,15 +6,16 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {SearchIcon} from '../../constant/images';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { SearchIcon } from '../../constant/images';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 interface SearchProps {
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
 }
-const Search = ({search, setSearch}: SearchProps) => {
-  const {themeColors} = useGlobalContext();
+const Search = ({ search, setSearch }: SearchProps) => {
+  const { themeColors, english } = useGlobalContext();
   return (
     <View
       style={{
@@ -36,14 +37,14 @@ const Search = ({search, setSearch}: SearchProps) => {
       <TextInput
         value={search}
         onChangeText={text => setSearch(text)}
-        placeholder="Search..."
+        placeholder={`${t('search', english)}...`}
         placeholderTextColor={hexToRGBA(themeColors.black as string, 0.3)}
         style={{
           padding: 16,
           borderRadius: 8,
           paddingLeft: 40,
         }}
-        // onSubmitEditing={() => { console.log('submit') }}
+      // onSubmitEditing={() => { console.log('submit') }}
       />
     </View>
   );

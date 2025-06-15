@@ -1,29 +1,23 @@
 import React from 'react';
 import CountryPicker from 'react-native-country-picker-modal';
 
-import {
-  Dimensions,
-  ScrollView,
-  Text,
-  TextInput,
-  View
-} from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {Dimensions, ScrollView, Text, TextInput, View} from 'react-native';
+import {Dropdown} from 'react-native-element-dropdown';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Address from '../../components/sheard/Address';
 import GradientButton from '../../components/sheard/GradientButton';
-import { Colors } from '../../constant/colors';
-import { genderData } from '../../constant/data';
-import { globalStyles } from '../../constant/styles';
-import { IAddress, ILogin, IUpdateProfile } from '../../types/loginType';
-import { hexToRGBA } from '../../utils/hexToRGBA';
+import {Colors} from '../../constant/colors';
+import {genderData} from '../../constant/data';
+import {globalStyles} from '../../constant/styles';
+import {IAddress, ILogin, IUpdateProfile} from '../../types/loginType';
+import {hexToRGBA} from '../../utils/hexToRGBA';
 
 const Profile = () => {
   const [passShow, setPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
   const [countryCode, setCountryCode] = React.useState('BD');
   const [callingCode, setCallingCode] = React.useState('880');
-  const { width } = Dimensions.get('window');
+  const {width} = Dimensions.get('window');
 
   const [address, setAddress] = React.useState<IAddress>({
     streetName: '',
@@ -58,7 +52,6 @@ const Profile = () => {
     gender: 'male',
     'N°SIREN': '123456789',
     address: 'Dhaka',
-
   });
 
   const submitHandler = () => {
@@ -69,9 +62,9 @@ const Profile = () => {
     };
     Object.keys(combinedInputValue).forEach(key => {
       if (combinedInputValue[key as keyof Combined] === '') {
-        setError(prev => ({ ...prev, [key]: true }));
+        setError(prev => ({...prev, [key]: true}));
       } else {
-        setError(prev => ({ ...prev, [key]: false }));
+        setError(prev => ({...prev, [key]: false}));
       }
     });
   };
@@ -97,14 +90,14 @@ const Profile = () => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{ flex: 1, marginRight: 10 }}>
+                <View style={{flex: 1, marginRight: 10}}>
                   <Text style={globalStyles.inputLabel}>First Name</Text>
-                  <View style={{ position: 'relative' }}>
+                  <View style={{position: 'relative'}}>
                     <TextInput
                       value={inputValue['first name']}
                       onChangeText={text => {
-                        setInputValue({ ...inputValue, ['first name']: text });
-                        setError({ ...error, ['first name']: false });
+                        setInputValue({...inputValue, ['first name']: text});
+                        setError({...error, ['first name']: false});
                       }}
                       placeholder="Enter your first name"
                       placeholderTextColor={globalStyles.inputPlaceholder.color}
@@ -116,14 +109,14 @@ const Profile = () => {
                   </View>
                 </View>
 
-                <View style={{ flex: 1, marginLeft: 10 }}>
+                <View style={{flex: 1, marginLeft: 10}}>
                   <Text style={globalStyles.inputLabel}>Last Name</Text>
-                  <View style={{ position: 'relative' }}>
+                  <View style={{position: 'relative'}}>
                     <TextInput
                       value={inputValue['last name']}
                       onChangeText={text => {
-                        setInputValue({ ...inputValue, ['last name']: text });
-                        setError({ ...error, ['last name']: false });
+                        setInputValue({...inputValue, ['last name']: text});
+                        setError({...error, ['last name']: false});
                       }}
                       placeholder="Enter your last name"
                       placeholderTextColor={globalStyles.inputPlaceholder.color}
@@ -153,14 +146,14 @@ const Profile = () => {
                   placeholder="Select Gender"
                   value={inputValue.gender}
                   onChange={item => {
-                    setInputValue({ ...inputValue, gender: item.value });
-                    setError({ ...error, gender: false });
+                    setInputValue({...inputValue, gender: item.value});
+                    setError({...error, gender: false});
                   }}
                   placeholderStyle={{
                     color: globalStyles.inputPlaceholder.color,
                   }}
-                  selectedTextStyle={{ color: '#000' }}
-                  containerStyle={{ borderRadius: 5 }}
+                  selectedTextStyle={{color: '#000'}}
+                  containerStyle={{borderRadius: 5}}
                   dropdownPosition="auto"
                 />
               </View>
@@ -170,7 +163,7 @@ const Profile = () => {
             return (
               <View key={key}>
                 <Text style={globalStyles.inputLabel}>Contact</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <CountryPicker
                     countryCode={countryCode as any}
                     withFlag
@@ -196,8 +189,8 @@ const Profile = () => {
                   <TextInput
                     value={inputValue.contact}
                     onChangeText={text => {
-                      setInputValue({ ...inputValue, contact: text });
-                      setError({ ...error, contact: false });
+                      setInputValue({...inputValue, contact: text});
+                      setError({...error, contact: false});
                     }}
                     placeholder="Enter your contact number"
                     keyboardType="phone-pad"
@@ -234,18 +227,20 @@ const Profile = () => {
               <Text style={globalStyles.inputLabel}>
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </Text>
-              <View style={{ position: 'relative' }}>
+              <View style={{position: 'relative'}}>
                 <TextInput
                   value={inputValue[key as keyof IUpdateProfile]}
                   onChangeText={text => {
-                    setInputValue({ ...inputValue, [key]: text });
-                    setError({ ...error, [key]: false });
+                    setInputValue({...inputValue, [key]: text});
+                    setError({...error, [key]: false});
                   }}
                   placeholder={`Enter your ${key}`}
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
                     globalStyles.input,
-                    error[key as keyof IUpdateProfile] ? globalStyles.inputError : {},
+                    error[key as keyof IUpdateProfile]
+                      ? globalStyles.inputError
+                      : {},
                   ]}
                 />
               </View>
@@ -253,7 +248,7 @@ const Profile = () => {
           );
         })}
 
-        <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
+        <View style={{paddingHorizontal: 25, marginBottom: 120}}>
           <GradientButton handler={() => submitHandler()}>
             <Text
               style={{
@@ -266,12 +261,9 @@ const Profile = () => {
             </Text>
           </GradientButton>
         </View>
-
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-
 export default Profile;
-

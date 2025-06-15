@@ -1,5 +1,11 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// src/navigation/StackLayout.tsx
+
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
+import {useGlobalContext} from '../providers/GlobalContextProvider';
+import {t} from '../utils/translate';
+
+// Screens & Components
 import InvoiceDetails from '../components/Invoice/InvoiceDetails';
 import ForgetPassword from '../screens/auth/ForgetPassword';
 import Login from '../screens/auth/Login';
@@ -27,6 +33,8 @@ import TabLayout from './TabLayout';
 const Stack = createNativeStackNavigator();
 
 const StackLayout = () => {
+  const {english} = useGlobalContext();
+
   return (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
@@ -34,7 +42,7 @@ const StackLayout = () => {
         component={Login}
         options={{
           headerShown: true,
-          title: 'Login',
+          title: t('login', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -44,7 +52,7 @@ const StackLayout = () => {
         component={SignUp}
         options={{
           headerShown: true,
-          title: 'Create Account',
+          title: t('createAccount', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -54,7 +62,7 @@ const StackLayout = () => {
         component={ForgetPassword}
         options={{
           headerShown: true,
-          title: 'Forget Password',
+          title: t('forgetPassword', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -64,7 +72,7 @@ const StackLayout = () => {
         component={Otp}
         options={{
           headerShown: true,
-          title: 'Verify Code',
+          title: t('verifyCode', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -74,7 +82,7 @@ const StackLayout = () => {
         component={NewPassword}
         options={{
           headerShown: true,
-          title: 'New Password',
+          title: t('newPassword', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -84,7 +92,7 @@ const StackLayout = () => {
         component={CreateIntervention}
         options={{
           headerShown: true,
-          title: 'Create Intervention',
+          title: t('createIntervention', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -94,7 +102,7 @@ const StackLayout = () => {
         component={UpdateIntervention}
         options={{
           headerShown: true,
-          title: 'Update Intervention',
+          title: t('updateIntervention', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -104,7 +112,7 @@ const StackLayout = () => {
         component={CreateExpenses}
         options={{
           headerShown: true,
-          title: 'Create Expenses',
+          title: t('createExpenses', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -114,7 +122,7 @@ const StackLayout = () => {
         component={UpdateExpenses}
         options={{
           headerShown: true,
-          title: 'Update Expenses',
+          title: t('updateExpenses', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -124,7 +132,7 @@ const StackLayout = () => {
         component={InterventionDetails}
         options={{
           headerShown: true,
-          title: 'Details',
+          title: t('details', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -134,7 +142,7 @@ const StackLayout = () => {
         component={InvoiceDetails}
         options={{
           headerShown: true,
-          title: 'Details',
+          title: t('details', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -144,7 +152,7 @@ const StackLayout = () => {
         component={CreateInvoice}
         options={{
           headerShown: true,
-          title: 'Create Invoice',
+          title: t('createInvoice', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -154,7 +162,7 @@ const StackLayout = () => {
         component={UpdateInvoice}
         options={{
           headerShown: true,
-          title: 'Update Invoice',
+          title: t('updateInvoice', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -164,7 +172,7 @@ const StackLayout = () => {
         component={Profile}
         options={{
           headerShown: true,
-          title: 'Edit Profile',
+          title: t('editProfile', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -174,7 +182,7 @@ const StackLayout = () => {
         component={Subscription}
         options={{
           headerShown: true,
-          title: 'Subscription',
+          title: t('subscription', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -184,7 +192,7 @@ const StackLayout = () => {
         component={InterventionCategory}
         options={{
           headerShown: true,
-          title: 'Intervention Category',
+          title: t('interventionCategory', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -194,7 +202,7 @@ const StackLayout = () => {
         component={CreateInterventionCategory}
         options={{
           headerShown: true,
-          title: 'Create Intervention Category',
+          title: t('createInterventionCategory', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -204,7 +212,7 @@ const StackLayout = () => {
         component={UpdateInterventionCategory}
         options={{
           headerShown: true,
-          title: 'Update Intervention Category',
+          title: t('updateInterventionCategory', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -214,7 +222,7 @@ const StackLayout = () => {
         component={Support}
         options={{
           headerShown: true,
-          title: 'Contact Support',
+          title: t('contactSupport', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -224,7 +232,7 @@ const StackLayout = () => {
         component={ChangePassword}
         options={{
           headerShown: true,
-          title: 'Change Password',
+          title: t('changePassword', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -234,7 +242,7 @@ const StackLayout = () => {
         component={TermsAndConditions}
         options={{
           headerShown: true,
-          title: 'Terms And Conditions',
+          title: t('termsAndConditions', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
@@ -244,16 +252,15 @@ const StackLayout = () => {
         component={PrivacyPolicy}
         options={{
           headerShown: true,
-          title: 'Privacy Policy',
+          title: t('privacyPolicy', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,
         }}
       />
-      {/* Main app tabs */}
       <Stack.Screen
         name="Tabs"
         component={TabLayout}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

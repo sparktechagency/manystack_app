@@ -11,7 +11,7 @@ export type StackTypes = {
   Login: undefined;
   SignUp: undefined;
   Forget: undefined;
-  Otp: { from: string };
+  Otp: { params: { from: 'login' | 'forget' } };
   NewPassword: undefined;
   Tabs: undefined;
   CreateIntervention: undefined;

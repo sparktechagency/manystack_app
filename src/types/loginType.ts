@@ -56,7 +56,7 @@ export interface IUpdateProfile {
 }
 
 export interface IChangePassword {
-  "current password": string;
-  "new password": string;
-  "confirm password": string;
+  'current password': string;
+  'new password': string;
+  'confirm password': string;
 }
