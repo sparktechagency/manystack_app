@@ -14,6 +14,7 @@ import GradientButton from '../../components/sheard/GradientButton';
 import { eye, eyeSlash, logo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useLoginMutation } from '../../redux/Apis/authApis';
 import { ILogin } from '../../types/loginType';
 import { StackTypes } from '../../types/ScreenPropsTypes';
 import { t } from '../../utils/translate';
@@ -21,7 +22,7 @@ import { t } from '../../utils/translate';
 const Login = () => {
   const { english } = useGlobalContext();
   const navigate = useNavigation<NavigationProp<StackTypes>>();
-
+  const [] = useLoginMutation();
   const [passShow, setPassShow] = React.useState(true);
 
   const [error, setError] = React.useState({

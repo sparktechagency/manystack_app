@@ -1,8 +1,9 @@
-import { Link } from '@react-navigation/native';
-import React from 'react';
+import { Link, NavigationProp, useNavigation } from '@react-navigation/native';
+import React, { useCallback } from 'react';
 import CountryPicker from 'react-native-country-picker-modal';
 
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
   ImageSourcePropType,
@@ -14,6 +15,7 @@ import {
 } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import Address from '../../components/sheard/Address';
 import GradientButton from '../../components/sheard/GradientButton';
 import { Colors } from '../../constant/colors';
@@ -21,10 +23,13 @@ import { genderData } from '../../constant/data';
 import { eye, eyeSlash } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useRegisterMutation } from '../../redux/Apis/authApis';
 import { IAddress, ILogin, ISignUp } from '../../types/loginType';
+import { StackTypes } from '../../types/ScreenPropsTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { t } from '../../utils/translate';
 const SignUp = () => {
+  const navigation = useNavigation<NavigationProp<StackTypes>>()
   const [passShow, setPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
   const [countryCode, setCountryCode] = React.useState('BD');
@@ -32,11 +37,11 @@ const SignUp = () => {
   const { width } = Dimensions.get('window');
   const { english } = useGlobalContext();
   const [address, setAddress] = React.useState<IAddress>({
-    streetName: '',
-    city: '',
-    streetNo: '',
-    country: '',
-    postalCode: '',
+    streetName: 'b block',
+    city: 'bonassre',
+    streetNo: '123',
+    country: 'Bangladesh',
+    postalCode: '1212',
   });
 
   const [error, setError] = React.useState({
@@ -59,7 +64,7 @@ const SignUp = () => {
   const [inputValue, setInputValue] = React.useState<ISignUp>({
     'first name': 'shaharul',
     'last name': 'siyam',
-    email: 'siyamoffice0273@gmail',
+    email: 'siyamoffice0273@gmail.com',
     contact: '01700000000',
     gender: 'male',
     'N°SIREN': '123456789',
@@ -67,8 +72,11 @@ const SignUp = () => {
     password: '123456',
     confirmPassword: '123456',
   });
-  // t('login', english)
-  const submitHandler = () => {
+  //rtk
+  const [register, { isLoading }] = useRegisterMutation()
+
+  const submitHandler = useCallback(() => {
+    let isInvalid = false;
     type Combined = ISignUp & IAddress;
     const combinedInputValue: Combined = {
       ...inputValue,
@@ -76,12 +84,56 @@ const SignUp = () => {
     };
     Object.keys(combinedInputValue).forEach(key => {
       if (combinedInputValue[key as keyof ISignUp] === '') {
+        isInvalid = true;
         setError(prev => ({ ...prev, [key]: true }));
       } else {
         setError(prev => ({ ...prev, [key]: false }));
       }
     });
-  };
+    if (isInvalid) {
+      Toast.show({
+        type: 'error',
+        text1: "Please fill all fields",
+        text2: "All fields are required",
+      });
+      return;
+    }
+    const data = {
+      "firstName": combinedInputValue['first name'],
+      "lastName": combinedInputValue['last name'],
+      "email": combinedInputValue['email'],
+      "contact": combinedInputValue['contact'],
+      "nSiren": combinedInputValue['N°SIREN'],
+      "address": {
+        "streetNo": combinedInputValue['streetNo'],
+        "streetName": combinedInputValue['streetName'],
+        "city": combinedInputValue['city'],
+        "postalCode": combinedInputValue['postalCode'],
+        "country": combinedInputValue['country']
+      },
+      "gender": combinedInputValue['gender'],
+      "password": combinedInputValue['password']
+    }
+    register(data)
+      .unwrap()
+      .then((res) => {
+        navigation.navigate('Otp', { params: { from: "signup", email: combinedInputValue['email'] } });
+        Toast.show({
+          type: 'success',
+          text1: "registered successfully",
+          text2: res.message,
+        });
+      }
+      )
+      .catch((err) => {
+        Toast.show({
+          type: 'error',
+          text1: "registration failed",
+          text2: err.data?.message || "Something went wrong",
+        });
+      }
+      );
+  }, [register, inputValue, address]);
 
   return (
     <SafeAreaView>
@@ -305,15 +357,18 @@ const SignUp = () => {
 
         <View style={{ paddingHorizontal: 25 }}>
           <GradientButton handler={() => submitHandler()}>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: '700',
-                fontSize: 18,
-              }}>
-              {t("signUp", english)}
-            </Text>
+            {
+              isLoading ? <ActivityIndicator size="large" color="#FFFFFF" /> : <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: '700',
+                  fontSize: 18,
+                }}>
+                {t("signUp", english)}
+              </Text>
+            }
+
           </GradientButton>
         </View>
 

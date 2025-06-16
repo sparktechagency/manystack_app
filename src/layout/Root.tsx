@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import Toast from 'react-native-toast-message';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { Provider } from 'react-redux';
 import GlobalContextProvider from '../providers/GlobalContextProvider';
@@ -24,6 +25,7 @@ const Root = () => {
       <Provider store={store}>
         <GlobalContextProvider>
           <DrawerLayout />
+          <Toast />
         </GlobalContextProvider>
       </Provider>
     </NavigationContainer>
