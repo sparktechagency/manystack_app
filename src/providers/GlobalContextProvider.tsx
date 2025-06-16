@@ -27,7 +27,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
   const { width, height } = Dimensions.get('window');
   const colorScheme = useColorScheme();
   const [search, setSearch] = useState<string>('');
-  const [english, setEnglish] = useState<boolean>(true);
+  const [english, setEnglish] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [images, setImages] = React.useState<string[]>([]);
   const themeColors = Colors.light;

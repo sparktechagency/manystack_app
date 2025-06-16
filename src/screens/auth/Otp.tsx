@@ -8,17 +8,22 @@ import GradientButton from '../../components/sheard/GradientButton';
 import { Colors } from '../../constant/colors';
 import { logo } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { useVerifyEmailMutation } from '../../redux/Apis/authApis';
+import { useVerifyEmailMutation, useVerifyOtpMutation } from '../../redux/Apis/authApis';
 import { StackTypes } from '../../types/ScreenPropsTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { t } from '../../utils/translate';
 const Otp = () => {
   const route = useRoute();
-  const { from, email } = route.params as { from: string; email: string };
+  const params = route?.params as { params: { from: string; email: string } };
+  const from = params?.params?.from;
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const { english } = useGlobalContext();
   const [code, setCode] = useState('')
+
   const [verify, { isLoading }] = useVerifyEmailMutation();
+  const [verifyOtp, { isLoading: otpLoading }] = useVerifyOtpMutation();
+
+
   const handleOtpChange = useCallback(() => {
     if (code?.length != 6) {
       Toast.show({
@@ -27,7 +32,23 @@ const Otp = () => {
         text2: "Please enter a valid 6-digit OTP.",
       });
     };
-    verify({
+    from === 'signup' ? verify({
+      code,
+      email: params?.params?.email,
+    }).then((res) => {
+      Toast.show({
+        type: 'success',
+        text1: "Success",
+        text2: res.data?.message || "OTP verified successfully.",
+      })
+      navigate.navigate(from == "signup" ? 'Login' : 'NewPassword',);
+    }).catch((err) => {
+      Toast.show({
+        type: 'error',
+        text1: "Error",
+        text2: err?.data?.message || "An unexpected error occurred.",
+      });
+    }) : verifyOtp({
       code,
     }).then((res) => {
       Toast.show({
@@ -44,6 +65,8 @@ const Otp = () => {
       });
     });
   }, [code, verify, from])
+
+
   return (
     <SafeAreaView
       style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -51,7 +74,7 @@ const Otp = () => {
         <Image source={logo as ImageSourcePropType} height={100} width={100} />
       </View>
       {/* form */}
-      <View style={{ width: '100%', paddingHorizontal: 20 }}>
+      <View style={{ width: '90%', paddingHorizontal: 20 }}>
         <Text
           style={{
             fontSize: 16,
@@ -112,7 +135,7 @@ const Otp = () => {
                   fontWeight: '700',
                   fontSize: 18,
                 }}>
-                {t("signUp", english)}
+                {t("submit", english)}
               </Text>
             }
 
