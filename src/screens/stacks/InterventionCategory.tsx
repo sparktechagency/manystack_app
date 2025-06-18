@@ -14,7 +14,6 @@ const InterventionCategory = () => {
   const textColor = hexToRGBA(themeColors.black as string, 0.6);
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const { data, isLoading, isFetching } = useGetCategoriesQuery(undefined)
-  console.log({ data })
   return (
     <SafeAreaView
       style={{

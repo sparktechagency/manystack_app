@@ -1,12 +1,17 @@
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-native';
 import { globalStyles } from '../../constant/styles';
-import { useCreateCategory } from '../../hooks/categoryApiCall';
+import { useCreateCategory, useUpdateCategory } from '../../hooks/categoryApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IInterventionCategory } from '../../types/DataTypes';
+import { StackTypes } from '../../types/ScreenPropsTypes';
 import GradientButton from '../sheard/GradientButton';
 const InterventionCategoryFrom = () => {
+  const navigation = useNavigation<NavigationProp<StackTypes>>()
+  const { params }: any = useRoute()
   const { handleCreateCategory, isLoading, } = useCreateCategory();
+  const { handleUpdateCategory, isLoading: updating, } = useUpdateCategory();
   const { height, width } = useGlobalContext();
   const [error, setError] = React.useState({
     'category Name': false,
@@ -14,8 +19,8 @@ const InterventionCategoryFrom = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<IInterventionCategory>({
-    'category Name': '',
-    'category Price': '',
+    'category Name': params?.params?.name,
+    'category Price': params?.params?.price,
   });
   const submitHandler = async () => {
     Object.keys(inputValue).forEach(key => {
@@ -29,7 +34,8 @@ const InterventionCategoryFrom = () => {
       name: inputValue['category Name'],
       price: inputValue['category Price'],
     }
-    await handleCreateCategory(data);
+    params?.params?.id ? await handleUpdateCategory(data, params?.params?.id) : await handleCreateCategory(data);
+    navigation.goBack()
   };
   return (
     <View
@@ -74,7 +80,7 @@ const InterventionCategoryFrom = () => {
         }}>
         <GradientButton handler={submitHandler}>
           {
-            isLoading ? <ActivityIndicator size="large" color="white" /> : <Text
+            isLoading || updating ? <ActivityIndicator size="large" color="white" /> : <Text
               style={{
                 color: 'white',
                 textAlign: 'center',
