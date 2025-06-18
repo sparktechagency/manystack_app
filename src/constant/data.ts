@@ -1,9 +1,8 @@
 import {
   IExpenses,
-  IIntervention,
   IInterventionCategoryData,
   IInvoice,
-  ISubscription,
+  ISubscription
 } from '../types/DataTypes';
 import { DrawerIcons } from './images';
 
@@ -21,100 +20,7 @@ export const interventionFilter = [
   { label: 'after_sales_service', value: 'After sales service' },
 ];
 
-export const intervention: IIntervention[] = [
-  {
-    invoice_id: 'INT-20250507-001',
-    status: 'Unpaid',
-    date: '25,Feb 2025',
-    service: 'After sales service',
-    amount: 350.0,
-    description: 'Rich with spices, memories, and the',
-    images: [],
-  },
-  {
-    invoice_id: 'INT-20250507-002',
-    status: 'Unpaid',
-    date: '25,Feb 2025',
-    service: 'After sales service',
-    amount: 350.0,
-    description: 'Rich with spices, memories, and the',
-    images: [],
-  },
-  {
-    invoice_id: 'INT-20250507-003',
-    status: 'Unpaid',
-    date: '25,Feb 2025',
-    service: 'After sales service',
-    amount: 350.0,
-    description: 'Rich with spices, memories, and the',
-    images: [],
-  },
-  {
-    invoice_id: 'INT-20250507-004',
-    status: 'Unpaid',
-    date: '25,Feb 2025',
-    service: 'After sales service',
-    amount: 350.0,
-    description: 'Rich with spices, memories, and the',
-    images: [],
-  },
-  {
-    invoice_id: 'INT-20250507-005',
-    status: 'Paid',
-    date: '25,Feb 2025',
-    service: 'After sales service',
-    amount: 350.0,
-    description: 'Rich with spices, memories, and the',
-    images: [],
-  },
-];
-export const interventionFr: IIntervention[] = [
-  {
-    invoice_id: 'INT-20250507-001',
-    status: 'Impayé',
-    date: '25 février 2025',
-    service: 'Service après-vente',
-    amount: 350.0,
-    description: 'Riche en épices, souvenirs et... ',
-    images: [],
-  },
-  {
-    invoice_id: 'INT-20250507-002',
-    status: 'Impayé',
-    date: '25 février 2025',
-    service: 'Service après-vente',
-    amount: 350.0,
-    description: 'Riche en épices, souvenirs et... ',
-    images: [],
-  },
-  {
-    invoice_id: 'INT-20250507-003',
-    status: 'Impayé',
-    date: '25 février 2025',
-    service: 'Service après-vente',
-    amount: 350.0,
-    description: 'Riche en épices, souvenirs et... ',
-    images: [],
-  },
-  {
-    invoice_id: 'INT-20250507-004',
-    status: 'Impayé',
-    date: '25 février 2025',
-    service: 'Service après-vente',
-    amount: 350.0,
-    description: 'Riche en épices, souvenirs et... ',
-    images: [],
-  },
-  {
-    invoice_id: 'INT-20250507-005',
-    status: 'Payé',
-    date: '25 février 2025',
-    service: 'Service après-vente',
-    amount: 350.0,
-    description: 'Riche en épices, souvenirs et... ',
-    images: [],
-  },
-];
+
 
 export const Expenses: IExpenses[] = [
   {

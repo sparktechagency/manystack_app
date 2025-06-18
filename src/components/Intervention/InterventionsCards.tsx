@@ -32,7 +32,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
                 color: themeColors.primary as string,
               },
             ]}>
-            {item.invoice_id}
+            {item.interventionId}
           </Text>
 
           <View
@@ -76,7 +76,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
         </Text>
         <Text
           style={[CardStyles.amount, { color: themeColors.primary as string }]}>
-          ${item.amount.toFixed(2)}
+          ${item.price.toFixed(2)}
         </Text>
         <Text
           style={[
@@ -86,15 +86,14 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
             },
           ]}
           numberOfLines={1}>
-          {item.description?.slice(0, 35)}
-          {item.description?.length > 35 ? '...' : ''}
+          {item.note}
         </Text>
 
         <View style={CardStyles.actions}>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('InterventionDetails', {
-                params: { id: item.invoice_id },
+                params: { id: item.interventionId },
               });
             }}>
             <Image
@@ -110,7 +109,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('UpdateIntervention', {
-                params: { id: item.invoice_id },
+                params: { id: item.interventionId },
               });
             }}>
             <Image
