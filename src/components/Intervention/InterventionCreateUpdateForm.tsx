@@ -70,6 +70,7 @@ const InterventionCreateUpdateForm = () => {
     formData.append("latitude", location?.latitude);
     formData.append("longitude", location?.longitude);
     await handleCreateIntervention(formData)
+
   };
   return (
     <ScrollView
