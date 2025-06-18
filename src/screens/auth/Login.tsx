@@ -28,7 +28,6 @@ const Login = () => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const [signIn, { isLoading }] = useLoginMutation();
   const [passShow, setPassShow] = React.useState(true);
-
   const [error, setError] = React.useState({
     email: false,
     password: false,
@@ -87,20 +86,23 @@ const Login = () => {
     //   navigate.navigate('Tabs');
     // }
   };
-  if (userLoading && firstLoad) {
+  if (userLoading) {
     return (
       <></>
     )
   }
   if (user?._id && firstLoad) {
     navigate.navigate('Tabs');
-    setFirstLoad(false)
     setTimeout(() => {
       SplashScreen.hide();
     }, 1000);
+    setFirstLoad(false)
     return
   } else {
-    SplashScreen.hide();
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 1000);
+    setFirstLoad(false)
   }
   return (
     <SafeAreaView
