@@ -68,7 +68,7 @@ const ImageUpload = ({
         cropping: false,
       });
       const newImage = {
-        path: result.path,
+        uri: result.path,
         name: result?.filename ?? "random.jpg",
         type: result?.mime ?? "image/jpeg",
         mimeType: result?.mime ?? "image/jpeg",

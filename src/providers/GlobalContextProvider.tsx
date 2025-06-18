@@ -7,7 +7,7 @@ import { IUserProfile } from '../types/DataTypes';
 // import { Colors, ITheme } from '../constant/colors';
 // import { store } from '../Redux/store';
 export interface IImage {
-  path: string,
+  uri: string,
   name: string,
   type: string,
   mimeType: string,

@@ -75,7 +75,13 @@ const FloatingPlus = () => {
       const result = await ImageCropPicker.openCamera({
         cropping: false,
       });
-      setImages([result.path]);
+      const newImage = {
+        uri: result.path,
+        name: result?.filename ?? "random.jpg",
+        type: result?.mime ?? "image/jpeg",
+        mimeType: result?.mime ?? "image/jpeg",
+      }
+      setImages([newImage]);
       navigation.navigate('CreateIntervention');
     } catch (error: any) {
       if (error.code !== 'E_PICKER_CANCELLED') {
