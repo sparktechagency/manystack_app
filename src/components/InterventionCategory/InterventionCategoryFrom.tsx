@@ -1,14 +1,15 @@
-import { useRoute } from '@react-navigation/native';
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-native';
 import { globalStyles } from '../../constant/styles';
 import { useCreateCategory, useUpdateCategory } from '../../hooks/categoryApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IInterventionCategory } from '../../types/DataTypes';
+import { StackTypes } from '../../types/ScreenPropsTypes';
 import GradientButton from '../sheard/GradientButton';
 const InterventionCategoryFrom = () => {
+  const navigation = useNavigation<NavigationProp<StackTypes>>()
   const { params }: any = useRoute()
-  const { id, name, price } = params?.params
   const { handleCreateCategory, isLoading, } = useCreateCategory();
   const { handleUpdateCategory, isLoading: updating, } = useUpdateCategory();
   const { height, width } = useGlobalContext();
@@ -18,8 +19,8 @@ const InterventionCategoryFrom = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<IInterventionCategory>({
-    'category Name': name,
-    'category Price': price,
+    'category Name': params?.params?.name,
+    'category Price': params?.params?.price,
   });
   const submitHandler = async () => {
     Object.keys(inputValue).forEach(key => {
@@ -33,7 +34,8 @@ const InterventionCategoryFrom = () => {
       name: inputValue['category Name'],
       price: inputValue['category Price'],
     }
-    id ? await handleUpdateCategory(data, id) : await handleCreateCategory(data);
+    params?.params?.id ? await handleUpdateCategory(data, params?.params?.id) : await handleCreateCategory(data);
+    navigation.goBack()
   };
   return (
     <View
