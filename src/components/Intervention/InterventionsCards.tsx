@@ -13,6 +13,7 @@ import { DeleteIcon, Edit, eye, logo } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IIntervention } from '../../types/DataTypes';
 import { StackTypes } from '../../types/ScreenPropsTypes';
+import { generateImageUrl } from '../../utils/baseUrls';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const InterventionsCards = ({ item }: { item: IIntervention }) => {
@@ -63,7 +64,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
               color: hexToRGBA(themeColors.black as string, 0.7),
             },
           ]}>
-          {item.date}
+          {item?.createdAt?.split('T')[0]}
         </Text>
         <Text
           style={[
@@ -72,7 +73,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
               color: hexToRGBA(themeColors.black as string, 0.7),
             },
           ]}>
-          {item.service}
+          {item?.category?.name}
         </Text>
         <Text
           style={[CardStyles.amount, { color: themeColors.primary as string }]}>
@@ -86,7 +87,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
             },
           ]}
           numberOfLines={1}>
-          {item.note}
+          {item?.note}
         </Text>
 
         <View style={CardStyles.actions}>
@@ -109,7 +110,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('UpdateIntervention', {
-                params: { id: item.interventionId },
+                params: { id: item?._id },
               });
             }}>
             <Image
@@ -159,7 +160,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
         {item.images && item.images.length > 0 ? (
           <>
             <Image
-              source={{ uri: item.images[0] }}
+              source={{ uri: generateImageUrl(item?.images[0]?.url as string) }}
               style={CardStyles.image}
               resizeMode="cover"
             />

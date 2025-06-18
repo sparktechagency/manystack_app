@@ -7,10 +7,9 @@ import InterventionsCards from './InterventionsCards';
 const Interventions = () => {
   const [limit, setLimit] = useState(10)
   const { data, isLoading, isFetching } = useGetInterventionsQuery(undefined)
-  console.log(data)
   return (
     <FlatList
-      data={[] as IIntervention[]}
+      data={data?.interventions || [] as IIntervention[]}
       keyExtractor={(item: IIntervention) => item.interventionId}
       renderItem={({ item }) => (
         <InterventionsCards key={item._id} item={item} />

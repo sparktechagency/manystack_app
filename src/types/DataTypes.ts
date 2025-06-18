@@ -16,11 +16,17 @@ export interface IIntervention {
   _id: string;
   interventionId: string;
   status: string;
-  date: string;
-  service: string;
+  createdAt: string;
+  category: {
+    name: string;
+  };
   price: number;
   note: string;
-  images: string[];
+  images: [{
+    createdAt: string
+    url: string,
+    location: string
+  }] | [];
 }
 export interface IExpenses {
   name: string;
