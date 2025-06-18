@@ -1,17 +1,15 @@
-import {NavigationContainer} from '@react-navigation/native';
-import React, {useEffect} from 'react';
-import {StatusBar, useColorScheme} from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import { StatusBar, useColorScheme } from 'react-native';
+import Toast from 'react-native-toast-message';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Provider } from 'react-redux';
 import GlobalContextProvider from '../providers/GlobalContextProvider';
+import { store } from '../redux/store';
 import DrawerLayout from './DrawerLayout';
 
 const Root = () => {
   const isDarkMode = useColorScheme() === 'dark';
-
-  useEffect(() => {
-    SplashScreen.hide();
-  }, []);
 
   return (
     <NavigationContainer>
@@ -19,9 +17,12 @@ const Root = () => {
         barStyle={isDarkMode ? 'dark-content' : 'light-content'}
         backgroundColor={isDarkMode ? Colors.lighter : Colors.darker}
       />
-      <GlobalContextProvider>
-        <DrawerLayout />
-      </GlobalContextProvider>
+      <Provider store={store}>
+        <GlobalContextProvider>
+          <DrawerLayout />
+          <Toast />
+        </GlobalContextProvider>
+      </Provider>
     </NavigationContainer>
   );
 };

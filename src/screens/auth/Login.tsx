@@ -1,27 +1,32 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link, NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import SplashScreen from 'react-native-splash-screen';
+import Toast from 'react-native-toast-message';
 import GradientButton from '../../components/sheard/GradientButton';
 import { eye, eyeSlash, logo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useLoginMutation } from '../../redux/Apis/authApis';
 import { ILogin } from '../../types/loginType';
 import { StackTypes } from '../../types/ScreenPropsTypes';
 import { t } from '../../utils/translate';
 
 const Login = () => {
-  const { english } = useGlobalContext();
+  const { english, user, userLoading } = useGlobalContext();
   const navigate = useNavigation<NavigationProp<StackTypes>>();
-
+  const [signIn, { isLoading }] = useLoginMutation();
   const [passShow, setPassShow] = React.useState(true);
 
   const [error, setError] = React.useState({
@@ -35,17 +40,67 @@ const Login = () => {
   });
 
   const submitHandler = () => {
+    let isInvalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof ILogin] === '') {
         setError(prev => ({ ...prev, [key]: true }));
+        isInvalid = true;
       } else {
         setError(prev => ({ ...prev, [key]: false }));
       }
     });
-    if (inputValue.email !== '' && inputValue.password !== '') {
-      navigate.navigate('Tabs');
+    if (isInvalid) {
+      Toast.show({
+        type: 'error',
+        text1: english ? 'failed to login' : 'échec de la connexion',
+        text2: english
+          ? 'Please fill all fields'
+          : 'Veuillez remplir tous les champs',
+      });
     }
+    signIn(inputValue)
+      .unwrap()
+      .then(async (res) => {
+        console.log(res)
+        Toast.show({
+          type: 'success',
+          text1: english ? 'Login successfully' : 'Connexion réussie',
+          text2: res.data?.message || (english ? 'Welcome back!' : 'Bienvenue de nouveau!'),
+        });
+        await Promise.all([
+          AsyncStorage.setItem('token', res.token),
+          AsyncStorage.setItem('user', JSON.stringify(res.user)),
+        ])
+        navigate.navigate('Tabs');
+      }
+      )
+      .catch(err => {
+        console.log(err)
+        Toast.show({
+          type: 'error',
+          text1: english ? 'Login failed' : 'Échec de la connexion',
+          text2: err.data?.message || (english ? 'An error occurred' : 'Une erreur est survenue'),
+        });
+      }
+      );
+    // if (inputValue.email !== '' && inputValue.password !== '') {
+    //   navigate.navigate('Tabs');
+    // }
   };
+  if (userLoading) {
+    return (
+      <></>
+    )
+  }
+  if (user?._id) {
+    navigate.navigate('Tabs');
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 1000);
+    return
+  } else {
+    SplashScreen.hide();
+  }
   return (
     <SafeAreaView
       style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -114,15 +169,17 @@ const Login = () => {
             paddingHorizontal: 25,
           }}>
           <GradientButton handler={() => submitHandler()}>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: 700,
-                fontSize: 18,
-              }}>
-              {english ? 'Login' : 'Connexion'}
-            </Text>
+            {
+              isLoading ? <ActivityIndicator size="small" color="#FFFFFF" /> : <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: 700,
+                  fontSize: 18,
+                }}>
+                {english ? 'Login' : 'Connexion'}
+              </Text>
+            }
           </GradientButton>
         </View>
 

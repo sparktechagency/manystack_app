@@ -1,6 +1,8 @@
-import React, {createContext, ReactNode, useContext, useState} from 'react';
-import {Dimensions, useColorScheme} from 'react-native';
-import {Colors, ITheme} from '../constant/colors';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
+import { Dimensions, useColorScheme } from 'react-native';
+import { Colors, ITheme } from '../constant/colors';
+import { useGetProfileQuery } from '../redux/Apis/userApis';
+import { IUserProfile } from '../types/DataTypes';
 // import { Provider } from 'react-redux';
 // import { Colors, ITheme } from '../constant/colors';
 // import { store } from '../Redux/store';
@@ -17,14 +19,17 @@ interface GlobalContextType {
   width: number;
   english: boolean;
   setEnglish: React.Dispatch<React.SetStateAction<boolean>>;
+  user: IUserProfile | null
+  userLoading: boolean
 }
 
 interface GlobalProviderProps {
   children: ReactNode;
 }
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
-const GlobalContextProvider = ({children}: GlobalProviderProps) => {
-  const {width, height} = Dimensions.get('window');
+const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
+  const { data, isLoading: userLoading } = useGetProfileQuery(undefined)
+  const { width, height } = Dimensions.get('window');
   const colorScheme = useColorScheme();
   const [search, setSearch] = useState<string>('');
   const [english, setEnglish] = useState<boolean>(false);
@@ -43,6 +48,8 @@ const GlobalContextProvider = ({children}: GlobalProviderProps) => {
     setImages,
     english,
     setEnglish,
+    user: data?.data,
+    userLoading
   };
   return (
     <GlobalContext.Provider value={values}>

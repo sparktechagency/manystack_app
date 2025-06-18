@@ -1,18 +1,72 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
+import React, { useCallback, useState } from 'react';
+import { ActivityIndicator, Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
 import { OtpInput } from 'react-native-otp-entry';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import GradientButton from '../../components/sheard/GradientButton';
 import { Colors } from '../../constant/colors';
 import { logo } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useVerifyEmailMutation, useVerifyOtpMutation } from '../../redux/Apis/authApis';
 import { StackTypes } from '../../types/ScreenPropsTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { t } from '../../utils/translate';
 const Otp = () => {
+  const route = useRoute();
+  const params = route?.params as { params: { from: string; email: string } };
+  const from = params?.params?.from;
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const { english } = useGlobalContext();
+  const [code, setCode] = useState('')
+
+  const [verify, { isLoading }] = useVerifyEmailMutation();
+  const [verifyOtp, { isLoading: otpLoading }] = useVerifyOtpMutation();
+
+
+  const handleOtpChange = useCallback(() => {
+    if (code?.length != 6) {
+      Toast.show({
+        type: 'error',
+        text1: "Invalid OTP",
+        text2: "Please enter a valid 6-digit OTP.",
+      });
+    };
+    from === 'signup' ? verify({
+      code,
+      email: params?.params?.email,
+    }).then((res) => {
+      Toast.show({
+        type: 'success',
+        text1: "Success",
+        text2: res.data?.message || "OTP verified successfully.",
+      })
+      navigate.navigate(from == "signup" ? 'Login' : 'NewPassword',);
+    }).catch((err) => {
+      Toast.show({
+        type: 'error',
+        text1: "Error",
+        text2: err?.data?.message || "An unexpected error occurred.",
+      });
+    }) : verifyOtp({
+      code,
+    }).then((res) => {
+      Toast.show({
+        type: 'success',
+        text1: "Success",
+        text2: res.data?.message || "OTP verified successfully.",
+      })
+      navigate.navigate(from == "signup" ? 'Login' : 'NewPassword',);
+    }).catch((err) => {
+      Toast.show({
+        type: 'error',
+        text1: "Error",
+        text2: err?.data?.message || "An unexpected error occurred.",
+      });
+    });
+  }, [code, verify, from])
+
+
   return (
     <SafeAreaView
       style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -20,7 +74,7 @@ const Otp = () => {
         <Image source={logo as ImageSourcePropType} height={100} width={100} />
       </View>
       {/* form */}
-      <View style={{ width: '100%', paddingHorizontal: 20 }}>
+      <View style={{ width: '90%', paddingHorizontal: 20 }}>
         <Text
           style={{
             fontSize: 16,
@@ -43,10 +97,10 @@ const Otp = () => {
           type="numeric"
           secureTextEntry={false}
           focusStickBlinkingDuration={500}
-          onFocus={() => console.log('Focused')}
-          onBlur={() => console.log('Blurred')}
-          onTextChange={text => console.log(text)}
-          onFilled={text => console.log(`OTP is ${text}`)}
+          // onFocus={() => console.log('Focused')}
+          // onBlur={() => console.log('Blurred')}
+          // onTextChange={text => console.log(text)}
+          onFilled={text => setCode(text)}
           textInputProps={{
             accessibilityLabel: 'One-Time Password',
           }}
@@ -56,7 +110,6 @@ const Otp = () => {
             allowFontScaling: false,
           }}
           theme={{
-            // containerStyle: {backgroundColor: Colors.light.white},
             pinCodeContainerStyle: {
               backgroundColor: hexToRGBA(Colors.light.primary as string, 0.2),
             },
@@ -73,18 +126,19 @@ const Otp = () => {
             marginTop: 40,
           }}>
           <GradientButton
-            handler={() => {
-              navigate.navigate('NewPassword');
-            }}>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: 700,
-                fontSize: 18,
-              }}>
-              {t('submit', english)}
-            </Text>
+            handler={handleOtpChange}>
+            {
+              isLoading ? <ActivityIndicator size="small" color="#0000ff" /> : <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: '700',
+                  fontSize: 18,
+                }}>
+                {t("submit", english)}
+              </Text>
+            }
+
           </GradientButton>
         </View>
       </View>
