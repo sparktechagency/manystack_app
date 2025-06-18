@@ -1,18 +1,20 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import CategoryListItem from '../../components/InterventionCategory/CategoryListItem';
 import GradientButton from '../../components/sheard/GradientButton';
-import {InterventionCategoryData} from '../../constant/data';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {StackTypes} from '../../types/ScreenPropsTypes';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
+import { StackTypes } from '../../types/ScreenPropsTypes';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const InterventionCategory = () => {
-  const {themeColors, width, height} = useGlobalContext();
+  const { themeColors, width, height } = useGlobalContext();
   const textColor = hexToRGBA(themeColors.black as string, 0.6);
   const navigate = useNavigation<NavigationProp<StackTypes>>();
+  const { data, isLoading, isFetching } = useGetCategoriesQuery(undefined)
+  console.log({ data })
   return (
     <SafeAreaView
       style={{
@@ -58,14 +60,9 @@ const InterventionCategory = () => {
             Actions
           </Text>
         </View>
-        {InterventionCategoryData.map(item => (
-          <CategoryListItem
-            key={item.id}
-            title={item.name}
-            price={item.price}
-            id={item.id}
-          />
-        ))}
+        {
+          (isLoading || isFetching) ? <ActivityIndicator color={themeColors.primary as string} size="large" /> : data?.categories?.map((item: any) => <CategoryListItem key={item._id} title={item.name} price={item.price} id={item._id} />)
+        }
       </ScrollView>
       <View
         style={{
