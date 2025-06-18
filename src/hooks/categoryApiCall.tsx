@@ -1,6 +1,6 @@
 
 import Toast from 'react-native-toast-message';
-import { useCreateCategoryMutation } from '../redux/Apis/categoryApis';
+import { useCreateCategoryMutation, useUpdateCategoryMutation } from '../redux/Apis/categoryApis';
 
 export const useCreateCategory = () => {
   const [createCategory, { isLoading, error, data }] = useCreateCategoryMutation();
@@ -23,11 +23,38 @@ export const useCreateCategory = () => {
         });
       return true;
     } catch (err) {
-      console.error('Failed to create category:', err);
       // throw err;
       return false;
     }
   };
 
   return { handleCreateCategory, isLoading, error, data };
+};
+export const useUpdateCategory = () => {
+  const [updateCategory, { isLoading, error, data }] = useUpdateCategoryMutation();
+
+  const handleUpdateCategory = async (data: any, id: string) => {
+    try {
+      await updateCategory(data).unwrap()
+        .then((res) => {
+          Toast.show({
+            type: 'success',
+            text1: 'category updated',
+            text2: res.data?.message || 'Category updated successfully.',
+          })
+        }).catch((err) => {
+          Toast.show({
+            type: 'error',
+            text1: 'Failed to update category',
+            text2: err.data?.message || 'Failed to update category.',
+          })
+        });
+      return true;
+    } catch (err) {
+      // throw err;
+      return false;
+    }
+  };
+
+  return { handleUpdateCategory, isLoading, error, data };
 };

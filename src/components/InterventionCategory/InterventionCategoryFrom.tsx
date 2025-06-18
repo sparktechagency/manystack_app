@@ -2,7 +2,7 @@ import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-native';
 import { globalStyles } from '../../constant/styles';
-import { useCreateCategory } from '../../hooks/categoryApiCall';
+import { useCreateCategory, useUpdateCategory } from '../../hooks/categoryApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IInterventionCategory } from '../../types/DataTypes';
 import GradientButton from '../sheard/GradientButton';
@@ -10,6 +10,7 @@ const InterventionCategoryFrom = () => {
   const { params }: any = useRoute()
   const { id, name, price } = params?.params
   const { handleCreateCategory, isLoading, } = useCreateCategory();
+  const { handleUpdateCategory, isLoading: updating, } = useUpdateCategory();
   const { height, width } = useGlobalContext();
   const [error, setError] = React.useState({
     'category Name': false,
@@ -32,7 +33,7 @@ const InterventionCategoryFrom = () => {
       name: inputValue['category Name'],
       price: inputValue['category Price'],
     }
-    await handleCreateCategory(data);
+    id ? await handleUpdateCategory(data, id) : await handleCreateCategory(data);
   };
   return (
     <View
@@ -77,7 +78,7 @@ const InterventionCategoryFrom = () => {
         }}>
         <GradientButton handler={submitHandler}>
           {
-            isLoading ? <ActivityIndicator size="large" color="white" /> : <Text
+            isLoading || updating ? <ActivityIndicator size="large" color="white" /> : <Text
               style={{
                 color: 'white',
                 textAlign: 'center',

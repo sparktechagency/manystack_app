@@ -54,7 +54,7 @@ const CategoryListItem = ({ title, price, id }: ICategoryListItem) => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('UpdateInterventionCategory', {
-              params: { id: id, name: title, price: price },
+              params: { id: id, name: title, price: price?.toString() },
             });
           }}>
           <Image
