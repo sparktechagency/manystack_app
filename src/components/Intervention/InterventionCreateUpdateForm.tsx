@@ -14,6 +14,7 @@ import { paymentStatus } from '../../constant/data';
 import { Camera, DeleteIcon } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
 import { ICreateInterVention } from '../../types/DataTypes';
 import { ICreateInterVentionError } from '../../types/ErrorTypes';
 import { getLocation } from '../../utils/getLocations';
@@ -22,6 +23,7 @@ import GradientButton from '../sheard/GradientButton';
 import ImageUpload from '../sheard/ImageUpload';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 const InterventionCreateUpdateForm = () => {
+  const { data } = useGetCategoriesQuery(undefined)
   const { themeColors, setImages, images } = useGlobalContext();
   const [error, setError] = React.useState<ICreateInterVentionError>({
     'intervention id': false,
@@ -95,12 +97,9 @@ const InterventionCreateUpdateForm = () => {
             <View key={key}>
               <Text style={globalStyles.inputLabel}>Select Category</Text>
               <SingleSelectDropDown
+                placeholder='Select Category'
                 name={key}
-                data={[
-                  { label: 'category', value: 'category' },
-                  { label: 'category', value: 'category' },
-                  { label: 'category', value: 'category' },
-                ]}
+                data={data?.categories?.map((category: any) => ({ label: category.name, value: category._id })) || []}
                 value={inputValue[key as keyof ICreateInterVention] as string}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
