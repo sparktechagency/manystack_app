@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { paymentStatus } from '../../constant/data';
 import { Camera, DeleteIcon } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
@@ -31,7 +32,7 @@ const InterventionCreateUpdateForm = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<ICreateInterVention>({
-    'intervention id': '',
+    // 'intervention id': '',
     category: '',
     price: '',
     note: '',
@@ -46,8 +47,22 @@ const InterventionCreateUpdateForm = () => {
         setError(prev => ({ ...prev, [key]: false }));
       }
     });
+    const formData = new FormData();
+    Object.keys(inputValue).forEach(key => {
+      formData.append(key, inputValue[key as keyof ICreateInterVention]);
+    })
+    images.forEach((image) => {
+      formData.append('image', image);
+    })
     const location = await getLocation();
-    console.log('Location:', location);
+    if (Object.values(location as any).some(value => value === undefined)) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Please enable location',
+      })
+    }
+    formData.append("location", JSON.stringify(location));
   };
   return (
     <ScrollView
@@ -63,6 +78,7 @@ const InterventionCreateUpdateForm = () => {
             <View key={key}>
               <Text style={globalStyles.inputLabel}>Status</Text>
               <SingleSelectDropDown
+                placeholder="Select Status"
                 name={key}
                 data={paymentStatus}
                 value={inputValue[key as keyof ICreateInterVention] as string}
