@@ -1,6 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   StyleSheet,
@@ -10,6 +11,7 @@ import {
 } from 'react-native';
 import { DeleteIcon, Edit } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
+import { useDeleteCategory } from '../../hooks/categoryApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { ICategoryListItem } from '../../types/PropsType';
 import { StackTypes } from '../../types/ScreenPropsTypes';
@@ -20,6 +22,7 @@ const CategoryListItem = ({ title, price, id }: ICategoryListItem) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
   const { themeColors, width, height } = useGlobalContext();
   const textColor = hexToRGBA(themeColors.black as string, 0.6);
+  const { handleDeleteCategory, isLoading } = useDeleteCategory();
   return (
     <View
       style={[
@@ -67,16 +70,18 @@ const CategoryListItem = ({ title, price, id }: ICategoryListItem) => {
             ]}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            source={DeleteIcon as ImageSourcePropType}
-            style={[
-              CardStyles.icon,
-              {
-                tintColor: themeColors.red as string,
-              },
-            ]}
-          />
+        <TouchableOpacity onPress={async () => await handleDeleteCategory(id)}>
+          {
+            isLoading ? <ActivityIndicator color={themeColors.primary as string} size={"small"} /> : <Image
+              source={DeleteIcon as ImageSourcePropType}
+              style={[
+                CardStyles.icon,
+                {
+                  tintColor: themeColors.red as string,
+                },
+              ]}
+            />
+          }
         </TouchableOpacity>
       </View>
     </View>

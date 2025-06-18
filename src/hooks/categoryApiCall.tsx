@@ -1,6 +1,6 @@
 
 import Toast from 'react-native-toast-message';
-import { useCreateCategoryMutation, useUpdateCategoryMutation } from '../redux/Apis/categoryApis';
+import { useCreateCategoryMutation, useDeleteCategoryMutation, useUpdateCategoryMutation } from '../redux/Apis/categoryApis';
 
 export const useCreateCategory = () => {
   const [createCategory, { isLoading, error, data }] = useCreateCategoryMutation();
@@ -57,4 +57,34 @@ export const useUpdateCategory = () => {
   };
 
   return { handleUpdateCategory, isLoading, error, data };
+};
+
+export const useDeleteCategory = () => {
+  const [deleteCategory, { isLoading, error, data }] = useDeleteCategoryMutation();
+
+  const handleDeleteCategory = async (id: string) => {
+    try {
+      await deleteCategory(id).unwrap()
+        .then((res) => {
+          Toast.show({
+            type: 'success',
+            text1: 'category deleted',
+            text2: res.data?.message || 'Category deleted successfully.',
+          })
+        }).catch((err) => {
+          Toast.show({
+            type: 'error',
+            text1: 'Failed to delete category',
+            text2: err.data?.message || 'Failed to delete category.',
+          })
+        });
+      return true;
+    } catch (err) {
+      // throw err;
+      return false;
+    }
+  };
+
+  return { handleDeleteCategory, isLoading, error, data };
+
 };
