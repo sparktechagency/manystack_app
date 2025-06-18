@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   ScrollView,
@@ -13,6 +14,7 @@ import Toast from 'react-native-toast-message';
 import { paymentStatus } from '../../constant/data';
 import { Camera, DeleteIcon } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
+import { createIntervention } from '../../hooks/interventionApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
 import { ICreateInterVention } from '../../types/DataTypes';
@@ -24,6 +26,7 @@ import ImageUpload from '../sheard/ImageUpload';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 const InterventionCreateUpdateForm = () => {
   const { data } = useGetCategoriesQuery(undefined)
+  const { handleCreateIntervention, isLoading } = createIntervention()
   const { themeColors, setImages, images } = useGlobalContext();
   const [error, setError] = React.useState<ICreateInterVentionError>({
     'intervention id': false,
@@ -36,9 +39,9 @@ const InterventionCreateUpdateForm = () => {
   const [inputValue, setInputValue] = React.useState<ICreateInterVention>({
     // 'intervention id': '',
     category: '',
-    price: '',
-    note: '',
-    status: '',
+    price: '20',
+    note: '12',
+    status: 'paid',
   });
 
   const submitHandler = async () => {
@@ -54,9 +57,9 @@ const InterventionCreateUpdateForm = () => {
       formData.append(key, inputValue[key as keyof ICreateInterVention]);
     })
     images.forEach((image) => {
-      formData.append('image', image);
+      formData.append('images', image);
     })
-    const location = await getLocation();
+    const location: any = await getLocation();
     if (Object.values(location as any).some(value => value === undefined)) {
       return Toast.show({
         type: 'error',
@@ -64,7 +67,9 @@ const InterventionCreateUpdateForm = () => {
         text2: 'Please enable location',
       })
     }
-    formData.append("location", JSON.stringify(location));
+    formData.append("latitude", location?.latitude);
+    formData.append("longitude", location?.longitude);
+    await handleCreateIntervention(formData)
   };
   return (
     <ScrollView
@@ -165,9 +170,9 @@ const InterventionCreateUpdateForm = () => {
       <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
         {images?.length > 0 && (
           images.map((image, index) => (
-            <View key={image.path} style={{ position: 'relative', width: 100, height: 100, }} >
+            <View key={image.uri} style={{ position: 'relative', width: 100, height: 100, }} >
               <Image
-                source={{ uri: image?.path }}
+                source={{ uri: image?.uri }}
                 style={{
                   marginTop: 6,
                   width: 100,
@@ -176,7 +181,7 @@ const InterventionCreateUpdateForm = () => {
                 }}
               />
               <TouchableOpacity onPress={() => {
-                setImages(prev => prev.filter((item, i) => item.path !== image.path))
+                setImages(prev => prev.filter((item, i) => item.uri !== image.uri))
               }} style={{ position: 'absolute', top: 8, right: 8, backgroundColor: "red", borderRadius: 10, padding: 3 }}>
                 <Image
                   source={DeleteIcon as ImageSourcePropType}
@@ -193,15 +198,20 @@ const InterventionCreateUpdateForm = () => {
       </View>
       <View style={{ paddingHorizontal: 25, marginTop: 50 }}>
         <GradientButton handler={() => submitHandler()}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: '700',
-              fontSize: 18,
-            }}>
-            Save
-          </Text>
+          {
+            isLoading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: '700',
+                fontSize: 18,
+              }}>
+              Save
+            </Text>
+          }
+
         </GradientButton>
       </View>
     </ScrollView>
