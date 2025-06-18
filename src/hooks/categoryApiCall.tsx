@@ -35,7 +35,7 @@ export const useUpdateCategory = () => {
 
   const handleUpdateCategory = async (data: any, id: string) => {
     try {
-      await updateCategory(data).unwrap()
+      await updateCategory({ data, id }).unwrap()
         .then((res) => {
           Toast.show({
             type: 'success',
