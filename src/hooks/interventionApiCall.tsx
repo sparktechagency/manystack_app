@@ -17,7 +17,6 @@ export const createIntervention = () => {
           })
           navigation.goBack()
         }).catch((err) => {
-          console.log(err);
           Toast.show({
             type: 'error',
             text1: 'Failed to create intervention',
@@ -26,7 +25,6 @@ export const createIntervention = () => {
         });
       return true;
     } catch (err) {
-      console.log(err)
       // throw err;
       return false;
     }

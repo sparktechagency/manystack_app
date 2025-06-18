@@ -13,13 +13,20 @@ export interface ICreateExpenses {
   status: string;
 }
 export interface IIntervention {
-  invoice_id: string;
+  _id: string;
+  interventionId: string;
   status: string;
-  date: string;
-  service: string;
-  amount: number;
-  description: string;
-  images: string[];
+  createdAt: string;
+  category: {
+    name: string;
+  };
+  price: number;
+  note: string;
+  images: [{
+    createdAt: string
+    url: string,
+    location: string
+  }] | [];
 }
 export interface IExpenses {
   name: string;
