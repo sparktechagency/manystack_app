@@ -1,7 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
-import SplashScreen from 'react-native-splash-screen';
 import Toast from 'react-native-toast-message';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { Provider } from 'react-redux';
@@ -11,10 +10,6 @@ import DrawerLayout from './DrawerLayout';
 
 const Root = () => {
   const isDarkMode = useColorScheme() === 'dark';
-
-  useEffect(() => {
-    SplashScreen.hide();
-  }, []);
 
   return (
     <NavigationContainer>

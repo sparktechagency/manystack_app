@@ -12,6 +12,7 @@ import {
   View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import SplashScreen from 'react-native-splash-screen';
 import Toast from 'react-native-toast-message';
 import GradientButton from '../../components/sheard/GradientButton';
 import { eye, eyeSlash, logo } from '../../constant/images';
@@ -23,7 +24,7 @@ import { StackTypes } from '../../types/ScreenPropsTypes';
 import { t } from '../../utils/translate';
 
 const Login = () => {
-  const { english } = useGlobalContext();
+  const { english, user, userLoading } = useGlobalContext();
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const [signIn, { isLoading }] = useLoginMutation();
   const [passShow, setPassShow] = React.useState(true);
@@ -86,6 +87,20 @@ const Login = () => {
     //   navigate.navigate('Tabs');
     // }
   };
+  if (userLoading) {
+    return (
+      <></>
+    )
+  }
+  if (user?._id) {
+    navigate.navigate('Tabs');
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 1000);
+    return
+  } else {
+    SplashScreen.hide();
+  }
   return (
     <SafeAreaView
       style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

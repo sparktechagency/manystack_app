@@ -52,3 +52,27 @@ export interface IInterventionCategory {
   'category Name': string;
   'category Price': string;
 }
+export interface IUserProfile {
+  _id: string
+  firstName: string
+  lastName: string
+  gender: string
+  email: string
+  contact: string
+  isBlocked: boolean
+  isEmailVerified: boolean
+  profilePicture: string | null
+  businessLogo: string | null
+  role: string
+  nSiren: string
+  address: {
+    streetNo: string
+    streetName: string
+    city: string
+    postalCode: string
+    country: string
+  }
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
