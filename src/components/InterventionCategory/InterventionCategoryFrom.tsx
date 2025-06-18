@@ -17,7 +17,6 @@ const InterventionCategoryFrom = () => {
     'category Name': '',
     'category Price': '',
   });
-  console.log(isLoading)
   const submitHandler = async () => {
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof IInterventionCategory] === '') {
