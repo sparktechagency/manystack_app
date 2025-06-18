@@ -1,10 +1,11 @@
 import React from 'react';
-import {ImageSourcePropType} from 'react-native';
-import {ISubscription} from './DataTypes';
+import { ImageSourcePropType } from 'react-native';
+import { IImage } from '../providers/GlobalContextProvider';
+import { ISubscription } from './DataTypes';
 
 export interface ISingleDropDownProps {
   error: any;
-  data: {label: string; value: string}[];
+  data: { label: string; value: string }[];
   name: any;
   value: string;
   inputValue: any;
@@ -16,7 +17,7 @@ export interface ISingleDropDownProps {
 
 export interface IImageUploadProps {
   images: any;
-  setImages: React.Dispatch<React.SetStateAction<string[]>>;
+  setImages: React.Dispatch<React.SetStateAction<IImage[]>>;
   maxNumber?: number;
   children: React.ReactNode;
 }

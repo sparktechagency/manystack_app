@@ -24,7 +24,7 @@ import { StackTypes } from '../../types/ScreenPropsTypes';
 import { t } from '../../utils/translate';
 
 const Login = () => {
-  const { english, user, userLoading } = useGlobalContext();
+  const { english, user, userLoading, firstLoad, setFirstLoad } = useGlobalContext();
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const [signIn, { isLoading }] = useLoginMutation();
   const [passShow, setPassShow] = React.useState(true);
@@ -87,13 +87,14 @@ const Login = () => {
     //   navigate.navigate('Tabs');
     // }
   };
-  if (userLoading) {
+  if (userLoading && firstLoad) {
     return (
       <></>
     )
   }
-  if (user?._id) {
+  if (user?._id && firstLoad) {
     navigate.navigate('Tabs');
+    setFirstLoad(false)
     setTimeout(() => {
       SplashScreen.hide();
     }, 1000);

@@ -6,14 +6,19 @@ import { IUserProfile } from '../types/DataTypes';
 // import { Provider } from 'react-redux';
 // import { Colors, ITheme } from '../constant/colors';
 // import { store } from '../Redux/store';
-
+export interface IImage {
+  path: string,
+  name: string,
+  type: string,
+  mimeType: string,
+}
 interface GlobalContextType {
   themeColors: ITheme;
   setSearch: (arg1: string) => void;
   search: string;
   setModalOpen: (arg1: boolean) => void;
-  setImages: React.Dispatch<React.SetStateAction<string[]>>;
-  images: string[];
+  images: IImage[] | [];
+  setImages: React.Dispatch<React.SetStateAction<IImage[]>>;
   modalOpen: boolean;
   height: number;
   width: number;
@@ -21,6 +26,8 @@ interface GlobalContextType {
   setEnglish: React.Dispatch<React.SetStateAction<boolean>>;
   user: IUserProfile | null
   userLoading: boolean
+  firstLoad: boolean
+  setFirstLoad: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface GlobalProviderProps {
@@ -28,13 +35,14 @@ interface GlobalProviderProps {
 }
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
+  const [firstLoad, setFirstLoad] = useState<boolean>(true);
   const { data, isLoading: userLoading } = useGetProfileQuery(undefined)
   const { width, height } = Dimensions.get('window');
   const colorScheme = useColorScheme();
   const [search, setSearch] = useState<string>('');
   const [english, setEnglish] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [images, setImages] = React.useState<string[]>([]);
+  const [images, setImages] = React.useState<IImage[] | []>([]);
   const themeColors = Colors.light;
   const values = {
     themeColors,
@@ -50,6 +58,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     setEnglish,
     user: data?.data,
     userLoading
+    , firstLoad, setFirstLoad
   };
   return (
     <GlobalContext.Provider value={values}>

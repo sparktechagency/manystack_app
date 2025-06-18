@@ -6,10 +6,11 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import { paymentStatus } from '../../constant/data';
-import { Camera } from '../../constant/images';
+import { Camera, DeleteIcon } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { ICreateInterVention } from '../../types/DataTypes';
@@ -145,18 +146,36 @@ const InterventionCreateUpdateForm = () => {
             </Text>
           </View>
         </View>
-        {images?.length > 0 && (
-          <Image
-            source={{ uri: images[0] }}
-            style={{
-              marginTop: 6,
-              width: 200,
-              height: 100,
-              resizeMode: 'contain',
-            }}
-          />
-        )}
       </ImageUpload>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+        {images?.length > 0 && (
+          images.map((image, index) => (
+            <View key={image.path} style={{ position: 'relative', width: 100, height: 100, }} >
+              <Image
+                source={{ uri: image?.path }}
+                style={{
+                  marginTop: 6,
+                  width: 100,
+                  height: 100,
+                  resizeMode: 'contain',
+                }}
+              />
+              <TouchableOpacity onPress={() => {
+                setImages(prev => prev.filter((item, i) => item.path !== image.path))
+              }} style={{ position: 'absolute', top: 8, right: 8, backgroundColor: "red", borderRadius: 10, padding: 3 }}>
+                <Image
+                  source={DeleteIcon as ImageSourcePropType}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    tintColor: "white"
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          ))
+        )}
+      </View>
       <View style={{ paddingHorizontal: 25, marginTop: 50 }}>
         <GradientButton handler={() => submitHandler()}>
           <Text
