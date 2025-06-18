@@ -1,29 +1,36 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {IInterventionCategory} from '../../types/DataTypes';
+import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-native';
+import { globalStyles } from '../../constant/styles';
+import { useCreateCategory } from '../../hooks/categoryApiCall';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { IInterventionCategory } from '../../types/DataTypes';
 import GradientButton from '../sheard/GradientButton';
 const InterventionCategoryFrom = () => {
-  const {height, width} = useGlobalContext();
+  const { handleCreateCategory, isLoading, } = useCreateCategory();
+  const { height, width } = useGlobalContext();
   const [error, setError] = React.useState({
     'category Name': false,
     'category Price': false,
   });
 
   const [inputValue, setInputValue] = React.useState<IInterventionCategory>({
-    'category Name': 'Intervention Name',
-    'category Price': '100',
+    'category Name': '',
+    'category Price': '',
   });
-
-  const submitHandler = () => {
+  console.log(isLoading)
+  const submitHandler = async () => {
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof IInterventionCategory] === '') {
-        setError(prev => ({...prev, [key]: true}));
+        setError(prev => ({ ...prev, [key]: true }));
       } else {
-        setError(prev => ({...prev, [key]: false}));
+        setError(prev => ({ ...prev, [key]: false }));
       }
     });
+    const data = {
+      name: inputValue['category Name'],
+      price: inputValue['category Price'],
+    }
+    await handleCreateCategory(data);
   };
   return (
     <View
@@ -38,12 +45,12 @@ const InterventionCategoryFrom = () => {
           <Text style={[globalStyles.inputLabel]}>
             {key.charAt(0).toUpperCase() + key.slice(1)}
           </Text>
-          <View style={{position: 'relative'}}>
+          <View style={{ position: 'relative' }}>
             <TextInput
               value={inputValue[key as keyof IInterventionCategory]}
               onChangeText={text => {
-                setInputValue({...inputValue, [key]: text});
-                setError({...error, [key]: false});
+                setInputValue({ ...inputValue, [key]: text });
+                setError({ ...error, [key]: false });
               }}
               keyboardType={key === 'category Price' ? 'numeric' : 'default'}
               placeholder={`Enter your ${key}`}
@@ -67,15 +74,18 @@ const InterventionCategoryFrom = () => {
           paddingVertical: 16,
         }}>
         <GradientButton handler={submitHandler}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: 700,
-              fontSize: 18,
-            }}>
-            Submit
-          </Text>
+          {
+            isLoading ? <ActivityIndicator size="large" color="white" /> : <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: 700,
+                fontSize: 18,
+              }}>
+              Submit
+            </Text>
+          }
+
         </GradientButton>
       </View>
     </View>
