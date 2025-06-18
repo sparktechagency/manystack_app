@@ -25,7 +25,7 @@ export type StackTypes = {
   EditProfile: undefined;
   Subscription: undefined;
   InterventionCategory: undefined;
-  UpdateInterventionCategory: { params: { id: string } };
+  UpdateInterventionCategory: { params: { id: string, name: string, price: string } };
   CreateInterventionCategory: undefined;
   Support: undefined;
   ChangePassword: undefined;

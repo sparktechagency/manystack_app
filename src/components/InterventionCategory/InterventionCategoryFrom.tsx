@@ -1,3 +1,4 @@
+import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-native';
 import { globalStyles } from '../../constant/styles';
@@ -6,6 +7,8 @@ import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IInterventionCategory } from '../../types/DataTypes';
 import GradientButton from '../sheard/GradientButton';
 const InterventionCategoryFrom = () => {
+  const { params }: any = useRoute()
+  const { id, name, price } = params?.params
   const { handleCreateCategory, isLoading, } = useCreateCategory();
   const { height, width } = useGlobalContext();
   const [error, setError] = React.useState({
@@ -14,8 +17,8 @@ const InterventionCategoryFrom = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<IInterventionCategory>({
-    'category Name': '',
-    'category Price': '',
+    'category Name': name,
+    'category Price': price,
   });
   const submitHandler = async () => {
     Object.keys(inputValue).forEach(key => {
