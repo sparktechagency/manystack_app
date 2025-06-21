@@ -37,7 +37,7 @@ const InterVention = () => {
   return (
     <SafeAreaView>
       <View style={{ paddingBottom: 62 }}>
-        <Heading key={1} />
+        <Heading setSearch={setSearch} key={1} />
         <FlatList
           refreshing={refreshing}
           onRefresh={onRefresh}

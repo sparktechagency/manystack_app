@@ -8,15 +8,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { interventionFilter } from '../../constant/data';
 import { Filter } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { t } from '../../utils/translate';
+import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
 
 const DROPDOWN_MAX_HEIGHT = 200;
 
-const Heading = ({ title }: { title?: string }) => {
+const Heading = ({ title, setSearch }: { title?: string, setSearch: React.Dispatch<React.SetStateAction<string>> }) => {
+  const { data } = useGetCategoriesQuery(undefined)
   const { english } = useGlobalContext()
   const [open, setOpen] = React.useState(false);
   const animation = useRef(new Animated.Value(0)).current;
@@ -49,6 +49,11 @@ const Heading = ({ title }: { title?: string }) => {
         useNativeDriver: false,
       }).start();
     }
+  };
+
+  const handleFilter = (name: string) => {
+    toggleDropdown();
+    setSearch(name);
   };
 
   return (
@@ -96,10 +101,12 @@ const Heading = ({ title }: { title?: string }) => {
               overflow: 'hidden',
               // remove flex, gap and use padding/margin for spacing if needed
             }}>
-            {interventionFilter.map(item => (
-              <Text key={item.value} style={{ marginBottom: 10 }}>
-                {t(item.label as any, english)}
-              </Text>
+            {data?.categories?.map((item: any) => (
+              <TouchableOpacity key={item._id} onPress={() => handleFilter(item.name)}>
+                <Text key={item._id} style={{ marginBottom: 10 }}>
+                  {item.name}
+                </Text>
+              </TouchableOpacity>
             ))}
           </Animated.View>
         )}
