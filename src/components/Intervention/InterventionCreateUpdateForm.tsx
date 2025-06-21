@@ -1,3 +1,4 @@
+import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -26,6 +27,7 @@ import ImageUpload from '../sheard/ImageUpload';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 const InterventionCreateUpdateForm = () => {
   const { data } = useGetCategoriesQuery(undefined)
+  const { params }: any = useRoute()
   const { handleCreateIntervention, isLoading } = createIntervention()
   const { themeColors, setImages, images } = useGlobalContext();
   const [error, setError] = React.useState<ICreateInterVentionError>({
@@ -37,10 +39,10 @@ const InterventionCreateUpdateForm = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<ICreateInterVention>({
-    category: '',
-    price: '20',
-    note: '12',
-    status: 'paid',
+    category: params?.params?.category,
+    price: params?.params?.price,
+    note: params?.params?.note,
+    status: params?.params?.status,
   });
 
   const submitHandler = async () => {

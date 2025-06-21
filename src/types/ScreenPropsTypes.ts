@@ -15,7 +15,9 @@ export type StackTypes = {
   NewPassword: undefined;
   Tabs: undefined;
   CreateIntervention: undefined;
-  UpdateIntervention: { params: { id: string } };
+  UpdateIntervention: {
+    params: { id: string, category: string, price: string, note: string, status: string, }
+  };
   InterventionDetails: { params: { id: string } };
   CreateExpenses: undefined;
   UpdateExpenses: { params: { id: string } };
