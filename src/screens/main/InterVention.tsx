@@ -23,15 +23,7 @@ const InterVention = () => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    try {
-      // Example: fetch new data here
-      console.log("Refreshing...");
-      // Simulate delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      // Update data if needed
-    } catch (err) {
-      console.error(err);
-    }
+
     setRefreshing(false);
   };
   return (

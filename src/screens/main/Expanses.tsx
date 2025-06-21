@@ -16,7 +16,14 @@ import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { t } from '../../utils/translate';
 
 const Expanses = () => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [search, setSearch] = React.useState<string>('');
+  const [fromDate, setFromDate] = React.useState<string>('');
+  const [toDate, setToDate] = React.useState<string>('');
+  const fromTOHandler = (formatDate: string, toDate: string) => {
+    setFromDate(formatDate);
+    setToDate(toDate);
+  }
   const { english } = useGlobalContext();
   const elements = [
     <ProfitCard
@@ -27,15 +34,21 @@ const Expanses = () => {
       key={1}
     />,
     <Search search={search} setSearch={setSearch} key={2} />,
-    <FilterByDate title="Expanses" key={3} />,
+    <FilterByDate fromTOHandler={fromTOHandler} title="expanses" key={3} />,
     <AllExpenses key={4} />,
   ];
+  const onRefresh = async () => {
+    setRefreshing(true);
 
+    setRefreshing(false);
+  };
   return (
     <SafeAreaView>
       <View style={{ paddingBottom: 62 }}>
-        <Heading title={t("expanses", english)} />
+        <Heading setSearch={setSearch} title={t("expanses", english)} />
         <FlatList
+          refreshing={refreshing}
+          onRefresh={onRefresh}
           keyExtractor={(item, index) => index.toString()}
           data={elements}
           renderItem={({ item }) => item}

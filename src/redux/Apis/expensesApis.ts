@@ -4,7 +4,16 @@ const expensesApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // get expenses endpoint
     getExpenses: builder.query({
-      query: () => 'api/expense/get-all',
+      query: ({ limit, fromDate, toDate, search }) => ({
+        url: 'api/expense/get-all',
+        method: 'GET',
+        params: {
+          search: search,
+          limit: limit,
+          fromDate: fromDate,
+          toDate: toDate,
+        },
+      }),
       providesTags: ['expenses'],
     }),
     // create expense endpoint
