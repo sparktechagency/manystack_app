@@ -1,6 +1,7 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   ScrollView,
@@ -60,14 +61,6 @@ const ExpensesCreateUpdateForm = () => {
       }
     });
     if (invalid) return;
-    // const data = {
-    //   expenseName: inputValue['Expense Name'],
-    //   expenseCategory: inputValue.category,
-    //   price: inputValue.price,
-    //   note: inputValue.note,
-    //   latitude: 0,
-    //   longitude: 0
-    // };
     const location: any = await getLocation();
     if (Object.values(location as any).some(value => value === undefined)) {
       return Toast.show({
@@ -217,15 +210,19 @@ const ExpensesCreateUpdateForm = () => {
         </View>
         <View style={{ paddingHorizontal: 25, marginTop: 20, marginBottom: 150 }}>
           <GradientButton handler={() => submitHandler()}>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: '700',
-                fontSize: 18,
-              }}>
-              Save
-            </Text>
+            {
+              (isLoading || updating) ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: '700',
+                  fontSize: 18,
+                }}>
+                Save
+              </Text>
+            }
           </GradientButton>
         </View>
       </ScrollView>
