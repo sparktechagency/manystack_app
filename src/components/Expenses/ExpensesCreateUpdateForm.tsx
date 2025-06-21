@@ -43,11 +43,10 @@ const ExpensesCreateUpdateForm = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<ICreateExpenses>({
-    'Expense Name': params?.params?.name,
-    category: params?.params?.category,
+    'Expense Name': params?.params?.expenseName,
+    category: params?.params?.expenseCategory,
     price: params?.params?.price,
     note: params?.params?.note,
-    status: params?.params?.status?.toLowerCase(),
   });
 
   const submitHandler = async () => {

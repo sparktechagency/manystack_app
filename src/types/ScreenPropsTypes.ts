@@ -20,7 +20,7 @@ export type StackTypes = {
   };
   InterventionDetails: { params: { id: string } };
   CreateExpenses: undefined;
-  UpdateExpenses: { params: { id: string } };
+  UpdateExpenses: { params: { id: string, expenseName: string, expenseCategory: string, price: string, note: string, } };
   InvoiceDetails: { params: { id: string } };
   CreateInvoice: undefined;
   UpdateInvoice: { params: { id: string } };

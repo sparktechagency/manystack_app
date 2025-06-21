@@ -84,7 +84,7 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('UpdateExpenses', {
-                params: { id: item._id },
+                params: { id: item._id, expenseName: item.expenseName, expenseCategory: item.expenseCategory, price: item.price.toString(), note: item.note, },
               });
             }}>
             <Image
