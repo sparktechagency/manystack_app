@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { DeleteIcon, Edit, eye, logo } from '../../constant/images';
-import { updateIntervention } from '../../hooks/interventionApiCall';
+import { updateIntervention, useDeleteIntervention } from '../../hooks/interventionApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IIntervention } from '../../types/DataTypes';
 import { StackTypes } from '../../types/ScreenPropsTypes';
@@ -22,6 +22,7 @@ import { hexToRGBA } from '../../utils/hexToRGBA';
 const InterventionsCards = ({ item }: { item: IIntervention }) => {
   // const { handleDeleteIntervention } = deleteIntervention()
   const { handleUpdateIntervention, isLoading: updating } = updateIntervention()
+  const { handleDeleteIntervention, isLoading: deleting } = useDeleteIntervention()
   const navigation = useNavigation<NavigationProp<StackTypes>>();
   const { themeColors } = useGlobalContext();
   const toggleSwitch = async () => {
@@ -142,16 +143,18 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
               ]}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Image
-              source={DeleteIcon as ImageSourcePropType}
-              style={[
-                CardStyles.icon,
-                {
-                  tintColor: themeColors.red as string,
-                },
-              ]}
-            />
+          <TouchableOpacity onPress={() => handleDeleteIntervention(item._id)}>
+            {
+              deleting ? <ActivityIndicator size="small" color={themeColors.primary as string} /> : <Image
+                source={DeleteIcon as ImageSourcePropType}
+                style={[
+                  CardStyles.icon,
+                  {
+                    tintColor: themeColors.red as string,
+                  },
+                ]}
+              />
+            }
           </TouchableOpacity>
           {
             updating ? <ActivityIndicator size="small" color={themeColors.primary as string} /> : <Switch
