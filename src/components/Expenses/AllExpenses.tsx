@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 import { useGetExpensesQuery } from '../../redux/Apis/expensesApis';
 import { IExpenses } from '../../types/DataTypes';
 import ExpensesCards from './ExpensesCards';
@@ -28,4 +28,3 @@ const AllExpenses = ({ search, fromDate, toDate }: { search: string, fromDate: s
 
 export default AllExpenses;
 
-const styles = StyleSheet.create({});
