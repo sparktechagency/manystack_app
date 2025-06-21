@@ -24,10 +24,10 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
   return (
     <View
       style={[CardStyles.card, { backgroundColor: themeColors.white as string }]}>
-      <View>
-        <View style={[CardStyles.headerRow, {
-          maxWidth: "70%"
-        }]}>
+      <View style={{
+        maxWidth: "60%"
+      }}>
+        <View style={[CardStyles.headerRow]}>
           <Text
             numberOfLines={1}
             style={[
@@ -68,7 +68,8 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
               color: hexToRGBA(themeColors.black as string, 0.7),
             },
           ]}
-          numberOfLines={1}>
+          numberOfLines={1}
+        >
           {item.note}
         </Text>
 
