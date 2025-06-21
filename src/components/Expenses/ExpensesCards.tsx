@@ -2,6 +2,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   Text,
@@ -9,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import { DeleteIcon, DownloadPdf, Edit, logo } from '../../constant/images';
+import { useDeleteExpenses } from '../../hooks/expensesApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IExpenses } from '../../types/DataTypes';
 import { StackTypes } from '../../types/ScreenPropsTypes';
@@ -17,6 +19,7 @@ import { CardStyles } from '../Intervention/InterventionsCards';
 
 const ExpensesCards = ({ item }: { item: IExpenses }) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
+  const { handleDeleteExpenses, isLoading } = useDeleteExpenses();
   const { themeColors, width } = useGlobalContext();
   return (
     <View
@@ -97,8 +100,10 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
               ]}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Image
+          <TouchableOpacity onPress={() => {
+            handleDeleteExpenses(item._id)
+          }}>
+            {isLoading ? <ActivityIndicator size="small" color={themeColors.primary as string} /> : <Image
               source={DeleteIcon as ImageSourcePropType}
               style={[
                 CardStyles.icon,
@@ -106,7 +111,7 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
                   tintColor: themeColors.red as string,
                 },
               ]}
-            />
+            />}
           </TouchableOpacity>
         </View>
       </View>
