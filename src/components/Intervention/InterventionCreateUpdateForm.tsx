@@ -37,7 +37,6 @@ const InterventionCreateUpdateForm = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<ICreateInterVention>({
-    // 'intervention id': '',
     category: '',
     price: '20',
     note: '12',
