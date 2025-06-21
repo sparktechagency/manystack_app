@@ -1,6 +1,7 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -15,10 +16,10 @@ import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { StackTypes } from '../../types/ScreenPropsTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
-import GradientButton from '../sheard/GradientButton';
 import { t } from '../../utils/translate';
+import GradientButton from '../sheard/GradientButton';
 
-const FilterByDate = ({ title }: { title?: string }) => {
+const FilterByDate = ({ title, fromTOHandler }: { title?: string, fromTOHandler: (arg: string, arg0: string) => void }) => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const { themeColors, english } = useGlobalContext();
 
@@ -32,11 +33,16 @@ const FilterByDate = ({ title }: { title?: string }) => {
     setShowFromPicker(Platform.OS === 'ios');
     if (selectedDate) setFromDate(selectedDate);
   };
-
   const onToChange = (event: any, selectedDate?: Date) => {
     setShowToPicker(Platform.OS === 'ios');
     if (selectedDate) setToDate(selectedDate);
   };
+
+  useEffect(() => {
+    if (fromDate && toDate) {
+      fromTOHandler(moment(fromDate).format('YYYY-MM-DD'), moment(toDate).format('YYYY-MM-DD'));
+    }
+  }, [fromDate, toDate])
 
   const formatDate = (date?: Date) => {
     if (!date) return '00/00/000';

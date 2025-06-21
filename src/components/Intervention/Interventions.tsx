@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import { useGetInterventionsQuery } from '../../redux/Apis/interventionApis';
 import { IIntervention } from '../../types/DataTypes';
+import { InterVentionsProps } from '../../types/PropsType';
 import InterventionsCards from './InterventionsCards';
 
-const Interventions = () => {
+const Interventions = ({ search, fromDate, toDate }: InterVentionsProps) => {
   const [limit, setLimit] = useState(10)
-  const { data, isLoading, isFetching } = useGetInterventionsQuery(undefined)
+  const { data, isLoading, isFetching } = useGetInterventionsQuery({ search, limit, fromDate, toDate })
   return (
     <FlatList
       data={data?.interventions || [] as IIntervention[]}
@@ -21,7 +22,9 @@ const Interventions = () => {
         justifyContent: 'center',
         alignItems: 'center'
       }}><ActivityIndicator size="large" color="blue" /></View> : <></>}
-      onEndReached={() => setLimit(limit + 10)}
+      onEndReached={() => {
+        !isLoading && !isFetching && setLimit(limit + 10)
+      }}
     />
   );
 };

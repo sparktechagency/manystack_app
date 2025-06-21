@@ -37,3 +37,9 @@ export interface ICategoryListItem {
   price: string;
   id: string;
 }
+
+export interface InterVentionsProps {
+  search: string;
+  fromDate: string;
+  toDate: string;
+}

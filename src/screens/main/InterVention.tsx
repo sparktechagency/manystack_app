@@ -8,11 +8,18 @@ import Search from '../../components/sheard/Search';
 const InterVention = () => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [search, setSearch] = React.useState<string>('');
+  const [fromDate, setFromDate] = React.useState<string>('');
+  const [toDate, setToDate] = React.useState<string>('');
+  const fromTOHandler = (formatDate: string, toDate: string) => {
+    setFromDate(formatDate);
+    setToDate(toDate);
+  }
   const elements = [
     <Search search={search} setSearch={setSearch} key={1} />,
-    <FilterByDate key={2} />,
-    <Interventions key={3} />,
+    <FilterByDate fromTOHandler={fromTOHandler} key={2} />,
+    <Interventions search={search} fromDate={fromDate} toDate={toDate} key={3} />,
   ];
+
   const onRefresh = async () => {
     setRefreshing(true);
     try {

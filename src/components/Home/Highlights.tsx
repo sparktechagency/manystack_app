@@ -49,6 +49,7 @@ const Highlights = () => {
               {item.count}
             </Text>
             <Text
+              numberOfLines={1}
               style={{
                 fontSize: 16,
                 color: hexToRGBA(themeColors.black as string, 0.5),

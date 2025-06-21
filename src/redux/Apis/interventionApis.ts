@@ -4,7 +4,16 @@ const interventionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // get interventions endpoint
     getInterventions: builder.query({
-      query: () => 'api/intervention/get-all',
+      query: ({ limit, fromDate, toDate, search }) => ({
+        url: 'api/intervention/get-all',
+        method: 'GET',
+        params: {
+          search: search,
+          limit: limit,
+          fromDate: fromDate,
+          toDate: toDate,
+        },
+      }),
       providesTags: ['intervention'],
     }),
     // create intervention endpoint
