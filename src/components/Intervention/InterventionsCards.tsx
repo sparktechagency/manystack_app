@@ -1,4 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import moment from 'moment';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -84,7 +85,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
               color: hexToRGBA(themeColors.black as string, 0.7),
             },
           ]}>
-          {item?.createdAt?.split('T')[0]}
+          {moment(item.createdAt).format('YYYY-MM-DD')}
         </Text>
         <Text
           style={[

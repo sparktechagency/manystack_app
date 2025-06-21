@@ -2,10 +2,10 @@ import React from 'react';
 import {
   FlatList,
   ImageSourcePropType,
-  SafeAreaView,
   StyleSheet,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AllExpenses from '../../components/Expenses/AllExpenses';
 import ProfitCard from '../../components/Home/ProfitCard';
 import FilterByDate from '../../components/Intervention/FilterByDate';
@@ -34,8 +34,8 @@ const Expanses = () => {
       key={1}
     />,
     <Search search={search} setSearch={setSearch} key={2} />,
-    <FilterByDate fromTOHandler={fromTOHandler} title="expanses" key={3} />,
-    <AllExpenses key={4} />,
+    <FilterByDate fromTOHandler={fromTOHandler} title="Expenses" key={3} />,
+    <AllExpenses search={search} fromDate={fromDate} toDate={toDate} key={4} />,
   ];
   const onRefresh = async () => {
     setRefreshing(true);

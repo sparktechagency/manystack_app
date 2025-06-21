@@ -30,13 +30,19 @@ export interface IIntervention {
   }] | [];
 }
 export interface IExpenses {
-  name: string;
-  status: string;
-  date: string;
-  service: string;
-  amount: number;
-  description: string;
-  images: string[];
+  createdAt: string;
+  expenseCategory: string;
+  expenseName: string;
+  images: [{
+    createdAt: string
+    url: string,
+    location: string
+  }] | [];
+  note: string;
+  price: number;
+  updatedAt: string;
+  user: string
+  _id: string
 }
 export interface IInvoice {
   invoice_id: string;

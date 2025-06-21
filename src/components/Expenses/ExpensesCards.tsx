@@ -1,4 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import moment from 'moment';
 import React from 'react';
 import {
   Image,
@@ -32,7 +33,7 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
                 color: themeColors.primary as string,
               },
             ]}>
-            {item.name}
+            {item.expenseName}
           </Text>
         </View>
         <Text
@@ -42,7 +43,7 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
               color: hexToRGBA(themeColors.black as string, 0.7),
             },
           ]}>
-          {item.date}
+          {moment(item.createdAt).format('YYYY-MM-DD')}
         </Text>
         <Text
           style={[
@@ -51,11 +52,11 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
               color: hexToRGBA(themeColors.black as string, 0.7),
             },
           ]}>
-          {item.service}
+          {item.expenseCategory}
         </Text>
         <Text
           style={[CardStyles.amount, { color: themeColors.primary as string }]}>
-          ${item.amount.toFixed(2)}
+          ${item.price.toFixed(2)}
         </Text>
         <Text
           style={[
@@ -65,7 +66,7 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
             },
           ]}
           numberOfLines={1}>
-          {item.description}
+          {item.note}
         </Text>
 
         <View style={CardStyles.actions}>
@@ -83,7 +84,7 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('UpdateExpenses', {
-                params: { id: item.name },
+                params: { id: item._id },
               });
             }}>
             <Image
@@ -119,7 +120,7 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
         {item.images && item.images.length > 0 ? (
           <>
             <Image
-              source={{ uri: item.images[0] }}
+              source={{ uri: item?.images[0]?.url }}
               style={CardStyles.image}
               resizeMode="cover"
             />

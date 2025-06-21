@@ -51,7 +51,6 @@ const FilterByDate = ({ title, fromTOHandler }: { title?: string, fromTOHandler:
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
-
   const getAllTitleKey = () => {
     if (title === 'Expenses') return 'allExpenses';
     if (title === 'Invoice') return 'allInvoice';
