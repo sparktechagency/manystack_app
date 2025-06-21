@@ -1,16 +1,20 @@
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import FlexTextOpacity from '../../components/InterventionDetails/FlexTextOpacity';
 import ImageCard from '../../components/InterventionDetails/ImageCard';
 import GradientButton from '../../components/sheard/GradientButton';
-import {intervention} from '../../constant/data';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {IIntervention} from '../../types/DataTypes';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetInterventionByIdQuery } from '../../redux/Apis/interventionApis';
+import { StackTypes } from '../../types/ScreenPropsTypes';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const InterventionDetails = () => {
-  const {width, height, themeColors} = useGlobalContext();
-  const data = intervention?.[0] as IIntervention;
+  const { width, height, themeColors } = useGlobalContext();
+  const navigation = useNavigation<NavigationProp<StackTypes>>()
+  const { params }: any = useRoute()
+  const { data } = useGetInterventionByIdQuery(params?.params?.id)
+  console.log(data)
   return (
     <View
       style={{
@@ -27,21 +31,21 @@ const InterventionDetails = () => {
         INT-20250507-001
       </Text>
 
-      <FlexTextOpacity text1="Date :" text2={data.date} />
-      <FlexTextOpacity text1="Category :" text2={data.service} />
+      <FlexTextOpacity text1="Date :" text2={data?.createdAt?.split('T')[0]} />
+      <FlexTextOpacity text1="Category :" text2={data?.category?.name} />
       <FlexTextOpacity
         text1="Price :"
-        text2={`$${data.amount}`}
+        text2={`$${data?.price}`}
         color={themeColors.primary as string}
       />
-      <FlexTextOpacity text1="Note :" text2={data.description} />
+      <FlexTextOpacity text1="Note :" text2={data?.note} />
       <FlatList
         data={[
           1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         ]}
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <ImageCard key={item} item={item?.toString()} />
         )}
         showsVerticalScrollIndicator={false}
@@ -62,7 +66,7 @@ const InterventionDetails = () => {
           paddingVertical: 16,
           backgroundColor: hexToRGBA(themeColors.white as string, 0.9),
         }}>
-        <GradientButton handler={() => {}}>
+        <GradientButton handler={() => { }}>
           <Text
             style={{
               color: 'white',

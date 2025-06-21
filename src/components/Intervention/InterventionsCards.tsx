@@ -114,7 +114,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('InterventionDetails', {
-                params: { id: item.interventionId },
+                params: { id: item._id },
               });
             }}>
             <Image
