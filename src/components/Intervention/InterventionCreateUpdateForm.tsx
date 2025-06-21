@@ -205,7 +205,7 @@ const InterventionCreateUpdateForm = () => {
         <View style={{ paddingHorizontal: 25, marginTop: 20, marginBottom: 120 }}>
           <GradientButton handler={() => submitHandler()}>
             {
-              isLoading ? (
+              (isLoading || updating) ? (
                 <ActivityIndicator size="small" color="white" />
               ) : <Text
                 style={{
