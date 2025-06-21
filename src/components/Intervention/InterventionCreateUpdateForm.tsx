@@ -48,13 +48,16 @@ const InterventionCreateUpdateForm = () => {
   });
 
   const submitHandler = async () => {
+    let invalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof ICreateInterVention] === '') {
         setError(prev => ({ ...prev, [key]: true }));
+        invalid = true;
       } else {
         setError(prev => ({ ...prev, [key]: false }));
       }
     });
+    if (invalid) return;
     const formData = new FormData();
     Object.keys(inputValue).forEach(key => {
       formData.append(key, inputValue[key as keyof ICreateInterVention]);
