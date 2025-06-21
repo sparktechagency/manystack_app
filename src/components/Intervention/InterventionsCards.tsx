@@ -1,6 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   StyleSheet,
@@ -9,7 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { DeleteIcon, Edit, eye, logo } from '../../constant/images';
+import { updateIntervention } from '../../hooks/interventionApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IIntervention } from '../../types/DataTypes';
 import { StackTypes } from '../../types/ScreenPropsTypes';
@@ -17,10 +20,26 @@ import { generateImageUrl } from '../../utils/baseUrls';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const InterventionsCards = ({ item }: { item: IIntervention }) => {
+  // const { handleDeleteIntervention } = deleteIntervention()
+  const { handleUpdateIntervention, isLoading: updating } = updateIntervention()
   const navigation = useNavigation<NavigationProp<StackTypes>>();
   const { themeColors } = useGlobalContext();
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const toggleSwitch = async () => {
+    const data = new FormData()
+    data.append('status', item.status === 'PAID' ? 'UNPAID' : 'PAID')
+    const res = await handleUpdateIntervention(data,
+      item._id,
+      false
+    )
+    if (res) {
+      Toast.show({
+        type: 'success',
+        text1: item.status === 'PAID' ? 'Unpaid' : 'Paid',
+        text2: item.status === 'PAID' ? 'Intervention marked as Unpaid.' : 'Intervention marked as Paid.',
+      })
+    }
+  };
+
   return (
     <View
       style={[CardStyles.card, { backgroundColor: themeColors.white as string }]}>
@@ -134,20 +153,23 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
               ]}
             />
           </TouchableOpacity>
-          <Switch
-            trackColor={{
-              false: hexToRGBA(themeColors.black as string, 0.2),
-              true: hexToRGBA(themeColors.primary as string, 0.2),
-            }}
-            thumbColor={
-              isEnabled
-                ? (themeColors.primary as string)
-                : (themeColors.white as string)
-            }
-            ios_backgroundColor={hexToRGBA(themeColors.black as string, 0.2)}
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-          />
+          {
+            updating ? <ActivityIndicator size="small" color={themeColors.primary as string} /> : <Switch
+              trackColor={{
+                false: hexToRGBA(themeColors.black as string, 0.2),
+                true: hexToRGBA(themeColors.primary as string, 0.2),
+              }}
+              thumbColor={
+                item.status === 'PAID'
+                  ? (themeColors.primary as string)
+                  : (themeColors.white as string)
+              }
+              ios_backgroundColor={hexToRGBA(themeColors.black as string, 0.2)}
+              onValueChange={toggleSwitch}
+              value={item.status === 'PAID'}
+            />
+          }
+
         </View>
       </View>
       <View

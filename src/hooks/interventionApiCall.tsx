@@ -36,16 +36,16 @@ export const createIntervention = () => {
 export const updateIntervention = () => {
   const navigation = useNavigation<NavigationProp<TabsTypes>>()
   const [update, { isLoading }] = useUpdateInterventionMutation();
-  const handleUpdateIntervention = async (data: any, id: string) => {
+  const handleUpdateIntervention = async (data: any, id: string, action: boolean = true) => {
     try {
       await update({ data, id }).unwrap()
         .then((res) => {
-          Toast.show({
+          action && Toast.show({
             type: 'success',
             text1: 'intervention updated',
             text2: res.data?.message || 'Intervention updated successfully.',
           })
-          navigation.goBack()
+          action && navigation.goBack()
         }).catch((err) => {
           Toast.show({
             type: 'error',
