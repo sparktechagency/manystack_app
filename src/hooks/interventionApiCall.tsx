@@ -1,6 +1,6 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import { useCreateInterventionMutation, useUpdateInterventionMutation } from '../redux/Apis/interventionApis';
+import { useCreateInterventionMutation, useDeleteInterventionMutation, useUpdateInterventionMutation } from '../redux/Apis/interventionApis';
 import { TabsTypes } from '../types/ScreenPropsTypes';
 
 export const createIntervention = () => {
@@ -61,4 +61,32 @@ export const updateIntervention = () => {
   }
 
   return { handleUpdateIntervention, isLoading };
+}
+
+export const useDeleteIntervention = () => {
+  const [deleteIntervention, { isLoading }] = useDeleteInterventionMutation();
+  const handleDeleteIntervention = async (id: string, action: boolean = true) => {
+    try {
+      await deleteIntervention(id).unwrap()
+        .then((res) => {
+          action && Toast.show({
+            type: 'success',
+            text1: 'intervention deleted',
+            text2: res.data?.message || 'Intervention deleted successfully.',
+          })
+        }).catch((err) => {
+          Toast.show({
+            type: 'error',
+            text1: 'Failed to delete intervention',
+            text2: err.data?.message || 'Failed to delete intervention.',
+          })
+        });
+      return true;
+    } catch (err) {
+      // throw err;
+      return false;
+    }
+  }
+
+  return { handleDeleteIntervention, isLoading };
 }
