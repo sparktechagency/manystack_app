@@ -11,11 +11,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import { paymentStatus } from '../../constant/data';
 import { Camera, DeleteIcon } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
-import { createIntervention } from '../../hooks/interventionApiCall';
+import { createIntervention, updateIntervention } from '../../hooks/interventionApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
 import { ICreateInterVention } from '../../types/DataTypes';
@@ -29,6 +30,7 @@ const InterventionCreateUpdateForm = () => {
   const { data } = useGetCategoriesQuery(undefined)
   const { params }: any = useRoute()
   const { handleCreateIntervention, isLoading } = createIntervention()
+  const { handleUpdateIntervention, isLoading: updating } = updateIntervention()
   const { themeColors, setImages, images } = useGlobalContext();
   const [error, setError] = React.useState<ICreateInterVentionError>({
     'intervention id': false,
@@ -42,7 +44,7 @@ const InterventionCreateUpdateForm = () => {
     category: params?.params?.category,
     price: params?.params?.price,
     note: params?.params?.note,
-    status: params?.params?.status,
+    status: params?.params?.status?.toLowerCase(),
   });
 
   const submitHandler = async () => {
@@ -70,153 +72,156 @@ const InterventionCreateUpdateForm = () => {
     }
     formData.append("latitude", location?.latitude);
     formData.append("longitude", location?.longitude);
-    await handleCreateIntervention(formData)
+
+    params?.params?.id ? await handleUpdateIntervention(formData, params?.params?.id) : await handleCreateIntervention(formData)
 
   };
   return (
-    <ScrollView
-      style={{
-        width: '100%',
-        height: '100%',
-        paddingHorizontal: 20,
-        paddingVertical: 20,
-      }}>
-      {Object.keys(inputValue).map((key, index, arr) => {
-        if (key === 'status') {
+    <SafeAreaView>
+      <ScrollView
+        style={{
+          width: '100%',
+          height: '100%',
+          paddingHorizontal: 20,
+          paddingVertical: 20,
+        }}>
+        {Object.keys(inputValue).map((key, index, arr) => {
+          if (key === 'status') {
+            return (
+              <View key={key}>
+                <Text style={globalStyles.inputLabel}>Status</Text>
+                <SingleSelectDropDown
+                  placeholder="Select Status"
+                  name={key}
+                  data={paymentStatus}
+                  value={inputValue[key as keyof ICreateInterVention] as string}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  setError={setError}
+                  error={error}
+                />
+              </View>
+            );
+          }
+          if (key === 'category') {
+            return (
+              <View key={key}>
+                <Text style={globalStyles.inputLabel}>Select Category</Text>
+                <SingleSelectDropDown
+                  placeholder='Select Category'
+                  name={key}
+                  data={data?.categories?.map((category: any) => ({ label: category.name, value: category._id })) || []}
+                  value={inputValue[key as keyof ICreateInterVention] as string}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  setError={setError}
+                  error={error}
+                />
+              </View>
+            );
+          }
           return (
-            <View key={key}>
-              <Text style={globalStyles.inputLabel}>Status</Text>
-              <SingleSelectDropDown
-                placeholder="Select Status"
-                name={key}
-                data={paymentStatus}
-                value={inputValue[key as keyof ICreateInterVention] as string}
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                setError={setError}
-                error={error}
-              />
+            <View key={key} style={{}}>
+              <Text style={globalStyles.inputLabel}>
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </Text>
+              <View style={{ position: 'relative' }}>
+                <TextInput
+                  value={inputValue[key as keyof ICreateInterVention]}
+                  onChangeText={text => {
+                    setInputValue({ ...inputValue, [key]: text });
+                    setError({ ...error, [key]: false });
+                  }}
+                  keyboardType={key === 'price' ? 'numeric' : 'default'}
+                  placeholder={`Enter your ${key}`}
+                  placeholderTextColor={globalStyles.inputPlaceholder.color}
+                  style={[
+                    globalStyles.input,
+                    error[key as keyof ICreateInterVention]
+                      ? globalStyles.inputError
+                      : {},
+                  ]}
+                />
+              </View>
             </View>
           );
-        }
-        if (key === 'category') {
-          return (
-            <View key={key}>
-              <Text style={globalStyles.inputLabel}>Select Category</Text>
-              <SingleSelectDropDown
-                placeholder='Select Category'
-                name={key}
-                data={data?.categories?.map((category: any) => ({ label: category.name, value: category._id })) || []}
-                value={inputValue[key as keyof ICreateInterVention] as string}
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                setError={setError}
-                error={error}
-              />
-            </View>
-          );
-        }
-        return (
-          <View key={key} style={{}}>
-            <Text style={globalStyles.inputLabel}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </Text>
-            <View style={{ position: 'relative' }}>
-              <TextInput
-                value={inputValue[key as keyof ICreateInterVention]}
-                onChangeText={text => {
-                  setInputValue({ ...inputValue, [key]: text });
-                  setError({ ...error, [key]: false });
-                }}
-                keyboardType={key === 'price' ? 'numeric' : 'default'}
-                placeholder={`Enter your ${key}`}
-                placeholderTextColor={globalStyles.inputPlaceholder.color}
-                style={[
-                  globalStyles.input,
-                  error[key as keyof ICreateInterVention]
-                    ? globalStyles.inputError
-                    : {},
-                ]}
-              />
-            </View>
-          </View>
-        );
-      })}
+        })}
 
-      <ImageUpload images={images} setImages={setImages} maxNumber={5}>
-        <Text style={[globalStyles.inputLabel]}>Add Image</Text>
-        <View
-          style={[
-            globalStyles.flex,
-            {
-              justifyContent: 'flex-start',
-              gap: 10,
-              borderColor: hexToRGBA(themeColors.black as string, 0.2),
-              paddingVertical: 14,
-              paddingHorizontal: 14,
-              borderRadius: 5,
-              borderWidth: 1,
-            },
-          ]}>
-          <Image
-            source={Camera as ImageSourcePropType}
-            style={{ width: 30, height: 30 }}
-          />
-          <View>
-            <Text style={[globalStyles.inputLabel, { fontSize: 16 }]}>
-              Select image
-            </Text>
+        <ImageUpload images={images} setImages={setImages} maxNumber={5}>
+          <Text style={[globalStyles.inputLabel]}>Add Image</Text>
+          <View
+            style={[
+              globalStyles.flex,
+              {
+                justifyContent: 'flex-start',
+                gap: 10,
+                borderColor: hexToRGBA(themeColors.black as string, 0.2),
+                paddingVertical: 14,
+                paddingHorizontal: 14,
+                borderRadius: 5,
+                borderWidth: 1,
+              },
+            ]}>
+            <Image
+              source={Camera as ImageSourcePropType}
+              style={{ width: 30, height: 30 }}
+            />
+            <View>
+              <Text style={[globalStyles.inputLabel, { fontSize: 16 }]}>
+                Select image
+              </Text>
+            </View>
           </View>
-        </View>
-      </ImageUpload>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-        {images?.length > 0 && (
-          images.map((image, index) => (
-            <View key={image.uri} style={{ position: 'relative', width: 100, height: 100, }} >
-              <Image
-                source={{ uri: image?.uri }}
-                style={{
-                  marginTop: 6,
-                  width: 100,
-                  height: 100,
-                  resizeMode: 'contain',
-                }}
-              />
-              <TouchableOpacity onPress={() => {
-                setImages(prev => prev.filter((item, i) => item.uri !== image.uri))
-              }} style={{ position: 'absolute', top: 8, right: 8, backgroundColor: "red", borderRadius: 10, padding: 3 }}>
+        </ImageUpload>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          {images?.length > 0 && (
+            images.map((image, index) => (
+              <View key={image.uri} style={{ position: 'relative', width: 100, height: 100, }} >
                 <Image
-                  source={DeleteIcon as ImageSourcePropType}
+                  source={{ uri: image?.uri }}
                   style={{
-                    width: 20,
-                    height: 20,
-                    tintColor: "white"
+                    marginTop: 6,
+                    width: 100,
+                    height: 100,
+                    resizeMode: 'contain',
                   }}
                 />
-              </TouchableOpacity>
-            </View>
-          ))
-        )}
-      </View>
-      <View style={{ paddingHorizontal: 25, marginTop: 50 }}>
-        <GradientButton handler={() => submitHandler()}>
-          {
-            isLoading ? (
-              <ActivityIndicator size="small" color="white" />
-            ) : <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: '700',
-                fontSize: 18,
-              }}>
-              Save
-            </Text>
-          }
+                <TouchableOpacity onPress={() => {
+                  setImages(prev => prev.filter((item, i) => item.uri !== image.uri))
+                }} style={{ position: 'absolute', top: 8, right: 8, backgroundColor: "red", borderRadius: 10, padding: 3 }}>
+                  <Image
+                    source={DeleteIcon as ImageSourcePropType}
+                    style={{
+                      width: 20,
+                      height: 20,
+                      tintColor: "white"
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+            ))
+          )}
+        </View>
+        <View style={{ paddingHorizontal: 25, marginTop: 20, marginBottom: 120 }}>
+          <GradientButton handler={() => submitHandler()}>
+            {
+              isLoading ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: '700',
+                  fontSize: 18,
+                }}>
+                Save
+              </Text>
+            }
 
-        </GradientButton>
-      </View>
-    </ScrollView>
+          </GradientButton>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

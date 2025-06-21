@@ -1,6 +1,6 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-import { useCreateInterventionMutation } from '../redux/Apis/interventionApis';
+import { useCreateInterventionMutation, useUpdateInterventionMutation } from '../redux/Apis/interventionApis';
 import { TabsTypes } from '../types/ScreenPropsTypes';
 
 export const createIntervention = () => {
@@ -31,4 +31,34 @@ export const createIntervention = () => {
   }
 
   return { handleCreateIntervention, isLoading };
+}
+
+export const updateIntervention = () => {
+  const navigation = useNavigation<NavigationProp<TabsTypes>>()
+  const [update, { isLoading }] = useUpdateInterventionMutation();
+  const handleUpdateIntervention = async (data: any, id: string) => {
+    try {
+      await update({ data, id }).unwrap()
+        .then((res) => {
+          Toast.show({
+            type: 'success',
+            text1: 'intervention updated',
+            text2: res.data?.message || 'Intervention updated successfully.',
+          })
+          navigation.goBack()
+        }).catch((err) => {
+          Toast.show({
+            type: 'error',
+            text1: 'Failed to update intervention',
+            text2: err.data?.message || 'Failed to update intervention.',
+          })
+        });
+      return true;
+    } catch (err) {
+      // throw err;
+      return false;
+    }
+  }
+
+  return { handleUpdateIntervention, isLoading };
 }

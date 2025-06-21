@@ -110,7 +110,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('UpdateIntervention', {
-                params: { id: item._id, category: item.category.name, price: item.price?.toString(), note: item.note, status: item.status },
+                params: { id: item._id, category: item.category._id, price: item.price?.toString(), note: item.note, status: item.status },
               });
             }}>
             <Image

@@ -19,6 +19,7 @@ export interface IIntervention {
   createdAt: string;
   category: {
     name: string;
+    _id: string;
   };
   price: number;
   note: string;
