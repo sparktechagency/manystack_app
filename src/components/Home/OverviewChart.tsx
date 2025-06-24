@@ -5,9 +5,47 @@ import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { t } from '../../utils/translate';
-
-const OverviewChart = () => {
+interface MonthlyData {
+  month: string;
+  income: number;
+  expenses: number;
+  profit: number;
+}
+interface Props {
+  monthlyData: MonthlyData[];
+}
+const OverviewChart = ({ monthlyData }: Props) => {
   const { themeColors, english } = useGlobalContext();
+  const mapMonthlyDataToBarData = (monthlyData: MonthlyData[]) => {
+    return monthlyData.flatMap((item) => [
+      {
+        value: item.income,
+        label: item.month,
+        spacing: 2,
+        labelWidth: 30,
+        labelTextStyle: { color: "gray" },
+        frontColor: "#017FF4",
+      },
+      {
+        value: item.expenses,
+        frontColor: "#4CAF50",
+        spacing: 2,
+      },
+      {
+        value: item.profit,
+        frontColor: "#F2C94C",
+      },
+    ]);
+  };
+
+  console.log(mapMonthlyDataToBarData(monthlyData))
+  const getMaxValue = (monthlyData: MonthlyData[]): number => {
+    return monthlyData.reduce((max, item) => {
+      const currentMax = Math.max(item.income, item.expenses, item.profit);
+      return currentMax > max ? currentMax : max;
+    }, 0);
+  };
+
   const barData = [
     // Jan
     {
@@ -209,7 +247,7 @@ const OverviewChart = () => {
       {renderTitle()}
 
       <BarChart
-        data={barData}
+        data={mapMonthlyDataToBarData(monthlyData)}
         barWidth={6}
         spacing={13}
         roundedTop
@@ -219,7 +257,7 @@ const OverviewChart = () => {
         yAxisThickness={0}
         yAxisTextStyle={{ color: 'gray' }}
         noOfSections={3}
-        maxValue={80}
+        maxValue={getMaxValue(monthlyData)}
       />
     </View>
   );
