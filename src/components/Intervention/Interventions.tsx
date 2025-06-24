@@ -23,8 +23,9 @@ const Interventions = ({ search, fromDate, toDate }: InterVentionsProps) => {
         alignItems: 'center'
       }}><ActivityIndicator size="large" color="blue" /></View> : <></>}
       onEndReached={() => {
-        !isLoading && !isFetching && setLimit(limit + 10)
+        !isLoading && !isFetching && data?.pagination?.totalItems > limit && setLimit(limit + 10)
       }}
+      onEndReachedThreshold={0.5}
     />
   );
 };

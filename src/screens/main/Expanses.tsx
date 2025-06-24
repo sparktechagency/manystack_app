@@ -10,6 +10,7 @@ import AllExpenses from '../../components/Expenses/AllExpenses';
 import ProfitCard from '../../components/Home/ProfitCard';
 import FilterByDate from '../../components/Intervention/FilterByDate';
 import Heading from '../../components/Intervention/Heading';
+import PrettyCard from '../../components/sheard/PrettyCard';
 import Search from '../../components/sheard/Search';
 import { Loss } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
@@ -54,6 +55,7 @@ const Expanses = () => {
           renderItem={({ item }) => item}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ gap: 15, paddingHorizontal: 20 }}
+          ListEmptyComponent={<PrettyCard title="No Expenses" description="No expenses found. Check back later or create a new one to get started!" />}
         />
       </View>
     </SafeAreaView>
