@@ -5,6 +5,7 @@ import {
   ImageSourcePropType,
   Modal,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -63,7 +64,10 @@ const ImageCard = ({ item }: IImageCard) => {
           }}
         />
       </TouchableOpacity>
-
+      <View style={{ position: 'absolute', bottom: 10, left: 10, backgroundColor: 'rgba(255, 255, 255, 0.5)', width: "100%" }}>
+        <Text style={{ color: themeColors.black as string, fontSize: 12 }}>{item.location}</Text>
+        <Text style={{ color: themeColors.black as string, fontSize: 12 }}>{item.createdAt?.split('T')[0]}</Text>
+      </View>
       <TouchableOpacity onPress={handleDeleteImage} style={{ position: 'absolute', top: 10, right: 10 }}>
         {
           isLoading ? <ActivityIndicator size={"small"} color={themeColors.primary as string} /> : <Image
