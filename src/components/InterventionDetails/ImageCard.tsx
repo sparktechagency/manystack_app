@@ -7,12 +7,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Close, DeleteIcon, logo} from '../../constant/images';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { Close, DeleteIcon } from '../../constant/images';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { generateImageUrl } from '../../utils/baseUrls';
+import { hexToRGBA } from '../../utils/hexToRGBA';
+interface IImageCard {
+  item: {
+    url: string;
+    createdAt: string;
+    _id: string;
+    location: string;
 
-const ImageCard = ({item}: {item: string}) => {
-  const {width, height, themeColors} = useGlobalContext();
+  };
+}
+const ImageCard = ({ item }: IImageCard) => {
+  const { width, height, themeColors } = useGlobalContext();
   const [modalVisible, setModalVisible] = React.useState(false);
   return (
     <View
@@ -25,7 +34,7 @@ const ImageCard = ({item}: {item: string}) => {
         activeOpacity={0.6}
         onPress={() => setModalVisible(true)}>
         <Image
-          source={logo as ImageSourcePropType}
+          source={{ uri: generateImageUrl(item.url) }}
           style={{
             width: (width - 60) / 2,
             height: 200,
@@ -36,7 +45,7 @@ const ImageCard = ({item}: {item: string}) => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity style={{position: 'absolute', top: 10, right: 10}}>
+      <TouchableOpacity style={{ position: 'absolute', top: 10, right: 10 }}>
         <Image
           source={DeleteIcon as ImageSourcePropType}
           style={[
@@ -63,7 +72,7 @@ const ImageCard = ({item}: {item: string}) => {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
           }}>
           <Image
-            source={logo as ImageSourcePropType}
+            source={{ uri: generateImageUrl(item.url) }}
             style={{
               width: '100%',
               height: '100%',
@@ -73,7 +82,7 @@ const ImageCard = ({item}: {item: string}) => {
 
           <TouchableOpacity
             onPress={() => setModalVisible(false)}
-            style={{position: 'absolute', top: 20, right: 20}}>
+            style={{ position: 'absolute', top: 20, right: 20 }}>
             <Image
               source={Close as ImageSourcePropType}
               style={[

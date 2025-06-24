@@ -16,7 +16,7 @@ export interface ISingleDropDownProps {
 }
 
 export interface IImageUploadProps {
-  images: any;
+  images: IImage[];
   setImages: React.Dispatch<React.SetStateAction<IImage[]>>;
   maxNumber?: number;
   children: React.ReactNode;

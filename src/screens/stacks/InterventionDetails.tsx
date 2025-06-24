@@ -28,25 +28,23 @@ const InterventionDetails = () => {
           fontWeight: 600,
           color: themeColors.primary as string,
         }}>
-        INT-20250507-001
+        {data?.intervention?.interventionId}
       </Text>
 
-      <FlexTextOpacity text1="Date :" text2={data?.createdAt?.split('T')[0]} />
-      <FlexTextOpacity text1="Category :" text2={data?.category?.name} />
+      <FlexTextOpacity text1="Date :" text2={data?.intervention?.createdAt?.split('T')[0]} />
+      <FlexTextOpacity text1="Category :" text2={data?.intervention?.category?.name} />
       <FlexTextOpacity
         text1="Price :"
-        text2={`$${data?.price}`}
+        text2={`$${data?.intervention?.price}`}
         color={themeColors.primary as string}
       />
-      <FlexTextOpacity text1="Note :" text2={data?.note} />
+      <FlexTextOpacity text1="Note :" text2={data?.intervention?.note} />
       <FlatList
-        data={[
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-        ]}
+        data={data?.intervention?.images ?? []}
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <ImageCard key={item} item={item?.toString()} />
+          <ImageCard key={item} item={item} />
         )}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
