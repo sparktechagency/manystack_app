@@ -1,5 +1,6 @@
 import React from 'react';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FilterByDate from '../../components/Intervention/FilterByDate';
 import Heading from '../../components/Intervention/Heading';
 import Invoices from '../../components/Invoice/Invoices';
