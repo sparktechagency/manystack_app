@@ -44,11 +44,33 @@ export interface IExpenses {
   _id: string
 }
 export interface IInvoice {
-  invoice_id: string;
-  status: string;
-  date: string;
-  service: string;
-  amount: number;
+  "address": {
+    "streetNo": string,
+    "streetName": string,
+    "city": string,
+    "postalCode": string,
+    "country": string
+  },
+  "services": {
+    "selectedService": string,
+    "quantity": number,
+    "price": number
+  },
+  "_id": string,
+  "name": string,
+  "email": string
+  "phone": string
+  "nSiren": string
+  "status": string
+  "user": {
+    "_id": string
+    "email": string,
+    "nSiren": string
+  },
+  "data": string,
+  "createdAt": string,
+  "updatedAt": string,
+  "invoiceId": string,
 }
 export interface ISubscription {
   name: string;

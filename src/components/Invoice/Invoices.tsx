@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import { InvoiceDataFr } from '../../constant/data';
 import { useGetInvoicesQuery } from '../../redux/Apis/invoiceApis';
 import { IInvoice } from '../../types/DataTypes';
 import InvoiceCard from './InvoiceCard';
@@ -10,7 +9,7 @@ const Invoices = ({ search, fromDate, toDate }: { search: string, fromDate: stri
   const { data, isLoading, isFetching } = useGetInvoicesQuery({ search, limit, fromDate, toDate })
   return (
     <FlatList
-      data={InvoiceDataFr as IInvoice[]}
+      data={data?.invoices || [] as IInvoice[]}
       keyExtractor={(item: IInvoice) => item.invoice_id}
       renderItem={({ item }) => <InvoiceCard key={item.invoice_id} item={item} />}
       showsVerticalScrollIndicator={false}
