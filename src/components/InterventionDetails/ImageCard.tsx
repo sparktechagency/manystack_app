@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   Modal,
@@ -7,8 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { Close, DeleteIcon } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useDeleteImageMutation } from '../../redux/Apis/interventionApis';
 import { generateImageUrl } from '../../utils/baseUrls';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 interface IImageCard {
@@ -23,6 +26,22 @@ interface IImageCard {
 const ImageCard = ({ item }: IImageCard) => {
   const { width, height, themeColors } = useGlobalContext();
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [deleteImage, { isLoading }] = useDeleteImageMutation()
+  const handleDeleteImage = () => {
+    deleteImage({ id: item._id }).unwrap().then((res: any) => {
+      Toast.show({
+        type: 'success',
+        text1: 'Image deleted successfully',
+        text2: res?.message,
+      })
+    }).catch((error) => {
+      Toast.show({
+        type: 'error',
+        text1: 'Image deleted failed',
+        text2: error.data.message,
+      })
+    })
+  }
   return (
     <View
       style={{
@@ -45,17 +64,20 @@ const ImageCard = ({ item }: IImageCard) => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity style={{ position: 'absolute', top: 10, right: 10 }}>
-        <Image
-          source={DeleteIcon as ImageSourcePropType}
-          style={[
-            {
-              tintColor: themeColors.red as string,
-              width: 20,
-              height: 20,
-            },
-          ]}
-        />
+      <TouchableOpacity onPress={handleDeleteImage} style={{ position: 'absolute', top: 10, right: 10 }}>
+        {
+          isLoading ? <ActivityIndicator size={"small"} color={themeColors.primary as string} /> : <Image
+            source={DeleteIcon as ImageSourcePropType}
+            style={[
+              {
+                tintColor: themeColors.red as string,
+                width: 20,
+                height: 20,
+              },
+            ]}
+          />
+        }
+
       </TouchableOpacity>
       <Modal
         animationType="fade"
