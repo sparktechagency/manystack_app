@@ -18,7 +18,7 @@ const Home = () => {
     <ProfitCard title={t("profit", english)} count={`$${data?.data?.totalProfit || 0}`} percentage={data?.data?.profitChange || "0%"} key={2} />,
     <ProfitCard title="Intervention" count={data?.data?.totalIntervention || "0"} percentage={data?.data?.interventionChange || "0%"} key={3} />,
     <OverviewChart key={4} />,
-    <Highlights key={5} />,
+    <Highlights key={5} interventionCount={data?.data?.totalInterventionsInPrice || "0"} priceCount={`$${Number(data?.data?.totalExpensesInPrice / 1000 || 0).toFixed(2)}` || "0"} />,
   ];
   return (
     <SafeAreaView>

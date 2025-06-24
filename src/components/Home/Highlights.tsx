@@ -5,11 +5,11 @@ import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { t } from '../../utils/translate';
 
-const Highlights = () => {
+const Highlights = ({ interventionCount, priceCount }: { interventionCount: string, priceCount: string }) => {
   const { width, themeColors, english } = useGlobalContext();
   const data = [
-    { count: '10', title: t('total_intervention', english) },
-    { count: '$3.2k', title: t('total_price', english) },
+    { count: interventionCount, title: t('total_intervention', english) },
+    { count: priceCount, title: t('total_price', english) },
   ];
   return (
     <View>
