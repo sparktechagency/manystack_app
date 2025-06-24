@@ -4,7 +4,16 @@ const invoiceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // get invoices endpoint
     getInvoices: builder.query({
-      query: () => 'api/invoices/get-all',
+      query: ({ search, limit, fromDate, toDate }) => ({
+        url: 'api/invoices/get-all',
+        method: 'GET',
+        params: {
+          search: search,
+          limit: limit,
+          fromDate: fromDate,
+          toDate: toDate,
+        },
+      }),
       providesTags: ['invoice'],
     }),
     // create invoice endpoint

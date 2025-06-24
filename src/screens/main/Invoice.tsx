@@ -10,15 +10,22 @@ import { t } from '../../utils/translate';
 const Invoice = () => {
   const { english } = useGlobalContext();
   const [search, setSearch] = React.useState<string>('');
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [fromDate, setFromDate] = React.useState<string>('');
+  const [toDate, setToDate] = React.useState<string>('');
+  const fromTOHandler = (formatDate: string, toDate: string) => {
+    setFromDate(formatDate);
+    setToDate(toDate);
+  }
   const elements = [
     <Search search={search} setSearch={setSearch} key={1} />,
-    <FilterByDate title="Invoice" key={2} />,
-    <Invoices key={3} />,
+    <FilterByDate fromTOHandler={fromTOHandler} title="Invoice" key={2} />,
+    <Invoices search={search} fromDate={fromDate} toDate={toDate} key={3} />,
   ];
   return (
     <SafeAreaView>
       <View style={{ paddingBottom: 62 }}>
-        <Heading title={t("invoice", english)} />
+        <Heading setSearch={setSearch} title={t("invoice", english)} />
         <FlatList
           keyExtractor={(item, index) => index.toString()}
           data={elements}
