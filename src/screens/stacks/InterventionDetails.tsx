@@ -64,8 +64,7 @@ const InterventionDetails = () => {
           // backgroundColor: hexToRGBA(themeColors.white as string, 0.9),
         }}>
         <GradientButton handler={() => {
-          console.log("download pdf button clicked")
-          downloadButton(`api/expense/download-pdf/68554f73d2a1ebcb90d9617d`)
+          downloadButton(`api/expense/download-pdf/${data?.intervention?._id}`)
         }}>
           <Text
             style={{

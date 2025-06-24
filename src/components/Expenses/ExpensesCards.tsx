@@ -14,6 +14,7 @@ import { useDeleteExpenses } from '../../hooks/expensesApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IExpenses } from '../../types/DataTypes';
 import { StackTypes } from '../../types/ScreenPropsTypes';
+import { downloadButton } from '../../utils/DownloadPdf';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { CardStyles } from '../Intervention/InterventionsCards';
 
@@ -74,7 +75,9 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
         </Text>
 
         <View style={CardStyles.actions}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            downloadButton(`api/expense/download-pdf/${item._id}`)
+          }}>
             <Image
               source={DownloadPdf as ImageSourcePropType}
               style={[
