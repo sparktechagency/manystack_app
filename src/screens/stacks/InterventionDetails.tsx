@@ -7,14 +7,13 @@ import GradientButton from '../../components/sheard/GradientButton';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetInterventionByIdQuery } from '../../redux/Apis/interventionApis';
 import { StackTypes } from '../../types/ScreenPropsTypes';
-import { hexToRGBA } from '../../utils/hexToRGBA';
+import { downloadButton } from '../../utils/DownloadPdf';
 
 const InterventionDetails = () => {
   const { width, height, themeColors } = useGlobalContext();
   const navigation = useNavigation<NavigationProp<StackTypes>>()
   const { params }: any = useRoute()
   const { data } = useGetInterventionByIdQuery(params?.params?.id)
-  console.log(data)
   return (
     <View
       style={{
@@ -59,12 +58,15 @@ const InterventionDetails = () => {
         style={{
           paddingHorizontal: 25,
           position: 'absolute',
-          bottom: 56,
+          bottom: 100,
           width: width,
           paddingVertical: 16,
-          backgroundColor: hexToRGBA(themeColors.white as string, 0.9),
+          // backgroundColor: hexToRGBA(themeColors.white as string, 0.9),
         }}>
-        <GradientButton handler={() => { }}>
+        <GradientButton handler={() => {
+          console.log("download pdf button clicked")
+          downloadButton(`api/expense/download-pdf/68554f73d2a1ebcb90d9617d`)
+        }}>
           <Text
             style={{
               color: 'white',
