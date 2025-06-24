@@ -7,14 +7,16 @@ import OverviewChart from '../../components/Home/OverviewChart';
 import ProfitCard from '../../components/Home/ProfitCard';
 import WellCome from '../../components/Home/WellCome';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetHomePageDataQuery } from '../../redux/Apis/userApis';
 import { t } from '../../utils/translate';
 
 const Home = () => {
   const { english } = useGlobalContext();
+  const { data, isLoading, isFetching } = useGetHomePageDataQuery(undefined)
   const elements = [
     <WellCome key={1} />,
-    <ProfitCard title={t("profit", english)} count="$23,787" percentage="+14%" key={2} />,
-    <ProfitCard title="Intervention" count="100" percentage="+14%" key={3} />,
+    <ProfitCard title={t("profit", english)} count={`$${data?.data?.totalProfit || 0}`} percentage={data?.data?.profitChange || "0%"} key={2} />,
+    <ProfitCard title="Intervention" count={data?.data?.totalIntervention || "0"} percentage={data?.data?.interventionChange || "0%"} key={3} />,
     <OverviewChart key={4} />,
     <Highlights key={5} />,
   ];

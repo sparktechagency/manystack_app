@@ -53,7 +53,11 @@ const userApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-
+    // get Home  page data 
+    getHomePageData: builder.query({
+      query: () => 'api/home/dashboard',
+      providesTags: ['auth'],
+    }),
   }),
 })
 
@@ -63,6 +67,7 @@ export const {
   useChangePasswordMutation,
   useUploadLogoMutation,
   useDeleteAccountMutation,
+  useGetHomePageDataQuery
 } = userApi
 
 
