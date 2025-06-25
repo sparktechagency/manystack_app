@@ -2,6 +2,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   StyleSheet,
@@ -10,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import { DeleteIcon, DownloadPdf, Edit, eye } from '../../constant/images';
+import { deleteInvoice } from '../../hooks/invoiceApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IInvoice } from '../../types/DataTypes';
 import { StackTypes } from '../../types/ScreenPropsTypes';
@@ -20,6 +22,7 @@ import { CardStyles } from '../Intervention/InterventionsCards';
 const InvoiceCard = ({ item }: { item: IInvoice }) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
   const { themeColors } = useGlobalContext();
+  const { deleteInvoiceHandler, isLoading } = deleteInvoice();
   return (
     <View
       style={[
@@ -134,8 +137,8 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
               ]}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Image
+          <TouchableOpacity onPress={() => deleteInvoiceHandler(item._id)}>
+            {isLoading ? <ActivityIndicator size="small" color={themeColors.primary as string} /> : <Image
               source={DeleteIcon as ImageSourcePropType}
               style={[
                 CardStyles.icon,
@@ -143,7 +146,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
                   tintColor: themeColors.red as string,
                 },
               ]}
-            />
+            />}
           </TouchableOpacity>
         </View>
       </View>
