@@ -2,6 +2,7 @@ import { NavigationProp, useNavigation, useRoute } from '@react-navigation/nativ
 import moment from 'moment';
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   SafeAreaView,
@@ -13,6 +14,7 @@ import {
 import { Text } from 'react-native-gesture-handler';
 import { DeleteIcon, DownloadPdf, Edit, FullLogo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
+import { deleteInvoice, useUpdateInvoice } from '../../hooks/invoiceApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetInvoiceByIdQuery } from '../../redux/Apis/invoiceApis';
 import { IInvoice } from '../../types/DataTypes';
@@ -28,6 +30,8 @@ const InvoiceDetails = () => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
   const { themeColors, width, height } = useGlobalContext();
   const { data } = useGetInvoiceByIdQuery(params?.params?.id)
+  const { deleteInvoiceHandler, isLoading } = deleteInvoice()
+  const { updateInvoiceHandler, isLoading: updateInvoiceLoading } = useUpdateInvoice()
   const invoice = data?.invoice as IInvoice
   return (
     <SafeAreaView
@@ -116,16 +120,21 @@ const InvoiceDetails = () => {
               ]}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
-            <Image
-              source={DeleteIcon as ImageSourcePropType}
-              style={[
-                CardStyles.icon,
-                {
-                  tintColor: themeColors.red as string,
-                },
-              ]}
-            />
+          <TouchableOpacity onPress={() => deleteInvoiceHandler(invoice?._id, () => navigation.goBack())} disabled={isLoading}>
+            {
+              isLoading ? (
+                <ActivityIndicator size="small" color={themeColors.primary as string} />
+              ) : (
+                <Image
+                  source={DeleteIcon as ImageSourcePropType}
+                  style={[
+                    CardStyles.icon,
+                    {
+                      tintColor: themeColors.red as string,
+                    },
+                  ]}
+                />
+              )}
           </TouchableOpacity>
         </View>
         <FlexTextOpacity text1="Name :" text2={invoice?.name} />
@@ -227,16 +236,24 @@ const InvoiceDetails = () => {
             width: "100%",
             paddingVertical: 16,
           }}>
-          <GradientButton handler={() => { }}>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: 700,
-                fontSize: 18,
-              }}>
-              Mark As Paid
-            </Text>
+          <GradientButton handler={() => updateInvoiceHandler({
+            status: 'PAID',
+          }, invoice?._id)}>
+            {
+              updateInvoiceLoading ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : (
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: 700,
+                    fontSize: 18,
+                  }}>
+                  Mark As Paid
+                </Text>
+              )
+            }
           </GradientButton>
         </View>
       </ScrollView>

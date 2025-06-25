@@ -24,8 +24,8 @@ export const useCreateInvoice = () => {
 
 export const useUpdateInvoice = () => {
   const [updateInvoice, { isLoading }] = useUpdateInvoiceMutation()
-  const updateInvoiceHandler = (data: any, handler?: () => void) => {
-    updateInvoice(data).then((res) => {
+  const updateInvoiceHandler = (data: any, id: string, handler?: () => void) => {
+    updateInvoice({ data, id }).then((res) => {
       Toast.show({
         type: 'success',
         text1: 'Invoice updated',

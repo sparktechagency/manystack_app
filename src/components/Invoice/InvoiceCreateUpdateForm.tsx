@@ -121,7 +121,7 @@ const InvoiceCreateUpdateForm = () => {
       date: moment(inputValue.date).format('YYYY-MM-DD'),
       user: user?._id,
     }
-    params?.params?.id ? updateInvoiceHandler(data, () => {
+    params?.params?.id ? updateInvoiceHandler(data, params?.params?.id, () => {
       navigation.goBack()
     }) : createInvoiceHandler(data, () => {
       navigation.goBack()
