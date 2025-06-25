@@ -30,6 +30,7 @@ const InvoiceService = ({
 }) => {
   const { width, themeColors } = useGlobalContext();
   const { data } = useGetCategoriesQuery(undefined)
+  console.log(service)
   return (
     <View>
       <Text style={globalStyles.inputLabel}>Add Service Details</Text>
@@ -67,6 +68,7 @@ const InvoiceService = ({
           </View>
           <View style={styles.row}>
             <TextInput
+              value={item.quantity}
               onChangeText={text => {
                 const updatedService = {
                   ...item,
@@ -88,6 +90,7 @@ const InvoiceService = ({
               placeholderTextColor={globalStyles.inputPlaceholder.color}
             />
             <TextInput
+              value={item.price}
               onChangeText={text => {
                 const updatedService = {
                   ...item,

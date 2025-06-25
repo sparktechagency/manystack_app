@@ -1,5 +1,5 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import {
@@ -24,34 +24,39 @@ import { Calender } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useCreateInvoice } from '../../hooks/invoiceApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetInvoiceByIdQuery } from '../../redux/Apis/invoiceApis';
 import { IAddress, IInvoiceForm, IInvoiceService } from '../../types/loginType';
 import { generateRandom } from '../../utils/generateRandom';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import InvoiceService from './InvoiceService';
 const InvoiceCreateUpdateForm = () => {
+  const { params }: any = useRoute()
   const [serviceDate, setServiceDate] = React.useState<Date | undefined>();
-  const [passShow, setPassShow] = React.useState(true);
-  const [cPassShow, setCPassShow] = React.useState(true);
   const [countryCode, setCountryCode] = React.useState('BD');
-  const [callingCode, setCallingCode] = React.useState('880');
   const [showPicker, setShowPicker] = React.useState(false);
   const { width, themeColors, user } = useGlobalContext();
   const navigation = useNavigation()
+  const { data } = useGetInvoiceByIdQuery(params?.params?.id)
   const [address, setAddress] = React.useState<IAddress>({
-    streetName: '',
-    city: '',
-    streetNo: '',
-    country: '',
-    postalCode: '',
+    streetName: params?.params?.address?.streetName,
+    city: params?.params?.address?.city,
+    streetNo: params?.params?.address?.streetNo,
+    country: params?.params?.address?.country,
+    postalCode: params?.params?.address?.postalCode,
   });
-  const [service, setService] = React.useState<IInvoiceService[]>([
-    {
-      id: generateRandom(),
-      service: '',
-      quantity: '',
-      price: '',
-    },
-  ]);
+  const [service, setService] = React.useState<IInvoiceService[]>(params?.params?.service.map((item: any) => ({
+    id: generateRandom(),
+    service: item.selectedService,
+    quantity: item.quantity?.toString(),
+    price: item.price?.toString(),
+  })) || [
+      {
+        id: generateRandom(),
+        service: '',
+        quantity: '',
+        price: '',
+      },
+    ]);
 
   const [error, setError] = React.useState({
     name: false,
@@ -74,15 +79,15 @@ const InvoiceCreateUpdateForm = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<IInvoiceForm>({
-    name: `${user?.firstName} ${user?.lastName}`,
-    email: user?.email as string,
-    contact: user?.contact as string,
+    name: params?.params?.name,
+    email: params?.params?.email,
+    contact: params?.params?.phone,
     // gender: 'male',
-    'N°SIREN': '123456789',
+    'N°SIREN': params?.params?.nSiren,
     address: 'Dhaka',
     services: 'web development',
     date: '01/01/2023',
-    status: 'paid',
+    status: params?.params?.status,
   });
   const { createInvoiceHandler, isLoading } = useCreateInvoice()
   const submitHandler = () => {
@@ -220,7 +225,6 @@ const InvoiceCreateUpdateForm = () => {
                     withCallingCodeButton
                     onSelect={country => {
                       setCountryCode(country.cca2);
-                      setCallingCode(country.callingCode[0]);
                     }}
                     containerButtonStyle={{
                       width: 110,

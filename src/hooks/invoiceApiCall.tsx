@@ -1,5 +1,5 @@
 import Toast from 'react-native-toast-message'
-import { useCreateInvoiceMutation } from '../redux/Apis/invoiceApis'
+import { useCreateInvoiceMutation, useUpdateInvoiceMutation } from '../redux/Apis/invoiceApis'
 
 export const useCreateInvoice = () => {
   const [createInvoice, { isLoading }] = useCreateInvoiceMutation()
@@ -20,4 +20,25 @@ export const useCreateInvoice = () => {
     })
   }
   return { createInvoiceHandler, isLoading }
+}
+
+export const useUpdateInvoice = () => {
+  const [updateInvoice, { isLoading }] = useUpdateInvoiceMutation()
+  const updateInvoiceHandler = (data: any, handler?: () => void) => {
+    updateInvoice(data).then((res) => {
+      Toast.show({
+        type: 'success',
+        text1: 'Invoice updated',
+        text2: res.data?.message || 'Invoice updated successfully.',
+      })
+      handler?.()
+    }).catch((err) => {
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to update invoice',
+        text2: err.data?.message || 'Failed to update invoice.',
+      })
+    })
+  }
+  return { updateInvoiceHandler, isLoading }
 }

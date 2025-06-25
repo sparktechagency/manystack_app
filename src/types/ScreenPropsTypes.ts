@@ -1,3 +1,5 @@
+import { IAddress } from './loginType';
+
 // Tabs navigator params (Bottom Tabs inside Stack)
 export type TabsTypes = {
   Home: undefined;
@@ -23,7 +25,7 @@ export type StackTypes = {
   UpdateExpenses: { params: { id: string, expenseName: string, expenseCategory: string, price: string, note: string, } };
   InvoiceDetails: { params: { id: string } };
   CreateInvoice: undefined;
-  UpdateInvoice: { params: { id: string } };
+  UpdateInvoice: { params: { id: string, address: IAddress, service: { selectedService: string; quantity: number; price: number; }[], name: string, email: string, phone: string, nSiren: string, status: string } };
   EditProfile: undefined;
   Subscription: undefined;
   InterventionCategory: undefined;

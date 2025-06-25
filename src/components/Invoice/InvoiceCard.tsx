@@ -120,7 +120,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('UpdateInvoice', {
-                params: { id: item._id },
+                params: { id: item._id, address: item.address, service: item.services, name: item.name, email: item.email, phone: item.phone, nSiren: item.nSiren, status: item.status },
               });
             }}>
             <Image

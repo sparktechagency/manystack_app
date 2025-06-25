@@ -24,7 +24,7 @@ export interface IAddress {
   country: string;
 }
 export interface IInvoiceService {
-  id: string;
+  id?: string;
   service: string;
   quantity: string;
   price: string;

@@ -55,4 +55,5 @@ export const {
   useCreateInvoiceMutation,
   useUpdateInvoiceMutation,
   useDeleteInvoiceMutation,
+  useGetInvoiceByIdQuery,
 } = invoiceApi
