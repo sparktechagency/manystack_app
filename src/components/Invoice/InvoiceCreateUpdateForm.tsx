@@ -11,19 +11,19 @@ import {
   View,
 } from 'react-native';
 import CountryPicker from 'react-native-country-picker-modal';
-import {Dropdown} from 'react-native-element-dropdown';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { Dropdown } from 'react-native-element-dropdown';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Address from '../../components/sheard/Address';
 import GradientButton from '../../components/sheard/GradientButton';
-import {Colors} from '../../constant/colors';
-import {genderData, paymentStatus} from '../../constant/data';
-import {Calender} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {IAddress, IInvoiceForm, IInvoiceService} from '../../types/loginType';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { Colors } from '../../constant/colors';
+import { genderData, paymentStatus } from '../../constant/data';
+import { Calender } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { IAddress, IInvoiceForm, IInvoiceService } from '../../types/loginType';
+import { generateRandom } from '../../utils/generateRandom';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 import InvoiceService from './InvoiceService';
-import {generateRandom} from '../../utils/generateRandom';
 const InvoiceCreateUpdateForm = () => {
   const [serviceDate, setServiceDate] = React.useState<Date | undefined>();
   const [passShow, setPassShow] = React.useState(true);
@@ -31,7 +31,7 @@ const InvoiceCreateUpdateForm = () => {
   const [countryCode, setCountryCode] = React.useState('BD');
   const [callingCode, setCallingCode] = React.useState('880');
   const [showPicker, setShowPicker] = React.useState(false);
-  const {width, themeColors} = useGlobalContext();
+  const { width, themeColors } = useGlobalContext();
 
   const [address, setAddress] = React.useState<IAddress>({
     streetName: '',
@@ -89,11 +89,12 @@ const InvoiceCreateUpdateForm = () => {
     };
     Object.keys(combinedInputValue).forEach(key => {
       if (combinedInputValue[key as keyof IInvoiceForm] === '') {
-        setError(prev => ({...prev, [key]: true}));
+        setError(prev => ({ ...prev, [key]: true }));
       } else {
-        setError(prev => ({...prev, [key]: false}));
+        setError(prev => ({ ...prev, [key]: false }));
       }
     });
+    console.log(combinedInputValue)
   };
   const formatDate = (date?: Date) => {
     if (!date) return '00/00/000';
@@ -107,7 +108,7 @@ const InvoiceCreateUpdateForm = () => {
     setShowPicker(Platform.OS === 'ios');
     if (selectedDate) {
       setServiceDate(selectedDate);
-      setInputValue({...inputValue, date: formatDate(selectedDate)});
+      setInputValue({ ...inputValue, date: formatDate(selectedDate) });
     }
   };
 
@@ -138,14 +139,14 @@ const InvoiceCreateUpdateForm = () => {
                   placeholder="Select Gender"
                   value={inputValue.gender}
                   onChange={item => {
-                    setInputValue({...inputValue, gender: item.value});
-                    setError({...error, gender: false});
+                    setInputValue({ ...inputValue, gender: item.value });
+                    setError({ ...error, gender: false });
                   }}
                   placeholderStyle={{
                     color: globalStyles.inputPlaceholder.color,
                   }}
-                  selectedTextStyle={{color: '#000'}}
-                  containerStyle={{borderRadius: 5}}
+                  selectedTextStyle={{ color: '#000' }}
+                  containerStyle={{ borderRadius: 5 }}
                   dropdownPosition="auto"
                 />
               </View>
@@ -168,14 +169,14 @@ const InvoiceCreateUpdateForm = () => {
                   placeholder="Select Status"
                   value={inputValue.gender}
                   onChange={item => {
-                    setInputValue({...inputValue, gender: item.value});
-                    setError({...error, gender: false});
+                    setInputValue({ ...inputValue, gender: item.value });
+                    setError({ ...error, gender: false });
                   }}
                   placeholderStyle={{
                     color: globalStyles.inputPlaceholder.color,
                   }}
-                  selectedTextStyle={{color: '#000'}}
-                  containerStyle={{borderRadius: 5}}
+                  selectedTextStyle={{ color: '#000' }}
+                  containerStyle={{ borderRadius: 5 }}
                   dropdownPosition="auto"
                 />
               </View>
@@ -185,7 +186,7 @@ const InvoiceCreateUpdateForm = () => {
             return (
               <View key={key}>
                 <Text style={globalStyles.inputLabel}>Contact</Text>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <CountryPicker
                     countryCode={countryCode as any}
                     withFlag
@@ -211,8 +212,8 @@ const InvoiceCreateUpdateForm = () => {
                   <TextInput
                     value={inputValue.contact}
                     onChangeText={text => {
-                      setInputValue({...inputValue, contact: text});
-                      setError({...error, contact: false});
+                      setInputValue({ ...inputValue, contact: text });
+                      setError({ ...error, contact: false });
                     }}
                     placeholder="Enter your contact number"
                     keyboardType="phone-pad"
@@ -319,7 +320,7 @@ const InvoiceCreateUpdateForm = () => {
                     mode="date"
                     display="default"
                     onChange={onFromChange}
-                    // maximumDate={toDate}
+                  // maximumDate={toDate}
                   />
                 )}
               </View>
@@ -330,12 +331,12 @@ const InvoiceCreateUpdateForm = () => {
               <Text style={globalStyles.inputLabel}>
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </Text>
-              <View style={{position: 'relative'}}>
+              <View style={{ position: 'relative' }}>
                 <TextInput
                   value={inputValue[key as keyof IInvoiceForm]}
                   onChangeText={text => {
-                    setInputValue({...inputValue, [key]: text});
-                    setError({...error, [key]: false});
+                    setInputValue({ ...inputValue, [key]: text });
+                    setError({ ...error, [key]: false });
                   }}
                   placeholder={`Enter your ${key}`}
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
@@ -351,7 +352,7 @@ const InvoiceCreateUpdateForm = () => {
           );
         })}
 
-        <View style={{paddingHorizontal: 25, marginBottom: 120}}>
+        <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
           <GradientButton handler={() => submitHandler()}>
             <Text
               style={{

@@ -34,10 +34,11 @@ const InvoiceService = ({
       <Text style={globalStyles.inputLabel}>Add Service Details</Text>
       <Text style={globalStyles.inputLabel}>Services</Text>
       {service.map((item, index) => (
-        <View key={item.id} style={styles.row}>
+        <View key={item.id}>
           <View
             style={{
-              width: (width - 120) / 2.5,
+              width: "100%",
+              // width: (width - 120) / 2.5,
             }}>
             <SingleSelectDropDown
               name={'service'}
@@ -60,98 +61,103 @@ const InvoiceService = ({
               error={error}
             />
           </View>
-          <TextInput
-            onChangeText={text => {
-              const updatedService = {
-                ...item,
-                quantity: text,
-              };
-              const newArray = service.map((s, i) =>
-                i === index ? updatedService : s,
-              );
-              setService(newArray);
-            }}
-            style={[
-              globalStyles.input,
-              error?.streetName ? globalStyles.inputError : {},
-              { maxWidth: (width - 120) / 3.5 },
-            ]}
-            keyboardType="numeric"
-            placeholder="quantity"
-            placeholderTextColor={globalStyles.inputPlaceholder.color}
-          />
-          <TextInput
-            onChangeText={text => {
-              const updatedService = {
-                ...item,
-                price: text,
-              };
-              const newArray = service.map((s, i) =>
-                i === index ? updatedService : s,
-              );
-              setService(newArray);
-            }}
-            style={[
-              globalStyles.input,
-              error?.postalCode ? globalStyles.inputError : {},
-              { maxWidth: (width - 120) / 4 },
-            ]}
-            placeholder="price"
-            keyboardType="numeric"
-            placeholderTextColor={globalStyles.inputPlaceholder.color}
-          />
-          <View
-            style={[
-              styles.row,
-              {
-                marginTop: -15,
-                gap: 3,
-                justifyContent: 'center',
-              },
-            ]}>
-            <TouchableOpacity
-              onPress={() => {
-                setService([
-                  ...service,
-                  { id: generateRandom(), service: '', quantity: '', price: '' },
-                ]);
+          <View style={styles.row}>
+            <TextInput
+              onChangeText={text => {
+                const updatedService = {
+                  ...item,
+                  quantity: text,
+                };
+                const newArray = service.map((s, i) =>
+                  i === index ? updatedService : s,
+                );
+                setService(newArray);
               }}
-              style={{
-                backgroundColor: hexToRGBA(themeColors.primary as string, 0.1),
-                padding: 6,
-                borderRadius: 6,
-              }}>
-              <Image
-                source={Plus as ImageSourcePropType}
-                style={{
-                  width: 20,
-                  height: 20,
-                  tintColor: themeColors.primary as string,
-                }}
-              />
-            </TouchableOpacity>
-            {index !== 0 && (
+              style={[
+                globalStyles.input,
+                error?.streetName ? globalStyles.inputError : {},
+                // { maxWidth: (width - 120) / 3.5 },
+                { maxWidth: (width - 100) / 2 },
+              ]}
+              keyboardType="numeric"
+              placeholder="quantity"
+              placeholderTextColor={globalStyles.inputPlaceholder.color}
+            />
+            <TextInput
+              onChangeText={text => {
+                const updatedService = {
+                  ...item,
+                  price: text,
+                };
+                const newArray = service.map((s, i) =>
+                  i === index ? updatedService : s,
+                );
+                setService(newArray);
+              }}
+              style={[
+                globalStyles.input,
+                error?.postalCode ? globalStyles.inputError : {},
+                { maxWidth: (width - 120) / 2 },
+                // { maxWidth: (width - 120) / 4 },
+              ]}
+              placeholder="price"
+              keyboardType="numeric"
+              placeholderTextColor={globalStyles.inputPlaceholder.color}
+            />
+            <View
+              style={[
+                styles.row,
+                {
+                  marginTop: -15,
+                  gap: 3,
+                  justifyContent: 'center',
+                },
+              ]}>
               <TouchableOpacity
                 onPress={() => {
-                  const newArray = service.filter(s => s.id !== item.id);
-                  setService(newArray);
+                  setService([
+                    ...service,
+                    { id: generateRandom(), service: '', quantity: '', price: '' },
+                  ]);
                 }}
                 style={{
-                  backgroundColor: hexToRGBA(themeColors.red as string, 0.1),
+                  backgroundColor: hexToRGBA(themeColors.primary as string, 0.1),
                   padding: 6,
                   borderRadius: 6,
                 }}>
                 <Image
-                  source={Close as ImageSourcePropType}
+                  source={Plus as ImageSourcePropType}
                   style={{
-                    width: 16,
-                    height: 16,
-                    tintColor: themeColors.red as string,
+                    width: 20,
+                    height: 20,
+                    tintColor: themeColors.primary as string,
                   }}
                 />
               </TouchableOpacity>
-            )}
+              {index !== 0 && (
+                <TouchableOpacity
+                  onPress={() => {
+                    const newArray = service.filter(s => s.id !== item.id);
+                    setService(newArray);
+                  }}
+                  style={{
+                    backgroundColor: hexToRGBA(themeColors.red as string, 0.1),
+                    padding: 6,
+                    borderRadius: 6,
+                  }}>
+                  <Image
+                    source={Close as ImageSourcePropType}
+                    style={{
+                      width: 16,
+                      height: 16,
+                      tintColor: themeColors.red as string,
+                    }}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
+
         </View>
       ))}
     </View>
@@ -170,8 +176,8 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderRadius: 6,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
     marginRight: 8,
     fontSize: 16,
     backgroundColor: 'white',

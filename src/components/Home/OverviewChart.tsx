@@ -38,7 +38,6 @@ const OverviewChart = ({ monthlyData }: Props) => {
     ]);
   };
 
-  console.log(mapMonthlyDataToBarData(monthlyData))
   const getMaxValue = (monthlyData: MonthlyData[]): number => {
     return monthlyData.reduce((max, item) => {
       const currentMax = Math.max(item.income, item.expenses, item.profit);
