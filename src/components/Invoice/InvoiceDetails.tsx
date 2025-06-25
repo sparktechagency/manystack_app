@@ -1,4 +1,5 @@
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
+import moment from 'moment';
 import React from 'react';
 import {
   Image,
@@ -108,7 +109,7 @@ const InvoiceDetails = () => {
                 globalStyles.inputLabel,
                 { color: themeColors.primary as string, textAlign: 'right' },
               ]}>
-              INV-20250507-001
+              {invoice.invoiceId}
             </Text>
             <Text
               style={[
@@ -117,7 +118,7 @@ const InvoiceDetails = () => {
                   textAlign: 'right',
                 },
               ]}>
-              25,Feb 2025
+              {moment(invoice.data).format('YYYY-MM-DD')}
             </Text>
           </View>
         </View>
@@ -126,16 +127,16 @@ const InvoiceDetails = () => {
           Customer Details
         </Text>
 
-        <FlexTextOpacity text1="Name :" text2="John Doe" />
-        <FlexTextOpacity text1="Email :" text2="siyamoffice0273@gmail.com" />
-        <FlexTextOpacity text1="Contact :" text2="+8801566026301" />
+        <FlexTextOpacity text1="Name :" text2={invoice?.name} />
+        <FlexTextOpacity text1="Email :" text2={invoice?.email} />
+        <FlexTextOpacity text1="Contact :" text2={invoice?.phone} />
         <FlexTextOpacity
           text1="Address :"
-          text2="24B Rue Mandela,75010 Paris, France"
+          text2={invoice?.address?.streetNo + " " + invoice?.address?.streetName + " " + invoice?.address?.city + " " + invoice?.address?.postalCode + " " + invoice?.address?.country}
         />
         <FlexTextOpacity
           text1="Siren no :"
-          text2="732 829 320"
+          text2={invoice?.nSiren}
           color={themeColors.primary as string}
         />
         <Text style={[globalStyles.inputLabel, { marginTop: 20 }]}>Services</Text>
@@ -177,40 +178,43 @@ const InvoiceDetails = () => {
               Price
             </Text>
           </View>
-          <View
-            style={[
-              globalStyles.flex,
-              {
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: 20,
-                paddingVertical: 16,
-                borderRadius: 8,
-              },
-            ]}>
-            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
-              01
-            </Text>
-            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
-              After sales service
-            </Text>
-            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
-              01
-            </Text>
-            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
-              350.00$
-            </Text>
-          </View>
+          {invoice.services.map((service, index) => (
+            <View
+              key={index}
+              style={[
+                globalStyles.flex,
+                {
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: 20,
+                  paddingVertical: 16,
+                  borderRadius: 8,
+                },
+              ]}>
+              <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
+                {index + 1}
+              </Text>
+              <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
+                {service.selectedService}
+              </Text>
+              <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
+                {service.quantity}
+              </Text>
+              <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
+                ${service.price}
+              </Text>
+            </View>
+          ))}
         </View>
         <FlexTextOpacity
           text1="Total :"
-          text2="350.00$"
+          text2={invoice.services.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0).toFixed(2)}
           color={themeColors.primary as string}
         />
         <FlexTextOpacity
           text1="Status :"
-          text2="Unpaid"
-          color={themeColors.red as string}
+          text2={invoice.status}
+          color={invoice.status === 'Unpaid' ? themeColors.red as string : themeColors.green as string}
         />
 
         <View
