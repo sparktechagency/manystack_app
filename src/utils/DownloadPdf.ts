@@ -3,12 +3,12 @@ import Toast from 'react-native-toast-message';
 import RNFetchBlob from 'rn-fetch-blob';
 import { baseUrl } from './baseUrls';
 
-export const downloadButton = async (url: string) => {
+export const downloadButton = async (url: string, name?: string) => {
   console.log("download pdf button clicked")
   const token = await AsyncStorage.getItem('token');
   try {
     let dirs = RNFetchBlob.fs.dirs;
-    const fileName = `interventions-${Date.now()}.pdf`;
+    const fileName = `${name ?? "expanses"}-${Date.now()}.pdf`;
 
     RNFetchBlob.config({
       fileCache: true,

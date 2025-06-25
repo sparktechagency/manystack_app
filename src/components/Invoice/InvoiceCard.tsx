@@ -13,6 +13,7 @@ import { DeleteIcon, DownloadPdf, Edit, eye } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IInvoice } from '../../types/DataTypes';
 import { StackTypes } from '../../types/ScreenPropsTypes';
+import { downloadButton } from '../../utils/DownloadPdf';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { CardStyles } from '../Intervention/InterventionsCards';
 
@@ -106,7 +107,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
               ]}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => downloadButton(`api/invoices/download-pdf/${item._id}`, "invoice")}>
             <Image
               source={DownloadPdf as ImageSourcePropType}
               style={[
