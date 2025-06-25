@@ -1,7 +1,9 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   Platform,
@@ -20,6 +22,7 @@ import { Colors } from '../../constant/colors';
 import { paymentStatus } from '../../constant/data';
 import { Calender } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
+import { useCreateInvoice } from '../../hooks/invoiceApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IAddress, IInvoiceForm, IInvoiceService } from '../../types/loginType';
 import { generateRandom } from '../../utils/generateRandom';
@@ -33,7 +36,7 @@ const InvoiceCreateUpdateForm = () => {
   const [callingCode, setCallingCode] = React.useState('880');
   const [showPicker, setShowPicker] = React.useState(false);
   const { width, themeColors, user } = useGlobalContext();
-
+  const navigation = useNavigation()
   const [address, setAddress] = React.useState<IAddress>({
     streetName: '',
     city: '',
@@ -81,7 +84,7 @@ const InvoiceCreateUpdateForm = () => {
     date: '01/01/2023',
     status: 'paid',
   });
-
+  const { createInvoiceHandler, isLoading } = useCreateInvoice()
   const submitHandler = () => {
     let invalid = false;
     type Combined = IInvoiceForm & IAddress;
@@ -114,6 +117,9 @@ const InvoiceCreateUpdateForm = () => {
       date: moment(inputValue.date).format('YYYY-MM-DD'),
       user: user?._id,
     }
+    createInvoiceHandler(data, () => {
+      navigation.goBack()
+    })
   };
   const formatDate = (date?: Date) => {
     if (!date) return '00/00/000';
@@ -373,15 +379,21 @@ const InvoiceCreateUpdateForm = () => {
 
         <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
           <GradientButton handler={() => submitHandler()}>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: '700',
-                fontSize: 18,
-              }}>
-              Submit
-            </Text>
+            {
+              isLoading ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : (
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: '700',
+                    fontSize: 18,
+                  }}>
+                  Submit
+                </Text>
+              )
+            }
           </GradientButton>
         </View>
       </ScrollView>
