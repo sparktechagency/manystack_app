@@ -73,20 +73,20 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
               color: hexToRGBA(themeColors.black as string, 0.7),
             },
           ]}>
-          {moment(item.createdAt).format('YYYY-MM-DD')}
+          {moment(item.data).format('YYYY-MM-DD')}
         </Text>
-        <Text
+        {/* <Text
           style={[
             CardStyles.service,
             {
               color: hexToRGBA(themeColors.black as string, 0.7),
             },
           ]}>
-          {item?.services?.selectedService}
-        </Text>
+          {item?.services[0]?.selectedService}
+        </Text> */}
         <Text
           style={[CardStyles.amount, { color: themeColors.primary as string }]}>
-          ${item?.services?.price?.toFixed(2)}
+          ${item?.services?.reduce((acc, curr) => acc + curr.price, 0).toFixed(2)}
         </Text>
 
         <View style={[CardStyles.actions, { width: '30%' }]}>

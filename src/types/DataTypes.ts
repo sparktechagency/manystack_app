@@ -55,7 +55,7 @@ export interface IInvoice {
     "selectedService": string,
     "quantity": number,
     "price": number
-  },
+  }[],
   "_id": string,
   "name": string,
   "email": string
