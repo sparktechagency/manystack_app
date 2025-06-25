@@ -22,9 +22,8 @@ import { Colors } from '../../constant/colors';
 import { paymentStatus } from '../../constant/data';
 import { Calender } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
-import { useCreateInvoice } from '../../hooks/invoiceApiCall';
+import { useCreateInvoice, useUpdateInvoice } from '../../hooks/invoiceApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { useGetInvoiceByIdQuery } from '../../redux/Apis/invoiceApis';
 import { IAddress, IInvoiceForm, IInvoiceService } from '../../types/loginType';
 import { generateRandom } from '../../utils/generateRandom';
 import { hexToRGBA } from '../../utils/hexToRGBA';
@@ -36,7 +35,6 @@ const InvoiceCreateUpdateForm = () => {
   const [showPicker, setShowPicker] = React.useState(false);
   const { width, themeColors, user } = useGlobalContext();
   const navigation = useNavigation()
-  const { data } = useGetInvoiceByIdQuery(params?.params?.id)
   const [address, setAddress] = React.useState<IAddress>({
     streetName: params?.params?.address?.streetName,
     city: params?.params?.address?.city,
@@ -87,9 +85,10 @@ const InvoiceCreateUpdateForm = () => {
     address: 'Dhaka',
     services: 'web development',
     date: '01/01/2023',
-    status: params?.params?.status,
+    status: params?.params?.status?.toLowerCase(),
   });
   const { createInvoiceHandler, isLoading } = useCreateInvoice()
+  const { updateInvoiceHandler, isLoading: updateLoading } = useUpdateInvoice()
   const submitHandler = () => {
     let invalid = false;
     type Combined = IInvoiceForm & IAddress;
@@ -122,7 +121,9 @@ const InvoiceCreateUpdateForm = () => {
       date: moment(inputValue.date).format('YYYY-MM-DD'),
       user: user?._id,
     }
-    createInvoiceHandler(data, () => {
+    params?.params?.id ? updateInvoiceHandler(data, () => {
+      navigation.goBack()
+    }) : createInvoiceHandler(data, () => {
       navigation.goBack()
     })
   };
@@ -384,7 +385,7 @@ const InvoiceCreateUpdateForm = () => {
         <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
           <GradientButton handler={() => submitHandler()}>
             {
-              isLoading ? (
+              isLoading || updateLoading ? (
                 <ActivityIndicator size="small" color="white" />
               ) : (
                 <Text
