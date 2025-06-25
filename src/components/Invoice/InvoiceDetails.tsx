@@ -1,4 +1,4 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -13,6 +13,8 @@ import { Text } from 'react-native-gesture-handler';
 import { DeleteIcon, DownloadPdf, Edit, FullLogo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetInvoiceByIdQuery } from '../../redux/Apis/invoiceApis';
+import { IInvoice } from '../../types/DataTypes';
 import { StackTypes } from '../../types/ScreenPropsTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { CardStyles } from '../Intervention/InterventionsCards';
@@ -20,8 +22,11 @@ import FlexTextOpacity from '../InterventionDetails/FlexTextOpacity';
 import GradientButton from '../sheard/GradientButton';
 
 const InvoiceDetails = () => {
+  const { params }: any = useRoute()
   const navigation = useNavigation<NavigationProp<StackTypes>>();
   const { themeColors, width, height } = useGlobalContext();
+  const { data } = useGetInvoiceByIdQuery(params?.params?.id)
+  const invoice = data?.invoice as IInvoice
   return (
     <SafeAreaView
       style={{
@@ -73,7 +78,9 @@ const InvoiceDetails = () => {
           />
         </TouchableOpacity>
       </View>
-      <ScrollView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
         <View
           style={[
             globalStyles.flex,
@@ -84,6 +91,7 @@ const InvoiceDetails = () => {
               marginTop: 10,
               borderBottomWidth: 1,
               borderBottomColor: hexToRGBA(themeColors.primary as string, 0.5),
+
             },
           ]}>
           <Image
@@ -204,27 +212,29 @@ const InvoiceDetails = () => {
           text2="Unpaid"
           color={themeColors.red as string}
         />
+
+        <View
+          style={{
+            paddingHorizontal: 25,
+            // position: 'absolute',
+            // bottom: 100,
+            marginBottom: 100,
+            width: "100%",
+            paddingVertical: 16,
+          }}>
+          <GradientButton handler={() => { }}>
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: 700,
+                fontSize: 18,
+              }}>
+              Mark As Paid
+            </Text>
+          </GradientButton>
+        </View>
       </ScrollView>
-      <View
-        style={{
-          paddingHorizontal: 25,
-          position: 'absolute',
-          bottom: 56,
-          width: width,
-          paddingVertical: 16,
-        }}>
-        <GradientButton handler={() => { }}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: 700,
-              fontSize: 18,
-            }}>
-            Mark As Paid
-          </Text>
-        </GradientButton>
-      </View>
     </SafeAreaView>
   );
 };
