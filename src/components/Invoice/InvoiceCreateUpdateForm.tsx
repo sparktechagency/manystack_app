@@ -77,7 +77,7 @@ const InvoiceCreateUpdateForm = () => {
     name: `${user?.firstName} ${user?.lastName}`,
     email: user?.email as string,
     contact: user?.contact as string,
-    gender: 'male',
+    // gender: 'male',
     'N°SIREN': '123456789',
     address: 'Dhaka',
     services: 'web development',
@@ -192,10 +192,10 @@ const InvoiceCreateUpdateForm = () => {
                   labelField="label"
                   valueField="value"
                   placeholder="Select Status"
-                  value={inputValue.gender}
+                  value={inputValue.status}
                   onChange={item => {
-                    setInputValue({ ...inputValue, gender: item.value });
-                    setError({ ...error, gender: false });
+                    setInputValue({ ...inputValue, status: item.value });
+                    setError({ ...error, status: false });
                   }}
                   placeholderStyle={{
                     color: globalStyles.inputPlaceholder.color,

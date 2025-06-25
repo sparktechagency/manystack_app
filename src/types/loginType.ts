@@ -38,7 +38,7 @@ export interface IInvoiceForm {
   name: string;
   email: string;
   contact: string;
-  gender: string;
+  gender?: string;
   'N°SIREN': string;
   address: string;
   services: string;
