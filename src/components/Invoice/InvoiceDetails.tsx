@@ -17,6 +17,7 @@ import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetInvoiceByIdQuery } from '../../redux/Apis/invoiceApis';
 import { IInvoice } from '../../types/DataTypes';
 import { StackTypes } from '../../types/ScreenPropsTypes';
+import { downloadButton } from '../../utils/DownloadPdf';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { CardStyles } from '../Intervention/InterventionsCards';
 import FlexTextOpacity from '../InterventionDetails/FlexTextOpacity';
@@ -35,50 +36,7 @@ const InvoiceDetails = () => {
         position: 'relative',
         height: height,
       }}>
-      <View
-        style={[
-          CardStyles.actions,
-          { width: 90, marginLeft: 'auto', marginTop: -35, marginRight: 20 },
-        ]}>
-        <TouchableOpacity>
-          <Image
-            source={DownloadPdf as ImageSourcePropType}
-            style={[
-              CardStyles.icon,
-              {
-                tintColor: themeColors.primary as string,
-              },
-            ]}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('UpdateIntervention', {
-              params: { id: '', category: '', price: '', note: '', status: '', },
-            });
-          }}>
-          <Image
-            source={Edit as ImageSourcePropType}
-            style={[
-              CardStyles.icon,
-              {
-                tintColor: themeColors.primary as string,
-              },
-            ]}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image
-            source={DeleteIcon as ImageSourcePropType}
-            style={[
-              CardStyles.icon,
-              {
-                tintColor: themeColors.red as string,
-              },
-            ]}
-          />
-        </TouchableOpacity>
-      </View>
+
       <ScrollView
         showsVerticalScrollIndicator={false}
       >
@@ -109,7 +67,7 @@ const InvoiceDetails = () => {
                 globalStyles.inputLabel,
                 { color: themeColors.primary as string, textAlign: 'right' },
               ]}>
-              {invoice.invoiceId}
+              {invoice?.invoiceId}
             </Text>
             <Text
               style={[
@@ -118,7 +76,7 @@ const InvoiceDetails = () => {
                   textAlign: 'right',
                 },
               ]}>
-              {moment(invoice.data).format('YYYY-MM-DD')}
+              {moment(invoice?.data).format('YYYY-MM-DD')}
             </Text>
           </View>
         </View>
@@ -126,7 +84,50 @@ const InvoiceDetails = () => {
         <Text style={[globalStyles.inputLabel, { marginTop: 20 }]}>
           Customer Details
         </Text>
-
+        <View
+          style={[
+            CardStyles.actions,
+            { width: 90, marginLeft: 'auto', top: -35 },
+          ]}>
+          <TouchableOpacity onPress={() => downloadButton(`api/invoices/download-pdf/${invoice?._id}`, "invoice")}>
+            <Image
+              source={DownloadPdf as ImageSourcePropType}
+              style={[
+                CardStyles.icon,
+                {
+                  tintColor: themeColors.primary as string,
+                },
+              ]}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('UpdateInvoice', {
+                params: { id: invoice?._id, address: invoice?.address, service: invoice?.services, name: invoice?.name, email: invoice?.email, phone: invoice?.phone, nSiren: invoice?.nSiren, status: invoice?.status },
+              });
+            }}>
+            <Image
+              source={Edit as ImageSourcePropType}
+              style={[
+                CardStyles.icon,
+                {
+                  tintColor: themeColors.primary as string,
+                },
+              ]}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image
+              source={DeleteIcon as ImageSourcePropType}
+              style={[
+                CardStyles.icon,
+                {
+                  tintColor: themeColors.red as string,
+                },
+              ]}
+            />
+          </TouchableOpacity>
+        </View>
         <FlexTextOpacity text1="Name :" text2={invoice?.name} />
         <FlexTextOpacity text1="Email :" text2={invoice?.email} />
         <FlexTextOpacity text1="Contact :" text2={invoice?.phone} />
@@ -178,7 +179,7 @@ const InvoiceDetails = () => {
               Price
             </Text>
           </View>
-          {invoice.services.map((service, index) => (
+          {invoice?.services.map((service, index) => (
             <View
               key={index}
               style={[
@@ -208,13 +209,13 @@ const InvoiceDetails = () => {
         </View>
         <FlexTextOpacity
           text1="Total :"
-          text2={invoice.services.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0).toFixed(2)}
+          text2={invoice?.services.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0).toFixed(2)}
           color={themeColors.primary as string}
         />
         <FlexTextOpacity
           text1="Status :"
-          text2={invoice.status}
-          color={invoice.status === 'Unpaid' ? themeColors.red as string : themeColors.green as string}
+          text2={invoice?.status}
+          color={invoice?.status === 'Unpaid' ? themeColors.red as string : themeColors.green as string}
         />
 
         <View
