@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { interventionFilter } from '../../constant/data';
 import { Close, Plus } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
 import { IInvoiceService } from '../../types/loginType';
 import { generateRandom } from '../../utils/generateRandom';
 import { hexToRGBA } from '../../utils/hexToRGBA';
@@ -29,6 +29,7 @@ const InvoiceService = ({
   setError: (arg0: any) => void;
 }) => {
   const { width, themeColors } = useGlobalContext();
+  const { data } = useGetCategoriesQuery(undefined)
   return (
     <View>
       <Text style={globalStyles.inputLabel}>Add Service Details</Text>
@@ -43,7 +44,10 @@ const InvoiceService = ({
             <SingleSelectDropDown
               name={'service'}
               placeholder="Service"
-              data={interventionFilter}
+              data={data?.categories?.map((item: any) => ({
+                label: item.name,
+                value: item.name,
+              }))}
               value={item.service}
               inputValue={service}
               setInputValue={setService}

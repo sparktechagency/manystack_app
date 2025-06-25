@@ -1,4 +1,5 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
 import React from 'react';
 import {
   Image,
@@ -16,7 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Address from '../../components/sheard/Address';
 import GradientButton from '../../components/sheard/GradientButton';
 import { Colors } from '../../constant/colors';
-import { genderData, paymentStatus } from '../../constant/data';
+import { paymentStatus } from '../../constant/data';
 import { Calender } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
@@ -31,7 +32,7 @@ const InvoiceCreateUpdateForm = () => {
   const [countryCode, setCountryCode] = React.useState('BD');
   const [callingCode, setCallingCode] = React.useState('880');
   const [showPicker, setShowPicker] = React.useState(false);
-  const { width, themeColors } = useGlobalContext();
+  const { width, themeColors, user } = useGlobalContext();
 
   const [address, setAddress] = React.useState<IAddress>({
     streetName: '',
@@ -70,9 +71,9 @@ const InvoiceCreateUpdateForm = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<IInvoiceForm>({
-    name: 'shaharul',
-    email: 'siyamoffice0273@gmail',
-    contact: '01700000000',
+    name: `${user?.firstName} ${user?.lastName}`,
+    email: user?.email as string,
+    contact: user?.contact as string,
     gender: 'male',
     'N°SIREN': '123456789',
     address: 'Dhaka',
@@ -82,6 +83,7 @@ const InvoiceCreateUpdateForm = () => {
   });
 
   const submitHandler = () => {
+    let invalid = false;
     type Combined = IInvoiceForm & IAddress;
     const combinedInputValue: Combined = {
       ...inputValue,
@@ -90,11 +92,28 @@ const InvoiceCreateUpdateForm = () => {
     Object.keys(combinedInputValue).forEach(key => {
       if (combinedInputValue[key as keyof IInvoiceForm] === '') {
         setError(prev => ({ ...prev, [key]: true }));
+        invalid = true;
       } else {
         setError(prev => ({ ...prev, [key]: false }));
       }
     });
-    console.log(combinedInputValue)
+    if (invalid) return
+    const services = service.map((item: any) => ({
+      selectedService: item.service,
+      quantity: item.quantity,
+      price: item.price,
+    }));
+    const data = {
+      "name": inputValue?.name,
+      "email": inputValue?.email,
+      "phone": inputValue?.contact,
+      "nSiren": inputValue['N°SIREN'],
+      "address": address,
+      "services": services,
+      status: inputValue.status,
+      date: moment(inputValue.date).format('YYYY-MM-DD'),
+      user: user?._id,
+    }
   };
   const formatDate = (date?: Date) => {
     if (!date) return '00/00/000';
@@ -122,36 +141,36 @@ const InvoiceCreateUpdateForm = () => {
           paddingVertical: 20,
         }}>
         {Object.keys(inputValue).map((key, index, arr) => {
-          if (key === 'gender') {
-            return (
-              <View key={key}>
-                <Text style={globalStyles.inputLabel}>Gender</Text>
-                <Dropdown
-                  style={[
-                    globalStyles.input,
-                    error[key as keyof IInvoiceForm]
-                      ? globalStyles.inputError
-                      : {},
-                  ]}
-                  data={genderData}
-                  labelField="label"
-                  valueField="value"
-                  placeholder="Select Gender"
-                  value={inputValue.gender}
-                  onChange={item => {
-                    setInputValue({ ...inputValue, gender: item.value });
-                    setError({ ...error, gender: false });
-                  }}
-                  placeholderStyle={{
-                    color: globalStyles.inputPlaceholder.color,
-                  }}
-                  selectedTextStyle={{ color: '#000' }}
-                  containerStyle={{ borderRadius: 5 }}
-                  dropdownPosition="auto"
-                />
-              </View>
-            );
-          }
+          // if (key === 'gender') {
+          //   return (
+          //     <View key={key}>
+          //       <Text style={globalStyles.inputLabel}>Gender</Text>
+          //       <Dropdown
+          //         style={[
+          //           globalStyles.input,
+          //           error[key as keyof IInvoiceForm]
+          //             ? globalStyles.inputError
+          //             : {},
+          //         ]}
+          //         data={genderData}
+          //         labelField="label"
+          //         valueField="value"
+          //         placeholder="Select Gender"
+          //         value={inputValue.gender}
+          //         onChange={item => {
+          //           setInputValue({ ...inputValue, gender: item.value });
+          //           setError({ ...error, gender: false });
+          //         }}
+          //         placeholderStyle={{
+          //           color: globalStyles.inputPlaceholder.color,
+          //         }}
+          //         selectedTextStyle={{ color: '#000' }}
+          //         containerStyle={{ borderRadius: 5 }}
+          //         dropdownPosition="auto"
+          //       />
+          //     </View>
+          //   );
+          // }
           if (key === 'status') {
             return (
               <View key={key}>
