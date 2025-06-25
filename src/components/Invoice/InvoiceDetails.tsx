@@ -1,4 +1,4 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -9,19 +9,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Text} from 'react-native-gesture-handler';
-import {DeleteIcon, DownloadPdf, Edit, FullLogo} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {StackTypes} from '../../types/ScreenPropsTypes';
-import {hexToRGBA} from '../../utils/hexToRGBA';
-import {CardStyles} from '../Intervention/InterventionsCards';
+import { Text } from 'react-native-gesture-handler';
+import { DeleteIcon, DownloadPdf, Edit, FullLogo } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { StackTypes } from '../../types/ScreenPropsTypes';
+import { hexToRGBA } from '../../utils/hexToRGBA';
+import { CardStyles } from '../Intervention/InterventionsCards';
 import FlexTextOpacity from '../InterventionDetails/FlexTextOpacity';
 import GradientButton from '../sheard/GradientButton';
 
 const InvoiceDetails = () => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
-  const {themeColors, width, height} = useGlobalContext();
+  const { themeColors, width, height } = useGlobalContext();
   return (
     <SafeAreaView
       style={{
@@ -32,7 +32,7 @@ const InvoiceDetails = () => {
       <View
         style={[
           CardStyles.actions,
-          {width: 90, marginLeft: 'auto', marginTop: -35, marginRight: 20},
+          { width: 90, marginLeft: 'auto', marginTop: -35, marginRight: 20 },
         ]}>
         <TouchableOpacity>
           <Image
@@ -48,7 +48,7 @@ const InvoiceDetails = () => {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('UpdateIntervention', {
-              params: {id: ''},
+              params: { id: '', category: '', price: '', note: '', status: '', },
             });
           }}>
           <Image
@@ -98,7 +98,7 @@ const InvoiceDetails = () => {
             <Text
               style={[
                 globalStyles.inputLabel,
-                {color: themeColors.primary as string, textAlign: 'right'},
+                { color: themeColors.primary as string, textAlign: 'right' },
               ]}>
               INV-20250507-001
             </Text>
@@ -114,7 +114,7 @@ const InvoiceDetails = () => {
           </View>
         </View>
 
-        <Text style={[globalStyles.inputLabel, {marginTop: 20}]}>
+        <Text style={[globalStyles.inputLabel, { marginTop: 20 }]}>
           Customer Details
         </Text>
 
@@ -130,7 +130,7 @@ const InvoiceDetails = () => {
           text2="732 829 320"
           color={themeColors.primary as string}
         />
-        <Text style={[globalStyles.inputLabel, {marginTop: 20}]}>Services</Text>
+        <Text style={[globalStyles.inputLabel, { marginTop: 20 }]}>Services</Text>
         <View
           style={[
             {
@@ -152,19 +152,19 @@ const InvoiceDetails = () => {
                 marginBottom: 10,
               },
             ]}>
-            <Text style={{color: hexToRGBA(themeColors.black as string, 0.6)}}>
+            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
               {' '}
               No
             </Text>
-            <Text style={{color: hexToRGBA(themeColors.black as string, 0.6)}}>
+            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
               {' '}
               Name
             </Text>
-            <Text style={{color: hexToRGBA(themeColors.black as string, 0.6)}}>
+            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
               {' '}
               Quantity
             </Text>
-            <Text style={{color: hexToRGBA(themeColors.black as string, 0.6)}}>
+            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
               {' '}
               Price
             </Text>
@@ -180,16 +180,16 @@ const InvoiceDetails = () => {
                 borderRadius: 8,
               },
             ]}>
-            <Text style={{color: hexToRGBA(themeColors.black as string, 0.6)}}>
+            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
               01
             </Text>
-            <Text style={{color: hexToRGBA(themeColors.black as string, 0.6)}}>
+            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
               After sales service
             </Text>
-            <Text style={{color: hexToRGBA(themeColors.black as string, 0.6)}}>
+            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
               01
             </Text>
-            <Text style={{color: hexToRGBA(themeColors.black as string, 0.6)}}>
+            <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
               350.00$
             </Text>
           </View>
@@ -213,7 +213,7 @@ const InvoiceDetails = () => {
           width: width,
           paddingVertical: 16,
         }}>
-        <GradientButton handler={() => {}}>
+        <GradientButton handler={() => { }}>
           <Text
             style={{
               color: 'white',
