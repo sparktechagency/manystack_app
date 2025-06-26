@@ -103,7 +103,15 @@ export const translations = {
     en: 'Price',
     fr: 'Prix',
   },
+  selectImage: {
+    en: 'Select image',
+    fr: 'Sélectionner une image',
+  },
 
+  addImage: {
+    en: 'Add Image',
+    fr: 'Ajouter une image',
+  },
 
 
 } as const;

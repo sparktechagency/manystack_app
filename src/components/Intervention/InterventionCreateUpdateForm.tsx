@@ -153,7 +153,7 @@ const InterventionCreateUpdateForm = () => {
         })}
 
         <ImageUpload images={images} setImages={setImages} maxNumber={5}>
-          <Text style={[globalStyles.inputLabel]}>Add Image</Text>
+          <Text style={[globalStyles.inputLabel]}>{t('addImage', english)}</Text>
           <View
             style={[
               globalStyles.flex,
@@ -173,7 +173,7 @@ const InterventionCreateUpdateForm = () => {
             />
             <View>
               <Text style={[globalStyles.inputLabel, { fontSize: 16 }]}>
-                Select image
+                {t('selectImage', english)}
               </Text>
             </View>
           </View>
