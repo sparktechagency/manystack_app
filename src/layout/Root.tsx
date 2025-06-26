@@ -14,8 +14,8 @@ const Root = () => {
   return (
     <NavigationContainer>
       <StatusBar
-        barStyle={isDarkMode ? 'dark-content' : 'light-content'}
-        backgroundColor={isDarkMode ? Colors.lighter : Colors.darker}
+        barStyle="dark-content"
+        backgroundColor={Colors.lighter}
       />
       <Provider store={store}>
         <GlobalContextProvider>
