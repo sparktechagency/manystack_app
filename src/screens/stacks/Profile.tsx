@@ -18,11 +18,11 @@ const Profile = () => {
   const { width, user } = useGlobalContext();
   console.log(user)
   const [address, setAddress] = React.useState<IAddress>({
-    streetName: '',
-    city: '',
-    streetNo: '',
-    country: '',
-    postalCode: '',
+    streetName: user?.address?.streetName || '',
+    city: user?.address?.city || '',
+    streetNo: user?.address?.streetNo || '',
+    country: user?.address?.country || '',
+    postalCode: user?.address?.postalCode || '',
   });
 
   const [error, setError] = React.useState({

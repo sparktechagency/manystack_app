@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import RNRestart from 'react-native-restart';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import Toast from 'react-native-toast-message';
@@ -22,7 +23,6 @@ import { useLoginMutation } from '../../redux/Apis/authApis';
 import { ILogin } from '../../types/loginType';
 import { StackTypes } from '../../types/ScreenPropsTypes';
 import { t } from '../../utils/translate';
-
 const Login = () => {
   const { english, user, userLoading, firstLoad, setFirstLoad } = useGlobalContext();
   const navigate = useNavigation<NavigationProp<StackTypes>>();
@@ -60,7 +60,7 @@ const Login = () => {
     signIn(inputValue)
       .unwrap()
       .then(async (res) => {
-        console.log(res)
+        // console.log(res)
         Toast.show({
           type: 'success',
           text1: english ? 'Login successfully' : 'Connexion réussie',
@@ -70,6 +70,7 @@ const Login = () => {
           AsyncStorage.setItem('token', res.token),
           AsyncStorage.setItem('user', JSON.stringify(res.user)),
         ])
+        RNRestart.restart();
         navigate.navigate('Tabs');
       }
       )
