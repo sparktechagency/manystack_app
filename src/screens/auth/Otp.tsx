@@ -27,7 +27,7 @@ const Otp = () => {
 
   const handleOtpChange = useCallback(() => {
     if (code?.length != 6) {
-      Toast.show({
+      return Toast.show({
         type: 'error',
         text1: "Invalid OTP",
         text2: "Please enter a valid 6-digit OTP.",
