@@ -1,19 +1,21 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
   ImageSourcePropType,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import GradientButton from '../../components/sheard/GradientButton';
 import { eye, eyeSlash, logo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useResetPasswordMutation } from '../../redux/Apis/authApis';
 import { INewPassword } from '../../types/loginType';
 import { StackTypes } from '../../types/ScreenPropsTypes';
 import { t } from '../../utils/translate';
@@ -22,6 +24,7 @@ const NewPassword = () => {
   const [passShow, setPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
   const { english } = useGlobalContext();
+  const [resetPasswordHandler, { isLoading: resetLoading }] = useResetPasswordMutation()
   const [error, setError] = React.useState({
     password: false,
     confirmPassword: false,
@@ -32,15 +35,43 @@ const NewPassword = () => {
     confirmPassword: '123456',
   });
 
-  const submitHandler = () => {
-    Object.keys(inputValue).forEach(key => {
-      if (inputValue[key as keyof INewPassword] === '') {
-        setError(prev => ({ ...prev, [key]: true }));
-      } else {
-        setError(prev => ({ ...prev, [key]: false }));
-      }
-    });
-    navigate.navigate('Tabs');
+  const submitHandler = async () => {
+    if (!inputValue.password || !inputValue.confirmPassword) {
+      return setError({
+        password: true,
+        confirmPassword: true,
+      })
+    }
+    if (inputValue.password !== inputValue.confirmPassword) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Passwords do not match.',
+      })
+      return setError({
+        password: true,
+        confirmPassword: true,
+      })
+    }
+    resetPasswordHandler({
+      email: await AsyncStorage.getItem('email'),
+      newPassword: inputValue.password,
+      confirmPassword: inputValue.confirmPassword,
+    }).then(async (res: any) => {
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: res?.message || 'Password reset successfully.',
+      })
+      await AsyncStorage.removeItem('email')
+      navigate.navigate('Tabs');
+    }).catch((err: any) => {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: err?.data?.message || 'An unexpected error occurred.',
+      })
+    })
   };
   return (
     <SafeAreaView
@@ -130,4 +161,4 @@ const NewPassword = () => {
 
 export default NewPassword;
 
-const styles = StyleSheet.create({});
+

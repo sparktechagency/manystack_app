@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import { ActivityIndicator, Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
@@ -35,12 +36,13 @@ const Otp = () => {
     from === 'signup' ? verify({
       code,
       email: params?.params?.email,
-    }).then((res) => {
+    }).then(async (res) => {
       Toast.show({
         type: 'success',
         text1: "Success",
         text2: res.data?.message || "OTP verified successfully.",
       })
+      await AsyncStorage.removeItem('email')
       navigate.navigate(from == "signup" ? 'Login' : 'NewPassword',);
     }).catch((err) => {
       Toast.show({

@@ -1,6 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   StyleSheet,
@@ -12,6 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import GradientButton from '../../components/sheard/GradientButton';
 import { logo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
+import { useForgetPassword } from '../../hooks/authApisCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IForget } from '../../types/loginType';
 import { StackTypes } from '../../types/ScreenPropsTypes';
@@ -27,16 +30,17 @@ const ForgetPassword = () => {
   const [inputValue, setInputValue] = React.useState<IForget>({
     email: 'siyamoffice0273@gmail.com',
   });
-
+  const { forgetPasswordHandler, isLoading } = useForgetPassword()
   const submitHandler = () => {
-    Object.keys(inputValue).forEach(key => {
-      if (inputValue[key as keyof IForget] === '') {
-        setError(prev => ({ ...prev, [key]: true }));
-      } else {
-        setError(prev => ({ ...prev, [key]: false }));
-      }
-    });
-    navigate.navigate('Otp', { params: { from: 'forget' } });
+    if (inputValue.email === '') {
+      return setError({
+        email: true,
+      })
+    }
+    forgetPasswordHandler({ email: inputValue.email }, async () => {
+      await AsyncStorage.setItem('email', inputValue?.email)
+      navigate.navigate('Otp', { params: { from: 'forget', email: inputValue.email } });
+    })
   };
 
   return (
@@ -76,15 +80,21 @@ const ForgetPassword = () => {
             marginTop: 20,
           }}>
           <GradientButton handler={() => submitHandler()}>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: 700,
-                fontSize: 18,
-              }}>
-              {t('submit', english)}
-            </Text>
+            {
+              isLoading ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : (
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: 700,
+                    fontSize: 18,
+                  }}>
+                  {t('submit', english)}
+                </Text>
+              )
+            }
           </GradientButton>
         </View>
       </View>
