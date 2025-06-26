@@ -149,7 +149,18 @@ export const translations = {
     en: 'Subject',
     fr: 'Sujet',
   },
-
+  "current password": {
+    en: 'Current Password',
+    fr: 'Mot de passe actuel',
+  },
+  "new password": {
+    en: 'New Password',
+    fr: 'Nouveau mot de passe',
+  },
+  "confirm password": {
+    en: 'Confirm Password',
+    fr: 'Confirmer le mot de passe',
+  },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
