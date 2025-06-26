@@ -15,6 +15,7 @@ import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
 import { IInvoiceService } from '../../types/loginType';
 import { generateRandom } from '../../utils/generateRandom';
 import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 
 const InvoiceService = ({
@@ -28,13 +29,13 @@ const InvoiceService = ({
   error: any;
   setError: (arg0: any) => void;
 }) => {
-  const { width, themeColors } = useGlobalContext();
+  const { width, themeColors, english } = useGlobalContext();
   const { data } = useGetCategoriesQuery(undefined)
   console.log(service)
   return (
     <View>
-      <Text style={globalStyles.inputLabel}>Add Service Details</Text>
-      <Text style={globalStyles.inputLabel}>Services</Text>
+      <Text style={globalStyles.inputLabel}>{t('addServiceDetails', english)}</Text>
+      <Text style={globalStyles.inputLabel}>{t('services', english)}</Text>
       {service.map((item, index) => (
         <View key={item.id}>
           <View
@@ -86,7 +87,7 @@ const InvoiceService = ({
                 { maxWidth: (width - 100) / 2 },
               ]}
               keyboardType="numeric"
-              placeholder="quantity"
+              placeholder={t('quantity', english)}
               placeholderTextColor={globalStyles.inputPlaceholder.color}
             />
             <TextInput
@@ -107,7 +108,7 @@ const InvoiceService = ({
                 { maxWidth: (width - 120) / 2 },
                 // { maxWidth: (width - 120) / 4 },
               ]}
-              placeholder="price"
+              placeholder={t('price', english)}
               keyboardType="numeric"
               placeholderTextColor={globalStyles.inputPlaceholder.color}
             />

@@ -22,18 +22,20 @@ import { Colors } from '../../constant/colors';
 import { paymentStatus } from '../../constant/data';
 import { Calender } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
+import { TranslationKey } from '../../constant/translations';
 import { useCreateInvoice, useUpdateInvoice } from '../../hooks/invoiceApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IAddress, IInvoiceForm, IInvoiceService } from '../../types/loginType';
 import { generateRandom } from '../../utils/generateRandom';
 import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 import InvoiceService from './InvoiceService';
 const InvoiceCreateUpdateForm = () => {
   const { params }: any = useRoute()
   const [serviceDate, setServiceDate] = React.useState<Date | undefined>();
   const [countryCode, setCountryCode] = React.useState('BD');
   const [showPicker, setShowPicker] = React.useState(false);
-  const { width, themeColors, user } = useGlobalContext();
+  const { width, themeColors, user, english } = useGlobalContext();
   const navigation = useNavigation()
   const [address, setAddress] = React.useState<IAddress>({
     streetName: params?.params?.address?.streetName,
@@ -186,7 +188,7 @@ const InvoiceCreateUpdateForm = () => {
           if (key === 'status') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>Status</Text>
+                <Text style={globalStyles.inputLabel}>{t(key as TranslationKey, english)}</Text>
                 <Dropdown
                   style={[
                     globalStyles.input,
@@ -197,7 +199,7 @@ const InvoiceCreateUpdateForm = () => {
                   data={paymentStatus}
                   labelField="label"
                   valueField="value"
-                  placeholder="Select Status"
+                  placeholder={t('status', english)}
                   value={inputValue.status}
                   onChange={item => {
                     setInputValue({ ...inputValue, status: item.value });
@@ -216,7 +218,7 @@ const InvoiceCreateUpdateForm = () => {
           if (key === 'contact') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>Contact</Text>
+                <Text style={globalStyles.inputLabel}>{t(key as TranslationKey, english)}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <CountryPicker
                     countryCode={countryCode as any}
@@ -245,7 +247,7 @@ const InvoiceCreateUpdateForm = () => {
                       setInputValue({ ...inputValue, contact: text });
                       setError({ ...error, contact: false });
                     }}
-                    placeholder="Enter your contact number"
+                    placeholder={`${t('enter', english)} ${t('contact', english)}`}
                     keyboardType="phone-pad"
                     placeholderTextColor={globalStyles.inputPlaceholder.color}
                     style={[
@@ -359,7 +361,7 @@ const InvoiceCreateUpdateForm = () => {
           return (
             <View key={key} style={{}}>
               <Text style={globalStyles.inputLabel}>
-                {key.charAt(0).toUpperCase() + key.slice(1)}
+                {t(key as TranslationKey, english)}
               </Text>
               <View style={{ position: 'relative' }}>
                 <TextInput
@@ -368,7 +370,7 @@ const InvoiceCreateUpdateForm = () => {
                     setInputValue({ ...inputValue, [key]: text });
                     setError({ ...error, [key]: false });
                   }}
-                  placeholder={`Enter your ${key}`}
+                  placeholder={`${t('enter', english)} ${t(key as TranslationKey, english)}`}
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
                     globalStyles.input,

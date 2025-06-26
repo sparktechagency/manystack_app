@@ -17,7 +17,7 @@ const Address = ({
   const { width, english } = useGlobalContext();
   return (
     <View>
-      <Text style={globalStyles.inputLabel}>Address</Text>
+      <Text style={globalStyles.inputLabel}>{t('address', english)}</Text>
       <View style={styles.row}>
         <TextInput
           value={address?.streetNo}

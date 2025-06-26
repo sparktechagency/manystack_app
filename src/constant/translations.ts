@@ -38,6 +38,7 @@ export const translations = {
   contact: { en: 'Contact', fr: 'Contact' },
   gender: { en: 'Gender', fr: 'Genre' },
   siren: { en: 'N°SIREN', fr: 'N°SIREN' },
+  'N°SIREN': { en: 'N°SIREN', fr: 'N°SIREN' },
   address: { en: 'Address', fr: 'Adresse' },
   password: { en: 'Password', fr: 'Mot de passe' },
   confirmPassword: { en: 'Confirm Password', fr: 'Confirmer le mot de passe' },
@@ -120,7 +121,26 @@ export const translations = {
     en: 'Select Status',
     fr: 'Sélectionner le statut',
   },
-
+  addServiceDetails: {
+    en: 'Add Service Details',
+    fr: 'Ajouter les détails du service',
+  },
+  services: {
+    en: 'Services',
+    fr: 'Services',
+  },
+  quantity: {
+    en: 'Quantity',
+    fr: 'Quantité',
+  },
+  phone: {
+    en: 'Phone',
+    fr: 'Téléphone',
+  },
+  name: {
+    en: 'Name',
+    fr: 'Nom',
+  },
 
 } as const;
 
