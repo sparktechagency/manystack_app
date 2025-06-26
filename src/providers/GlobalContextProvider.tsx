@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
-import { Dimensions, useColorScheme } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Colors, ITheme } from '../constant/colors';
 import { useGetProfileQuery } from '../redux/Apis/userApis';
 import { IUserProfile } from '../types/DataTypes';
@@ -38,7 +38,6 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
   const [firstLoad, setFirstLoad] = useState<boolean>(true);
   const { data, isLoading: userLoading } = useGetProfileQuery(undefined)
   const { width, height } = Dimensions.get('window');
-  const colorScheme = useColorScheme();
   const [search, setSearch] = useState<string>('');
   const [english, setEnglish] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);

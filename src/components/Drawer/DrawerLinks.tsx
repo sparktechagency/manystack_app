@@ -1,4 +1,5 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DrawerActions, NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -12,7 +13,6 @@ import { DrawerIcons } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IDrawerLinksProps } from '../../types/PropsType';
-import { StackTypes } from '../../types/ScreenPropsTypes';
 import { t } from '../../utils/translate';
 
 const DrawerLinks = ({
@@ -22,10 +22,21 @@ const DrawerLinks = ({
   showArrow = true,
 }: IDrawerLinksProps) => {
   const { themeColors, english } = useGlobalContext();
-  const navigate = useNavigation<NavigationProp<StackTypes>>();
+  const navigate = useNavigation<NavigationProp<ParamListBase>>();
   return (
     <TouchableOpacity
-      onPress={() => navigate.navigate(href as any)}
+      onPress={async () => {
+        if (href === 'Login') {
+          await AsyncStorage.removeItem('token');
+          navigate.reset({
+            index: 0,
+            routes: [{ name: href as any }],
+          });
+          navigate.dispatch(DrawerActions.closeDrawer());
+        } else {
+          navigate.navigate(href as any)
+        }
+      }}
       style={[
         globalStyles.flex,
         {
