@@ -36,7 +36,7 @@ const Otp = () => {
     from === 'signup' ? verify({
       code,
       email: params?.params?.email,
-    }).then(async (res) => {
+    }).unwrap().then(async (res) => {
       Toast.show({
         type: 'success',
         text1: "Success",
@@ -52,7 +52,7 @@ const Otp = () => {
       });
     }) : verifyOtp({
       code,
-    }).then((res) => {
+    }).unwrap().then((res) => {
       Toast.show({
         type: 'success',
         text1: "Success",

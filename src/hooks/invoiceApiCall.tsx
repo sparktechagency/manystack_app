@@ -1,10 +1,10 @@
 import Toast from 'react-native-toast-message'
-import { useCreateInvoiceMutation, useDeleteInvoiceMutation, useUpdateInvoiceMutation } from '../redux/Apis/invoiceApis'
+import { useCreateInvoiceMutation, useDeleteInvoiceMutation, useMarkInvoiceAsPaidMutation, useUpdateInvoiceMutation } from '../redux/Apis/invoiceApis'
 
 export const useCreateInvoice = () => {
   const [createInvoice, { isLoading }] = useCreateInvoiceMutation()
   const createInvoiceHandler = (data: any, handler?: () => void) => {
-    createInvoice(data).then((res) => {
+    createInvoice(data).unwrap().then((res) => {
       Toast.show({
         type: 'success',
         text1: 'Invoice created',
@@ -25,7 +25,7 @@ export const useCreateInvoice = () => {
 export const useUpdateInvoice = () => {
   const [updateInvoice, { isLoading }] = useUpdateInvoiceMutation()
   const updateInvoiceHandler = (data: any, id: string, handler?: () => void) => {
-    updateInvoice({ data, id }).then((res) => {
+    updateInvoice({ data, id }).unwrap().then((res) => {
       Toast.show({
         type: 'success',
         text1: 'Invoice updated',
@@ -46,7 +46,7 @@ export const useUpdateInvoice = () => {
 export const deleteInvoice = () => {
   const [deleteInvoice, { isLoading }] = useDeleteInvoiceMutation()
   const deleteInvoiceHandler = (id: string, handler?: () => void) => {
-    deleteInvoice(id).then((res) => {
+    deleteInvoice(id).unwrap().then((res) => {
       Toast.show({
         type: 'success',
         text1: 'Invoice deleted',
@@ -62,4 +62,26 @@ export const deleteInvoice = () => {
     })
   }
   return { deleteInvoiceHandler, isLoading }
+}
+
+export const useMarkPaidUnpaid = () => {
+  const [markPaidUnpaid, { isLoading }] = useMarkInvoiceAsPaidMutation()
+  const markPaidUnpaidHandler = (id: string, handler?: () => void) => {
+    markPaidUnpaid(id).unwrap().then((res) => {
+      Toast.show({
+        type: 'success',
+        text1: 'Invoice marked as paid',
+        text2: res?.message || 'Invoice marked as paid successfully.',
+      })
+      handler?.()
+    }).catch((err) => {
+      console.log(err)
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to mark invoice as paid',
+        text2: err.data?.message || 'Failed to mark invoice as paid.',
+      })
+    })
+  }
+  return { markPaidUnpaidHandler, isLoading }
 }

@@ -47,6 +47,13 @@ const invoiceApi = baseApi.injectEndpoints({
       query: (id) => `api/invoices/get-by-id/${id}`,
       providesTags: ['invoice'],
     }),
+    markInvoiceAsPaid: builder.mutation({
+      query: (id) => ({
+        url: `api/invoices/paid-unpaid/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['invoice'],
+    }),
   }),
 })
 
@@ -56,4 +63,5 @@ export const {
   useUpdateInvoiceMutation,
   useDeleteInvoiceMutation,
   useGetInvoiceByIdQuery,
+  useMarkInvoiceAsPaidMutation,
 } = invoiceApi

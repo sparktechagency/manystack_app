@@ -54,7 +54,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
               CardStyles.statusBadge,
               {
                 backgroundColor:
-                  item.status === 'Unpaid'
+                  item.status === 'UNPAID'
                     ? hexToRGBA(themeColors.yellow as string, 0.4)
                     : hexToRGBA(themeColors.green as string, 0.4),
               },

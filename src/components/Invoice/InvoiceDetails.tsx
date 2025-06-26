@@ -14,7 +14,7 @@ import {
 import { Text } from 'react-native-gesture-handler';
 import { DeleteIcon, DownloadPdf, Edit, FullLogo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
-import { deleteInvoice, useUpdateInvoice } from '../../hooks/invoiceApiCall';
+import { deleteInvoice, useMarkPaidUnpaid, useUpdateInvoice } from '../../hooks/invoiceApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetInvoiceByIdQuery } from '../../redux/Apis/invoiceApis';
 import { IInvoice } from '../../types/DataTypes';
@@ -32,6 +32,7 @@ const InvoiceDetails = () => {
   const { data } = useGetInvoiceByIdQuery(params?.params?.id)
   const { deleteInvoiceHandler, isLoading } = deleteInvoice()
   const { updateInvoiceHandler, isLoading: updateInvoiceLoading } = useUpdateInvoice()
+  const { markPaidUnpaidHandler, isLoading: markPaidUnpaidLoading } = useMarkPaidUnpaid()
   const invoice = data?.invoice as IInvoice
   return (
     <SafeAreaView
@@ -224,7 +225,7 @@ const InvoiceDetails = () => {
         <FlexTextOpacity
           text1="Status :"
           text2={invoice?.status}
-          color={invoice?.status === 'Unpaid' ? themeColors.red as string : themeColors.green as string}
+          color={invoice?.status === 'UNPAID' ? themeColors.red as string : themeColors.green as string}
         />
 
         <View
@@ -236,11 +237,9 @@ const InvoiceDetails = () => {
             width: "100%",
             paddingVertical: 16,
           }}>
-          <GradientButton handler={() => updateInvoiceHandler({
-            status: 'PAID',
-          }, invoice?._id)}>
+          <GradientButton handler={() => markPaidUnpaidHandler(invoice?._id)}>
             {
-              updateInvoiceLoading ? (
+              markPaidUnpaidLoading ? (
                 <ActivityIndicator size="small" color="white" />
               ) : (
                 <Text
@@ -250,7 +249,7 @@ const InvoiceDetails = () => {
                     fontWeight: 700,
                     fontSize: 18,
                   }}>
-                  Mark As Paid
+                  Mark As {invoice?.status === 'UNPAID' ? 'Paid' : 'Unpaid'}
                 </Text>
               )
             }

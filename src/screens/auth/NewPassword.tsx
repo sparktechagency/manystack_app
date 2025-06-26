@@ -57,7 +57,7 @@ const NewPassword = () => {
       email: await AsyncStorage.getItem('email'),
       newPassword: inputValue.password,
       confirmPassword: inputValue.confirmPassword,
-    }).then(async (res: any) => {
+    }).unwrap().then(async (res: any) => {
       Toast.show({
         type: 'success',
         text1: 'Success',

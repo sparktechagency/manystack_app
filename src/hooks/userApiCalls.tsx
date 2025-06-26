@@ -4,7 +4,7 @@ import { useChangePasswordMutation, useUpdateProfileMutation } from '../redux/Ap
 export const useUpdateProfile = () => {
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
   const updateProfileHandler = (data: any, id: string, handler?: () => void) => {
-    updateProfile({ data, id }).then((res) => {
+    updateProfile({ data, id }).unwrap().then((res) => {
       Toast.show({
         type: 'success',
         text1: 'Profile updated',
@@ -24,7 +24,7 @@ export const useUpdateProfile = () => {
 export const useChangePassword = () => {
   const [changePassword, { isLoading }] = useChangePasswordMutation();
   const changePasswordHandler = (data: any, handler?: () => void) => {
-    changePassword(data).then((res: any) => {
+    changePassword(data).unwrap().then((res: any) => {
       Toast.show({
         type: 'success',
         text1: 'Password changed',
