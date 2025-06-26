@@ -96,7 +96,7 @@ const InterventionCreateUpdateForm = () => {
               <View key={key}>
                 <Text style={globalStyles.inputLabel}>{t('status', english)}</Text>
                 <SingleSelectDropDown
-                  placeholder="Select Status"
+                  placeholder={t('selectStatus', english)}
                   name={key}
                   data={paymentStatus}
                   value={inputValue[key as keyof ICreateInterVention] as string}
@@ -113,7 +113,7 @@ const InterventionCreateUpdateForm = () => {
               <View key={key}>
                 <Text style={globalStyles.inputLabel}>{t('selectCategory', english)}</Text>
                 <SingleSelectDropDown
-                  placeholder='Select Category'
+                  placeholder={t('selectCategory', english)}
                   name={key}
                   data={data?.categories?.map((category: any) => ({ label: category.name, value: category._id })) || []}
                   value={inputValue[key as keyof ICreateInterVention] as string}
@@ -138,7 +138,7 @@ const InterventionCreateUpdateForm = () => {
                     setError({ ...error, [key]: false });
                   }}
                   keyboardType={key === 'price' ? 'numeric' : 'default'}
-                  placeholder={`Enter your ${key}`}
+                  placeholder={t(key as TranslationKey, english)}
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
                     globalStyles.input,

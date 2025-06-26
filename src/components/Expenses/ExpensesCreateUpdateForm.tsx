@@ -140,7 +140,7 @@ const ExpensesCreateUpdateForm = () => {
                     setError({ ...error, [key]: false });
                   }}
                   keyboardType={key === 'price' ? 'numeric' : 'default'}
-                  placeholder={`Enter your ${key}`}
+                  placeholder={t(key as TranslationKey, english)}
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
                     globalStyles.input,

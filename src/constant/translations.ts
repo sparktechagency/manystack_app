@@ -116,6 +116,10 @@ export const translations = {
     en: 'Expense Name',
     fr: 'Nom de la dépense',
   },
+  selectStatus: {
+    en: 'Select Status',
+    fr: 'Sélectionner le statut',
+  },
 
 
 } as const;
