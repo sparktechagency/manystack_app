@@ -1,6 +1,9 @@
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TextInput, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import GradientButton from '../../components/sheard/GradientButton';
+import { useSupportCreate } from '../../hooks/supportApisCalls';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { t } from '../../utils/translate';
 
@@ -8,6 +11,17 @@ const Support = () => {
   const { height, width, english } = useGlobalContext();
   const [subject, setSubject] = React.useState('');
   const [message, setMessage] = React.useState('');
+  const { handleSupportCreate, isLoading } = useSupportCreate();
+  const navigation = useNavigation<NavigationProp<ParamListBase>>()
+  const handleSubmit = () => {
+    if (!subject || !message) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Subject and message are required',
+      });
+    }
+    handleSupportCreate({ subject, message }, () => navigation.goBack());
+  };
   return (
     <View
       style={[
@@ -43,16 +57,22 @@ const Support = () => {
           width: width,
           paddingVertical: 16,
         }}>
-        <GradientButton handler={() => { }}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: 700,
-              fontSize: 18,
-            }}>
-            {t('submit', english)}
-          </Text>
+        <GradientButton handler={handleSubmit}>
+          {
+            isLoading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: 700,
+                  fontSize: 18,
+                }}>
+                {t('submit', english)}
+              </Text>
+            )
+          }
         </GradientButton>
       </View>
     </View>

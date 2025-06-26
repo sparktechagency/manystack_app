@@ -67,7 +67,8 @@ export const {
   useChangePasswordMutation,
   useUploadLogoMutation,
   useDeleteAccountMutation,
-  useGetHomePageDataQuery
+  useGetHomePageDataQuery,
+  useSupportMutation
 } = userApi
 
 
