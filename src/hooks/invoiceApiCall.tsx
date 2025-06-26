@@ -5,10 +5,11 @@ export const useCreateInvoice = () => {
   const [createInvoice, { isLoading }] = useCreateInvoiceMutation()
   const createInvoiceHandler = (data: any, handler?: () => void) => {
     createInvoice(data).unwrap().then((res) => {
+      console.log(res)
       Toast.show({
         type: 'success',
         text1: 'Invoice created',
-        text2: res.data?.message || 'Invoice created successfully.',
+        text2: res?.message || 'Invoice created successfully.',
       })
       handler?.()
     }).catch((err) => {

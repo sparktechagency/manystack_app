@@ -120,7 +120,7 @@ const InvoiceCreateUpdateForm = () => {
       "address": address,
       "services": services,
       status: inputValue.status,
-      date: moment(inputValue.date).format('YYYY-MM-DD'),
+      data: moment(inputValue.date).format('YYYY-MM-DD'),
       user: user?._id,
     }
     params?.params?.id ? updateInvoiceHandler(data, params?.params?.id, () => {
