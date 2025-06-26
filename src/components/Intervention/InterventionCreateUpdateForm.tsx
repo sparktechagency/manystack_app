@@ -16,6 +16,7 @@ import Toast from 'react-native-toast-message';
 import { paymentStatus } from '../../constant/data';
 import { Camera, DeleteIcon } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
+import { TranslationKey } from '../../constant/translations';
 import { createIntervention, updateIntervention } from '../../hooks/interventionApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
@@ -110,7 +111,7 @@ const InterventionCreateUpdateForm = () => {
           if (key === 'category') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>Select Category</Text>
+                <Text style={globalStyles.inputLabel}>{t('selectCategory', english)}</Text>
                 <SingleSelectDropDown
                   placeholder='Select Category'
                   name={key}
@@ -127,7 +128,7 @@ const InterventionCreateUpdateForm = () => {
           return (
             <View key={key} style={{}}>
               <Text style={globalStyles.inputLabel}>
-                {key.charAt(0).toUpperCase() + key.slice(1)}
+                {t(key as TranslationKey, english)}
               </Text>
               <View style={{ position: 'relative' }}>
                 <TextInput

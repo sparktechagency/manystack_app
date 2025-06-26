@@ -91,6 +91,19 @@ export const translations = {
     en: 'Status',
     fr: 'Statut',
   },
+  selectCategory: {
+    en: 'Select Category',
+    fr: 'Sélectionner une catégorie',
+  },
+  note: {
+    en: 'Note',
+    fr: 'Remarque',
+  },
+  price: {
+    en: 'Price',
+    fr: 'Prix',
+  },
+
 
 
 } as const;
