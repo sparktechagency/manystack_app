@@ -87,6 +87,11 @@ export const translations = {
   invoice: { en: 'Invoice', fr: 'Facture' },
   after_sales_service: { en: 'After-Sales Service', fr: 'Service après-vente' },
   PLP: { en: 'PLP', fr: 'PLP' },
+  status: {
+    en: 'Status',
+    fr: 'Statut',
+  },
+
 
 } as const;
 

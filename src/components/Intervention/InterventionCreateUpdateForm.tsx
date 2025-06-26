@@ -23,6 +23,7 @@ import { ICreateInterVention } from '../../types/DataTypes';
 import { ICreateInterVentionError } from '../../types/ErrorTypes';
 import { getLocation } from '../../utils/getLocations';
 import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 import GradientButton from '../sheard/GradientButton';
 import ImageUpload from '../sheard/ImageUpload';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
@@ -31,7 +32,7 @@ const InterventionCreateUpdateForm = () => {
   const { params }: any = useRoute()
   const { handleCreateIntervention, isLoading } = createIntervention()
   const { handleUpdateIntervention, isLoading: updating } = updateIntervention()
-  const { themeColors, setImages, images } = useGlobalContext();
+  const { themeColors, setImages, images, english } = useGlobalContext();
   const [error, setError] = React.useState<ICreateInterVentionError>({
     'intervention id': false,
     category: false,
@@ -92,7 +93,7 @@ const InterventionCreateUpdateForm = () => {
           if (key === 'status') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>Status</Text>
+                <Text style={globalStyles.inputLabel}>{t('status', english)}</Text>
                 <SingleSelectDropDown
                   placeholder="Select Status"
                   name={key}
