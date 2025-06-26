@@ -1,9 +1,12 @@
 import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text} from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text } from 'react-native';
+import { usePrivacyPolicyQuery } from '../../redux/Apis/settingApis';
 
 const PrivacyPolicy = () => {
+  const { data, isLoading } = usePrivacyPolicyQuery(undefined)
+  console.log(data)
   return (
-    <SafeAreaView style={{flex: 1, padding: 16}}>
+    <SafeAreaView style={{ flex: 1, padding: 16 }}>
       <ScrollView>
         <Text>
           Privacy Policy{'\n\n'}
