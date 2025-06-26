@@ -112,6 +112,10 @@ export const translations = {
     en: 'Add Image',
     fr: 'Ajouter une image',
   },
+  "Expense Name": {
+    en: 'Expense Name',
+    fr: 'Nom de la dépense',
+  },
 
 
 } as const;

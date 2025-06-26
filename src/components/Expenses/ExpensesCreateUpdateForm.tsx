@@ -16,6 +16,7 @@ import Toast from 'react-native-toast-message';
 import { paymentStatus } from '../../constant/data';
 import { Camera, DeleteIcon } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
+import { TranslationKey } from '../../constant/translations';
 import { createExpenses, updateExpenses } from '../../hooks/expensesApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
@@ -23,12 +24,13 @@ import { ICreateExpenses } from '../../types/DataTypes';
 import { IExpensesError } from '../../types/ErrorTypes';
 import { getLocation } from '../../utils/getLocations';
 import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 import GradientButton from '../sheard/GradientButton';
 import ImageUpload from '../sheard/ImageUpload';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 
 const ExpensesCreateUpdateForm = () => {
-  const { themeColors, setImages, images } = useGlobalContext();
+  const { themeColors, setImages, images, english } = useGlobalContext();
   const { data } = useGetCategoriesQuery(undefined)
   const { params }: any = useRoute()
   const { handleCreateExpenses, isLoading } = createExpenses()
@@ -93,7 +95,7 @@ const ExpensesCreateUpdateForm = () => {
           if (key === 'status') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>Status</Text>
+                <Text style={globalStyles.inputLabel}>{t('status', english)}</Text>
                 <SingleSelectDropDown
                   name={key}
                   data={paymentStatus}
@@ -109,7 +111,7 @@ const ExpensesCreateUpdateForm = () => {
           if (key === 'category') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>Select Category</Text>
+                <Text style={globalStyles.inputLabel}>{t('selectCategory', english)}</Text>
                 <SingleSelectDropDown
                   name={key}
                   data={data?.categories?.map((item: any) => ({
@@ -128,7 +130,7 @@ const ExpensesCreateUpdateForm = () => {
           return (
             <View key={key} style={{}}>
               <Text style={globalStyles.inputLabel}>
-                {key.charAt(0).toUpperCase() + key.slice(1)}
+                {t(key as TranslationKey, english)}
               </Text>
               <View style={{ position: 'relative' }}>
                 <TextInput
@@ -153,7 +155,7 @@ const ExpensesCreateUpdateForm = () => {
         })}
 
         <ImageUpload images={images} setImages={setImages} maxNumber={5}>
-          <Text style={[globalStyles.inputLabel]}>Add Image</Text>
+          <Text style={[globalStyles.inputLabel]}>{t('addImage', english)}</Text>
           <View
             style={[
               globalStyles.flex,
@@ -173,7 +175,7 @@ const ExpensesCreateUpdateForm = () => {
             />
             <View>
               <Text style={[globalStyles.inputLabel, { fontSize: 16 }]}>
-                Select image
+                {t('selectImage', english)}
               </Text>
             </View>
           </View>
