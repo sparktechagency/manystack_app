@@ -141,6 +141,14 @@ export const translations = {
     en: 'Name',
     fr: 'Nom',
   },
+  writeHere: {
+    en: 'Write here',
+    fr: 'Écrivez ici',
+  },
+  subject: {
+    en: 'Subject',
+    fr: 'Sujet',
+  },
 
 } as const;
 

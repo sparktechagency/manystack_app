@@ -1,10 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import GradientButton from '../../components/sheard/GradientButton';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { t } from '../../utils/translate';
 
 const Support = () => {
-  const {height, width} = useGlobalContext();
+  const { height, width, english } = useGlobalContext();
+  const [subject, setSubject] = React.useState('');
+  const [message, setMessage] = React.useState('');
   return (
     <View
       style={[
@@ -13,12 +16,24 @@ const Support = () => {
           height,
         },
       ]}>
-      <Text style={styles.label}>Subject</Text>
+      <Text style={styles.label}>{t('subject', english)}</Text>
+      <TextInput
+        style={[styles.textArea, {
+          height: 45,
+        }]}
+        placeholder={t('subject', english)}
+        placeholderTextColor="#999"
+        value={subject}
+        onChangeText={setSubject}
+      />
+      <Text style={styles.label}>Message</Text>
       <TextInput
         style={styles.textArea}
         multiline={true}
-        placeholder="Write here......."
+        placeholder={t('writeHere', english)}
         placeholderTextColor="#999"
+        value={message}
+        onChangeText={setMessage}
       />
       <View
         style={{
@@ -28,7 +43,7 @@ const Support = () => {
           width: width,
           paddingVertical: 16,
         }}>
-        <GradientButton handler={() => {}}>
+        <GradientButton handler={() => { }}>
           <Text
             style={{
               color: 'white',
@@ -36,7 +51,7 @@ const Support = () => {
               fontWeight: 700,
               fontSize: 18,
             }}>
-            Submit
+            {t('submit', english)}
           </Text>
         </GradientButton>
       </View>
