@@ -3,8 +3,8 @@ import { useChangePasswordMutation, useUpdateProfileMutation } from '../redux/Ap
 
 export const useUpdateProfile = () => {
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
-  const updateProfileHandler = (data: any, id: string, handler?: () => void) => {
-    updateProfile({ data, id }).unwrap().then((res) => {
+  const updateProfileHandler = (data: any, handler?: () => void) => {
+    updateProfile(data).unwrap().then((res) => {
       Toast.show({
         type: 'success',
         text1: 'Profile updated',
