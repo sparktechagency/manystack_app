@@ -1,5 +1,5 @@
 import Toast from 'react-native-toast-message';
-import { useChangePasswordMutation, useUpdateProfileMutation } from '../redux/Apis/userApis';
+import { useChangePasswordMutation, useUpdateProfileMutation, useUploadLogoMutation } from '../redux/Apis/userApis';
 
 export const useUpdateProfile = () => {
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
@@ -40,4 +40,24 @@ export const useChangePassword = () => {
     })
   }
   return { changePasswordHandler, isLoading }
+}
+export const useUploadLogo = () => {
+  const [uploadLogo, { isLoading }] = useUploadLogoMutation();
+  const uploadLogoHandler = (data: any, handler?: () => void) => {
+    uploadLogo(data).unwrap().then((res: any) => {
+      Toast.show({
+        type: 'success',
+        text1: 'Logo uploaded',
+        text2: res?.message || 'Logo uploaded successfully.',
+      })
+      handler?.()
+    }).catch((err) => {
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to upload logo',
+        text2: err?.message || 'Failed to upload logo.',
+      })
+    })
+  }
+  return { uploadLogoHandler, isLoading }
 }
