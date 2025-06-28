@@ -12,7 +12,7 @@ const Payment = () => {
   const handleWebViewError = (syntheticEvent: any) => {
     const { nativeEvent } = syntheticEvent;
     console.error('WebView Error:', nativeEvent);
-    setPaymentStatus('error');
+    // setPaymentStatus('error');
   };
 
   const handleNavigationChange = (navState: any) => {
