@@ -37,11 +37,11 @@ const SignUp = () => {
   const { width } = Dimensions.get('window');
   const { english } = useGlobalContext();
   const [address, setAddress] = React.useState<IAddress>({
-    streetName: 'b block',
-    city: 'bonassre',
-    streetNo: '123',
-    country: 'Bangladesh',
-    postalCode: '1212',
+    streetName: '',
+    city: '',
+    streetNo: '',
+    country: '',
+    postalCode: '',
   });
 
   const [error, setError] = React.useState({
@@ -62,15 +62,15 @@ const SignUp = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<ISignUp>({
-    'first name': 'shaharul',
-    'last name': 'siyam',
-    email: 'siyamoffice0273@gmail.com',
-    contact: '01700000000',
-    gender: 'male',
-    'N°SIREN': '123456789',
-    address: 'Dhaka',
-    password: '123456',
-    confirmPassword: '123456',
+    'first name': '',
+    'last name': '',
+    email: '',
+    contact: '',
+    gender: '',
+    'N°SIREN': '',
+    address: 'address',
+    password: '',
+    confirmPassword: '',
   });
   //rtk
   const [register, { isLoading }] = useRegisterMutation()
@@ -102,7 +102,7 @@ const SignUp = () => {
       "firstName": combinedInputValue['first name'],
       "lastName": combinedInputValue['last name'],
       "email": combinedInputValue['email'],
-      "contact": combinedInputValue['contact'],
+      "contact": `${callingCode}${combinedInputValue['contact']}`,
       "nSiren": combinedInputValue['N°SIREN'],
       "address": {
         "streetNo": combinedInputValue['streetNo'],
