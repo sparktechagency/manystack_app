@@ -28,6 +28,13 @@ const subscriptionApi = baseApi.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    subscriptionPayment: builder.mutation({
+      query: (data) => ({
+        url: '/api/stripe/create-checkout-session',
+        method: 'POST',
+        body: data,
+      }),
+    }),
   })
 })
 
@@ -36,4 +43,5 @@ export const {
   useCreateSubscriptionMutation,
   useUpdateSubscriptionMutation,
   useDeleteSubscriptionMutation,
+  useSubscriptionPaymentMutation,
 } = subscriptionApi
