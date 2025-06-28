@@ -1,15 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {ISubscriptionProps} from '../../types/PropsType';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { ISubscriptionProps } from '../../types/PropsType';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const SubscriptionCard = ({
   item,
   selected,
   setSelected,
 }: ISubscriptionProps) => {
-  const {themeColors} = useGlobalContext();
+  const { themeColors } = useGlobalContext();
   return (
     <TouchableOpacity onPress={() => setSelected(item.name)}>
       <View
@@ -62,7 +62,7 @@ const SubscriptionCard = ({
               marginTop: 8,
               color: hexToRGBA(themeColors.black as string, 0.6),
             }}>
-            {item.type}
+            {item?.validity}
           </Text>
         </View>
         <Text
@@ -71,7 +71,7 @@ const SubscriptionCard = ({
             marginTop: 8,
             color: hexToRGBA(themeColors.black as string, 0.6),
           }}>
-          {item.description}
+          {item?.features?.join(', ')}
         </Text>
       </View>
     </TouchableOpacity>

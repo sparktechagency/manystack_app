@@ -13,11 +13,14 @@ import SubscriptionCard from '../../components/Subscriptions/SubscriptionCard';
 import { subscriptionsData } from '../../constant/data';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetSubscriptionQuery } from '../../redux/Apis/subscriptionApis';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const Subscription = () => {
   const { themeColors, width, height } = useGlobalContext();
   const [selected, setSelected] = React.useState('');
+  const { data } = useGetSubscriptionQuery(undefined)
+  console.log(data?.subscriptions)
   return (
     <SafeAreaView
       style={{

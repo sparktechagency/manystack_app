@@ -1,6 +1,5 @@
 import {
-  IInterventionCategoryData,
-  ISubscription
+  IInterventionCategoryData
 } from '../types/DataTypes';
 import { DrawerIcons } from './images';
 
@@ -39,20 +38,7 @@ export const DrawerLinksData = [
   { name: 'privacy_policy', href: 'PrivacyPolicy', icon: DrawerIcons.Privacy },
 ];
 
-export const subscriptionsData: ISubscription[] = [
-  {
-    name: 'Monthly',
-    type: 'Monthly',
-    price: '30$',
-    description: 'Cancel any time',
-  },
-  {
-    name: 'Annually',
-    type: 'Annually',
-    price: '100$',
-    description: 'Cancel any time',
-  },
-];
+
 
 export const InterventionCategoryData: IInterventionCategoryData[] = [
   { name: 'PLP', price: '350.00$', id: '1' },

@@ -73,10 +73,14 @@ export interface IInvoice {
   "invoiceId": string,
 }
 export interface ISubscription {
-  name: string;
-  type: string;
-  price: string;
-  description: string;
+  _id: string,
+  name: string,
+  price: number,
+  validity: string,
+  features: string[],
+  isActive: boolean,
+  createdAt: string,
+  updatedAt: string,
 }
 export interface IInterventionCategoryData {
   name: string;

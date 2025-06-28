@@ -31,4 +31,9 @@ const subscriptionApi = baseApi.injectEndpoints({
   })
 })
 
-export const { } = subscriptionApi
+export const {
+  useGetSubscriptionQuery,
+  useCreateSubscriptionMutation,
+  useUpdateSubscriptionMutation,
+  useDeleteSubscriptionMutation,
+} = subscriptionApi
