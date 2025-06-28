@@ -1,3 +1,4 @@
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   SafeAreaView,
@@ -5,8 +6,9 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import FlexTextOpacity from '../../components/InterventionDetails/FlexTextOpacity';
 import GradientButton from '../../components/sheard/GradientButton';
 import SubscriptionCard from '../../components/Subscriptions/SubscriptionCard';
@@ -17,10 +19,20 @@ import { ISubscription } from '../../types/DataTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const Subscription = () => {
+  const navigate = useNavigation<NavigationProp<ParamListBase>>()
   const { themeColors, width, height } = useGlobalContext();
   const [selected, setSelected] = React.useState('');
   const { data } = useGetSubscriptionQuery(undefined)
-  console.log(data?.subscriptions)
+  const handlePayment = () => {
+    if (selected) {
+      navigate.navigate('Payment', { params: { id: selected } })
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'Please select a plan',
+      })
+    }
+  }
   return (
     <SafeAreaView
       style={{
@@ -117,7 +129,7 @@ const Subscription = () => {
           style={{
             marginBottom: 120,
           }}>
-          <GradientButton handler={() => { }}>
+          <GradientButton handler={handlePayment}>
             <Text
               style={{
                 color: 'white',
