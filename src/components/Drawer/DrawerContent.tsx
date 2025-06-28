@@ -11,7 +11,9 @@ const DrawerContent = (props: any) => {
   const { showSubscription } = useGlobalContext();
   useEffect(() => {
     if (showSubscription) {
-      DrawerLinksData.push({ name: 'subscription', href: 'Subscription', icon: DrawerIcons.Crown })
+      if (!DrawerLinksData?.find((item: any) => item.name === 'subscription')) {
+        DrawerLinksData.push({ name: 'subscription', href: 'Subscription', icon: DrawerIcons.Crown })
+      }
     } else {
       DrawerLinksData.pop()
     }

@@ -1,6 +1,7 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
 
 const Payment = () => {
@@ -25,10 +26,28 @@ const Payment = () => {
   };
 
   const renderContent = () => {
-    if (!url) return <Text>No URL provided for payment.</Text>;
-    if (paymentStatus === 'success') return <Text>Payment Successful!</Text>;
-    if (paymentStatus === 'cancel') return <Text>Payment Cancelled.</Text>;
-    if (paymentStatus === 'error') return <Text>Something went wrong. Please try again.</Text>;
+    if (!url || paymentStatus !== 'pending') {
+      let message = '';
+      switch (paymentStatus) {
+        case 'success':
+          message = 'Payment Successful!';
+          break;
+        case 'cancel':
+          message = 'Payment Cancelled.';
+          break;
+        case 'error':
+          message = 'Something went wrong. Please try again.';
+          break;
+        default:
+          message = 'No URL provided for payment.';
+      }
+
+      return (
+        <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text>{message}</Text>
+        </SafeAreaView>
+      );
+    }
 
     return (
       <WebView
@@ -38,6 +57,7 @@ const Payment = () => {
       />
     );
   };
+
 
   return <View style={{ flex: 1 }}>{renderContent()}</View>;
 };
