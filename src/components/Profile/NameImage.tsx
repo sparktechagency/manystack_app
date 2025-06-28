@@ -1,14 +1,25 @@
-import React from 'react';
-import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
-import {Camera, Profile} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import React, { useEffect } from 'react';
+import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
+import { Camera, Profile } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useUploadLogo } from '../../hooks/userApiCalls';
+import { IImage, useGlobalContext } from '../../providers/GlobalContextProvider';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 import ImageUpload from '../sheard/ImageUpload';
 
 const NameImage = () => {
-  const {themeColors} = useGlobalContext();
-  const [images, setImages] = React.useState<string[]>([]);
+  const { themeColors, user } = useGlobalContext();
+  const [images, setImages] = React.useState<IImage[]>([]);
+  const { uploadLogoHandler } = useUploadLogo();
+  useEffect(() => {
+    if (images.length > 0) {
+      const formData = new FormData();
+      formData.append('businessLogo', images[0]);
+      uploadLogoHandler(formData, () => {
+        setImages([]);
+      });
+    }
+  }, [images]);
   return (
     <View
       style={{
@@ -59,7 +70,7 @@ const NameImage = () => {
             fontSize: 20,
           },
         ]}>
-        Many Stake
+        {user?.firstName} {user?.lastName}
       </Text>
     </View>
   );
