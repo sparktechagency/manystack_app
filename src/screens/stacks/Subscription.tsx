@@ -10,13 +10,13 @@ import {
 import FlexTextOpacity from '../../components/InterventionDetails/FlexTextOpacity';
 import GradientButton from '../../components/sheard/GradientButton';
 import SubscriptionCard from '../../components/Subscriptions/SubscriptionCard';
-import {subscriptionsData} from '../../constant/data';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { subscriptionsData } from '../../constant/data';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const Subscription = () => {
-  const {themeColors, width, height} = useGlobalContext();
+  const { themeColors, width, height } = useGlobalContext();
   const [selected, setSelected] = React.useState('');
   return (
     <SafeAreaView
@@ -25,7 +25,9 @@ const Subscription = () => {
         position: 'relative',
         height: height,
       }}>
-      <ScrollView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
         <Text style={[globalStyles.inputLabel]}>Current Plan</Text>
         <View
           style={{
@@ -108,27 +110,24 @@ const Subscription = () => {
             key={index}
           />
         ))}
+        <View
+          style={{
+            marginBottom: 120,
+          }}>
+          <GradientButton handler={() => { }}>
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: 700,
+                fontSize: 18,
+              }}>
+              Upgrade Now
+            </Text>
+          </GradientButton>
+        </View>
       </ScrollView>
-      <View
-        style={{
-          paddingHorizontal: 25,
-          position: 'absolute',
-          bottom: 100,
-          width: width,
-          paddingVertical: 16,
-        }}>
-        <GradientButton handler={() => {}}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: 700,
-              fontSize: 18,
-            }}>
-            Upgrade Now
-          </Text>
-        </GradientButton>
-      </View>
+
     </SafeAreaView>
   );
 };
