@@ -64,7 +64,7 @@ const NewPassword = () => {
         text2: res?.message || 'Password reset successfully.',
       })
       await AsyncStorage.removeItem('email')
-      navigate.navigate('Tabs');
+      navigate.navigate('Login');
     }).catch((err: any) => {
       Toast.show({
         type: 'error',
