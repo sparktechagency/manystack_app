@@ -10,10 +10,10 @@ import {
 import FlexTextOpacity from '../../components/InterventionDetails/FlexTextOpacity';
 import GradientButton from '../../components/sheard/GradientButton';
 import SubscriptionCard from '../../components/Subscriptions/SubscriptionCard';
-import { subscriptionsData } from '../../constant/data';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetSubscriptionQuery } from '../../redux/Apis/subscriptionApis';
+import { ISubscription } from '../../types/DataTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const Subscription = () => {
@@ -105,12 +105,12 @@ const Subscription = () => {
           ]}>
           Available Plan
         </Text>
-        {subscriptionsData.map((item, index) => (
+        {data?.subscriptions?.map((item: ISubscription, index: number) => (
           <SubscriptionCard
-            selected={selected === item.name}
+            selected={selected === item?._id}
             setSelected={setSelected}
             item={item}
-            key={index}
+            key={item?._id}
           />
         ))}
         <View

@@ -46,7 +46,7 @@ const SubscriptionCard = ({
               fontWeight: 700,
               color: hexToRGBA(themeColors.primary as string, 1),
             }}>
-            {item.price}
+            ${item.price}
           </Text>
           <Text
             style={{
