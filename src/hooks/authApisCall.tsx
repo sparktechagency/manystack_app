@@ -10,6 +10,7 @@ export const useForgetPassword = () => {
         text1: 'verification code sent',
         text2: res?.message || 'Verification code sent successfully.',
       })
+
       handler?.()
     }).catch((err) => {
       Toast.show({
