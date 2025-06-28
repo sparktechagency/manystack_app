@@ -4,11 +4,12 @@ import { Colors } from '../../constant/colors';
 import { logo, Profile } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { generateImageUrl } from '../../utils/baseUrls';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { t } from '../../utils/translate';
 
 const WellCome = () => {
-  const { english } = useGlobalContext();
+  const { english, user } = useGlobalContext();
   return (
     <View style={[globalStyles.flex, { justifyContent: 'space-between' }]}>
       <View
@@ -32,7 +33,7 @@ const WellCome = () => {
         </View>
       </View>
       <Image
-        source={Profile as ImageSourcePropType}
+        source={user?.businessLogo ? { uri: generateImageUrl(user?.businessLogo) } : Profile as ImageSourcePropType}
         style={{ width: 50, height: 50 }}
       />
     </View>

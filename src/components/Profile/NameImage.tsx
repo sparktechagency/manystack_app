@@ -4,6 +4,7 @@ import { Camera, Profile } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useUploadLogo } from '../../hooks/userApiCalls';
 import { IImage, useGlobalContext } from '../../providers/GlobalContextProvider';
+import { generateImageUrl } from '../../utils/baseUrls';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import ImageUpload from '../sheard/ImageUpload';
 
@@ -32,7 +33,7 @@ const NameImage = () => {
           position: 'relative',
         }}>
         <Image
-          source={Profile as ImageSourcePropType}
+          source={user?.businessLogo ? { uri: generateImageUrl(user?.businessLogo) } : Profile as ImageSourcePropType}
           style={{
             width: 100,
             height: 100,
