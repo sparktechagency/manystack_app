@@ -1,6 +1,7 @@
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
+  ActivityIndicator,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -13,6 +14,7 @@ import FlexTextOpacity from '../../components/InterventionDetails/FlexTextOpacit
 import GradientButton from '../../components/sheard/GradientButton';
 import SubscriptionCard from '../../components/Subscriptions/SubscriptionCard';
 import { globalStyles } from '../../constant/styles';
+import { useSubscriptionPayment } from '../../hooks/subscriptionApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetSubscriptionQuery } from '../../redux/Apis/subscriptionApis';
 import { ISubscription } from '../../types/DataTypes';
@@ -23,9 +25,12 @@ const Subscription = () => {
   const { themeColors, width, height } = useGlobalContext();
   const [selected, setSelected] = React.useState('');
   const { data } = useGetSubscriptionQuery(undefined)
+  const { handleSubscriptionPayment, isLoading } = useSubscriptionPayment()
   const handlePayment = () => {
     if (selected) {
-      navigate.navigate('Payment', { params: { id: selected } })
+      handleSubscriptionPayment({ subscriptionId: selected }, (url: string) => {
+        navigate.navigate('Payment', { params: { url } })
+      })
     } else {
       Toast.show({
         type: 'error',
@@ -130,15 +135,19 @@ const Subscription = () => {
             marginBottom: 120,
           }}>
           <GradientButton handler={handlePayment}>
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: 700,
-                fontSize: 18,
-              }}>
-              Upgrade Now
-            </Text>
+            {isLoading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: 700,
+                  fontSize: 18,
+                }}>
+                Upgrade Now
+              </Text>
+            )}
           </GradientButton>
         </View>
       </ScrollView>
