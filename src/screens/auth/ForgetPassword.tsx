@@ -28,7 +28,7 @@ const ForgetPassword = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<IForget>({
-    email: 'siyamoffice0273@gmail.com',
+    email: '',
   });
   const { forgetPasswordHandler, isLoading } = useForgetPassword()
   const submitHandler = () => {

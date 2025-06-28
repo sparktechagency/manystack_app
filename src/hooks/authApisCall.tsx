@@ -4,7 +4,7 @@ import { useForgetPasswordMutation } from '../redux/Apis/authApis';
 export const useForgetPassword = () => {
   const [forgetPassword, { isLoading }] = useForgetPasswordMutation();
   const forgetPasswordHandler = (data: any, handler?: () => void) => {
-    forgetPassword(data).then((res: any) => {
+    forgetPassword(data).unwrap().then((res: any) => {
       Toast.show({
         type: 'success',
         text1: 'verification code sent',
