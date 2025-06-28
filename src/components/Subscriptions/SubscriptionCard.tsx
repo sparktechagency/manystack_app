@@ -11,7 +11,7 @@ const SubscriptionCard = ({
 }: ISubscriptionProps) => {
   const { themeColors } = useGlobalContext();
   return (
-    <TouchableOpacity onPress={() => setSelected(item.name)}>
+    <TouchableOpacity onPress={() => setSelected(item?._id)}>
       <View
         style={{
           backgroundColor: selected

@@ -22,7 +22,6 @@ export const interventionFilter = [
 
 export const DrawerLinksData = [
   { name: 'edit_profile', href: 'EditProfile', icon: DrawerIcons.UserEdit },
-  { name: 'subscription', href: 'Subscription', icon: DrawerIcons.Crown },
   {
     name: 'intervention_category',
     href: 'InterventionCategory',

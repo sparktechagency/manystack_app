@@ -28,6 +28,7 @@ interface GlobalContextType {
   userLoading: boolean
   firstLoad: boolean
   setFirstLoad: React.Dispatch<React.SetStateAction<boolean>>
+  showSubscription: boolean
 }
 
 interface GlobalProviderProps {
@@ -42,6 +43,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
   const [english, setEnglish] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [images, setImages] = React.useState<IImage[] | []>([]);
+  const [showSubscription, setShowSubscription] = useState<boolean>(true);
   const themeColors = Colors.light;
   const values = {
     themeColors,
@@ -56,8 +58,10 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     english,
     setEnglish,
     user: data?.data,
-    userLoading
-    , firstLoad, setFirstLoad
+    userLoading,
+    firstLoad,
+    setFirstLoad,
+    showSubscription
   };
   return (
     <GlobalContext.Provider value={values}>
