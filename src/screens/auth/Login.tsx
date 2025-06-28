@@ -34,8 +34,8 @@ const Login = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<ILogin>({
-    email: 'siyamoffice0273@gmail.com',
-    password: '123456',
+    email: '',
+    password: '',
   });
 
   const submitHandler = () => {

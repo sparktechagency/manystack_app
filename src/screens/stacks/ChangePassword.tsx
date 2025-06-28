@@ -2,6 +2,7 @@ import React from 'react';
 
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import {
+  ActivityIndicator,
   Image,
   ImageSourcePropType,
   ScrollView,
@@ -56,7 +57,12 @@ const ChangePassword = () => {
         text1: 'All fields are required',
       });
     }
-    changePasswordHandler(inputValue, () => {
+    const data = {
+      "currentPassword": inputValue['current password'],
+      "newPassword": inputValue['new password'],
+      "confirmPassword": inputValue['confirm password']
+    }
+    changePasswordHandler(data, () => {
       setInputValue({
         'current password': '',
         'new password': '',
@@ -150,15 +156,21 @@ const ChangePassword = () => {
           paddingVertical: 16,
         }}>
         <GradientButton handler={submitHandler}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: 700,
-              fontSize: 18,
-            }}>
-            Save Changes
-          </Text>
+          {
+            isLoading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: 700,
+                  fontSize: 18,
+                }}>
+                Save Changes
+              </Text>
+            )
+          }
         </GradientButton>
       </View>
     </SafeAreaView>

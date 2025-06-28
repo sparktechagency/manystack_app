@@ -32,10 +32,11 @@ export const useChangePassword = () => {
       })
       handler?.()
     }).catch((err) => {
+      console.log(err)
       Toast.show({
         type: 'error',
         text1: 'Failed to change password',
-        text2: err?.message || 'Failed to change password.',
+        text2: err?.data?.message || 'Failed to change password.',
       })
     })
   }
