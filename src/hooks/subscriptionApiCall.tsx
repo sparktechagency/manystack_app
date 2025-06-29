@@ -1,5 +1,5 @@
 import Toast from 'react-native-toast-message';
-import { useSubscriptionPaymentMutation } from '../redux/Apis/subscriptionApis';
+import { useCancelSubscriptionMutation, useSubscriptionPaymentMutation } from '../redux/Apis/subscriptionApis';
 
 export const useSubscriptionPayment = () => {
   const [subscriptionPayment, { isLoading }] = useSubscriptionPaymentMutation();
@@ -30,3 +30,30 @@ export const useSubscriptionPayment = () => {
   return { handleSubscriptionPayment, isLoading };
 }
 
+export const useCancelSubscription = () => {
+  const [cancelSubscription, { isLoading }] = useCancelSubscriptionMutation();
+  const handleCancelSubscription = async () => {
+    try {
+      await cancelSubscription(undefined).unwrap()
+        .then((res) => {
+          Toast.show({
+            type: 'success',
+            text1: 'Subscription canceled',
+            text2: res?.message || 'Subscription canceled successfully.',
+          })
+        }).catch((err) => {
+          Toast.show({
+            type: 'error',
+            text1: 'Failed to cancel subscription',
+            text2: err?.data?.message || 'Failed to cancel subscription.',
+          })
+        });
+      return true
+    } catch (err) {
+      // throw err;
+      return false;
+    }
+  }
+
+  return { handleCancelSubscription, isLoading };
+}

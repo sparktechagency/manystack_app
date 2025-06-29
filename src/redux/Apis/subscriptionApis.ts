@@ -35,6 +35,20 @@ const subscriptionApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    getCurrentSubscription: builder.query({
+      query: () => ({
+        url: 'api/stripe/user-subscription',
+        method: 'GET',
+      }),
+      providesTags: ['subscription'],
+    }),
+    cancelSubscription: builder.mutation({
+      query: () => ({
+        url: 'api/stripe/cancel-subscription',
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['subscription'],
+    }),
   })
 })
 
@@ -44,4 +58,6 @@ export const {
   useUpdateSubscriptionMutation,
   useDeleteSubscriptionMutation,
   useSubscriptionPaymentMutation,
+  useGetCurrentSubscriptionQuery,
+  useCancelSubscriptionMutation,
 } = subscriptionApi

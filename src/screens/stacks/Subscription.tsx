@@ -14,9 +14,9 @@ import FlexTextOpacity from '../../components/InterventionDetails/FlexTextOpacit
 import GradientButton from '../../components/sheard/GradientButton';
 import SubscriptionCard from '../../components/Subscriptions/SubscriptionCard';
 import { globalStyles } from '../../constant/styles';
-import { useSubscriptionPayment } from '../../hooks/subscriptionApiCall';
+import { useCancelSubscription, useSubscriptionPayment } from '../../hooks/subscriptionApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { useGetSubscriptionQuery } from '../../redux/Apis/subscriptionApis';
+import { useGetCurrentSubscriptionQuery, useGetSubscriptionQuery } from '../../redux/Apis/subscriptionApis';
 import { ISubscription } from '../../types/DataTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 
@@ -25,7 +25,9 @@ const Subscription = () => {
   const { themeColors, width, height } = useGlobalContext();
   const [selected, setSelected] = React.useState('');
   const { data } = useGetSubscriptionQuery(undefined)
+  const { data: currentSubscription } = useGetCurrentSubscriptionQuery(undefined)
   const { handleSubscriptionPayment, isLoading } = useSubscriptionPayment()
+  const { handleCancelSubscription } = useCancelSubscription()
   const handlePayment = () => {
     if (selected) {
       handleSubscriptionPayment({ subscriptionId: selected }, (url: string) => {
@@ -49,70 +51,75 @@ const Subscription = () => {
         showsVerticalScrollIndicator={false}
       >
         <Text style={[globalStyles.inputLabel]}>Current Plan</Text>
-        <View
-          style={{
-            width: '100%',
-            height: 'auto',
-            backgroundColor: hexToRGBA(themeColors.primary as string, 0.1),
-            padding: 16,
-            borderRadius: 10,
-          }}>
-          <View
-            style={[
-              globalStyles.flex,
-              {
-                justifyContent: 'space-between',
-              },
-            ]}>
-            <Text
+        {
+          !currentSubscription?.data ? <Text style={{ textAlign: 'center' }}>No Subscription Found</Text>
+            : <View
               style={{
-                fontSize: 18,
-                fontWeight: '600',
-                color: themeColors.primary as string,
+                width: '100%',
+                height: 'auto',
+                backgroundColor: hexToRGBA(themeColors.primary as string, 0.1),
+                padding: 16,
+                borderRadius: 10,
               }}>
-              Basic Plan
-            </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: '600',
-                color: themeColors.white as string,
-                backgroundColor: hexToRGBA(themeColors.green as string, 0.6),
-                paddingHorizontal: 10,
-                borderRadius: 5,
-              }}>
-              Active
-            </Text>
-          </View>
-          <FlexTextOpacity
-            text1="Purchase Date :"
-            text2="25 Aug,2024"
-            color={hexToRGBA(themeColors.black as string, 0.6)}
-          />
-          <FlexTextOpacity
-            text1="Expiration Date :"
-            text2="25 Nov,2024"
-            color={hexToRGBA(themeColors.black as string, 0.6)}
-          />
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              marginTop: 10,
-            }}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: '600',
-                color: themeColors.white as string,
-                backgroundColor: hexToRGBA(themeColors.red as string, 0.6),
-                paddingHorizontal: 10,
-                paddingVertical: 5,
-                borderRadius: 5,
-              }}>
-              Cancel Request
-            </Text>
-          </TouchableOpacity>
-        </View>
+              <View
+                style={[
+                  globalStyles.flex,
+                  {
+                    justifyContent: 'space-between',
+                  },
+                ]}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: '600',
+                    color: themeColors.primary as string,
+                  }}>
+                  Basic Plan
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: '600',
+                    color: themeColors.white as string,
+                    backgroundColor: hexToRGBA(themeColors.green as string, 0.6),
+                    paddingHorizontal: 10,
+                    borderRadius: 5,
+                  }}>
+                  Active
+                </Text>
+              </View>
+              <FlexTextOpacity
+                text1="Purchase Date :"
+                text2="25 Aug,2024"
+                color={hexToRGBA(themeColors.black as string, 0.6)}
+              />
+              <FlexTextOpacity
+                text1="Expiration Date :"
+                text2="25 Nov,2024"
+                color={hexToRGBA(themeColors.black as string, 0.6)}
+              />
+              <TouchableOpacity
+                onPress={handleCancelSubscription}
+                style={{
+                  flexDirection: 'row',
+                  marginTop: 10,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: '600',
+                    color: themeColors.white as string,
+                    backgroundColor: hexToRGBA(themeColors.red as string, 0.6),
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    borderRadius: 5,
+                  }}>
+                  Cancel Subscription
+                </Text>
+              </TouchableOpacity>
+            </View>
+        }
+
         <Text
           style={[
             globalStyles.inputLabel,
