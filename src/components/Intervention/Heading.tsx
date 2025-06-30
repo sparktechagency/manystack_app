@@ -15,7 +15,7 @@ import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
 
 const DROPDOWN_MAX_HEIGHT = 200;
 
-const Heading = ({ title, setSearch }: { title?: string, setSearch: React.Dispatch<React.SetStateAction<string>> }) => {
+const Heading = ({ title, setSearch, show = true, options }: { title?: string, setSearch: React.Dispatch<React.SetStateAction<string>>, show?: boolean, options?: string[] }) => {
   const { data } = useGetCategoriesQuery(undefined)
   const { english } = useGlobalContext()
   const [open, setOpen] = React.useState(false);
@@ -75,12 +75,14 @@ const Heading = ({ title, setSearch }: { title?: string, setSearch: React.Dispat
         {title ? title : 'Intervention'}
       </Text>
       <View>
-        <TouchableOpacity activeOpacity={0.7} onPress={toggleDropdown}>
-          <Image
-            source={Filter as ImageSourcePropType}
-            style={{ width: 25, height: 25 }}
-          />
-        </TouchableOpacity>
+        {
+          show && <TouchableOpacity activeOpacity={0.7} onPress={toggleDropdown}>
+            <Image
+              source={Filter as ImageSourcePropType}
+              style={{ width: 25, height: 25 }}
+            />
+          </TouchableOpacity>
+        }
         {open && (
           <Animated.View
             style={{
@@ -101,13 +103,21 @@ const Heading = ({ title, setSearch }: { title?: string, setSearch: React.Dispat
               overflow: 'hidden',
               // remove flex, gap and use padding/margin for spacing if needed
             }}>
-            {data?.categories?.map((item: any) => (
-              <TouchableOpacity key={item._id} onPress={() => handleFilter(item.name)}>
-                <Text key={item._id} style={{ marginBottom: 10 }}>
-                  {item.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
+            {
+              options ? options.map((item: string, index) => (
+                <TouchableOpacity key={index} onPress={() => handleFilter(item)}>
+                  <Text key={index} style={{ marginBottom: 10 }}>
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              )) :
+                data?.categories?.map((item: any) => (
+                  <TouchableOpacity key={item._id} onPress={() => handleFilter(item.name)}>
+                    <Text key={item._id} style={{ marginBottom: 10 }}>
+                      {item.name}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
           </Animated.View>
         )}
       </View>

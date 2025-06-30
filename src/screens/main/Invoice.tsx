@@ -26,7 +26,7 @@ const Invoice = () => {
   return (
     <SafeAreaView>
       <View style={{ paddingBottom: 62 }}>
-        <Heading setSearch={setSearch} title={t("invoice", english)} />
+        <Heading setSearch={setSearch} title={t("invoice", english)} show={false} />
         <FlatList
           keyExtractor={(item, index) => index.toString()}
           data={elements}
