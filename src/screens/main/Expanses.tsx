@@ -46,7 +46,7 @@ const Expanses = () => {
   return (
     <SafeAreaView>
       <View style={{ paddingBottom: 62 }}>
-        <Heading setSearch={setSearch} title={t("expanses", english)} />
+        <Heading setSearch={setSearch} title={t("expanses", english)} options={['Equipment', 'Fuel', 'Vehicle']} />
         <FlatList
           refreshing={refreshing}
           onRefresh={onRefresh}
