@@ -43,7 +43,7 @@ const InterventionDetails = () => {
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <ImageCard key={item} item={item} />
+          <ImageCard key={item} item={item} id={data?.intervention?._id} />
         )}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

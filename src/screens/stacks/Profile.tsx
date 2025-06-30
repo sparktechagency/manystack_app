@@ -11,15 +11,17 @@ import GradientButton from '../../components/sheard/GradientButton';
 import { Colors } from '../../constant/colors';
 import { genderData } from '../../constant/data';
 import { globalStyles } from '../../constant/styles';
+import { TranslationKey } from '../../constant/translations';
 import { useUpdateProfile } from '../../hooks/userApiCalls';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IAddress, ILogin, IUpdateProfile } from '../../types/loginType';
 import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 
 const Profile = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const [countryCode, setCountryCode] = React.useState('BD');
-  const { width, user } = useGlobalContext();
+  const { width, user, english } = useGlobalContext();
   const [address, setAddress] = React.useState<IAddress>({
     streetName: user?.address?.streetName || '',
     city: user?.address?.city || '',
@@ -114,7 +116,7 @@ const Profile = () => {
                   justifyContent: 'space-between',
                 }}>
                 <View style={{ flex: 1, marginRight: 10 }}>
-                  <Text style={globalStyles.inputLabel}>First Name</Text>
+                  <Text style={globalStyles.inputLabel}>{t('firstName', english)}</Text>
                   <View style={{ position: 'relative' }}>
                     <TextInput
                       value={inputValue['first name']}
@@ -133,7 +135,7 @@ const Profile = () => {
                 </View>
 
                 <View style={{ flex: 1, marginLeft: 10 }}>
-                  <Text style={globalStyles.inputLabel}>Last Name</Text>
+                  <Text style={globalStyles.inputLabel}>{t('lastName', english)}</Text>
                   <View style={{ position: 'relative' }}>
                     <TextInput
                       value={inputValue['last name']}
@@ -157,7 +159,7 @@ const Profile = () => {
           if (key === 'gender') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>Gender</Text>
+                <Text style={globalStyles.inputLabel}>{t('gender', english)}</Text>
                 <Dropdown
                   style={[
                     globalStyles.input,
@@ -185,7 +187,7 @@ const Profile = () => {
           if (key === 'contact') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>Contact</Text>
+                <Text style={globalStyles.inputLabel}>{t('contact', english)}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <CountryPicker
                     countryCode={countryCode as any}
@@ -247,7 +249,7 @@ const Profile = () => {
           return (
             <View key={key} style={{}}>
               <Text style={globalStyles.inputLabel}>
-                {key.charAt(0).toUpperCase() + key.slice(1)}
+                {t(key as TranslationKey, english)}
               </Text>
               <View style={{ position: 'relative' }}>
                 <TextInput
@@ -283,7 +285,7 @@ const Profile = () => {
                     fontWeight: '700',
                     fontSize: 18,
                   }}>
-                  Save Changes
+                  Save
                 </Text>
               )
             }

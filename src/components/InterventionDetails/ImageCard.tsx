@@ -21,15 +21,15 @@ interface IImageCard {
     createdAt: string;
     _id: string;
     location: string;
-
   };
+  id: string;
 }
-const ImageCard = ({ item }: IImageCard) => {
+const ImageCard = ({ item, id }: IImageCard) => {
   const { width, height, themeColors } = useGlobalContext();
   const [modalVisible, setModalVisible] = React.useState(false);
   const [deleteImage, { isLoading }] = useDeleteImageMutation()
   const handleDeleteImage = () => {
-    deleteImage({ id: item._id }).unwrap().then((res: any) => {
+    deleteImage({ id: id, data: { imageUrl: item.url } }).unwrap().then((res: any) => {
       Toast.show({
         type: 'success',
         text1: 'Image deleted successfully',

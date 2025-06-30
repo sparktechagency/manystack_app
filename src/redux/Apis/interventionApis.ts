@@ -44,9 +44,10 @@ const interventionApi = baseApi.injectEndpoints({
     }),
     //delete image endpoint
     deleteImage: builder.mutation({
-      query: ({ id, }) => ({
+      query: ({ id, data }) => ({
         url: `api/intervention/delete-image/${id}`,
         method: 'DELETE',
+        body: data,
       }),
       invalidatesTags: ['intervention'],
     }),

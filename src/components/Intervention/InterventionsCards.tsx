@@ -1,4 +1,4 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import {
@@ -16,7 +16,6 @@ import { DeleteIcon, Edit, eye, logo } from '../../constant/images';
 import { updateIntervention, useDeleteIntervention } from '../../hooks/interventionApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IIntervention } from '../../types/DataTypes';
-import { StackTypes } from '../../types/ScreenPropsTypes';
 import { generateImageUrl } from '../../utils/baseUrls';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 
@@ -24,7 +23,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
   // const { handleDeleteIntervention } = deleteIntervention()
   const { handleUpdateIntervention, isLoading: updating } = updateIntervention()
   const { handleDeleteIntervention, isLoading: deleting } = useDeleteIntervention()
-  const navigation = useNavigation<NavigationProp<StackTypes>>();
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const { themeColors } = useGlobalContext();
   const toggleSwitch = async () => {
     const data = new FormData()
@@ -131,7 +130,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('UpdateIntervention', {
-                params: { id: item._id, category: item.category._id, price: item.price?.toString(), note: item.note, status: item.status },
+                params: { id: item._id, category: item.category._id, price: item.price?.toString(), note: item.note, status: item.status, interventionId: item.interventionId },
               });
             }}>
             <Image

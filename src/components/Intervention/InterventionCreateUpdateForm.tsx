@@ -43,10 +43,11 @@ const InterventionCreateUpdateForm = () => {
   });
 
   const [inputValue, setInputValue] = React.useState<ICreateInterVention>({
-    category: params?.params?.category,
-    price: params?.params?.price,
-    note: params?.params?.note,
-    status: params?.params?.status?.toLowerCase(),
+    'intervention id': params?.params?.interventionId || '',
+    category: params?.params?.category || '',
+    price: params?.params?.price || '',
+    note: params?.params?.note || '',
+    status: params?.params?.status?.toLowerCase() || '',
   });
 
   const submitHandler = async () => {
@@ -67,6 +68,7 @@ const InterventionCreateUpdateForm = () => {
     images.forEach((image) => {
       formData.append('images', image);
     })
+    formData.append('interventionId', inputValue['intervention id']);
     const location: any = await getLocation();
     if (Object.values(location as any).some(value => value === undefined)) {
       return Toast.show({

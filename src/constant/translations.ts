@@ -161,6 +161,10 @@ export const translations = {
     en: 'Confirm Password',
     fr: 'Confirmer le mot de passe',
   },
+  "intervention id": {
+    en: 'Intervention ID',
+    fr: 'ID de l’intervention',
+  },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
