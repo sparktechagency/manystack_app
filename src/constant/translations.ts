@@ -165,6 +165,10 @@ export const translations = {
     en: 'Intervention ID',
     fr: 'ID de l’intervention',
   },
+  service: {
+    en: 'Service',
+    fr: 'Service',
+  },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

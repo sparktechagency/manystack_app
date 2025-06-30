@@ -16,7 +16,6 @@ import { IInvoiceService } from '../../types/loginType';
 import { generateRandom } from '../../utils/generateRandom';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { t } from '../../utils/translate';
-import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 
 const InvoiceService = ({
   service,
@@ -43,18 +42,9 @@ const InvoiceService = ({
               width: "100%",
               // width: (width - 120) / 2.5,
             }}>
-            <SingleSelectDropDown
-              name={'service'}
-              placeholder="Service"
-              data={data?.categories?.map((item: any) => ({
-                label: item.name,
-                value: item.name,
-              }))}
+            <TextInput
               value={item.service}
-              inputValue={service}
-              setInputValue={setService}
-              setError={setError}
-              handler={text => {
+              onChangeText={text => {
                 const updatedService = {
                   ...item,
                   service: text,
@@ -64,7 +54,13 @@ const InvoiceService = ({
                 );
                 setService(newArray);
               }}
-              error={error}
+              style={[
+                globalStyles.input,
+                error?.streetName ? globalStyles.inputError : {},
+              ]}
+              keyboardType="default"
+              placeholder={t('service', english)}
+              placeholderTextColor={globalStyles.inputPlaceholder.color}
             />
           </View>
           <View style={styles.row}>
