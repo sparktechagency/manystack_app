@@ -19,7 +19,6 @@ import { globalStyles } from '../../constant/styles';
 import { TranslationKey } from '../../constant/translations';
 import { createExpenses, updateExpenses } from '../../hooks/expensesApiCall';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
 import { ICreateExpenses } from '../../types/DataTypes';
 import { IExpensesError } from '../../types/ErrorTypes';
 import { getLocation } from '../../utils/getLocations';
@@ -31,7 +30,6 @@ import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 
 const ExpensesCreateUpdateForm = () => {
   const { themeColors, setImages, images, english } = useGlobalContext();
-  const { data } = useGetCategoriesQuery(undefined)
   const { params }: any = useRoute()
   const { handleCreateExpenses, isLoading } = createExpenses()
   const { handleUpdateExpenses, isLoading: updating } = updateExpenses()
@@ -114,10 +112,7 @@ const ExpensesCreateUpdateForm = () => {
                 <Text style={globalStyles.inputLabel}>{t('selectCategory', english)}</Text>
                 <SingleSelectDropDown
                   name={key}
-                  data={data?.categories?.map((item: any) => ({
-                    label: item.name,
-                    value: item.name,
-                  }))}
+                  data={[{ label: 'Equipment', value: 'Equipment' }, { label: 'Fuel', value: 'Fuel' }, { label: 'Vehicle', value: 'Vehicle' }]}
                   value={inputValue[key as keyof ICreateExpenses]}
                   inputValue={inputValue}
                   setInputValue={setInputValue}
