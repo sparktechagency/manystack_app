@@ -30,7 +30,7 @@ const userApi = baseApi.injectEndpoints({
     //upload logo endpoint
     uploadLogo: builder.mutation({
       query: (data) => ({
-        url: '/api/user/profile/upload-logo /profile/upload-picture',
+        url: '/api/user/profile/upload-picture?profilePicture',
         method: 'POST',
         body: data,
       }),

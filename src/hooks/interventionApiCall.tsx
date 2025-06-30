@@ -1,9 +1,11 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
+import { useGlobalContext } from '../providers/GlobalContextProvider';
 import { useCreateInterventionMutation, useDeleteInterventionMutation, useUpdateInterventionMutation } from '../redux/Apis/interventionApis';
 import { TabsTypes } from '../types/ScreenPropsTypes';
 
 export const createIntervention = () => {
+  const { setImages } = useGlobalContext();
   const navigation = useNavigation<NavigationProp<TabsTypes>>()
   const [create, { isLoading }] = useCreateInterventionMutation();
   const handleCreateIntervention = async (data: any) => {
@@ -16,6 +18,7 @@ export const createIntervention = () => {
             text2: res.data?.message || 'Intervention created successfully.',
           })
           navigation.goBack()
+          setImages([])
         }).catch((err) => {
           Toast.show({
             type: 'error',
@@ -34,6 +37,7 @@ export const createIntervention = () => {
 }
 
 export const updateIntervention = () => {
+  const { setImages } = useGlobalContext();
   const navigation = useNavigation<NavigationProp<TabsTypes>>()
   const [update, { isLoading }] = useUpdateInterventionMutation();
   const handleUpdateIntervention = async (data: any, id: string, action: boolean = true) => {
@@ -46,6 +50,7 @@ export const updateIntervention = () => {
             text2: res.data?.message || 'Intervention updated successfully.',
           })
           action && navigation.goBack()
+          action && setImages([])
         }).catch((err) => {
           Toast.show({
             type: 'error',
