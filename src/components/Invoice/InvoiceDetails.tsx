@@ -94,7 +94,7 @@ const InvoiceDetails = () => {
             CardStyles.actions,
             { width: 90, marginLeft: 'auto', top: -35 },
           ]}>
-          <TouchableOpacity onPress={() => downloadButton(`api/invoices/download-pdf/${invoice?._id}`, "invoice")}>
+          <TouchableOpacity onPress={() => downloadButton(`api/invoices/download/${invoice?._id}`, "invoice")}>
             <Image
               source={DownloadPdf as ImageSourcePropType}
               style={[

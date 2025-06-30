@@ -110,7 +110,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
               ]}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => downloadButton(`api/invoices/download-pdf/${item._id}`, "invoice")}>
+          <TouchableOpacity onPress={() => downloadButton(`api/invoices/download/${item._id}`, "invoice")}>
             <Image
               source={DownloadPdf as ImageSourcePropType}
               style={[
