@@ -77,7 +77,7 @@ export const translations = {
   logout: { en: 'Logout', fr: 'Se déconnecter' },
   profit: { en: 'Profit', fr: 'Bénéfice' },
   income: { en: 'Income', fr: 'Revenu' },
-  today_highlights: { en: 'Today Highlights', fr: 'Faits saillants du jour' },
+  today_highlights: { en: 'Today Highlights', fr: 'Interventions du jour' },
   total_intervention: { en: 'Total Intervention', fr: 'Intervention totale' },
   total_price: { en: 'Total Price', fr: 'Prix total' },
   permission_denied: { en: 'Permission denied', fr: 'Permission refusée' },
