@@ -28,7 +28,7 @@ import GradientButton from '../sheard/GradientButton';
 const InvoiceDetails = () => {
   const { params }: any = useRoute()
   const navigation = useNavigation<NavigationProp<StackTypes>>();
-  const { themeColors, width, height } = useGlobalContext();
+  const { themeColors, width, height, english } = useGlobalContext();
   const { data } = useGetInvoiceByIdQuery(params?.params?.id)
   const { deleteInvoiceHandler, isLoading } = deleteInvoice()
   const { updateInvoiceHandler, isLoading: updateInvoiceLoading } = useUpdateInvoice()
@@ -138,19 +138,19 @@ const InvoiceDetails = () => {
               )}
           </TouchableOpacity>
         </View>
-        <FlexTextOpacity text1="Name :" text2={invoice?.name} />
-        <FlexTextOpacity text1="Email :" text2={invoice?.email} />
-        <FlexTextOpacity text1="Contact :" text2={invoice?.phone} />
+        <FlexTextOpacity text1={english ? "Name :" : "Nom :"} text2={invoice?.name} />
+        <FlexTextOpacity text1={english ? "Email :" : "Email :"} text2={invoice?.email} />
+        <FlexTextOpacity text1={english ? "Contact :" : "Contact :"} text2={invoice?.phone} />
         <FlexTextOpacity
-          text1="Address :"
+          text1={english ? "Address :" : "Adresse :"}
           text2={invoice?.address?.streetNo + " " + invoice?.address?.streetName + " " + invoice?.address?.city + " " + invoice?.address?.postalCode + " " + invoice?.address?.country}
         />
         <FlexTextOpacity
-          text1="Siren no :"
+          text1={english ? "Siren no :" : "N°SIREN :"}
           text2={invoice?.nSiren}
           color={themeColors.primary as string}
         />
-        <Text style={[globalStyles.inputLabel, { marginTop: 20 }]}>Services</Text>
+        <Text style={[globalStyles.inputLabel, { marginTop: 20 }]}>{english ? "Services" : "Services"}</Text>
         <View
           style={[
             {
@@ -178,15 +178,15 @@ const InvoiceDetails = () => {
             </Text>
             <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
               {' '}
-              Name
+              {english ? "Name" : "Nom"}
             </Text>
             <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
               {' '}
-              Quantity
+              {english ? "Quantity" : "Quantité"}
             </Text>
             <Text style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
               {' '}
-              Price
+              {english ? "Price" : "Prix"}
             </Text>
           </View>
           {invoice?.services.map((service, index) => (
@@ -218,12 +218,12 @@ const InvoiceDetails = () => {
           ))}
         </View>
         <FlexTextOpacity
-          text1="Total :"
+          text1={english ? "Total :" : "Total :"}
           text2={invoice?.services.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0).toFixed(2)}
           color={themeColors.primary as string}
         />
         <FlexTextOpacity
-          text1="Status :"
+          text1={english ? "Status :" : "Status :"}
           text2={invoice?.status}
           color={invoice?.status === 'UNPAID' ? themeColors.red as string : themeColors.green as string}
         />
@@ -249,7 +249,7 @@ const InvoiceDetails = () => {
                     fontWeight: 700,
                     fontSize: 18,
                   }}>
-                  Mark As {invoice?.status === 'UNPAID' ? 'Paid' : 'Unpaid'}
+                  Mark As {english ? (invoice?.status === 'UNPAID' ? 'Paid' : 'Unpaid') : (invoice?.status === 'UNPAID' ? 'Payé' : 'Non payé')}
                 </Text>
               )
             }
