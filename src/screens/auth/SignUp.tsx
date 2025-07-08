@@ -19,7 +19,7 @@ import Toast from 'react-native-toast-message';
 import Address from '../../components/sheard/Address';
 import GradientButton from '../../components/sheard/GradientButton';
 import { Colors } from '../../constant/colors';
-import { genderData } from '../../constant/data';
+import { currencyData, genderData } from '../../constant/data';
 import { eye, eyeSlash } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
@@ -59,12 +59,14 @@ const SignUp = () => {
     streetNo: false,
     country: false,
     postalCode: false,
+    currency: false,
   });
 
   const [inputValue, setInputValue] = React.useState<ISignUp>({
     'first name': '',
     'last name': '',
     email: '',
+    currency: '$',
     contact: '',
     gender: '',
     'N°SIREN': '',
@@ -288,7 +290,34 @@ const SignUp = () => {
               />
             );
           }
-
+          if (key === 'currency') {
+            return (
+              <View key={key}>
+                <Text style={globalStyles.inputLabel}>{english ? "Currency" : "Devise"}</Text>
+                <Dropdown
+                  style={[
+                    globalStyles.input,
+                    error[key as keyof ILogin] ? globalStyles.inputError : {},
+                  ]}
+                  data={currencyData}
+                  labelField="label"
+                  valueField="value"
+                  placeholder={english ? "Select Currency" : "Select Currency"}
+                  value={inputValue.currency}
+                  onChange={item => {
+                    setInputValue({ ...inputValue, currency: item.value });
+                    setError({ ...error, currency: false });
+                  }}
+                  placeholderStyle={{
+                    color: globalStyles.inputPlaceholder.color,
+                  }}
+                  selectedTextStyle={{ color: '#000' }}
+                  containerStyle={{ borderRadius: 5 }}
+                  dropdownPosition="auto"
+                />
+              </View>
+            );
+          }
           return (
             <View key={key} style={{}}>
               <Text style={globalStyles.inputLabel}>

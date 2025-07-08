@@ -15,6 +15,7 @@ export interface ISignUp {
   address: string;
   password: string;
   confirmPassword: string;
+  currency: string;
 }
 export interface IAddress {
   streetNo: string;
