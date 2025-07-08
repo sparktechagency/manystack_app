@@ -169,7 +169,10 @@ export const translations = {
     en: 'Service',
     fr: 'Service',
   },
-
+  selectCurrency: {
+    en: 'Select Currency',
+    fr: 'Sélectionner la devise',
+  },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
