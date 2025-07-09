@@ -28,12 +28,13 @@ import GradientButton from '../sheard/GradientButton';
 const InvoiceDetails = () => {
   const { params }: any = useRoute()
   const navigation = useNavigation<NavigationProp<StackTypes>>();
-  const { themeColors, width, height, english } = useGlobalContext();
+  const { themeColors, user, height, english } = useGlobalContext();
   const { data } = useGetInvoiceByIdQuery(params?.params?.id)
   const { deleteInvoiceHandler, isLoading } = deleteInvoice()
   const { updateInvoiceHandler, isLoading: updateInvoiceLoading } = useUpdateInvoice()
   const { markPaidUnpaidHandler, isLoading: markPaidUnpaidLoading } = useMarkPaidUnpaid()
   const invoice = data?.invoice as IInvoice
+  console.log(user)
   return (
     <SafeAreaView
       style={{
@@ -87,7 +88,7 @@ const InvoiceDetails = () => {
         </View>
 
         <Text style={[globalStyles.inputLabel, { marginTop: 20 }]}>
-          Customer Details
+          User Details
         </Text>
         <View
           style={[
@@ -138,6 +139,13 @@ const InvoiceDetails = () => {
               )}
           </TouchableOpacity>
         </View>
+        <FlexTextOpacity text1={english ? "Name :" : "Nom :"} text2={user?.firstName + " " + user?.lastName} />
+        <FlexTextOpacity text1={english ? "Email :" : "Email :"} text2={user?.email + " "} />
+        <FlexTextOpacity text1={english ? "Contact :" : "Contact :"} text2={user?.contact + " "} />
+        <FlexTextOpacity text1={english ? "Address :" : "Adresse :"} text2={user?.address?.streetName + " " + user?.address?.streetNo + " " + user?.address?.city + " " + user?.address?.postalCode + " " + user?.address?.country} />
+        <Text style={[globalStyles.inputLabel, { marginTop: 20 }]}>
+          Customer Details
+        </Text>
         <FlexTextOpacity text1={english ? "Name :" : "Nom :"} text2={invoice?.name} />
         <FlexTextOpacity text1={english ? "Email :" : "Email :"} text2={invoice?.email} />
         <FlexTextOpacity text1={english ? "Contact :" : "Contact :"} text2={invoice?.phone} />
