@@ -24,7 +24,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
   const { handleUpdateIntervention, isLoading: updating } = updateIntervention()
   const { handleDeleteIntervention, isLoading: deleting } = useDeleteIntervention()
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
-  const { themeColors } = useGlobalContext();
+  const { themeColors, currency } = useGlobalContext();
   const toggleSwitch = async () => {
     const data = new FormData()
     data.append('status', item.status === 'PAID' ? 'UNPAID' : 'PAID')
@@ -97,7 +97,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
         </Text>
         <Text
           style={[CardStyles.amount, { color: themeColors.primary as string }]}>
-          ${item.price.toFixed(2)}
+          {currency}{item.price.toFixed(2)}
         </Text>
         <Text
           style={[
