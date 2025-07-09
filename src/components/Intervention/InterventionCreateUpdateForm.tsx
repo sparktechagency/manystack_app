@@ -87,7 +87,7 @@ const InterventionCreateUpdateForm = () => {
     if (inputValue['category']) {
       const category = data?.categories?.find((category: any) => category._id === inputValue['category'])
       if (category) {
-        setInputValue({ ...inputValue, price: category?.price })
+        setInputValue({ ...inputValue, price: category?.price?.toString() || "0" })
       }
     }
   }, [inputValue['category']])
@@ -143,7 +143,7 @@ const InterventionCreateUpdateForm = () => {
               </Text>
               <View style={{ position: 'relative' }}>
                 <TextInput
-                  editable={false}
+                  // editable={false}
                   value={inputValue[key as keyof ICreateInterVention]}
                   keyboardType={"numeric"}
                   placeholder={t(key as TranslationKey, english)}

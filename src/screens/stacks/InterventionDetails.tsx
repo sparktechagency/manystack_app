@@ -10,7 +10,7 @@ import { StackTypes } from '../../types/ScreenPropsTypes';
 import { downloadButton } from '../../utils/DownloadPdf';
 
 const InterventionDetails = () => {
-  const { width, height, themeColors } = useGlobalContext();
+  const { width, height, themeColors, currency } = useGlobalContext();
   const navigation = useNavigation<NavigationProp<StackTypes>>()
   const { params }: any = useRoute()
   const { data } = useGetInterventionByIdQuery(params?.params?.id)
@@ -34,7 +34,7 @@ const InterventionDetails = () => {
       <FlexTextOpacity text1="Category :" text2={data?.intervention?.category?.name} />
       <FlexTextOpacity
         text1="Price :"
-        text2={`$${data?.intervention?.price}`}
+        text2={`${currency}${data?.intervention?.price}`}
         color={themeColors.primary as string}
       />
       <FlexTextOpacity text1="Note :" text2={data?.intervention?.note} />
