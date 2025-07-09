@@ -11,15 +11,15 @@ import { useGetHomePageDataQuery } from '../../redux/Apis/userApis';
 import { t } from '../../utils/translate';
 
 const Home = () => {
-  const { english } = useGlobalContext();
+  const { english, currency } = useGlobalContext();
   const { data, isLoading, isFetching } = useGetHomePageDataQuery(undefined)
   const elements = [
     <WellCome key={1} />,
-    <ProfitCard title={t("profit", english)} count={`$${data?.data?.totalProfit || 0}`} percentage={data?.data?.profitChange || "0%"} key={2} />,
+    <ProfitCard title={t("profit", english)} count={`${currency}${data?.data?.totalProfit || 0}`} percentage={data?.data?.profitChange || "0%"} key={2} />,
     <ProfitCard title="Intervention" count={data?.data?.totalIntervention || "0"} percentage={data?.data?.interventionChange || "0%"} key={3} />,
-    <ProfitCard title={english ? "Income" : "revenu"} count={data?.data?.totalIntervention || "0"} percentage={data?.data?.interventionChange || "0%"} key={3} />,
+    <ProfitCard title={english ? "Income" : "revenu"} count={`${currency}${data?.data?.totalIntervention || 0}`} percentage={data?.data?.interventionChange || "0%"} key={3} />,
     <OverviewChart monthlyData={data?.data?.monthlyData || []} key={4} />,
-    <Highlights key={5} interventionCount={data?.data?.totalInterventionsInPrice || "0"} priceCount={`$${Number(data?.data?.totalExpensesInPrice / 1000 || 0).toFixed(2)}` || "0"} />,
+    <Highlights key={5} interventionCount={data?.data?.totalInterventionsInPrice || "0"} priceCount={`${currency}${Number(data?.data?.totalExpensesInPrice / 1000 || 0).toFixed(2)}` || "0"} />,
   ];
   return (
     <SafeAreaView>
