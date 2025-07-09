@@ -21,7 +21,7 @@ import { CardStyles } from '../Intervention/InterventionsCards';
 const ExpensesCards = ({ item }: { item: IExpenses }) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
   const { handleDeleteExpenses, isLoading } = useDeleteExpenses();
-  const { themeColors, width } = useGlobalContext();
+  const { themeColors, currency } = useGlobalContext();
   return (
     <View
       style={[CardStyles.card, { backgroundColor: themeColors.white as string }]}>
@@ -60,7 +60,7 @@ const ExpensesCards = ({ item }: { item: IExpenses }) => {
         </Text>
         <Text
           style={[CardStyles.amount, { color: themeColors.primary as string }]}>
-          ${item.price.toFixed(2)}
+          {currency}{item.price.toFixed(2)}
         </Text>
         <Text
           style={[
