@@ -93,7 +93,6 @@ const Profile = () => {
     })
 
   };
-
   return (
     <SafeAreaView>
       <ScrollView

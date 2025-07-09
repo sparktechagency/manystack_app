@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { Colors, ITheme } from '../constant/colors';
 import { useGetProfileQuery } from '../redux/Apis/userApis';
@@ -29,6 +29,8 @@ interface GlobalContextType {
   firstLoad: boolean
   setFirstLoad: React.Dispatch<React.SetStateAction<boolean>>
   showSubscription: boolean
+  currency: string
+  setCurrency: React.Dispatch<React.SetStateAction<string>>
 }
 
 interface GlobalProviderProps {
@@ -44,6 +46,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [images, setImages] = React.useState<IImage[] | []>([]);
   const [showSubscription, setShowSubscription] = useState<boolean>(true);
+  const [currency, setCurrency] = useState<string>('$');
   const themeColors = Colors.light;
   const values = {
     themeColors,
@@ -61,8 +64,15 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     userLoading,
     firstLoad,
     setFirstLoad,
-    showSubscription
+    showSubscription,
+    currency,
+    setCurrency
   };
+  useEffect(() => {
+    if (data?.data) {
+      setCurrency(data?.data?.currency)
+    }
+  }, [data])
   return (
     <GlobalContext.Provider value={values}>
       {/* <Provider store={store}> */}
