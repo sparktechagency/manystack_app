@@ -1,5 +1,5 @@
 import { useRoute } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -83,6 +83,14 @@ const InterventionCreateUpdateForm = () => {
     params?.params?.id ? await handleUpdateIntervention(formData, params?.params?.id) : await handleCreateIntervention(formData)
 
   };
+  useEffect(() => {
+    if (inputValue['category']) {
+      const category = data?.categories?.find((category: any) => category._id === inputValue['category'])
+      if (category) {
+        setInputValue({ ...inputValue, price: category?.price })
+      }
+    }
+  }, [inputValue['category']])
   return (
     <SafeAreaView>
       <ScrollView
@@ -127,6 +135,28 @@ const InterventionCreateUpdateForm = () => {
                 />
               </View>
             );
+          }
+          if (key === 'price') {
+            <View key={key} style={{}}>
+              <Text style={globalStyles.inputLabel}>
+                {t(key as TranslationKey, english)}
+              </Text>
+              <View style={{ position: 'relative' }}>
+                <TextInput
+                  editable={false}
+                  value={inputValue[key as keyof ICreateInterVention]}
+                  keyboardType={"numeric"}
+                  placeholder={t(key as TranslationKey, english)}
+                  placeholderTextColor={globalStyles.inputPlaceholder.color}
+                  style={[
+                    globalStyles.input,
+                    error[key as keyof ICreateInterVention]
+                      ? globalStyles.inputError
+                      : {},
+                  ]}
+                />
+              </View>
+            </View>
           }
           return (
             <View key={key} style={{}}>
