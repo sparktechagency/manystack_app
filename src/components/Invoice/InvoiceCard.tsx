@@ -21,7 +21,7 @@ import { CardStyles } from '../Intervention/InterventionsCards';
 
 const InvoiceCard = ({ item }: { item: IInvoice }) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
-  const { themeColors } = useGlobalContext();
+  const { themeColors, currency } = useGlobalContext();
   const { deleteInvoiceHandler, isLoading } = deleteInvoice();
   return (
     <View
@@ -90,7 +90,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
         </Text> */}
         <Text
           style={[CardStyles.amount, { color: themeColors.primary as string }]}>
-          ${item?.services?.reduce((acc, curr) => acc + curr.price, 0).toFixed(2)}
+          {currency}{item?.services?.reduce((acc, curr) => acc + curr.price, 0).toFixed(2)}
         </Text>
 
         <View style={[CardStyles.actions, { width: '30%' }]}>
