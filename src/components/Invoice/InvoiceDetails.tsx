@@ -34,7 +34,6 @@ const InvoiceDetails = () => {
   const { updateInvoiceHandler, isLoading: updateInvoiceLoading } = useUpdateInvoice()
   const { markPaidUnpaidHandler, isLoading: markPaidUnpaidLoading } = useMarkPaidUnpaid()
   const invoice = data?.invoice as IInvoice
-  console.log(user)
   return (
     <SafeAreaView
       style={{
