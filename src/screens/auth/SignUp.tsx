@@ -315,9 +315,9 @@ const SignUp = () => {
                 {/* {key.charAt(0).toUpperCase() + key.slice(1)} */}
                 {
                   t(key === 'N°SIREN'
-                    ? "siren"
-                    : key == "password"
-                      ? "password" : "confirmPassword"
+                    ? "siren" : key === "email" ? "email"
+                      : key == "password"
+                        ? "password" : "confirmPassword"
                     , english)
                 }
               </Text>
@@ -329,9 +329,9 @@ const SignUp = () => {
                     setError({ ...error, [key]: false });
                   }}
                   placeholder={`${t("enter", english)} ${t(key === 'N°SIREN'
-                    ? "siren"
-                    : key == "password"
-                      ? "password" : "confirmPassword"
+                    ? "siren" : key === "email" ? "email"
+                      : key == "password"
+                        ? "password" : "confirmPassword"
                     , english)}`}
                   secureTextEntry={
                     key === 'password'
