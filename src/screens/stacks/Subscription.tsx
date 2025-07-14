@@ -1,4 +1,5 @@
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import moment from 'moment';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -6,7 +7,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View
 } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -19,13 +19,35 @@ import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetCurrentSubscriptionQuery, useGetSubscriptionQuery } from '../../redux/Apis/subscriptionApis';
 import { ISubscription } from '../../types/DataTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
-
+interface ICurrentSubscription {
+  "success": boolean,
+  "subscription": {
+    "plan": string,
+    "isActive": boolean,
+    "isTrial": boolean,
+    "startDate": string,
+    "endDate": string
+  },
+  "plan": {
+    "trialPeriodDays": number,
+    "_id": string,
+    "name": string,
+    "price": number,
+    "validity": string,
+    "features": [
+      string
+    ],
+    "isActive": boolean,
+    "createdAt": string,
+    "updatedAt": string,
+  }
+}
 const Subscription = () => {
   const navigate = useNavigation<NavigationProp<ParamListBase>>()
   const { themeColors, width, height } = useGlobalContext();
   const [selected, setSelected] = React.useState('');
   const { data } = useGetSubscriptionQuery(undefined)
-  const { data: currentSubscription } = useGetCurrentSubscriptionQuery(undefined)
+  const { data: currentSubscription } = useGetCurrentSubscriptionQuery(undefined) as { data: ICurrentSubscription }
   const { handleSubscriptionPayment, isLoading } = useSubscriptionPayment()
   const { handleCancelSubscription } = useCancelSubscription()
   const handlePayment = () => {
@@ -52,7 +74,7 @@ const Subscription = () => {
       >
         <Text style={[globalStyles.inputLabel]}>Current Plan</Text>
         {
-          !currentSubscription?.data ? <Text style={{ textAlign: 'center' }}>No Subscription Found</Text>
+          !currentSubscription?.subscription?.isActive ? <Text style={{ textAlign: 'center' }}>No Subscription Found</Text>
             : <View
               style={{
                 width: '100%',
@@ -74,7 +96,7 @@ const Subscription = () => {
                     fontWeight: '600',
                     color: themeColors.primary as string,
                   }}>
-                  Basic Plan
+                  {currentSubscription?.plan?.name}
                 </Text>
                 <Text
                   style={{
@@ -85,20 +107,20 @@ const Subscription = () => {
                     paddingHorizontal: 10,
                     borderRadius: 5,
                   }}>
-                  Active
+                  {currentSubscription?.subscription?.isActive ? 'Active' : 'Inactive'}
                 </Text>
               </View>
               <FlexTextOpacity
                 text1="Purchase Date :"
-                text2="25 Aug,2024"
+                text2={moment(currentSubscription?.subscription?.startDate).format('DD MMM,YYYY')}
                 color={hexToRGBA(themeColors.black as string, 0.6)}
               />
               <FlexTextOpacity
                 text1="Expiration Date :"
-                text2="25 Nov,2024"
+                text2={moment(currentSubscription?.subscription?.endDate).format('DD MMM,YYYY')}
                 color={hexToRGBA(themeColors.black as string, 0.6)}
               />
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={handleCancelSubscription}
                 style={{
                   flexDirection: 'row',
@@ -116,7 +138,7 @@ const Subscription = () => {
                   }}>
                   Cancel Subscription
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
         }
 

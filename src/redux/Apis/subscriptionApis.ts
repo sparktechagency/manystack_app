@@ -37,7 +37,7 @@ const subscriptionApi = baseApi.injectEndpoints({
     }),
     getCurrentSubscription: builder.query({
       query: () => ({
-        url: 'api/stripe/user-subscription',
+        url: 'api/user/subscription',
         method: 'GET',
       }),
       providesTags: ['subscription'],
