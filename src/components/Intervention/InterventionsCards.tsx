@@ -1,4 +1,8 @@
-import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import {
@@ -12,38 +16,42 @@ import {
   View,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { DeleteIcon, Edit, eye, logo } from '../../constant/images';
-import { updateIntervention, useDeleteIntervention } from '../../hooks/interventionApiCall';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { IIntervention } from '../../types/DataTypes';
-import { generateImageUrl } from '../../utils/baseUrls';
-import { hexToRGBA } from '../../utils/hexToRGBA';
+import {DeleteIcon, Edit, eye, logo} from '../../constant/images';
+import {
+  updateIntervention,
+  useDeleteIntervention,
+} from '../../hooks/interventionApiCall';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {IIntervention} from '../../types/DataTypes';
+import {generateImageUrl} from '../../utils/baseUrls';
+import {hexToRGBA} from '../../utils/hexToRGBA';
 
-const InterventionsCards = ({ item }: { item: IIntervention }) => {
+const InterventionsCards = ({item}: {item: IIntervention}) => {
   // const { handleDeleteIntervention } = deleteIntervention()
-  const { handleUpdateIntervention, isLoading: updating } = updateIntervention()
-  const { handleDeleteIntervention, isLoading: deleting } = useDeleteIntervention()
+  const {handleUpdateIntervention, isLoading: updating} = updateIntervention();
+  const {handleDeleteIntervention, isLoading: deleting} =
+    useDeleteIntervention();
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
-  const { themeColors, currency } = useGlobalContext();
+  const {themeColors, currency} = useGlobalContext();
   const toggleSwitch = async () => {
-    const data = new FormData()
-    data.append('status', item.status === 'PAID' ? 'UNPAID' : 'PAID')
-    const res = await handleUpdateIntervention(data,
-      item._id,
-      false
-    )
+    const data = new FormData();
+    data.append('status', item.status === 'PAID' ? 'UNPAID' : 'PAID');
+    const res = await handleUpdateIntervention(data, item._id, false);
     if (res) {
       Toast.show({
         type: 'success',
         text1: item.status === 'PAID' ? 'Unpaid' : 'Paid',
-        text2: item.status === 'PAID' ? 'Intervention marked as Unpaid.' : 'Intervention marked as Paid.',
-      })
+        text2:
+          item.status === 'PAID'
+            ? 'Intervention marked as Unpaid.'
+            : 'Intervention marked as Paid.',
+      });
     }
   };
 
   return (
     <View
-      style={[CardStyles.card, { backgroundColor: themeColors.white as string }]}>
+      style={[CardStyles.card, {backgroundColor: themeColors.white as string}]}>
       <View>
         <View style={CardStyles.headerRow}>
           <Text
@@ -96,8 +104,9 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
           {item?.category?.name}
         </Text>
         <Text
-          style={[CardStyles.amount, { color: themeColors.primary as string }]}>
-          {currency}{item.price.toFixed(2)}
+          style={[CardStyles.amount, {color: themeColors.primary as string}]}>
+          {currency}
+          {item.price.toFixed(2)}
         </Text>
         <Text
           style={[
@@ -114,7 +123,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('InterventionDetails', {
-                params: { id: item._id },
+                params: {id: item._id},
               });
             }}>
             <Image
@@ -130,7 +139,14 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('UpdateIntervention', {
-                params: { id: item._id, category: item.category._id, price: item.price?.toString(), note: item.note, status: item.status, interventionId: item.interventionId },
+                params: {
+                  id: item._id,
+                  category: item.category._id,
+                  price: item.price?.toString(),
+                  note: item.note,
+                  status: item.status,
+                  interventionId: item.interventionId,
+                },
               });
             }}>
             <Image
@@ -144,8 +160,13 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleDeleteIntervention(item._id)}>
-            {
-              deleting ? <ActivityIndicator size="small" color={themeColors.primary as string} /> : <Image
+            {deleting ? (
+              <ActivityIndicator
+                size="small"
+                color={themeColors.primary as string}
+              />
+            ) : (
+              <Image
                 source={DeleteIcon as ImageSourcePropType}
                 style={[
                   CardStyles.icon,
@@ -154,10 +175,15 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
                   },
                 ]}
               />
-            }
+            )}
           </TouchableOpacity>
-          {
-            updating ? <ActivityIndicator size="small" color={themeColors.primary as string} /> : <Switch
+          {updating ? (
+            <ActivityIndicator
+              size="small"
+              color={themeColors.primary as string}
+            />
+          ) : (
+            <Switch
               trackColor={{
                 false: hexToRGBA(themeColors.black as string, 0.2),
                 true: hexToRGBA(themeColors.primary as string, 0.2),
@@ -171,8 +197,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
               onValueChange={toggleSwitch}
               value={item.status === 'PAID'}
             />
-          }
-
+          )}
         </View>
       </View>
       <View
@@ -185,7 +210,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
         {item.images && item.images.length > 0 ? (
           <>
             <Image
-              source={{ uri: generateImageUrl(item?.images[0]?.url as string) }}
+              source={{uri: generateImageUrl(item?.images[0]?.url as string)}}
               style={CardStyles.image}
               resizeMode="cover"
             />

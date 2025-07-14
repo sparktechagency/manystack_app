@@ -8,14 +8,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Close, Plus } from '../../constant/images';
-import { globalStyles } from '../../constant/styles';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
-import { IInvoiceService } from '../../types/loginType';
-import { generateRandom } from '../../utils/generateRandom';
-import { hexToRGBA } from '../../utils/hexToRGBA';
-import { t } from '../../utils/translate';
+import {Close, Plus} from '../../constant/images';
+import {globalStyles} from '../../constant/styles';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {useGetCategoriesQuery} from '../../redux/Apis/categoryApis';
+import {IInvoiceService} from '../../types/loginType';
+import {generateRandom} from '../../utils/generateRandom';
+import {hexToRGBA} from '../../utils/hexToRGBA';
+import {t} from '../../utils/translate';
 
 const InvoiceService = ({
   service,
@@ -28,18 +28,20 @@ const InvoiceService = ({
   error: any;
   setError: (arg0: any) => void;
 }) => {
-  const { width, themeColors, english } = useGlobalContext();
-  const { data } = useGetCategoriesQuery(undefined)
-  console.log(service)
+  const {width, themeColors, english} = useGlobalContext();
+  const {data} = useGetCategoriesQuery(undefined);
+  console.log(service);
   return (
     <View>
-      <Text style={globalStyles.inputLabel}>{t('addServiceDetails', english)}</Text>
+      <Text style={globalStyles.inputLabel}>
+        {t('addServiceDetails', english)}
+      </Text>
       <Text style={globalStyles.inputLabel}>{t('services', english)}</Text>
       {service.map((item, index) => (
         <View key={item.id}>
           <View
             style={{
-              width: "100%",
+              width: '100%',
               // width: (width - 120) / 2.5,
             }}>
             <TextInput
@@ -80,7 +82,7 @@ const InvoiceService = ({
                 globalStyles.input,
                 error?.streetName ? globalStyles.inputError : {},
                 // { maxWidth: (width - 120) / 3.5 },
-                { maxWidth: (width - 100) / 2 },
+                {maxWidth: (width - 100) / 2},
               ]}
               keyboardType="numeric"
               placeholder={t('quantity', english)}
@@ -101,7 +103,7 @@ const InvoiceService = ({
               style={[
                 globalStyles.input,
                 error?.postalCode ? globalStyles.inputError : {},
-                { maxWidth: (width - 120) / 2 },
+                {maxWidth: (width - 120) / 2},
                 // { maxWidth: (width - 120) / 4 },
               ]}
               placeholder={t('price', english)}
@@ -121,11 +123,19 @@ const InvoiceService = ({
                 onPress={() => {
                   setService([
                     ...service,
-                    { id: generateRandom(), service: '', quantity: '', price: '' },
+                    {
+                      id: generateRandom(),
+                      service: '',
+                      quantity: '',
+                      price: '',
+                    },
                   ]);
                 }}
                 style={{
-                  backgroundColor: hexToRGBA(themeColors.primary as string, 0.1),
+                  backgroundColor: hexToRGBA(
+                    themeColors.primary as string,
+                    0.1,
+                  ),
                   padding: 6,
                   borderRadius: 6,
                 }}>
@@ -161,7 +171,6 @@ const InvoiceService = ({
               )}
             </View>
           </View>
-
         </View>
       ))}
     </View>

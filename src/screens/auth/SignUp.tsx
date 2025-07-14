@@ -1,5 +1,5 @@
-import { Link, NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import {Link, NavigationProp, useNavigation} from '@react-navigation/native';
+import React, {useCallback} from 'react';
 import CountryPicker from 'react-native-country-picker-modal';
 
 import {
@@ -13,30 +13,30 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {Dropdown} from 'react-native-element-dropdown';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import Address from '../../components/sheard/Address';
 import GradientButton from '../../components/sheard/GradientButton';
 import SingleSelectDropDown from '../../components/sheard/SingleSelectDropDown';
-import { Colors } from '../../constant/colors';
-import { currencyData, genderData } from '../../constant/data';
-import { eye, eyeSlash } from '../../constant/images';
-import { globalStyles } from '../../constant/styles';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { useRegisterMutation } from '../../redux/Apis/authApis';
-import { IAddress, ILogin, ISignUp } from '../../types/loginType';
-import { StackTypes } from '../../types/ScreenPropsTypes';
-import { hexToRGBA } from '../../utils/hexToRGBA';
-import { t } from '../../utils/translate';
+import {Colors} from '../../constant/colors';
+import {currencyData, genderData} from '../../constant/data';
+import {eye, eyeSlash} from '../../constant/images';
+import {globalStyles} from '../../constant/styles';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {useRegisterMutation} from '../../redux/Apis/authApis';
+import {IAddress, ILogin, ISignUp} from '../../types/loginType';
+import {StackTypes} from '../../types/ScreenPropsTypes';
+import {hexToRGBA} from '../../utils/hexToRGBA';
+import {t} from '../../utils/translate';
 const SignUp = () => {
-  const navigation = useNavigation<NavigationProp<StackTypes>>()
+  const navigation = useNavigation<NavigationProp<StackTypes>>();
   const [passShow, setPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
   const [countryCode, setCountryCode] = React.useState('BD');
   const [callingCode, setCallingCode] = React.useState('880');
-  const { width } = Dimensions.get('window');
-  const { english } = useGlobalContext();
+  const {width} = Dimensions.get('window');
+  const {english} = useGlobalContext();
   const [address, setAddress] = React.useState<IAddress>({
     streetName: '',
     city: '',
@@ -76,7 +76,7 @@ const SignUp = () => {
     confirmPassword: '',
   });
   //rtk
-  const [register, { isLoading }] = useRegisterMutation()
+  const [register, {isLoading}] = useRegisterMutation();
 
   const submitHandler = useCallback(() => {
     let isInvalid = false;
@@ -88,55 +88,55 @@ const SignUp = () => {
     Object.keys(combinedInputValue).forEach(key => {
       if (combinedInputValue[key as keyof ISignUp] === '') {
         isInvalid = true;
-        setError(prev => ({ ...prev, [key]: true }));
+        setError(prev => ({...prev, [key]: true}));
       } else {
-        setError(prev => ({ ...prev, [key]: false }));
+        setError(prev => ({...prev, [key]: false}));
       }
     });
     if (isInvalid) {
       Toast.show({
         type: 'error',
-        text1: "Please fill all fields",
-        text2: "All fields are required",
+        text1: 'Please fill all fields',
+        text2: 'All fields are required',
       });
       return;
     }
     const data = {
-      "firstName": combinedInputValue['first name'],
-      "lastName": combinedInputValue['last name'],
-      "email": combinedInputValue['email'],
-      "contact": `${callingCode}${combinedInputValue['contact']}`,
-      "nSiren": combinedInputValue['N°SIREN'],
-      "address": {
-        "streetNo": combinedInputValue['streetNo'],
-        "streetName": combinedInputValue['streetName'],
-        "city": combinedInputValue['city'],
-        "postalCode": combinedInputValue['postalCode'],
-        "country": combinedInputValue['country']
+      firstName: combinedInputValue['first name'],
+      lastName: combinedInputValue['last name'],
+      email: combinedInputValue['email'],
+      contact: `${callingCode}${combinedInputValue['contact']}`,
+      nSiren: combinedInputValue['N°SIREN'],
+      address: {
+        streetNo: combinedInputValue['streetNo'],
+        streetName: combinedInputValue['streetName'],
+        city: combinedInputValue['city'],
+        postalCode: combinedInputValue['postalCode'],
+        country: combinedInputValue['country'],
       },
-      "gender": combinedInputValue['gender'],
-      "password": combinedInputValue['password'],
-      "currency": combinedInputValue['currency']
-    }
+      gender: combinedInputValue['gender'],
+      password: combinedInputValue['password'],
+      currency: combinedInputValue['currency'],
+    };
     register(data)
       .unwrap()
-      .then((res) => {
-        navigation.navigate('Otp', { params: { from: "signup", email: combinedInputValue['email'] } });
+      .then(res => {
+        navigation.navigate('Otp', {
+          params: {from: 'signup', email: combinedInputValue['email']},
+        });
         Toast.show({
           type: 'success',
-          text1: "registered successfully",
+          text1: 'registered successfully',
           text2: res.message,
         });
-      }
-      )
-      .catch((err) => {
+      })
+      .catch(err => {
         Toast.show({
           type: 'error',
-          text1: "registration failed",
-          text2: err.data?.message || "Something went wrong",
+          text1: 'registration failed',
+          text2: err.data?.message || 'Something went wrong',
         });
-      }
-      );
+      });
   }, [register, inputValue, address]);
 
   return (
@@ -160,16 +160,21 @@ const SignUp = () => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{ flex: 1, marginRight: 10 }}>
-                  <Text style={globalStyles.inputLabel}>{t("firstName", english)}</Text>
-                  <View style={{ position: 'relative' }}>
+                <View style={{flex: 1, marginRight: 10}}>
+                  <Text style={globalStyles.inputLabel}>
+                    {t('firstName', english)}
+                  </Text>
+                  <View style={{position: 'relative'}}>
                     <TextInput
                       value={inputValue['first name']}
                       onChangeText={text => {
-                        setInputValue({ ...inputValue, ['first name']: text });
-                        setError({ ...error, ['first name']: false });
+                        setInputValue({...inputValue, ['first name']: text});
+                        setError({...error, ['first name']: false});
                       }}
-                      placeholder={`${t("enter", english)} ${t("firstName", english)}`}
+                      placeholder={`${t('enter', english)} ${t(
+                        'firstName',
+                        english,
+                      )}`}
                       placeholderTextColor={globalStyles.inputPlaceholder.color}
                       style={[
                         globalStyles.input,
@@ -179,17 +184,21 @@ const SignUp = () => {
                   </View>
                 </View>
 
-                <View style={{ flex: 1, marginLeft: 10 }}>
-                  <Text style={globalStyles.inputLabel}>{t("lastName", english)}</Text>
-                  <View style={{ position: 'relative' }}>
+                <View style={{flex: 1, marginLeft: 10}}>
+                  <Text style={globalStyles.inputLabel}>
+                    {t('lastName', english)}
+                  </Text>
+                  <View style={{position: 'relative'}}>
                     <TextInput
-
                       value={inputValue['last name']}
                       onChangeText={text => {
-                        setInputValue({ ...inputValue, ['last name']: text });
-                        setError({ ...error, ['last name']: false });
+                        setInputValue({...inputValue, ['last name']: text});
+                        setError({...error, ['last name']: false});
                       }}
-                      placeholder={`${t("enter", english)} ${t("lastName", english)}`.slice(0, 20)}
+                      placeholder={`${t('enter', english)} ${t(
+                        'lastName',
+                        english,
+                      )}`.slice(0, 20)}
                       placeholderTextColor={globalStyles.inputPlaceholder.color}
                       style={[
                         globalStyles.input,
@@ -205,7 +214,9 @@ const SignUp = () => {
           if (key === 'gender') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>{t("gender", english)}</Text>
+                <Text style={globalStyles.inputLabel}>
+                  {t('gender', english)}
+                </Text>
                 <Dropdown
                   style={[
                     globalStyles.input,
@@ -214,17 +225,17 @@ const SignUp = () => {
                   data={genderData}
                   labelField="label"
                   valueField="value"
-                  placeholder={t("selectGender", english)}
+                  placeholder={t('selectGender', english)}
                   value={inputValue.gender}
                   onChange={item => {
-                    setInputValue({ ...inputValue, gender: item.value });
-                    setError({ ...error, gender: false });
+                    setInputValue({...inputValue, gender: item.value});
+                    setError({...error, gender: false});
                   }}
                   placeholderStyle={{
                     color: globalStyles.inputPlaceholder.color,
                   }}
-                  selectedTextStyle={{ color: '#000' }}
-                  containerStyle={{ borderRadius: 5 }}
+                  selectedTextStyle={{color: '#000'}}
+                  containerStyle={{borderRadius: 5}}
                   dropdownPosition="auto"
                 />
               </View>
@@ -233,8 +244,10 @@ const SignUp = () => {
           if (key === 'contact') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>{t("contact", english)}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={globalStyles.inputLabel}>
+                  {t('contact', english)}
+                </Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <CountryPicker
                     countryCode={countryCode as any}
                     withFlag
@@ -260,10 +273,13 @@ const SignUp = () => {
                   <TextInput
                     value={inputValue.contact}
                     onChangeText={text => {
-                      setInputValue({ ...inputValue, contact: text });
-                      setError({ ...error, contact: false });
+                      setInputValue({...inputValue, contact: text});
+                      setError({...error, contact: false});
                     }}
-                    placeholder={`${t("enter", english)} ${t("contact", english)}`}
+                    placeholder={`${t('enter', english)} ${t(
+                      'contact',
+                      english,
+                    )}`}
                     keyboardType="phone-pad"
                     placeholderTextColor={globalStyles.inputPlaceholder.color}
                     style={[
@@ -295,7 +311,9 @@ const SignUp = () => {
           if (key === 'currency') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>{english ? "Currency" : "Devise"}</Text>
+                <Text style={globalStyles.inputLabel}>
+                  {english ? 'Currency' : 'Devise'}
+                </Text>
                 <SingleSelectDropDown
                   error={error}
                   data={currencyData}
@@ -304,7 +322,7 @@ const SignUp = () => {
                   inputValue={inputValue}
                   setInputValue={setInputValue}
                   setError={setError}
-                  placeholder={t("selectCurrency", english)}
+                  placeholder={t('selectCurrency', english)}
                 />
               </View>
             );
@@ -313,32 +331,40 @@ const SignUp = () => {
             <View key={key} style={{}}>
               <Text style={globalStyles.inputLabel}>
                 {/* {key.charAt(0).toUpperCase() + key.slice(1)} */}
-                {
-                  t(key === 'N°SIREN'
-                    ? "siren" : key === "email" ? "email"
-                      : key == "password"
-                        ? "password" : "confirmPassword"
-                    , english)
-                }
+                {t(
+                  key === 'N°SIREN'
+                    ? 'siren'
+                    : key === 'email'
+                    ? 'email'
+                    : key == 'password'
+                    ? 'password'
+                    : 'confirmPassword',
+                  english,
+                )}
               </Text>
-              <View style={{ position: 'relative' }}>
+              <View style={{position: 'relative'}}>
                 <TextInput
                   value={inputValue[key as keyof ILogin]}
                   onChangeText={text => {
-                    setInputValue({ ...inputValue, [key]: text });
-                    setError({ ...error, [key]: false });
+                    setInputValue({...inputValue, [key]: text});
+                    setError({...error, [key]: false});
                   }}
-                  placeholder={`${t("enter", english)} ${t(key === 'N°SIREN'
-                    ? "siren" : key === "email" ? "email"
-                      : key == "password"
-                        ? "password" : "confirmPassword"
-                    , english)}`}
+                  placeholder={`${t('enter', english)} ${t(
+                    key === 'N°SIREN'
+                      ? 'siren'
+                      : key === 'email'
+                      ? 'email'
+                      : key == 'password'
+                      ? 'password'
+                      : 'confirmPassword',
+                    english,
+                  )}`}
                   secureTextEntry={
                     key === 'password'
                       ? passShow
                       : key === 'confirmPassword'
-                        ? cPassShow
-                        : false
+                      ? cPassShow
+                      : false
                   }
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
@@ -348,7 +374,7 @@ const SignUp = () => {
                 />
                 {(key === 'password' || key === 'confirmPassword') && (
                   <TouchableOpacity
-                    style={{ position: 'absolute', right: 10, top: 15 }}
+                    style={{position: 'absolute', right: 10, top: 15}}
                     onPress={() => {
                       if (key === 'password') {
                         setPassShow(!passShow);
@@ -363,10 +389,10 @@ const SignUp = () => {
                             ? (eye as ImageSourcePropType)
                             : (eyeSlash as ImageSourcePropType)
                           : cPassShow
-                            ? (eye as ImageSourcePropType)
-                            : (eyeSlash as ImageSourcePropType)
+                          ? (eye as ImageSourcePropType)
+                          : (eyeSlash as ImageSourcePropType)
                       }
-                      style={{ width: 20, height: 20 }}
+                      style={{width: 20, height: 20}}
                     />
                   </TouchableOpacity>
                 )}
@@ -375,27 +401,30 @@ const SignUp = () => {
           );
         })}
 
-        <View style={{ paddingHorizontal: 25 }}>
+        <View style={{paddingHorizontal: 25}}>
           <GradientButton handler={() => submitHandler()}>
-            {
-              isLoading ? <ActivityIndicator size="large" color="#FFFFFF" /> : <Text
+            {isLoading ? (
+              <ActivityIndicator size="large" color="#FFFFFF" />
+            ) : (
+              <Text
                 style={{
                   color: 'white',
                   textAlign: 'center',
                   fontWeight: '700',
                   fontSize: 18,
                 }}>
-                {t("signUp", english)}
+                {t('signUp', english)}
               </Text>
-            }
-
+            )}
           </GradientButton>
         </View>
 
-        <View style={[globalStyles.flex, { marginTop: 20, marginBottom: 120 }]}>
-          <Text style={globalStyles.text}>{t("alreadyAccount", english)} </Text>
+        <View style={[globalStyles.flex, {marginTop: 20, marginBottom: 120}]}>
+          <Text style={globalStyles.text}>{t('alreadyAccount', english)} </Text>
           <Link screen="Login" params={{}}>
-            <Text style={[{ marginLeft: 5 }, globalStyles.text]}>{t("login", english)}</Text>
+            <Text style={[{marginLeft: 5}, globalStyles.text]}>
+              {t('login', english)}
+            </Text>
           </Link>
         </View>
       </ScrollView>

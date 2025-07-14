@@ -1,7 +1,7 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -11,17 +11,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Calender } from '../../constant/images';
-import { globalStyles } from '../../constant/styles';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { StackTypes } from '../../types/ScreenPropsTypes';
-import { hexToRGBA } from '../../utils/hexToRGBA';
-import { t } from '../../utils/translate';
+import {Calender} from '../../constant/images';
+import {globalStyles} from '../../constant/styles';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {StackTypes} from '../../types/ScreenPropsTypes';
+import {hexToRGBA} from '../../utils/hexToRGBA';
+import {t} from '../../utils/translate';
 import GradientButton from '../sheard/GradientButton';
 
-const FilterByDate = ({ title, fromTOHandler }: { title?: string, fromTOHandler: (arg: string, arg0: string) => void }) => {
+const FilterByDate = ({
+  title,
+  fromTOHandler,
+}: {
+  title?: string;
+  fromTOHandler: (arg: string, arg0: string) => void;
+}) => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
-  const { themeColors, english } = useGlobalContext();
+  const {themeColors, english} = useGlobalContext();
 
   const [fromDate, setFromDate] = useState<Date | undefined>();
   const [toDate, setToDate] = useState<Date | undefined>();
@@ -40,9 +46,12 @@ const FilterByDate = ({ title, fromTOHandler }: { title?: string, fromTOHandler:
 
   useEffect(() => {
     if (fromDate && toDate) {
-      fromTOHandler(moment(fromDate).format('YYYY-MM-DD'), moment(toDate).format('YYYY-MM-DD'));
+      fromTOHandler(
+        moment(fromDate).format('YYYY-MM-DD'),
+        moment(toDate).format('YYYY-MM-DD'),
+      );
     }
-  }, [fromDate, toDate])
+  }, [fromDate, toDate]);
 
   const formatDate = (date?: Date) => {
     if (!date) return '00/00/000';
@@ -65,7 +74,7 @@ const FilterByDate = ({ title, fromTOHandler }: { title?: string, fromTOHandler:
 
   return (
     <View>
-      <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 6 }}>
+      <Text style={{fontSize: 16, fontWeight: '600', marginBottom: 6}}>
         {t('filterByDate', english)}
       </Text>
 
@@ -105,7 +114,10 @@ const FilterByDate = ({ title, fromTOHandler }: { title?: string, fromTOHandler:
                 ]}>
                 {formatDate(fromDate)}
               </Text>
-              <Image source={Calender as ImageSourcePropType} style={{ height: 20, width: 20 }} />
+              <Image
+                source={Calender as ImageSourcePropType}
+                style={{height: 20, width: 20}}
+              />
             </View>
           </TouchableOpacity>
           {showFromPicker && (
@@ -154,7 +166,10 @@ const FilterByDate = ({ title, fromTOHandler }: { title?: string, fromTOHandler:
                 ]}>
                 {formatDate(toDate)}
               </Text>
-              <Image source={Calender as ImageSourcePropType} style={{ height: 20, width: 20 }} />
+              <Image
+                source={Calender as ImageSourcePropType}
+                style={{height: 20, width: 20}}
+              />
             </View>
           </TouchableOpacity>
           {showToPicker && (
@@ -178,7 +193,7 @@ const FilterByDate = ({ title, fromTOHandler }: { title?: string, fromTOHandler:
             marginTop: 16,
           },
         ]}>
-        <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 6 }}>
+        <Text style={{fontSize: 16, fontWeight: '600', marginBottom: 6}}>
           {t(getAllTitleKey(), english)}
         </Text>
         <GradientButton

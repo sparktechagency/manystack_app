@@ -1,16 +1,25 @@
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { Dimensions, Image, ImageSourcePropType, Text, View } from 'react-native';
 import { Colors, ITheme } from '../constant/colors';
+import { Screen } from '../constant/images';
 import { useGetProfileQuery } from '../redux/Apis/userApis';
+import Subscription from '../screens/stacks/Subscription';
 import { IUserProfile } from '../types/DataTypes';
+import { t } from '../utils/translate';
 // import { Provider } from 'react-redux';
 // import { Colors, ITheme } from '../constant/colors';
 // import { store } from '../Redux/store';
 export interface IImage {
-  uri: string,
-  name: string,
-  type: string,
-  mimeType: string,
+  uri: string;
+  name: string;
+  type: string;
+  mimeType: string;
 }
 interface GlobalContextType {
   themeColors: ITheme;
@@ -24,13 +33,11 @@ interface GlobalContextType {
   width: number;
   english: boolean;
   setEnglish: React.Dispatch<React.SetStateAction<boolean>>;
-  user: IUserProfile | null
-  userLoading: boolean
-  firstLoad: boolean
-  setFirstLoad: React.Dispatch<React.SetStateAction<boolean>>
-  showSubscription: boolean
-  currency: string
-  setCurrency: React.Dispatch<React.SetStateAction<string>>
+  user: IUserProfile | null;
+  userLoading: boolean;
+  showSubscription: boolean;
+  currency: string;
+  setCurrency: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface GlobalProviderProps {
@@ -38,8 +45,11 @@ interface GlobalProviderProps {
 }
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
-  const [firstLoad, setFirstLoad] = useState<boolean>(true);
-  const { data, isLoading: userLoading } = useGetProfileQuery(undefined)
+  const {
+    data,
+    isLoading: userLoading,
+    isFetching,
+  } = useGetProfileQuery(undefined);
   const { width, height } = Dimensions.get('window');
   const [search, setSearch] = useState<string>('');
   const [english, setEnglish] = useState<boolean>(false);
@@ -61,22 +71,55 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     english,
     setEnglish,
     user: data?.data,
-    userLoading,
-    firstLoad,
-    setFirstLoad,
+    userLoading: userLoading || isFetching,
     showSubscription,
     currency,
-    setCurrency
+    setCurrency,
   };
+
   useEffect(() => {
     if (data?.data) {
-      setCurrency(data?.data?.currency)
+      setCurrency(data?.data?.currency);
     }
-  }, [data])
+  }, [data]);
+
+  if (isFetching || userLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          height,
+          width,
+          backgroundColor: themeColors.white as string,
+        }}>
+        {/* <ActivityIndicator size="large" color={themeColors.primary as string} /> */}
+        <Image
+          source={Screen as ImageSourcePropType}
+          style={{ width: width, height: height }}
+        />
+      </View>
+    );
+  }
+
   return (
     <GlobalContext.Provider value={values}>
       {/* <Provider store={store}> */}
-      {children}
+      {!data?.data?.subscription?.isActive && data?.data?._id ? (
+        <View
+          style={{
+            paddingTop: 20,
+            height,
+            width,
+            backgroundColor: themeColors.white as string,
+          }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: themeColors.black as string, textAlign: 'center' }}>{t('subscription', english)}</Text>
+          <Subscription />
+        </View>
+      ) : (
+        children
+      )}
       {/* </Provider> */}
     </GlobalContext.Provider>
   );

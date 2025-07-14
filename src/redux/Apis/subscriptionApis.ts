@@ -1,7 +1,7 @@
-import { baseApi } from '../baseApi';
+import {baseApi} from '../baseApi';
 
 const subscriptionApi = baseApi.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getSubscription: builder.query({
       query: () => ({
         url: 'api/dashboard/subscription/get-all',
@@ -9,27 +9,27 @@ const subscriptionApi = baseApi.injectEndpoints({
       }),
     }),
     createSubscription: builder.mutation({
-      query: (data) => ({
+      query: data => ({
         url: 'api/subscription/create',
         method: 'POST',
         body: data,
       }),
     }),
     updateSubscription: builder.mutation({
-      query: ({ data, id }) => ({
+      query: ({data, id}) => ({
         url: `api/subscription/update/${id}`,
         method: 'PUT',
         body: data,
       }),
     }),
     deleteSubscription: builder.mutation({
-      query: (id) => ({
+      query: id => ({
         url: `api/subscription/delete/${id}`,
         method: 'DELETE',
       }),
     }),
     subscriptionPayment: builder.mutation({
-      query: (data) => ({
+      query: data => ({
         url: '/api/stripe/create-checkout-session',
         method: 'POST',
         body: data,
@@ -49,8 +49,8 @@ const subscriptionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['subscription'],
     }),
-  })
-})
+  }),
+});
 
 export const {
   useGetSubscriptionQuery,
@@ -60,4 +60,4 @@ export const {
   useSubscriptionPaymentMutation,
   useGetCurrentSubscriptionQuery,
   useCancelSubscriptionMutation,
-} = subscriptionApi
+} = subscriptionApi;

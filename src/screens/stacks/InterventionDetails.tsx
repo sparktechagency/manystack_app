@@ -1,19 +1,23 @@
-import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import FlexTextOpacity from '../../components/InterventionDetails/FlexTextOpacity';
 import ImageCard from '../../components/InterventionDetails/ImageCard';
 import GradientButton from '../../components/sheard/GradientButton';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { useGetInterventionByIdQuery } from '../../redux/Apis/interventionApis';
-import { StackTypes } from '../../types/ScreenPropsTypes';
-import { downloadButton } from '../../utils/DownloadPdf';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {useGetInterventionByIdQuery} from '../../redux/Apis/interventionApis';
+import {StackTypes} from '../../types/ScreenPropsTypes';
+import {downloadButton} from '../../utils/DownloadPdf';
 
 const InterventionDetails = () => {
-  const { width, height, themeColors, currency } = useGlobalContext();
-  const navigation = useNavigation<NavigationProp<StackTypes>>()
-  const { params }: any = useRoute()
-  const { data } = useGetInterventionByIdQuery(params?.params?.id)
+  const {width, height, themeColors, currency} = useGlobalContext();
+  const navigation = useNavigation<NavigationProp<StackTypes>>();
+  const {params}: any = useRoute();
+  const {data} = useGetInterventionByIdQuery(params?.params?.id);
   return (
     <View
       style={{
@@ -30,8 +34,14 @@ const InterventionDetails = () => {
         {data?.intervention?.interventionId}
       </Text>
 
-      <FlexTextOpacity text1="Date :" text2={data?.intervention?.createdAt?.split('T')[0]} />
-      <FlexTextOpacity text1="Category :" text2={data?.intervention?.category?.name} />
+      <FlexTextOpacity
+        text1="Date :"
+        text2={data?.intervention?.createdAt?.split('T')[0]}
+      />
+      <FlexTextOpacity
+        text1="Category :"
+        text2={data?.intervention?.category?.name}
+      />
       <FlexTextOpacity
         text1="Price :"
         text2={`${currency}${data?.intervention?.price}`}
@@ -42,7 +52,7 @@ const InterventionDetails = () => {
         data={data?.intervention?.images ?? []}
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <ImageCard key={item} item={item} id={data?.intervention?._id} />
         )}
         showsVerticalScrollIndicator={false}
@@ -63,9 +73,13 @@ const InterventionDetails = () => {
           paddingVertical: 16,
           // backgroundColor: hexToRGBA(themeColors.white as string, 0.9),
         }}>
-        <GradientButton handler={() => {
-          downloadButton(`api/intervention/download-pdf/${data?.intervention?._id}`, "Intervention")
-        }}>
+        <GradientButton
+          handler={() => {
+            downloadButton(
+              `api/intervention/download-pdf/${data?.intervention?._id}`,
+              'Intervention',
+            );
+          }}>
           <Text
             style={{
               color: 'white',

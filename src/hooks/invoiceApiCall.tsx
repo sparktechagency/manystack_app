@@ -1,88 +1,109 @@
-import Toast from 'react-native-toast-message'
-import { useCreateInvoiceMutation, useDeleteInvoiceMutation, useMarkInvoiceAsPaidMutation, useUpdateInvoiceMutation } from '../redux/Apis/invoiceApis'
+import Toast from 'react-native-toast-message';
+import {
+  useCreateInvoiceMutation,
+  useDeleteInvoiceMutation,
+  useMarkInvoiceAsPaidMutation,
+  useUpdateInvoiceMutation,
+} from '../redux/Apis/invoiceApis';
 
 export const useCreateInvoice = () => {
-  const [createInvoice, { isLoading }] = useCreateInvoiceMutation()
+  const [createInvoice, {isLoading}] = useCreateInvoiceMutation();
   const createInvoiceHandler = (data: any, handler?: () => void) => {
-    createInvoice(data).unwrap().then((res) => {
-      console.log(res)
-      Toast.show({
-        type: 'success',
-        text1: 'Invoice created',
-        text2: res?.message || 'Invoice created successfully.',
+    createInvoice(data)
+      .unwrap()
+      .then(res => {
+        console.log(res);
+        Toast.show({
+          type: 'success',
+          text1: 'Invoice created',
+          text2: res?.message || 'Invoice created successfully.',
+        });
+        handler?.();
       })
-      handler?.()
-    }).catch((err) => {
-      Toast.show({
-        type: 'error',
-        text1: 'Failed to create invoice',
-        text2: err.data?.message || 'Failed to create invoice.',
-      })
-    })
-  }
-  return { createInvoiceHandler, isLoading }
-}
+      .catch(err => {
+        Toast.show({
+          type: 'error',
+          text1: 'Failed to create invoice',
+          text2: err.data?.message || 'Failed to create invoice.',
+        });
+      });
+  };
+  return {createInvoiceHandler, isLoading};
+};
 
 export const useUpdateInvoice = () => {
-  const [updateInvoice, { isLoading }] = useUpdateInvoiceMutation()
-  const updateInvoiceHandler = (data: any, id: string, handler?: () => void) => {
-    updateInvoice({ data, id }).unwrap().then((res) => {
-      Toast.show({
-        type: 'success',
-        text1: 'Invoice updated',
-        text2: res.data?.message || 'Invoice updated successfully.',
+  const [updateInvoice, {isLoading}] = useUpdateInvoiceMutation();
+  const updateInvoiceHandler = (
+    data: any,
+    id: string,
+    handler?: () => void,
+  ) => {
+    updateInvoice({data, id})
+      .unwrap()
+      .then(res => {
+        Toast.show({
+          type: 'success',
+          text1: 'Invoice updated',
+          text2: res.data?.message || 'Invoice updated successfully.',
+        });
+        handler?.();
       })
-      handler?.()
-    }).catch((err) => {
-      Toast.show({
-        type: 'error',
-        text1: 'Failed to update invoice',
-        text2: err.data?.message || 'Failed to update invoice.',
-      })
-    })
-  }
-  return { updateInvoiceHandler, isLoading }
-}
+      .catch(err => {
+        Toast.show({
+          type: 'error',
+          text1: 'Failed to update invoice',
+          text2: err.data?.message || 'Failed to update invoice.',
+        });
+      });
+  };
+  return {updateInvoiceHandler, isLoading};
+};
 
 export const deleteInvoice = () => {
-  const [deleteInvoice, { isLoading }] = useDeleteInvoiceMutation()
+  const [deleteInvoice, {isLoading}] = useDeleteInvoiceMutation();
   const deleteInvoiceHandler = (id: string, handler?: () => void) => {
-    deleteInvoice(id).unwrap().then((res) => {
-      Toast.show({
-        type: 'success',
-        text1: 'Invoice deleted',
-        text2: res.data?.message || 'Invoice deleted successfully.',
+    deleteInvoice(id)
+      .unwrap()
+      .then(res => {
+        Toast.show({
+          type: 'success',
+          text1: 'Invoice deleted',
+          text2: res.data?.message || 'Invoice deleted successfully.',
+        });
+        handler?.();
       })
-      handler?.()
-    }).catch((err) => {
-      Toast.show({
-        type: 'error',
-        text1: 'Failed to delete invoice',
-        text2: err.data?.message || 'Failed to delete invoice.',
-      })
-    })
-  }
-  return { deleteInvoiceHandler, isLoading }
-}
+      .catch(err => {
+        Toast.show({
+          type: 'error',
+          text1: 'Failed to delete invoice',
+          text2: err.data?.message || 'Failed to delete invoice.',
+        });
+      });
+  };
+  return {deleteInvoiceHandler, isLoading};
+};
 
 export const useMarkPaidUnpaid = () => {
-  const [markPaidUnpaid, { isLoading }] = useMarkInvoiceAsPaidMutation()
+  const [markPaidUnpaid, {isLoading}] = useMarkInvoiceAsPaidMutation();
   const markPaidUnpaidHandler = (id: string, handler?: () => void) => {
-    markPaidUnpaid(id).unwrap().then((res) => {
-      Toast.show({
-        type: 'success',
-        text1: 'Invoice marked as paid',
-        text2: res?.message || 'Invoice marked as paid successfully.',
+    markPaidUnpaid(id)
+      .unwrap()
+      .then(res => {
+        Toast.show({
+          type: 'success',
+          text1: 'Invoice marked as paid',
+          text2: res?.message || 'Invoice marked as paid successfully.',
+        });
+        handler?.();
       })
-      handler?.()
-    }).catch((err) => {
-      console.log(err)
-      Toast.show({
-        type: 'error',
-        text1: 'Failed to mark invoice as paid',
-        text2: err.data?.message || 'Failed to mark invoice as paid.',
-      })
-    })
-  }
-  return { markPaidUnpaidHandler, isLoading }
-}
+      .catch(err => {
+        console.log(err);
+        Toast.show({
+          type: 'error',
+          text1: 'Failed to mark invoice as paid',
+          text2: err.data?.message || 'Failed to mark invoice as paid.',
+        });
+      });
+  };
+  return {markPaidUnpaidHandler, isLoading};
+};

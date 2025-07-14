@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import { IImageUploadProps } from '../../types/PropsType';
+import {IImageUploadProps} from '../../types/PropsType';
 
 export const requestCameraPermission = async () => {
   if (Platform.OS !== 'android') return true;
@@ -69,10 +69,10 @@ const ImageUpload = ({
       });
       const newImage = {
         uri: result.path,
-        name: result?.filename ?? "random.jpg",
-        type: result?.mime ?? "image/jpeg",
-        mimeType: result?.mime ?? "image/jpeg",
-      }
+        name: result?.filename ?? 'random.jpg',
+        type: result?.mime ?? 'image/jpeg',
+        mimeType: result?.mime ?? 'image/jpeg',
+      };
       setImages([...images, newImage]);
     } catch (error: any) {
       if (error.code !== 'E_PICKER_CANCELLED') {

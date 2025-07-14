@@ -1,4 +1,4 @@
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -11,28 +11,28 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
-import { paymentStatus } from '../../constant/data';
-import { Camera, DeleteIcon } from '../../constant/images';
-import { globalStyles } from '../../constant/styles';
-import { TranslationKey } from '../../constant/translations';
-import { createExpenses, updateExpenses } from '../../hooks/expensesApiCall';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { ICreateExpenses } from '../../types/DataTypes';
-import { IExpensesError } from '../../types/ErrorTypes';
-import { getLocation } from '../../utils/getLocations';
-import { hexToRGBA } from '../../utils/hexToRGBA';
-import { t } from '../../utils/translate';
+import {paymentStatus} from '../../constant/data';
+import {Camera, DeleteIcon} from '../../constant/images';
+import {globalStyles} from '../../constant/styles';
+import {TranslationKey} from '../../constant/translations';
+import {createExpenses, updateExpenses} from '../../hooks/expensesApiCall';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {ICreateExpenses} from '../../types/DataTypes';
+import {IExpensesError} from '../../types/ErrorTypes';
+import {getLocation} from '../../utils/getLocations';
+import {hexToRGBA} from '../../utils/hexToRGBA';
+import {t} from '../../utils/translate';
 import GradientButton from '../sheard/GradientButton';
 import ImageUpload from '../sheard/ImageUpload';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 
 const ExpensesCreateUpdateForm = () => {
-  const { themeColors, setImages, images, english } = useGlobalContext();
-  const { params }: any = useRoute()
-  const { handleCreateExpenses, isLoading } = createExpenses()
-  const { handleUpdateExpenses, isLoading: updating } = updateExpenses()
+  const {themeColors, setImages, images, english} = useGlobalContext();
+  const {params}: any = useRoute();
+  const {handleCreateExpenses, isLoading} = createExpenses();
+  const {handleUpdateExpenses, isLoading: updating} = updateExpenses();
 
   const [error, setError] = React.useState<IExpensesError>({
     'Expense Name': false,
@@ -53,10 +53,10 @@ const ExpensesCreateUpdateForm = () => {
     let invalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof ICreateExpenses] === '') {
-        setError(prev => ({ ...prev, [key]: true }));
+        setError(prev => ({...prev, [key]: true}));
         invalid = true;
       } else {
-        setError(prev => ({ ...prev, [key]: false }));
+        setError(prev => ({...prev, [key]: false}));
       }
     });
     if (invalid) return;
@@ -66,7 +66,7 @@ const ExpensesCreateUpdateForm = () => {
         type: 'error',
         text1: 'Error',
         text2: 'Please enable location',
-      })
+      });
     }
     const formData = new FormData();
     formData.append('expenseName', inputValue['Expense Name']);
@@ -75,11 +75,13 @@ const ExpensesCreateUpdateForm = () => {
     formData.append('note', inputValue.note);
     formData.append('latitude', location?.latitude);
     formData.append('longitude', location?.longitude);
-    images.forEach((image) => {
+    images.forEach(image => {
       formData.append('images', image);
-    })
-    params?.params?.id ? await handleUpdateExpenses(formData, params?.params?.id) : await handleCreateExpenses(formData)
-  }
+    });
+    params?.params?.id
+      ? await handleUpdateExpenses(formData, params?.params?.id)
+      : await handleCreateExpenses(formData);
+  };
   return (
     <SafeAreaView>
       <ScrollView
@@ -93,7 +95,9 @@ const ExpensesCreateUpdateForm = () => {
           if (key === 'status') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>{t('status', english)}</Text>
+                <Text style={globalStyles.inputLabel}>
+                  {t('status', english)}
+                </Text>
                 <SingleSelectDropDown
                   name={key}
                   data={paymentStatus}
@@ -109,10 +113,16 @@ const ExpensesCreateUpdateForm = () => {
           if (key === 'category') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>{t('selectCategory', english)}</Text>
+                <Text style={globalStyles.inputLabel}>
+                  {t('selectCategory', english)}
+                </Text>
                 <SingleSelectDropDown
                   name={key}
-                  data={[{ label: 'Equipment', value: 'Equipment' }, { label: 'Fuel', value: 'Fuel' }, { label: 'Vehicle', value: 'Vehicle' }]}
+                  data={[
+                    {label: 'Equipment', value: 'Equipment'},
+                    {label: 'Fuel', value: 'Fuel'},
+                    {label: 'Vehicle', value: 'Vehicle'},
+                  ]}
                   value={inputValue[key as keyof ICreateExpenses]}
                   inputValue={inputValue}
                   setInputValue={setInputValue}
@@ -127,12 +137,12 @@ const ExpensesCreateUpdateForm = () => {
               <Text style={globalStyles.inputLabel}>
                 {t(key as TranslationKey, english)}
               </Text>
-              <View style={{ position: 'relative' }}>
+              <View style={{position: 'relative'}}>
                 <TextInput
                   value={inputValue[key as keyof ICreateExpenses]}
                   onChangeText={text => {
-                    setInputValue({ ...inputValue, [key]: text });
-                    setError({ ...error, [key]: false });
+                    setInputValue({...inputValue, [key]: text});
+                    setError({...error, [key]: false});
                   }}
                   keyboardType={key === 'price' ? 'numeric' : 'default'}
                   placeholder={t(key as TranslationKey, english)}
@@ -150,7 +160,9 @@ const ExpensesCreateUpdateForm = () => {
         })}
 
         <ImageUpload images={images} setImages={setImages} maxNumber={5}>
-          <Text style={[globalStyles.inputLabel]}>{t('addImage', english)}</Text>
+          <Text style={[globalStyles.inputLabel]}>
+            {t('addImage', english)}
+          </Text>
           <View
             style={[
               globalStyles.flex,
@@ -166,21 +178,23 @@ const ExpensesCreateUpdateForm = () => {
             ]}>
             <Image
               source={Camera as ImageSourcePropType}
-              style={{ width: 30, height: 30 }}
+              style={{width: 30, height: 30}}
             />
             <View>
-              <Text style={[globalStyles.inputLabel, { fontSize: 16 }]}>
+              <Text style={[globalStyles.inputLabel, {fontSize: 16}]}>
                 {t('selectImage', english)}
               </Text>
             </View>
           </View>
         </ImageUpload>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          {images?.length > 0 && (
+        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+          {images?.length > 0 &&
             images.map((image, index) => (
-              <View key={image.uri} style={{ position: 'relative', width: 100, height: 100, }} >
+              <View
+                key={image.uri}
+                style={{position: 'relative', width: 100, height: 100}}>
                 <Image
-                  source={{ uri: image?.uri }}
+                  source={{uri: image?.uri}}
                   style={{
                     marginTop: 6,
                     width: 100,
@@ -188,28 +202,38 @@ const ExpensesCreateUpdateForm = () => {
                     resizeMode: 'contain',
                   }}
                 />
-                <TouchableOpacity onPress={() => {
-                  setImages(prev => prev.filter((item, i) => item.uri !== image.uri))
-                }} style={{ position: 'absolute', top: 8, right: 8, backgroundColor: "red", borderRadius: 10, padding: 3 }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setImages(prev =>
+                      prev.filter((item, i) => item.uri !== image.uri),
+                    );
+                  }}
+                  style={{
+                    position: 'absolute',
+                    top: 8,
+                    right: 8,
+                    backgroundColor: 'red',
+                    borderRadius: 10,
+                    padding: 3,
+                  }}>
                   <Image
                     source={DeleteIcon as ImageSourcePropType}
                     style={{
                       width: 20,
                       height: 20,
-                      tintColor: "white"
+                      tintColor: 'white',
                     }}
                   />
                 </TouchableOpacity>
               </View>
-            ))
-          )}
+            ))}
         </View>
-        <View style={{ paddingHorizontal: 25, marginTop: 20, marginBottom: 150 }}>
+        <View style={{paddingHorizontal: 25, marginTop: 20, marginBottom: 150}}>
           <GradientButton handler={() => submitHandler()}>
-            {
-              (isLoading || updating) ? (
-                <ActivityIndicator size="small" color="white" />
-              ) : <Text
+            {isLoading || updating ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <Text
                 style={{
                   color: 'white',
                   textAlign: 'center',
@@ -218,7 +242,7 @@ const ExpensesCreateUpdateForm = () => {
                 }}>
                 Save
               </Text>
-            }
+            )}
           </GradientButton>
         </View>
       </ScrollView>

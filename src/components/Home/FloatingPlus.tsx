@@ -1,5 +1,5 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useRef, useState } from 'react';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import React, {useRef, useState} from 'react';
 import {
   Alert,
   Animated,
@@ -12,15 +12,15 @@ import {
   View,
 } from 'react-native';
 import ImageCropPicker from 'react-native-image-crop-picker';
-import { Close, Plus } from '../../constant/images';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { StackTypes } from '../../types/ScreenPropsTypes';
-import { t } from '../../utils/translate';
-import { requestCameraPermission } from '../sheard/ImageUpload';
+import {Close, Plus} from '../../constant/images';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {StackTypes} from '../../types/ScreenPropsTypes';
+import {t} from '../../utils/translate';
+import {requestCameraPermission} from '../sheard/ImageUpload';
 
 const FloatingPlus = () => {
   const [open, setOpen] = useState(false);
-  const { themeColors, setImages, english } = useGlobalContext();
+  const {themeColors, setImages, english} = useGlobalContext();
   const anim1 = useRef(new Animated.Value(0)).current;
   const anim2 = useRef(new Animated.Value(0)).current;
 
@@ -77,10 +77,10 @@ const FloatingPlus = () => {
       });
       const newImage = {
         uri: result.path,
-        name: result?.filename ?? "random.jpg",
-        type: result?.mime ?? "image/jpeg",
-        mimeType: result?.mime ?? "image/jpeg",
-      }
+        name: result?.filename ?? 'random.jpg',
+        type: result?.mime ?? 'image/jpeg',
+        mimeType: result?.mime ?? 'image/jpeg',
+      };
       setImages([newImage]);
       navigation.navigate('CreateIntervention');
     } catch (error: any) {
@@ -103,7 +103,7 @@ const FloatingPlus = () => {
                   outputRange: [0, -70],
                 }),
               },
-              { scale: anim1 },
+              {scale: anim1},
             ],
           },
         ]}>
@@ -123,18 +123,18 @@ const FloatingPlus = () => {
           <Text
             style={[
               styles.pillButtonText,
-              { color: themeColors.primary as string },
+              {color: themeColors.primary as string},
             ]}>
             {t('create_intervention', english)}
           </Text>
           <View
             style={[
               styles.iconCircle,
-              { backgroundColor: themeColors.primary as string },
+              {backgroundColor: themeColors.primary as string},
             ]}>
             <Image
               source={Plus as ImageSourcePropType}
-              style={[styles.icon, { tintColor: themeColors.white as string }]}
+              style={[styles.icon, {tintColor: themeColors.white as string}]}
             />
           </View>
         </TouchableOpacity>
@@ -152,7 +152,7 @@ const FloatingPlus = () => {
                   outputRange: [0, -140],
                 }),
               },
-              { scale: anim2 },
+              {scale: anim2},
             ],
           },
         ]}>
@@ -169,18 +169,18 @@ const FloatingPlus = () => {
           <Text
             style={[
               styles.pillButtonText,
-              { color: themeColors.primary as string },
+              {color: themeColors.primary as string},
             ]}>
             {t('take_image', english)}
           </Text>
           <View
             style={[
               styles.iconCircle,
-              { backgroundColor: themeColors.primary as string },
+              {backgroundColor: themeColors.primary as string},
             ]}>
             <Image
               source={Plus as ImageSourcePropType}
-              style={[styles.icon, { tintColor: themeColors.white as string }]}
+              style={[styles.icon, {tintColor: themeColors.white as string}]}
             />
           </View>
         </TouchableOpacity>
@@ -189,7 +189,7 @@ const FloatingPlus = () => {
       <TouchableOpacity
         style={[
           styles.mainButton,
-          { backgroundColor: themeColors.primary as string },
+          {backgroundColor: themeColors.primary as string},
         ]}
         onPress={toggleButtons}
         activeOpacity={0.8}>
@@ -200,7 +200,7 @@ const FloatingPlus = () => {
               : (Plus as ImageSourcePropType)
           }
           tintColor="white"
-          style={{ width: 20, height: 20 }}
+          style={{width: 20, height: 20}}
         />
       </TouchableOpacity>
     </View>
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
   },
   pillButtonText: {
     fontSize: 16,
@@ -261,6 +261,6 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
   },
 });

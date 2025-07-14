@@ -1,5 +1,5 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import {
@@ -14,29 +14,29 @@ import {
   View,
 } from 'react-native';
 import CountryPicker from 'react-native-country-picker-modal';
-import { Dropdown } from 'react-native-element-dropdown';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {Dropdown} from 'react-native-element-dropdown';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Address from '../../components/sheard/Address';
 import GradientButton from '../../components/sheard/GradientButton';
-import { Colors } from '../../constant/colors';
-import { paymentStatus } from '../../constant/data';
-import { Calender } from '../../constant/images';
-import { globalStyles } from '../../constant/styles';
-import { TranslationKey } from '../../constant/translations';
-import { useCreateInvoice, useUpdateInvoice } from '../../hooks/invoiceApiCall';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { IAddress, IInvoiceForm, IInvoiceService } from '../../types/loginType';
-import { generateRandom } from '../../utils/generateRandom';
-import { hexToRGBA } from '../../utils/hexToRGBA';
-import { t } from '../../utils/translate';
+import {Colors} from '../../constant/colors';
+import {paymentStatus} from '../../constant/data';
+import {Calender} from '../../constant/images';
+import {globalStyles} from '../../constant/styles';
+import {TranslationKey} from '../../constant/translations';
+import {useCreateInvoice, useUpdateInvoice} from '../../hooks/invoiceApiCall';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {IAddress, IInvoiceForm, IInvoiceService} from '../../types/loginType';
+import {generateRandom} from '../../utils/generateRandom';
+import {hexToRGBA} from '../../utils/hexToRGBA';
+import {t} from '../../utils/translate';
 import InvoiceService from './InvoiceService';
 const InvoiceCreateUpdateForm = () => {
-  const { params }: any = useRoute()
+  const {params}: any = useRoute();
   const [serviceDate, setServiceDate] = React.useState<Date | undefined>();
   const [countryCode, setCountryCode] = React.useState('BD');
   const [showPicker, setShowPicker] = React.useState(false);
-  const { width, themeColors, user, english } = useGlobalContext();
-  const navigation = useNavigation()
+  const {width, themeColors, user, english} = useGlobalContext();
+  const navigation = useNavigation();
   const [address, setAddress] = React.useState<IAddress>({
     streetName: params?.params?.address?.streetName,
     city: params?.params?.address?.city,
@@ -44,19 +44,21 @@ const InvoiceCreateUpdateForm = () => {
     country: params?.params?.address?.country,
     postalCode: params?.params?.address?.postalCode,
   });
-  const [service, setService] = React.useState<IInvoiceService[]>(params?.params?.service.map((item: any) => ({
-    id: generateRandom(),
-    service: item.selectedService,
-    quantity: item.quantity?.toString(),
-    price: item.price?.toString(),
-  })) || [
+  const [service, setService] = React.useState<IInvoiceService[]>(
+    params?.params?.service.map((item: any) => ({
+      id: generateRandom(),
+      service: item.selectedService,
+      quantity: item.quantity?.toString(),
+      price: item.price?.toString(),
+    })) || [
       {
         id: generateRandom(),
         service: '',
         quantity: '',
         price: '',
       },
-    ]);
+    ],
+  );
 
   const [error, setError] = React.useState({
     name: false,
@@ -89,8 +91,8 @@ const InvoiceCreateUpdateForm = () => {
     date: '01/01/2023',
     status: params?.params?.status?.toLowerCase(),
   });
-  const { createInvoiceHandler, isLoading } = useCreateInvoice()
-  const { updateInvoiceHandler, isLoading: updateLoading } = useUpdateInvoice()
+  const {createInvoiceHandler, isLoading} = useCreateInvoice();
+  const {updateInvoiceHandler, isLoading: updateLoading} = useUpdateInvoice();
   const submitHandler = () => {
     let invalid = false;
     type Combined = IInvoiceForm & IAddress;
@@ -100,34 +102,36 @@ const InvoiceCreateUpdateForm = () => {
     };
     Object.keys(combinedInputValue).forEach(key => {
       if (combinedInputValue[key as keyof IInvoiceForm] === '') {
-        setError(prev => ({ ...prev, [key]: true }));
+        setError(prev => ({...prev, [key]: true}));
         invalid = true;
       } else {
-        setError(prev => ({ ...prev, [key]: false }));
+        setError(prev => ({...prev, [key]: false}));
       }
     });
-    if (invalid) return
+    if (invalid) return;
     const services = service.map((item: any) => ({
       selectedService: item.service,
       quantity: item.quantity,
       price: item.price,
     }));
     const data = {
-      "name": inputValue?.name,
-      "email": inputValue?.email,
-      "phone": inputValue?.contact,
-      "nSiren": inputValue['N°SIREN'],
-      "address": address,
-      "services": services,
+      name: inputValue?.name,
+      email: inputValue?.email,
+      phone: inputValue?.contact,
+      nSiren: inputValue['N°SIREN'],
+      address: address,
+      services: services,
       status: inputValue.status,
       data: moment(inputValue.date).format('YYYY-MM-DD'),
       user: user?._id,
-    }
-    params?.params?.id ? updateInvoiceHandler(data, params?.params?.id, () => {
-      navigation.goBack()
-    }) : createInvoiceHandler(data, () => {
-      navigation.goBack()
-    })
+    };
+    params?.params?.id
+      ? updateInvoiceHandler(data, params?.params?.id, () => {
+          navigation.goBack();
+        })
+      : createInvoiceHandler(data, () => {
+          navigation.goBack();
+        });
   };
   const formatDate = (date?: Date) => {
     if (!date) return '00/00/000';
@@ -141,7 +145,7 @@ const InvoiceCreateUpdateForm = () => {
     setShowPicker(Platform.OS === 'ios');
     if (selectedDate) {
       setServiceDate(selectedDate);
-      setInputValue({ ...inputValue, date: formatDate(selectedDate) });
+      setInputValue({...inputValue, date: formatDate(selectedDate)});
     }
   };
 
@@ -188,7 +192,9 @@ const InvoiceCreateUpdateForm = () => {
           if (key === 'status') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>{t(key as TranslationKey, english)}</Text>
+                <Text style={globalStyles.inputLabel}>
+                  {t(key as TranslationKey, english)}
+                </Text>
                 <Dropdown
                   style={[
                     globalStyles.input,
@@ -202,14 +208,14 @@ const InvoiceCreateUpdateForm = () => {
                   placeholder={t('status', english)}
                   value={inputValue.status}
                   onChange={item => {
-                    setInputValue({ ...inputValue, status: item.value });
-                    setError({ ...error, status: false });
+                    setInputValue({...inputValue, status: item.value});
+                    setError({...error, status: false});
                   }}
                   placeholderStyle={{
                     color: globalStyles.inputPlaceholder.color,
                   }}
-                  selectedTextStyle={{ color: '#000' }}
-                  containerStyle={{ borderRadius: 5 }}
+                  selectedTextStyle={{color: '#000'}}
+                  containerStyle={{borderRadius: 5}}
                   dropdownPosition="auto"
                 />
               </View>
@@ -218,8 +224,10 @@ const InvoiceCreateUpdateForm = () => {
           if (key === 'contact') {
             return (
               <View key={key}>
-                <Text style={globalStyles.inputLabel}>{t(key as TranslationKey, english)}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={globalStyles.inputLabel}>
+                  {t(key as TranslationKey, english)}
+                </Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <CountryPicker
                     countryCode={countryCode as any}
                     withFlag
@@ -244,10 +252,13 @@ const InvoiceCreateUpdateForm = () => {
                   <TextInput
                     value={inputValue.contact}
                     onChangeText={text => {
-                      setInputValue({ ...inputValue, contact: text });
-                      setError({ ...error, contact: false });
+                      setInputValue({...inputValue, contact: text});
+                      setError({...error, contact: false});
                     }}
-                    placeholder={`${t('enter', english)} ${t('contact', english)}`}
+                    placeholder={`${t('enter', english)} ${t(
+                      'contact',
+                      english,
+                    )}`}
                     keyboardType="phone-pad"
                     placeholderTextColor={globalStyles.inputPlaceholder.color}
                     style={[
@@ -352,7 +363,7 @@ const InvoiceCreateUpdateForm = () => {
                     mode="date"
                     display="default"
                     onChange={onFromChange}
-                  // maximumDate={toDate}
+                    // maximumDate={toDate}
                   />
                 )}
               </View>
@@ -363,14 +374,17 @@ const InvoiceCreateUpdateForm = () => {
               <Text style={globalStyles.inputLabel}>
                 {t(key as TranslationKey, english)}
               </Text>
-              <View style={{ position: 'relative' }}>
+              <View style={{position: 'relative'}}>
                 <TextInput
                   value={inputValue[key as keyof IInvoiceForm]}
                   onChangeText={text => {
-                    setInputValue({ ...inputValue, [key]: text });
-                    setError({ ...error, [key]: false });
+                    setInputValue({...inputValue, [key]: text});
+                    setError({...error, [key]: false});
                   }}
-                  placeholder={`${t('enter', english)} ${t(key as TranslationKey, english)}`}
+                  placeholder={`${t('enter', english)} ${t(
+                    key as TranslationKey,
+                    english,
+                  )}`}
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
                     globalStyles.input,
@@ -384,23 +398,21 @@ const InvoiceCreateUpdateForm = () => {
           );
         })}
 
-        <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
+        <View style={{paddingHorizontal: 25, marginBottom: 120}}>
           <GradientButton handler={() => submitHandler()}>
-            {
-              isLoading || updateLoading ? (
-                <ActivityIndicator size="small" color="white" />
-              ) : (
-                <Text
-                  style={{
-                    color: 'white',
-                    textAlign: 'center',
-                    fontWeight: '700',
-                    fontSize: 18,
-                  }}>
-                  Submit
-                </Text>
-              )
-            }
+            {isLoading || updateLoading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: '700',
+                  fontSize: 18,
+                }}>
+                Submit
+              </Text>
+            )}
           </GradientButton>
         </View>
       </ScrollView>

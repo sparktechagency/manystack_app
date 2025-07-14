@@ -1,59 +1,69 @@
 import Toast from 'react-native-toast-message';
-import { useCancelSubscriptionMutation, useSubscriptionPaymentMutation } from '../redux/Apis/subscriptionApis';
+import {
+  useCancelSubscriptionMutation,
+  useSubscriptionPaymentMutation,
+} from '../redux/Apis/subscriptionApis';
 
 export const useSubscriptionPayment = () => {
-  const [subscriptionPayment, { isLoading }] = useSubscriptionPaymentMutation();
-  const handleSubscriptionPayment = async (data: any, handler?: (arg: string) => void) => {
+  const [subscriptionPayment, {isLoading}] = useSubscriptionPaymentMutation();
+  const handleSubscriptionPayment = async (
+    data: any,
+    handler?: (arg: string) => void,
+  ) => {
     try {
-      await subscriptionPayment(data).unwrap()
-        .then((res) => {
+      await subscriptionPayment(data)
+        .unwrap()
+        .then(res => {
           Toast.show({
             type: 'success',
             text1: 'Subscription payment',
             text2: res?.message || 'Subscription payment successfully.',
-          })
-          handler?.(res?.url)
-        }).catch((err) => {
+          });
+          handler?.(res?.url);
+        })
+        .catch(err => {
           Toast.show({
             type: 'error',
             text1: 'Failed to subscription payment',
             text2: err?.data?.message || 'Failed to subscription payment.',
-          })
+          });
         });
       return true;
     } catch (err) {
       // throw err;
       return false;
     }
-  }
+  };
 
-  return { handleSubscriptionPayment, isLoading };
-}
+  return {handleSubscriptionPayment, isLoading};
+};
 
 export const useCancelSubscription = () => {
-  const [cancelSubscription, { isLoading }] = useCancelSubscriptionMutation();
+  const [cancelSubscription, {isLoading}] = useCancelSubscriptionMutation();
   const handleCancelSubscription = async () => {
     try {
-      await cancelSubscription(undefined).unwrap()
-        .then((res) => {
+      await cancelSubscription(undefined)
+        .unwrap()
+        .then(res => {
           Toast.show({
             type: 'success',
             text1: 'Subscription canceled',
             text2: res?.message || 'Subscription canceled successfully.',
-          })
-        }).catch((err) => {
+          });
+        })
+        .catch(err => {
           Toast.show({
             type: 'error',
             text1: 'Failed to cancel subscription',
             text2: err?.data?.message || 'Failed to cancel subscription.',
-          })
+          });
         });
-      return true
+      return true;
     } catch (err) {
       // throw err;
       return false;
     }
-  }
+  };
 
-  return { handleCancelSubscription, isLoading };
-}
+  return {handleCancelSubscription, isLoading};
+};

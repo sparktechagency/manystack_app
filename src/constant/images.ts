@@ -32,6 +32,7 @@ import Loss from '../asset/loss.png';
 import Plus from '../asset/plus.png';
 import Profile from '../asset/profile.png';
 import Profit from '../asset/profit.png';
+import Screen from '../asset/screen.png';
 import SearchIcon from '../asset/Search.png';
 export const DrawerIcons = {
   Category,
@@ -69,5 +70,6 @@ export {
   Plus,
   Profile,
   Profit,
+  Screen,
   SearchIcon,
 };

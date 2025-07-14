@@ -1,22 +1,22 @@
 import React from 'react';
-import { Image, ImageSourcePropType, StyleSheet, Text, View } from 'react-native';
-import { Colors } from '../../constant/colors';
-import { logo, Profile } from '../../constant/images';
-import { globalStyles } from '../../constant/styles';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { generateImageUrl } from '../../utils/baseUrls';
-import { hexToRGBA } from '../../utils/hexToRGBA';
-import { t } from '../../utils/translate';
+import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
+import {Colors} from '../../constant/colors';
+import {logo, Profile} from '../../constant/images';
+import {globalStyles} from '../../constant/styles';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {generateImageUrl} from '../../utils/baseUrls';
+import {hexToRGBA} from '../../utils/hexToRGBA';
+import {t} from '../../utils/translate';
 
 const WellCome = () => {
-  const { english, user } = useGlobalContext();
+  const {english, user} = useGlobalContext();
   return (
-    <View style={[globalStyles.flex, { justifyContent: 'space-between' }]}>
+    <View style={[globalStyles.flex, {justifyContent: 'space-between'}]}>
       <View
-        style={[globalStyles.flex, { justifyContent: 'flex-start', gap: 10 }]}>
+        style={[globalStyles.flex, {justifyContent: 'flex-start', gap: 10}]}>
         <Image
           source={logo as ImageSourcePropType}
-          style={{ width: 40, height: 40 }}
+          style={{width: 40, height: 40}}
         />
         <View>
           <Text
@@ -33,8 +33,12 @@ const WellCome = () => {
         </View>
       </View>
       <Image
-        source={user?.businessLogo ? { uri: generateImageUrl(user?.businessLogo) } : Profile as ImageSourcePropType}
-        style={{ width: 50, height: 50 }}
+        source={
+          user?.businessLogo
+            ? {uri: generateImageUrl(user?.businessLogo)}
+            : (Profile as ImageSourcePropType)
+        }
+        style={{width: 50, height: 50}}
       />
     </View>
   );

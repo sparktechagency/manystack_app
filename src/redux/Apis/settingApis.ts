@@ -1,7 +1,7 @@
-import { baseApi } from '../baseApi';
+import {baseApi} from '../baseApi';
 
 const settingApi = baseApi.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     privacyPolicy: builder.query({
       query: () => ({
         url: 'api/dashboard/settings/privacy-policy/get',
@@ -15,9 +15,6 @@ const settingApi = baseApi.injectEndpoints({
       }),
     }),
   }),
-})
+});
 
-export const {
-  usePrivacyPolicyQuery,
-  useTermsAndConditionsQuery,
-} = settingApi
+export const {usePrivacyPolicyQuery, useTermsAndConditionsQuery} = settingApi;

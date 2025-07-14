@@ -1,7 +1,7 @@
-import { baseApi } from '../baseApi'
+import {baseApi} from '../baseApi';
 
 const categoryApi = baseApi.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     // get categories endpoint
     getCategories: builder.query({
       query: () => 'api/category/get-all',
@@ -9,7 +9,7 @@ const categoryApi = baseApi.injectEndpoints({
     }),
     // create category endpoint
     createCategory: builder.mutation({
-      query: (data) => ({
+      query: data => ({
         url: 'api/category/create',
         method: 'POST',
         body: data,
@@ -18,7 +18,7 @@ const categoryApi = baseApi.injectEndpoints({
     }),
     // update category endpoint
     updateCategory: builder.mutation({
-      query: ({ data, id }) => ({
+      query: ({data, id}) => ({
         url: `api/category/update/${id}`,
         method: 'PUT',
         body: data,
@@ -27,18 +27,18 @@ const categoryApi = baseApi.injectEndpoints({
     }),
     // delete category endpoint
     deleteCategory: builder.mutation({
-      query: (id) => ({
+      query: id => ({
         url: `api/category/delete/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['category'],
     }),
   }),
-})
+});
 
 export const {
   useGetCategoriesQuery,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
-} = categoryApi
+} = categoryApi;

@@ -1,7 +1,7 @@
-import { baseApi } from '../baseApi'
+import {baseApi} from '../baseApi';
 
 const userApi = baseApi.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     // get profile endpoint
     getProfile: builder.query({
       query: () => 'api/user/profile',
@@ -10,7 +10,7 @@ const userApi = baseApi.injectEndpoints({
 
     // update profile endpoint
     updateProfile: builder.mutation({
-      query: (data) => ({
+      query: data => ({
         url: 'api/user/profile/update',
         method: 'PUT',
         body: data,
@@ -20,7 +20,7 @@ const userApi = baseApi.injectEndpoints({
 
     // change password endpoint
     changePassword: builder.mutation({
-      query: (data) => ({
+      query: data => ({
         url: 'api/user/profile/change-password',
         method: 'PUT',
         body: data,
@@ -29,7 +29,7 @@ const userApi = baseApi.injectEndpoints({
     }),
     //upload logo endpoint
     uploadLogo: builder.mutation({
-      query: (data) => ({
+      query: data => ({
         url: '/api/user/profile/upload-picture?profilePicture',
         method: 'POST',
         body: data,
@@ -47,19 +47,19 @@ const userApi = baseApi.injectEndpoints({
     }),
     // support endpoint
     support: builder.mutation({
-      query: (data) => ({
+      query: data => ({
         url: 'api/support/create',
         method: 'POST',
         body: data,
       }),
     }),
-    // get Home  page data 
+    // get Home  page data
     getHomePageData: builder.query({
       query: () => 'api/home/dashboard',
       providesTags: ['auth'],
     }),
   }),
-})
+});
 
 export const {
   useGetProfileQuery,
@@ -68,7 +68,5 @@ export const {
   useUploadLogoMutation,
   useDeleteAccountMutation,
   useGetHomePageDataQuery,
-  useSupportMutation
-} = userApi
-
-
+  useSupportMutation,
+} = userApi;

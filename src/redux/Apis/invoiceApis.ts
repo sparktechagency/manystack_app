@@ -1,10 +1,10 @@
-import { baseApi } from '../baseApi'
+import {baseApi} from '../baseApi';
 
 const invoiceApi = baseApi.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     // get invoices endpoint
     getInvoices: builder.query({
-      query: ({ search, limit, fromDate, toDate }) => ({
+      query: ({search, limit, fromDate, toDate}) => ({
         url: 'api/invoices/get-all',
         method: 'GET',
         params: {
@@ -18,7 +18,7 @@ const invoiceApi = baseApi.injectEndpoints({
     }),
     // create invoice endpoint
     createInvoice: builder.mutation({
-      query: (data) => ({
+      query: data => ({
         url: 'api/invoices/create',
         method: 'POST',
         body: data,
@@ -27,7 +27,7 @@ const invoiceApi = baseApi.injectEndpoints({
     }),
     // update invoice endpoint
     updateInvoice: builder.mutation({
-      query: ({ data, id }) => ({
+      query: ({data, id}) => ({
         url: `api/invoices/update/${id}`,
         method: 'PUT',
         body: data,
@@ -36,7 +36,7 @@ const invoiceApi = baseApi.injectEndpoints({
     }),
     // delete invoice endpoint
     deleteInvoice: builder.mutation({
-      query: (id) => ({
+      query: id => ({
         url: `api/invoices/delete/${id}`,
         method: 'DELETE',
       }),
@@ -44,18 +44,18 @@ const invoiceApi = baseApi.injectEndpoints({
     }),
     // get invoice by id endpoint
     getInvoiceById: builder.query({
-      query: (id) => `api/invoices/get-by-id/${id}`,
+      query: id => `api/invoices/get-by-id/${id}`,
       providesTags: ['invoice'],
     }),
     markInvoiceAsPaid: builder.mutation({
-      query: (id) => ({
+      query: id => ({
         url: `api/invoices/paid-unpaid/${id}`,
         method: 'PUT',
       }),
       invalidatesTags: ['invoice'],
     }),
   }),
-})
+});
 
 export const {
   useGetInvoicesQuery,
@@ -64,4 +64,4 @@ export const {
   useDeleteInvoiceMutation,
   useGetInvoiceByIdQuery,
   useMarkInvoiceAsPaidMutation,
-} = invoiceApi
+} = invoiceApi;

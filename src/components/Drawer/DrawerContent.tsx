@@ -1,21 +1,25 @@
-import { DrawerContentScrollView } from '@react-navigation/drawer';
-import React, { useEffect } from 'react';
-import { ImageSourcePropType, StyleSheet } from 'react-native';
-import { DrawerLinksData } from '../../constant/data';
-import { DrawerIcons } from '../../constant/images';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import {DrawerContentScrollView} from '@react-navigation/drawer';
+import React, {useEffect} from 'react';
+import {ImageSourcePropType, StyleSheet} from 'react-native';
+import {DrawerLinksData} from '../../constant/data';
+import {DrawerIcons} from '../../constant/images';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
 import NameImage from '../Profile/NameImage';
 import DrawerLinks from './DrawerLinks';
 
 const DrawerContent = (props: any) => {
-  const { showSubscription } = useGlobalContext();
+  const {showSubscription} = useGlobalContext();
   useEffect(() => {
     if (showSubscription) {
       if (!DrawerLinksData?.find((item: any) => item.name === 'subscription')) {
-        DrawerLinksData.push({ name: 'subscription', href: 'Subscription', icon: DrawerIcons.Crown })
+        DrawerLinksData.push({
+          name: 'subscription',
+          href: 'Subscription',
+          icon: DrawerIcons.Crown,
+        });
       }
     } else {
-      DrawerLinksData.pop()
+      DrawerLinksData.pop();
     }
   }, [showSubscription]);
   return (

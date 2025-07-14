@@ -1,19 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { globalStyles } from '../../constant/styles';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { hexToRGBA } from '../../utils/hexToRGBA';
-import { t } from '../../utils/translate';
+import {StyleSheet, Text, View} from 'react-native';
+import {globalStyles} from '../../constant/styles';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {hexToRGBA} from '../../utils/hexToRGBA';
+import {t} from '../../utils/translate';
 
-const Highlights = ({ interventionCount, priceCount }: { interventionCount: string, priceCount: string }) => {
-  const { width, themeColors, english } = useGlobalContext();
+const Highlights = ({
+  interventionCount,
+  priceCount,
+}: {
+  interventionCount: string;
+  priceCount: string;
+}) => {
+  const {width, themeColors, english} = useGlobalContext();
   const data = [
-    { count: interventionCount, title: t('total_intervention', english) },
-    { count: priceCount, title: t('total_price', english) },
+    {count: interventionCount, title: t('total_intervention', english)},
+    {count: priceCount, title: t('total_price', english)},
   ];
   return (
     <View>
-      <Text style={[globalStyles.inputLabel, { fontSize: 20, fontWeight: 700 }]}>
+      <Text style={[globalStyles.inputLabel, {fontSize: 20, fontWeight: 700}]}>
         {t('today_highlights', english)}
       </Text>
       <View
@@ -26,7 +32,7 @@ const Highlights = ({ interventionCount, priceCount }: { interventionCount: stri
             paddingVertical: 10,
           },
         ]}>
-        {data?.map((item: { count: string; title: string }) => (
+        {data?.map((item: {count: string; title: string}) => (
           <View
             style={{
               boxShadow:

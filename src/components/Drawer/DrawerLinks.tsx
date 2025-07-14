@@ -1,5 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DrawerActions, NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import {
+  DrawerActions,
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from '@react-navigation/native';
 import React from 'react';
 import {
   Image,
@@ -9,12 +14,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import RNRestart from 'react-native-restart';
 import { DrawerIcons } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { IDrawerLinksProps } from '../../types/PropsType';
 import { t } from '../../utils/translate';
-
 const DrawerLinks = ({
   title,
   href,
@@ -28,13 +33,10 @@ const DrawerLinks = ({
       onPress={async () => {
         if (href === 'Login') {
           await AsyncStorage.removeItem('token');
-          navigate.reset({
-            index: 0,
-            routes: [{ name: href as any }],
-          });
+          RNRestart.restart();
           navigate.dispatch(DrawerActions.closeDrawer());
         } else {
-          navigate.navigate(href as any)
+          navigate.navigate(href as any);
         }
       }}
       style={[

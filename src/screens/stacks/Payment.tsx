@@ -1,16 +1,18 @@
-import { useRoute } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { WebView } from 'react-native-webview';
+import {useRoute} from '@react-navigation/native';
+import React, {useState} from 'react';
+import {Text, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {WebView} from 'react-native-webview';
 
 const Payment = () => {
-  const { params }: any = useRoute();
+  const {params}: any = useRoute();
   const [url] = useState(params?.params?.url); // keep original URL
-  const [paymentStatus, setPaymentStatus] = useState<'pending' | 'success' | 'cancel' | 'error'>('pending');
+  const [paymentStatus, setPaymentStatus] = useState<
+    'pending' | 'success' | 'cancel' | 'error'
+  >('pending');
 
   const handleWebViewError = (syntheticEvent: any) => {
-    const { nativeEvent } = syntheticEvent;
+    const {nativeEvent} = syntheticEvent;
     console.error('WebView Error:', nativeEvent);
     // setPaymentStatus('error');
   };
@@ -43,7 +45,8 @@ const Payment = () => {
       }
 
       return (
-        <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <SafeAreaView
+          style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <Text>{message}</Text>
         </SafeAreaView>
       );
@@ -51,15 +54,14 @@ const Payment = () => {
 
     return (
       <WebView
-        source={{ uri: url }}
+        source={{uri: url}}
         onError={handleWebViewError}
         onNavigationStateChange={handleNavigationChange}
       />
     );
   };
 
-
-  return <View style={{ flex: 1 }}>{renderContent()}</View>;
+  return <View style={{flex: 1}}>{renderContent()}</View>;
 };
 
 export default Payment;

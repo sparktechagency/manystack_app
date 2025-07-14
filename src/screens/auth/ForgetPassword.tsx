@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -10,19 +10,19 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import GradientButton from '../../components/sheard/GradientButton';
-import { logo } from '../../constant/images';
-import { globalStyles } from '../../constant/styles';
-import { useForgetPassword } from '../../hooks/authApisCall';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { IForget } from '../../types/loginType';
-import { StackTypes } from '../../types/ScreenPropsTypes';
-import { t } from '../../utils/translate';
+import {logo} from '../../constant/images';
+import {globalStyles} from '../../constant/styles';
+import {useForgetPassword} from '../../hooks/authApisCall';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {IForget} from '../../types/loginType';
+import {StackTypes} from '../../types/ScreenPropsTypes';
+import {t} from '../../utils/translate';
 
 const ForgetPassword = () => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
-  const { english } = useGlobalContext()
+  const {english} = useGlobalContext();
   const [error, setError] = React.useState({
     email: false,
   });
@@ -30,38 +30,40 @@ const ForgetPassword = () => {
   const [inputValue, setInputValue] = React.useState<IForget>({
     email: '',
   });
-  const { forgetPasswordHandler, isLoading } = useForgetPassword()
+  const {forgetPasswordHandler, isLoading} = useForgetPassword();
   const submitHandler = () => {
     if (inputValue.email === '') {
       return setError({
         email: true,
-      })
+      });
     }
-    forgetPasswordHandler({ email: inputValue.email }, async () => {
-      await AsyncStorage.setItem('email', inputValue?.email)
-      navigate.navigate('Otp', { params: { from: 'forget', email: inputValue.email } });
-    })
+    forgetPasswordHandler({email: inputValue.email}, async () => {
+      await AsyncStorage.setItem('email', inputValue?.email);
+      navigate.navigate('Otp', {
+        params: {from: 'forget', email: inputValue.email},
+      });
+    });
   };
 
   return (
     <SafeAreaView
-      style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <View style={{ marginTop: -60 }}>
+      style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{marginTop: -60}}>
         <Image source={logo as ImageSourcePropType} height={100} width={100} />
       </View>
       {/* form */}
-      <View style={{ width: '100%', paddingHorizontal: 20 }}>
+      <View style={{width: '100%', paddingHorizontal: 20}}>
         {Object.keys(inputValue).map((key, index) => (
           <View key={index}>
             <Text style={[globalStyles.inputLabel]}>
               {key.charAt(0).toUpperCase() + key.slice(1)}
             </Text>
-            <View style={{ position: 'relative' }}>
+            <View style={{position: 'relative'}}>
               <TextInput
                 value={inputValue[key as keyof IForget]}
                 onChangeText={text => {
-                  setInputValue({ ...inputValue, [key]: text });
-                  setError({ ...error, [key]: false });
+                  setInputValue({...inputValue, [key]: text});
+                  setError({...error, [key]: false});
                 }}
                 placeholder={`${t('enter', english)} ${t(key as any, english)}`}
                 placeholderTextColor={globalStyles.inputPlaceholder.color}
@@ -80,21 +82,19 @@ const ForgetPassword = () => {
             marginTop: 20,
           }}>
           <GradientButton handler={() => submitHandler()}>
-            {
-              isLoading ? (
-                <ActivityIndicator size="small" color="white" />
-              ) : (
-                <Text
-                  style={{
-                    color: 'white',
-                    textAlign: 'center',
-                    fontWeight: 700,
-                    fontSize: 18,
-                  }}>
-                  {t('submit', english)}
-                </Text>
-              )
-            }
+            {isLoading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: 700,
+                  fontSize: 18,
+                }}>
+                {t('submit', english)}
+              </Text>
+            )}
           </GradientButton>
         </View>
       </View>

@@ -1,10 +1,10 @@
-import { baseApi } from '../baseApi'
+import {baseApi} from '../baseApi';
 
 const expensesApi = baseApi.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     // get expenses endpoint
     getExpenses: builder.query({
-      query: ({ limit, fromDate, toDate, search }) => ({
+      query: ({limit, fromDate, toDate, search}) => ({
         url: 'api/expense/get-all',
         method: 'GET',
         params: {
@@ -18,7 +18,7 @@ const expensesApi = baseApi.injectEndpoints({
     }),
     // create expense endpoint
     createExpense: builder.mutation({
-      query: (data) => ({
+      query: data => ({
         url: 'api/expense/create',
         method: 'POST',
         body: data,
@@ -27,7 +27,7 @@ const expensesApi = baseApi.injectEndpoints({
     }),
     // update expense endpoint
     updateExpense: builder.mutation({
-      query: ({ data, id }) => ({
+      query: ({data, id}) => ({
         url: `api/expense/update/${id}`,
         method: 'PUT',
         body: data,
@@ -36,7 +36,7 @@ const expensesApi = baseApi.injectEndpoints({
     }),
     // delete expense endpoint
     deleteExpense: builder.mutation({
-      query: (id) => ({
+      query: id => ({
         url: `api/expense/delete/${id}`,
         method: 'DELETE',
       }),
@@ -44,11 +44,11 @@ const expensesApi = baseApi.injectEndpoints({
     }),
     // get expense by id endpoint
     getExpenseById: builder.query({
-      query: (id) => `api/expense/get-by-one/${id}`,
+      query: id => `api/expense/get-by-one/${id}`,
       providesTags: ['expenses'],
     }),
   }),
-})
+});
 
 export const {
   useGetExpensesQuery,
@@ -58,4 +58,4 @@ export const {
   useGetExpenseByIdQuery,
   useLazyGetExpenseByIdQuery,
   useLazyGetExpensesQuery,
-} = expensesApi
+} = expensesApi;

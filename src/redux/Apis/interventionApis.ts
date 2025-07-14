@@ -1,10 +1,10 @@
-import { baseApi } from '../baseApi'
+import {baseApi} from '../baseApi';
 
 const interventionApi = baseApi.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     // get interventions endpoint
     getInterventions: builder.query({
-      query: ({ limit, fromDate, toDate, search }) => ({
+      query: ({limit, fromDate, toDate, search}) => ({
         url: 'api/intervention/get-all',
         method: 'GET',
         params: {
@@ -18,7 +18,7 @@ const interventionApi = baseApi.injectEndpoints({
     }),
     // create intervention endpoint
     createIntervention: builder.mutation({
-      query: (data) => ({
+      query: data => ({
         url: 'api/intervention/create',
         method: 'POST',
         body: data,
@@ -27,7 +27,7 @@ const interventionApi = baseApi.injectEndpoints({
     }),
     // update intervention endpoint
     updateIntervention: builder.mutation({
-      query: ({ data, id }) => ({
+      query: ({data, id}) => ({
         url: `api/intervention/update/${id}`,
         method: 'PUT',
         body: data,
@@ -36,7 +36,7 @@ const interventionApi = baseApi.injectEndpoints({
     }),
     // delete intervention endpoint
     deleteIntervention: builder.mutation({
-      query: (id) => ({
+      query: id => ({
         url: `api/intervention/delete/${id}`,
         method: 'DELETE',
       }),
@@ -44,7 +44,7 @@ const interventionApi = baseApi.injectEndpoints({
     }),
     //delete image endpoint
     deleteImage: builder.mutation({
-      query: ({ id, data }) => ({
+      query: ({id, data}) => ({
         url: `api/intervention/delete-image/${id}`,
         method: 'DELETE',
         body: data,
@@ -54,12 +54,11 @@ const interventionApi = baseApi.injectEndpoints({
 
     // get intervention by id endpoint
     getInterventionById: builder.query({
-      query: (id) => `api/intervention/get-by-id/${id}`,
+      query: id => `api/intervention/get-by-id/${id}`,
       providesTags: ['intervention'],
     }),
-
   }),
-})
+});
 
 export const {
   useGetInterventionsQuery,
@@ -68,4 +67,4 @@ export const {
   useDeleteInterventionMutation,
   useDeleteImageMutation,
   useGetInterventionByIdQuery,
-} = interventionApi
+} = interventionApi;

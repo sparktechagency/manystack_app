@@ -1,64 +1,77 @@
 import Toast from 'react-native-toast-message';
-import { useChangePasswordMutation, useUpdateProfileMutation, useUploadLogoMutation } from '../redux/Apis/userApis';
+import {
+  useChangePasswordMutation,
+  useUpdateProfileMutation,
+  useUploadLogoMutation,
+} from '../redux/Apis/userApis';
 
 export const useUpdateProfile = () => {
-  const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+  const [updateProfile, {isLoading}] = useUpdateProfileMutation();
   const updateProfileHandler = (data: any, handler?: () => void) => {
-    updateProfile(data).unwrap().then((res) => {
-      Toast.show({
-        type: 'success',
-        text1: 'Profile updated',
-        text2: res.data?.message || 'Profile updated successfully.',
+    updateProfile(data)
+      .unwrap()
+      .then(res => {
+        Toast.show({
+          type: 'success',
+          text1: 'Profile updated',
+          text2: res.data?.message || 'Profile updated successfully.',
+        });
+        handler?.();
       })
-      handler?.()
-    }).catch((err) => {
-      Toast.show({
-        type: 'error',
-        text1: 'Failed to update profile',
-        text2: err.data?.message || 'Failed to update profile.',
-      })
-    })
-  }
-  return { updateProfileHandler, isLoading }
-}
+      .catch(err => {
+        Toast.show({
+          type: 'error',
+          text1: 'Failed to update profile',
+          text2: err.data?.message || 'Failed to update profile.',
+        });
+      });
+  };
+  return {updateProfileHandler, isLoading};
+};
 export const useChangePassword = () => {
-  const [changePassword, { isLoading }] = useChangePasswordMutation();
+  const [changePassword, {isLoading}] = useChangePasswordMutation();
   const changePasswordHandler = (data: any, handler?: () => void) => {
-    changePassword(data).unwrap().then((res: any) => {
-      Toast.show({
-        type: 'success',
-        text1: 'Password changed',
-        text2: res?.message || 'Password changed successfully.',
+    changePassword(data)
+      .unwrap()
+      .then((res: any) => {
+        Toast.show({
+          type: 'success',
+          text1: 'Password changed',
+          text2: res?.message || 'Password changed successfully.',
+        });
+        handler?.();
       })
-      handler?.()
-    }).catch((err) => {
-      console.log(err)
-      Toast.show({
-        type: 'error',
-        text1: 'Failed to change password',
-        text2: err?.data?.message || 'Failed to change password.',
-      })
-    })
-  }
-  return { changePasswordHandler, isLoading }
-}
+      .catch(err => {
+        console.log(err);
+        Toast.show({
+          type: 'error',
+          text1: 'Failed to change password',
+          text2: err?.data?.message || 'Failed to change password.',
+        });
+      });
+  };
+  return {changePasswordHandler, isLoading};
+};
 export const useUploadLogo = () => {
-  const [uploadLogo, { isLoading }] = useUploadLogoMutation();
+  const [uploadLogo, {isLoading}] = useUploadLogoMutation();
   const uploadLogoHandler = (data: any, handler?: () => void) => {
-    uploadLogo(data).unwrap().then((res: any) => {
-      Toast.show({
-        type: 'success',
-        text1: 'Logo uploaded',
-        text2: res?.message || 'Logo uploaded successfully.',
+    uploadLogo(data)
+      .unwrap()
+      .then((res: any) => {
+        Toast.show({
+          type: 'success',
+          text1: 'Logo uploaded',
+          text2: res?.message || 'Logo uploaded successfully.',
+        });
+        handler?.();
       })
-      handler?.()
-    }).catch((err) => {
-      Toast.show({
-        type: 'error',
-        text1: 'Failed to upload logo',
-        text2: err?.message || 'Failed to upload logo.',
-      })
-    })
-  }
-  return { uploadLogoHandler, isLoading }
-}
+      .catch(err => {
+        Toast.show({
+          type: 'error',
+          text1: 'Failed to upload logo',
+          text2: err?.message || 'Failed to upload logo.',
+        });
+      });
+  };
+  return {uploadLogoHandler, isLoading};
+};

@@ -1,15 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { ISubscriptionProps } from '../../types/PropsType';
-import { hexToRGBA } from '../../utils/hexToRGBA';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {ISubscriptionProps} from '../../types/PropsType';
+import {hexToRGBA} from '../../utils/hexToRGBA';
 
 const SubscriptionCard = ({
   item,
   selected,
   setSelected,
 }: ISubscriptionProps) => {
-  const { themeColors } = useGlobalContext();
+  const {themeColors} = useGlobalContext();
   return (
     <TouchableOpacity onPress={() => setSelected(item?._id)}>
       <View

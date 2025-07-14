@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from '@react-navigation/native';
 import {
   ActivityIndicator,
   Image,
@@ -9,25 +13,25 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import GradientButton from '../../components/sheard/GradientButton';
-import { eye, eyeSlash } from '../../constant/images';
-import { globalStyles } from '../../constant/styles';
-import { useChangePassword } from '../../hooks/userApiCalls';
-import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { IChangePassword } from '../../types/loginType';
-import { t } from '../../utils/translate';
+import {eye, eyeSlash} from '../../constant/images';
+import {globalStyles} from '../../constant/styles';
+import {useChangePassword} from '../../hooks/userApiCalls';
+import {useGlobalContext} from '../../providers/GlobalContextProvider';
+import {IChangePassword} from '../../types/loginType';
+import {t} from '../../utils/translate';
 
 const ChangePassword = () => {
-  const navigation = useNavigation<NavigationProp<ParamListBase>>()
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const [passShow, setPassShow] = React.useState(true);
   const [opassShow, setOPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
-  const { changePasswordHandler, isLoading } = useChangePassword()
-  const { english, width, height } = useGlobalContext();
+  const {changePasswordHandler, isLoading} = useChangePassword();
+  const {english, width, height} = useGlobalContext();
 
   const [error, setError] = React.useState({
     'current password': false,
@@ -45,10 +49,10 @@ const ChangePassword = () => {
     let invalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof IChangePassword] === '') {
-        setError(prev => ({ ...prev, [key]: true }));
+        setError(prev => ({...prev, [key]: true}));
         invalid = true;
       } else {
-        setError(prev => ({ ...prev, [key]: false }));
+        setError(prev => ({...prev, [key]: false}));
       }
     });
     if (invalid) {
@@ -58,18 +62,18 @@ const ChangePassword = () => {
       });
     }
     const data = {
-      "currentPassword": inputValue['current password'],
-      "newPassword": inputValue['new password'],
-      "confirmPassword": inputValue['confirm password']
-    }
+      currentPassword: inputValue['current password'],
+      newPassword: inputValue['new password'],
+      confirmPassword: inputValue['confirm password'],
+    };
     changePasswordHandler(data, () => {
       setInputValue({
         'current password': '',
         'new password': '',
         'confirm password': '',
       });
-      navigation.goBack()
-    })
+      navigation.goBack();
+    });
   };
 
   return (
@@ -90,20 +94,23 @@ const ChangePassword = () => {
               <Text style={globalStyles.inputLabel}>
                 {t(key as any, english)}
               </Text>
-              <View style={{ position: 'relative' }}>
+              <View style={{position: 'relative'}}>
                 <TextInput
                   value={inputValue[key as keyof IChangePassword]}
                   onChangeText={text => {
-                    setInputValue({ ...inputValue, [key]: text });
-                    setError({ ...error, [key]: false });
+                    setInputValue({...inputValue, [key]: text});
+                    setError({...error, [key]: false});
                   }}
-                  placeholder={`${t('enter', english)} ${t(key as any, english)}`}
+                  placeholder={`${t('enter', english)} ${t(
+                    key as any,
+                    english,
+                  )}`}
                   secureTextEntry={
                     key === 'new password'
                       ? passShow
                       : key === 'confirm password'
-                        ? cPassShow
-                        : opassShow
+                      ? cPassShow
+                      : opassShow
                   }
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
@@ -116,31 +123,31 @@ const ChangePassword = () => {
                 {(key === 'new password' ||
                   key === 'confirm password' ||
                   key === 'current password') && (
-                    <TouchableOpacity
-                      style={{ position: 'absolute', right: 10, top: 18 }}
-                      onPress={() => {
-                        if (key === 'new password') {
-                          setPassShow(!passShow);
-                        } else if (key === 'confirm password') {
-                          setCPassShow(!cPassShow);
-                        } else {
-                          setOPassShow(!opassShow);
-                        }
-                      }}>
-                      <Image
-                        source={
-                          key === 'new password'
-                            ? passShow
-                              ? (eye as ImageSourcePropType)
-                              : (eyeSlash as ImageSourcePropType)
-                            : cPassShow
-                              ? (eye as ImageSourcePropType)
-                              : (eyeSlash as ImageSourcePropType)
-                        }
-                        style={{ width: 20, height: 20 }}
-                      />
-                    </TouchableOpacity>
-                  )}
+                  <TouchableOpacity
+                    style={{position: 'absolute', right: 10, top: 18}}
+                    onPress={() => {
+                      if (key === 'new password') {
+                        setPassShow(!passShow);
+                      } else if (key === 'confirm password') {
+                        setCPassShow(!cPassShow);
+                      } else {
+                        setOPassShow(!opassShow);
+                      }
+                    }}>
+                    <Image
+                      source={
+                        key === 'new password'
+                          ? passShow
+                            ? (eye as ImageSourcePropType)
+                            : (eyeSlash as ImageSourcePropType)
+                          : cPassShow
+                          ? (eye as ImageSourcePropType)
+                          : (eyeSlash as ImageSourcePropType)
+                      }
+                      style={{width: 20, height: 20}}
+                    />
+                  </TouchableOpacity>
+                )}
               </View>
             </View>
           );
@@ -156,21 +163,19 @@ const ChangePassword = () => {
           paddingVertical: 16,
         }}>
         <GradientButton handler={submitHandler}>
-          {
-            isLoading ? (
-              <ActivityIndicator color="white" />
-            ) : (
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: 700,
-                  fontSize: 18,
-                }}>
-                Save Changes
-              </Text>
-            )
-          }
+          {isLoading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: 700,
+                fontSize: 18,
+              }}>
+              Save Changes
+            </Text>
+          )}
         </GradientButton>
       </View>
     </SafeAreaView>
