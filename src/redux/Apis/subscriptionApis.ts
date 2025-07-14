@@ -1,4 +1,4 @@
-import {baseApi} from '../baseApi';
+import { baseApi } from '../baseApi';
 
 const subscriptionApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -16,7 +16,7 @@ const subscriptionApi = baseApi.injectEndpoints({
       }),
     }),
     updateSubscription: builder.mutation({
-      query: ({data, id}) => ({
+      query: ({ data, id }) => ({
         url: `api/subscription/update/${id}`,
         method: 'PUT',
         body: data,
@@ -35,12 +35,12 @@ const subscriptionApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-    getCurrentSubscription: builder.query({
+    getMySubscription: builder.query({
       query: () => ({
         url: 'api/user/subscription',
         method: 'GET',
       }),
-      providesTags: ['subscription'],
+      // providesTags: ['subscription'],
     }),
     cancelSubscription: builder.mutation({
       query: () => ({
@@ -58,6 +58,6 @@ export const {
   useUpdateSubscriptionMutation,
   useDeleteSubscriptionMutation,
   useSubscriptionPaymentMutation,
-  useGetCurrentSubscriptionQuery,
+  useGetMySubscriptionQuery,
   useCancelSubscriptionMutation,
 } = subscriptionApi;

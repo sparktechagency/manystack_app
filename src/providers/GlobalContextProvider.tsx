@@ -5,9 +5,8 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { Dimensions, Image, ImageSourcePropType, Text, View } from 'react-native';
+import { Dimensions, Text, View } from 'react-native';
 import { Colors, ITheme } from '../constant/colors';
-import { Screen } from '../constant/images';
 import { useGetProfileQuery } from '../redux/Apis/userApis';
 import Subscription from '../screens/stacks/Subscription';
 import { IUserProfile } from '../types/DataTypes';
@@ -38,6 +37,8 @@ interface GlobalContextType {
   showSubscription: boolean;
   currency: string;
   setCurrency: React.Dispatch<React.SetStateAction<string>>;
+  firstLoad: boolean;
+  setFirstLoad: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface GlobalProviderProps {
@@ -55,6 +56,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
   const [english, setEnglish] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [images, setImages] = React.useState<IImage[] | []>([]);
+  const [firstLoad, setFirstLoad] = useState<boolean>(true);
   const [showSubscription, setShowSubscription] = useState<boolean>(true);
   const [currency, setCurrency] = useState<string>('$');
   const themeColors = Colors.light;
@@ -75,6 +77,8 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     showSubscription,
     currency,
     setCurrency,
+    firstLoad,
+    setFirstLoad,
   };
 
   useEffect(() => {
@@ -83,43 +87,26 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     }
   }, [data]);
 
-  if (isFetching || userLoading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          height,
-          width,
-          backgroundColor: themeColors.white as string,
-        }}>
-        {/* <ActivityIndicator size="large" color={themeColors.primary as string} /> */}
-        <Image
-          source={Screen as ImageSourcePropType}
-          style={{ width: width, height: height }}
-        />
-      </View>
-    );
-  }
+
 
   return (
     <GlobalContext.Provider value={values}>
       {/* <Provider store={store}> */}
-      {!data?.data?.subscription?.isActive && data?.data?._id ? (
-        <View
-          style={{
-            paddingTop: 20,
-            height,
-            width,
-            backgroundColor: themeColors.white as string,
-          }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold', color: themeColors.black as string, textAlign: 'center' }}>{t('subscription', english)}</Text>
-          <Subscription />
-        </View>
-      ) : (
-        children
-      )}
+      {
+        !data?.data?.subscription?.isActive && data?.data?._id ? (
+          <View
+            style={{
+              paddingTop: 20,
+              height,
+              width,
+              backgroundColor: themeColors.white as string,
+            }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: themeColors.black as string, textAlign: 'center' }}>{t('subscription', english)}</Text>
+            <Subscription />
+          </View>
+        ) : (
+          children
+        )}
       {/* </Provider> */}
     </GlobalContext.Provider>
   );
