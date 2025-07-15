@@ -95,6 +95,9 @@ const Login = () => {
           height,
           width,
           backgroundColor: themeColors.white as string,
+          position: 'absolute',
+          top: 0,
+          left: 0,
         }}>
         {/* <ActivityIndicator size="large" color={themeColors.primary as string} /> */}
         <Image
