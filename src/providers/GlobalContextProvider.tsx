@@ -74,7 +74,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     setEnglish,
     user: data?.data,
     userLoading: userLoading || isFetching,
-    showSubscription: data?.showSubscription,
+    showSubscription: data?.showSubscription || false,
     currency,
     setCurrency,
     firstLoad,
@@ -91,7 +91,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     <GlobalContext.Provider value={values}>
       {/* <Provider store={store}> */}
       {
-        !data?.data?.subscription?.isActive && data?.data?._id ? (
+        !data?.data?.subscription?.isActive && data?.data?._id && showSubscription ? (
           <View
             style={{
               paddingTop: 20,
