@@ -38,7 +38,7 @@ interface ICurrentSubscription {
     startDate: string;
     endDate: string;
   };
-  plan: {
+  planDetails: {
     trialPeriodDays: number;
     _id: string;
     name: string;
@@ -70,7 +70,6 @@ const Subscription = () => {
       });
     }
   };
-  console.log({ currentSubscription });
   return (
     <SafeAreaView
       style={{
@@ -104,7 +103,7 @@ const Subscription = () => {
                   fontWeight: '600',
                   color: themeColors.primary as string,
                 }}>
-                {currentSubscription?.plan?.name}
+                {currentSubscription?.subscription?.planDetails?.name}
               </Text>
               <Text
                 style={{

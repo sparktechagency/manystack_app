@@ -1,18 +1,20 @@
-import {useRoute} from '@react-navigation/native';
-import React, {useState} from 'react';
-import {Text, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {WebView} from 'react-native-webview';
+import { NavigationProp, ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { WebView } from 'react-native-webview';
+import GradientButton from '../../components/sheard/GradientButton';
+import { useGetMySubscriptionQuery } from '../../redux/Apis/subscriptionApis';
 
 const Payment = () => {
-  const {params}: any = useRoute();
+  const { params }: any = useRoute();
   const [url] = useState(params?.params?.url); // keep original URL
   const [paymentStatus, setPaymentStatus] = useState<
     'pending' | 'success' | 'cancel' | 'error'
   >('pending');
 
   const handleWebViewError = (syntheticEvent: any) => {
-    const {nativeEvent} = syntheticEvent;
+    const { nativeEvent } = syntheticEvent;
     console.error('WebView Error:', nativeEvent);
     // setPaymentStatus('error');
   };
@@ -28,6 +30,8 @@ const Payment = () => {
   };
 
   const renderContent = () => {
+    const { refetch } = useGetMySubscriptionQuery(undefined)
+    const navigate = useNavigation<NavigationProp<ParamListBase>>();
     if (!url || paymentStatus !== 'pending') {
       let message = '';
       switch (paymentStatus) {
@@ -43,25 +47,49 @@ const Payment = () => {
         default:
           message = 'No URL provided for payment.';
       }
-
+      refetch()
       return (
         <SafeAreaView
-          style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Text>{message}</Text>
+          style={{
+            flex: 1,
+            backgroundColor: '#f8f9fa',
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingHorizontal: 20,
+          }}
+        >
+
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: 'bold',
+              color: '#1e1e1e',
+              textAlign: 'center',
+              marginBottom: 20,
+            }}
+          >
+            {message}
+          </Text>
+
+          <GradientButton handler={() => navigate.navigate('Tabs', { screen: 'Home' })}>
+            <View style={{ paddingHorizontal: 10, paddingVertical: 12 }}>
+              <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>Go to Home</Text>
+            </View>
+          </GradientButton>
         </SafeAreaView>
-      );
+      )
     }
 
     return (
       <WebView
-        source={{uri: url}}
+        source={{ uri: url }}
         onError={handleWebViewError}
         onNavigationStateChange={handleNavigationChange}
       />
     );
   };
 
-  return <View style={{flex: 1}}>{renderContent()}</View>;
+  return <View style={{ flex: 1 }}>{renderContent()}</View>;
 };
 
 export default Payment;
