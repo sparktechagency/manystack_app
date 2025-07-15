@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -7,24 +7,27 @@ import {
   Text,
   View,
 } from 'react-native';
-import {Camera, Profile} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {useUploadLogo} from '../../hooks/userApiCalls';
-import {IImage, useGlobalContext} from '../../providers/GlobalContextProvider';
-import {generateImageUrl} from '../../utils/baseUrls';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { Camera, Profile } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useUploadLogo } from '../../hooks/userApiCalls';
+import { IImage, useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetProfileQuery } from '../../redux/Apis/userApis';
+import { generateImageUrl } from '../../utils/baseUrls';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 import ImageUpload from '../sheard/ImageUpload';
 
 const NameImage = () => {
-  const {themeColors, user} = useGlobalContext();
+  const { themeColors, user } = useGlobalContext();
+  const { refetch } = useGetProfileQuery(undefined)
   const [images, setImages] = React.useState<IImage[]>([]);
-  const {uploadLogoHandler, isLoading} = useUploadLogo();
+  const { uploadLogoHandler, isLoading } = useUploadLogo();
   useEffect(() => {
     if (images.length > 0) {
       const formData = new FormData();
       formData.append('profilePicture', images[0]);
       uploadLogoHandler(formData, () => {
         setImages([]);
+        refetch()
       });
     }
   }, [images]);
@@ -39,18 +42,27 @@ const NameImage = () => {
         style={{
           position: 'relative',
         }}>
-        <Image
-          source={
-            user?.profilePicture
-              ? {uri: generateImageUrl(user?.profilePicture as string)}
-              : (Profile as ImageSourcePropType)
-          }
-          style={{
-            width: 100,
-            height: 100,
-            borderRadius: 50,
-          }}
-        />
+        {
+          isLoading ? (
+            <ActivityIndicator
+              size="small"
+              color={themeColors.primary as string}
+            />
+          ) : (
+            <Image
+              source={
+                user?.profilePicture
+                  ? { uri: generateImageUrl(user?.profilePicture as string) }
+                  : (Profile as ImageSourcePropType)
+              }
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 50,
+              }}
+            />
+          )
+        }
         <ImageUpload images={images} setImages={setImages}>
           <View
             style={{
