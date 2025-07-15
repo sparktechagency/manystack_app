@@ -23,28 +23,28 @@ export interface IIntervention {
   price: number;
   note: string;
   images:
-    | [
-        {
-          createdAt: string;
-          url: string;
-          location: string;
-        },
-      ]
-    | [];
+  | [
+    {
+      createdAt: string;
+      url: string;
+      location: string;
+    },
+  ]
+  | [];
 }
 export interface IExpenses {
   createdAt: string;
   expenseCategory: string;
   expenseName: string;
   images:
-    | [
-        {
-          createdAt: string;
-          url: string;
-          location: string;
-        },
-      ]
-    | [];
+  | [
+    {
+      createdAt: string;
+      url: string;
+      location: string;
+    },
+  ]
+  | [];
   note: string;
   price: number;
   updatedAt: string;

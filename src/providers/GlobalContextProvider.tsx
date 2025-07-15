@@ -74,7 +74,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     setEnglish,
     user: data?.data,
     userLoading: userLoading || isFetching,
-    showSubscription,
+    showSubscription: data?.showSubscription,
     currency,
     setCurrency,
     firstLoad,
@@ -86,8 +86,6 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
       setCurrency(data?.data?.currency);
     }
   }, [data]);
-
-
 
   return (
     <GlobalContext.Provider value={values}>
