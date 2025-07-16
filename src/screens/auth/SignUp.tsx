@@ -66,7 +66,7 @@ const SignUp = () => {
     'first name': '',
     'last name': '',
     email: '',
-    currency: '$',
+    currency: '',
     contact: '',
     gender: '',
     'N°SIREN': '',
@@ -115,7 +115,7 @@ const SignUp = () => {
       },
       gender: combinedInputValue['gender'],
       password: combinedInputValue['password'],
-      currency: combinedInputValue['currency'],
+      currency: combinedInputValue['currency'] || '$',
     };
     register(data)
       .unwrap()
@@ -314,6 +314,10 @@ const SignUp = () => {
                   {english ? 'Currency' : 'Devise'}
                 </Text>
                 <Dropdown
+                  onFocus={() => {
+                    setError({ ...error, currency: false });
+                    setInputValue({ ...inputValue, currency: '' });
+                  }}
                   style={[
                     globalStyles.input,
                     error[key as keyof ILogin] ? globalStyles.inputError : {},
