@@ -35,6 +35,8 @@ const DrawerLinks = ({
           await AsyncStorage.removeItem('token');
           RNRestart.restart();
           navigate.dispatch(DrawerActions.closeDrawer());
+        } if (href === 'Delete') {
+
         } else {
           navigate.navigate(href as any);
         }
@@ -63,10 +65,12 @@ const DrawerLinks = ({
           style={{
             width: 24,
             height: 24,
-            tintColor: themeColors.black as string,
+            tintColor: href === "Delete" || href === 'Login' ? themeColors.red as string : themeColors.black as string,
           }}
         />
-        <Text>{t(title as any, english)}</Text>
+        <Text style={{
+          color: href === "Delete" || href === 'Login' ? themeColors.red as string : themeColors.black as string,
+        }}>{t(title as any, english)}</Text>
       </View>
       {showArrow && (
         <Image

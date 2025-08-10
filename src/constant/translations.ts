@@ -188,6 +188,10 @@ export const translations = {
     en: 'Select Currency',
     fr: 'Sélectionner la devise',
   },
+  "Delete Account": {
+    en: 'Delete Account',
+    fr: 'Supprimer le compte',
+  },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
