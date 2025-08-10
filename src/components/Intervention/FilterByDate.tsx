@@ -1,7 +1,7 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import moment from 'moment';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -11,12 +11,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Calender} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {StackTypes} from '../../types/ScreenPropsTypes';
-import {hexToRGBA} from '../../utils/hexToRGBA';
-import {t} from '../../utils/translate';
+import { Calender, Plus } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { StackTypes } from '../../types/ScreenPropsTypes';
+import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 import GradientButton from '../sheard/GradientButton';
 
 const FilterByDate = ({
@@ -27,7 +27,7 @@ const FilterByDate = ({
   fromTOHandler: (arg: string, arg0: string) => void;
 }) => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
-  const {themeColors, english} = useGlobalContext();
+  const { themeColors, english } = useGlobalContext();
 
   const [fromDate, setFromDate] = useState<Date | undefined>();
   const [toDate, setToDate] = useState<Date | undefined>();
@@ -74,7 +74,7 @@ const FilterByDate = ({
 
   return (
     <View>
-      <Text style={{fontSize: 16, fontWeight: '600', marginBottom: 6}}>
+      <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 6 }}>
         {t('filterByDate', english)}
       </Text>
 
@@ -116,7 +116,7 @@ const FilterByDate = ({
               </Text>
               <Image
                 source={Calender as ImageSourcePropType}
-                style={{height: 20, width: 20}}
+                style={{ height: 20, width: 20 }}
               />
             </View>
           </TouchableOpacity>
@@ -168,7 +168,7 @@ const FilterByDate = ({
               </Text>
               <Image
                 source={Calender as ImageSourcePropType}
-                style={{height: 20, width: 20}}
+                style={{ height: 20, width: 20 }}
               />
             </View>
           </TouchableOpacity>
@@ -193,7 +193,7 @@ const FilterByDate = ({
             marginTop: 16,
           },
         ]}>
-        <Text style={{fontSize: 16, fontWeight: '600', marginBottom: 6}}>
+        <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 6 }}>
           {t(getAllTitleKey(), english)}
         </Text>
         <GradientButton
@@ -206,15 +206,24 @@ const FilterByDate = ({
               navigate.navigate('CreateIntervention');
             }
           }}>
-          <Text
+          {/* <Text
             style={{
               color: 'white',
               textAlign: 'center',
               fontWeight: '700',
               fontSize: 18,
+              paddingHorizontal: 10
             }}>
             {t(getAddTitleKey(), english)}
-          </Text>
+          </Text> */}
+          <Image
+            source={Plus as ImageSourcePropType}
+            style={{
+              tintColor: "white",
+              height: 20,
+              width: 20
+            }}
+          />
         </GradientButton>
       </View>
     </View>
