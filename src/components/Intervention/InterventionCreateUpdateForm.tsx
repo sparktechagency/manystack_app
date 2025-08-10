@@ -1,5 +1,5 @@
-import {useRoute} from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import { useRoute } from '@react-navigation/native';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -11,32 +11,32 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
-import {paymentStatus} from '../../constant/data';
-import {Camera, DeleteIcon} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {TranslationKey} from '../../constant/translations';
+import { paymentStatus } from '../../constant/data';
+import { Camera, DeleteIcon } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { TranslationKey } from '../../constant/translations';
 import {
   createIntervention,
   updateIntervention,
 } from '../../hooks/interventionApiCall';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {useGetCategoriesQuery} from '../../redux/Apis/categoryApis';
-import {ICreateInterVention} from '../../types/DataTypes';
-import {ICreateInterVentionError} from '../../types/ErrorTypes';
-import {getLocation} from '../../utils/getLocations';
-import {hexToRGBA} from '../../utils/hexToRGBA';
-import {t} from '../../utils/translate';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
+import { ICreateInterVention } from '../../types/DataTypes';
+import { ICreateInterVentionError } from '../../types/ErrorTypes';
+import { getLocation } from '../../utils/getLocations';
+import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 import GradientButton from '../sheard/GradientButton';
 import ImageUpload from '../sheard/ImageUpload';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
 const InterventionCreateUpdateForm = () => {
-  const {data} = useGetCategoriesQuery(undefined);
-  const {params}: any = useRoute();
-  const {handleCreateIntervention, isLoading} = createIntervention();
-  const {handleUpdateIntervention, isLoading: updating} = updateIntervention();
-  const {themeColors, setImages, images, english} = useGlobalContext();
+  const { data } = useGetCategoriesQuery(undefined);
+  const { params }: any = useRoute();
+  const { handleCreateIntervention, isLoading } = createIntervention();
+  const { handleUpdateIntervention, isLoading: updating } = updateIntervention();
+  const { themeColors, setImages, images, english } = useGlobalContext();
   const [error, setError] = React.useState<ICreateInterVentionError>({
     'intervention id': false,
     category: false,
@@ -57,10 +57,10 @@ const InterventionCreateUpdateForm = () => {
     let invalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof ICreateInterVention] === '') {
-        setError(prev => ({...prev, [key]: true}));
+        setError(prev => ({ ...prev, [key]: true }));
         invalid = true;
       } else {
-        setError(prev => ({...prev, [key]: false}));
+        setError(prev => ({ ...prev, [key]: false }));
       }
     });
     if (invalid) return;
@@ -159,7 +159,7 @@ const InterventionCreateUpdateForm = () => {
               <Text style={globalStyles.inputLabel}>
                 {t(key as TranslationKey, english)}
               </Text>
-              <View style={{position: 'relative'}}>
+              <View style={{ position: 'relative' }}>
                 <TextInput
                   // editable={false}
                   value={inputValue[key as keyof ICreateInterVention]}
@@ -181,12 +181,12 @@ const InterventionCreateUpdateForm = () => {
               <Text style={globalStyles.inputLabel}>
                 {t(key as TranslationKey, english)}
               </Text>
-              <View style={{position: 'relative'}}>
+              <View style={{ position: 'relative' }}>
                 <TextInput
                   value={inputValue[key as keyof ICreateInterVention]}
                   onChangeText={text => {
-                    setInputValue({...inputValue, [key]: text});
-                    setError({...error, [key]: false});
+                    setInputValue({ ...inputValue, [key]: text });
+                    setError({ ...error, [key]: false });
                   }}
                   keyboardType={key === 'price' ? 'numeric' : 'default'}
                   placeholder={t(key as TranslationKey, english)}
@@ -222,23 +222,23 @@ const InterventionCreateUpdateForm = () => {
             ]}>
             <Image
               source={Camera as ImageSourcePropType}
-              style={{width: 30, height: 30}}
+              style={{ width: 30, height: 30 }}
             />
             <View>
-              <Text style={[globalStyles.inputLabel, {fontSize: 16}]}>
+              <Text style={[globalStyles.inputLabel, { fontSize: 16 }]}>
                 {t('selectImage', english)}
               </Text>
             </View>
           </View>
         </ImageUpload>
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
           {images?.length > 0 &&
             images.map((image, index) => (
               <View
                 key={image.uri}
-                style={{position: 'relative', width: 100, height: 100}}>
+                style={{ position: 'relative', width: 100, height: 100 }}>
                 <Image
-                  source={{uri: image?.uri}}
+                  source={{ uri: image?.uri }}
                   style={{
                     marginTop: 6,
                     width: 100,
@@ -272,7 +272,7 @@ const InterventionCreateUpdateForm = () => {
               </View>
             ))}
         </View>
-        <View style={{paddingHorizontal: 25, marginTop: 20, marginBottom: 120}}>
+        <View style={{ paddingHorizontal: 25, marginTop: 20, marginBottom: 120 }}>
           <GradientButton handler={() => submitHandler()}>
             {isLoading || updating ? (
               <ActivityIndicator size="small" color="white" />
