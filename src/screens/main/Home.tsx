@@ -1,11 +1,12 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, ImageSourcePropType } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FloatingPlus from '../../components/Home/FloatingPlus';
 import Highlights from '../../components/Home/Highlights';
 import OverviewChart from '../../components/Home/OverviewChart';
 import ProfitCard from '../../components/Home/ProfitCard';
 import WellCome from '../../components/Home/WellCome';
+import { Loss } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetHomePageDataQuery } from '../../redux/Apis/userApis';
 import { t } from '../../utils/translate';
@@ -32,6 +33,13 @@ const Home = () => {
       count={`${currency}${data?.data?.totalIncome || 0}`}
       percentage={data?.data?.incomeChange || '0%'}
       key={3}
+    />,
+    <ProfitCard
+      title={t('expanses', english)}
+      count={`${currency}23,787`}
+      percentage="+14%"
+      icon={Loss as ImageSourcePropType}
+      key={1}
     />,
     <OverviewChart monthlyData={data?.data?.monthlyData || []} key={4} />,
     <Highlights
