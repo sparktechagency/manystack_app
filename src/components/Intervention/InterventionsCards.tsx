@@ -16,23 +16,23 @@ import {
   View,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import {DeleteIcon, Edit, eye, logo} from '../../constant/images';
+import { Checkbox, DeleteIcon, Edit, eye, logo, Minus } from '../../constant/images';
 import {
   updateIntervention,
   useDeleteIntervention,
 } from '../../hooks/interventionApiCall';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {IIntervention} from '../../types/DataTypes';
-import {generateImageUrl} from '../../utils/baseUrls';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { IIntervention } from '../../types/DataTypes';
+import { generateImageUrl } from '../../utils/baseUrls';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 
-const InterventionsCards = ({item}: {item: IIntervention}) => {
+const InterventionsCards = ({ item }: { item: IIntervention }) => {
   // const { handleDeleteIntervention } = deleteIntervention()
-  const {handleUpdateIntervention, isLoading: updating} = updateIntervention();
-  const {handleDeleteIntervention, isLoading: deleting} =
+  const { handleUpdateIntervention, isLoading: updating } = updateIntervention();
+  const { handleDeleteIntervention, isLoading: deleting } =
     useDeleteIntervention();
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
-  const {themeColors, currency} = useGlobalContext();
+  const { themeColors, currency } = useGlobalContext();
   const toggleSwitch = async () => {
     const data = new FormData();
     data.append('status', item.status === 'PAID' ? 'UNPAID' : 'PAID');
@@ -51,7 +51,7 @@ const InterventionsCards = ({item}: {item: IIntervention}) => {
 
   return (
     <View
-      style={[CardStyles.card, {backgroundColor: themeColors.white as string}]}>
+      style={[CardStyles.card, { backgroundColor: themeColors.white as string }]}>
       <View>
         <View style={CardStyles.headerRow}>
           <Text
@@ -64,25 +64,17 @@ const InterventionsCards = ({item}: {item: IIntervention}) => {
             {item.interventionId}
           </Text>
 
-          <View
-            style={[
-              CardStyles.statusBadge,
-              {
-                backgroundColor:
-                  item.status === 'Unpaid'
-                    ? hexToRGBA(themeColors.yellow as string, 0.4)
-                    : hexToRGBA(themeColors.green as string, 0.4),
-              },
-            ]}>
-            <Text
-              style={[
-                CardStyles.statusText,
-                {
-                  color: hexToRGBA(themeColors.black as string, 0.6),
-                },
-              ]}>
-              {item.status}
-            </Text>
+          <View>
+            <Image
+              source={item?.status === "Unpaid" ? Minus as ImageSourcePropType : Checkbox as ImageSourcePropType}
+              style={{
+                height: 20,
+                width: 20,
+                tintColor: item.status === 'Unpaid'
+                  ? hexToRGBA(themeColors.red as string, 0.9)
+                  : hexToRGBA(themeColors.green as string, 0.9),
+              }}
+            />
           </View>
         </View>
         <Text
@@ -104,7 +96,7 @@ const InterventionsCards = ({item}: {item: IIntervention}) => {
           {item?.category?.name}
         </Text>
         <Text
-          style={[CardStyles.amount, {color: themeColors.primary as string}]}>
+          style={[CardStyles.amount, { color: themeColors.primary as string }]}>
           {currency}
           {item.price.toFixed(2)}
         </Text>
@@ -123,7 +115,7 @@ const InterventionsCards = ({item}: {item: IIntervention}) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('InterventionDetails', {
-                params: {id: item._id},
+                params: { id: item._id },
               });
             }}>
             <Image
@@ -210,7 +202,7 @@ const InterventionsCards = ({item}: {item: IIntervention}) => {
         {item.images && item.images.length > 0 ? (
           <>
             <Image
-              source={{uri: generateImageUrl(item?.images[0]?.url as string)}}
+              source={{ uri: generateImageUrl(item?.images[0]?.url as string) }}
               style={CardStyles.image}
               resizeMode="cover"
             />

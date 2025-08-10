@@ -1,6 +1,7 @@
 // tab icons
 import Calender from '../asset/calendar.png';
 import Camera from '../asset/Camera.png';
+import Checkbox from '../asset/checkbox.png';
 import Close from '../asset/close.png';
 import DeleteIcon from '../asset/delete.png';
 import DownloadPdf from '../asset/DownloadPdf.png';
@@ -29,6 +30,7 @@ import InterVention from '../asset/icon/InterVention.png';
 import Invoice from '../asset/icon/Invoice.png';
 import logo from '../asset/logo.png';
 import Loss from '../asset/loss.png';
+import Minus from '../asset/minus.png';
 import Plus from '../asset/plus.png';
 import Profile from '../asset/profile.png';
 import Profit from '../asset/profit.png';
@@ -56,8 +58,7 @@ export const TabIcons = {
 };
 export {
   Calender,
-  Camera,
-  Close,
+  Camera, Checkbox, Close,
   DeleteIcon,
   DownloadPdf,
   Edit,
@@ -66,10 +67,10 @@ export {
   Filter,
   FullLogo,
   logo,
-  Loss,
-  Plus,
+  Loss, Minus, Plus,
   Profile,
   Profit,
   Screen,
-  SearchIcon,
+  SearchIcon
 };
+
