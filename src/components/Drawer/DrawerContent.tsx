@@ -1,14 +1,16 @@
 import { DrawerContentScrollView } from '@react-navigation/drawer';
-import React, { useEffect } from 'react';
-import { ImageSourcePropType, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ImageSourcePropType, Modal, StyleSheet } from 'react-native';
 import { DrawerLinksData } from '../../constant/data';
 import { DeleteIcon, DrawerIcons } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import NameImage from '../Profile/NameImage';
+import AccountDeleteModal from './AccountDeleteModal';
 import DrawerLinks from './DrawerLinks';
 
 const DrawerContent = (props: any) => {
   const { showSubscription } = useGlobalContext();
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   useEffect(() => {
     if (showSubscription) {
       if (!DrawerLinksData?.find((item: any) => item.name === 'subscription')) {
@@ -22,6 +24,7 @@ const DrawerContent = (props: any) => {
       DrawerLinksData.pop();
     }
   }, [showSubscription]);
+
   return (
     <DrawerContentScrollView {...props}>
       <NameImage />
@@ -46,7 +49,18 @@ const DrawerContent = (props: any) => {
         title={'Delete Account'}
         href={'Delete'}
         icon={DeleteIcon as ImageSourcePropType}
+        setIsDeleteOpen={setIsDeleteOpen}
       />
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isDeleteOpen}
+        onRequestClose={() => {
+          setIsDeleteOpen(!isDeleteOpen);
+        }}
+      >
+        <AccountDeleteModal setIsDeleteOpen={setIsDeleteOpen} />
+      </Modal>
     </DrawerContentScrollView>
   );
 };

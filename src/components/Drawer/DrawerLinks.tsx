@@ -12,7 +12,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import RNRestart from 'react-native-restart';
 import { DrawerIcons } from '../../constant/images';
@@ -25,64 +25,68 @@ const DrawerLinks = ({
   href,
   icon,
   showArrow = true,
+  setIsDeleteOpen
 }: IDrawerLinksProps) => {
   const { themeColors, english } = useGlobalContext();
   const navigate = useNavigation<NavigationProp<ParamListBase>>();
   return (
-    <TouchableOpacity
-      onPress={async () => {
-        if (href === 'Login') {
-          await AsyncStorage.removeItem('token');
-          RNRestart.restart();
-          navigate.dispatch(DrawerActions.closeDrawer());
-        } if (href === 'Delete') {
-
-        } else {
-          navigate.navigate(href as any);
-        }
-      }}
-      style={[
-        globalStyles.flex,
-        {
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: 6,
-          marginVertical: 2,
-        },
-      ]}>
-      <View
+    <>
+      <TouchableOpacity
+        onPress={async () => {
+          if (href === 'Login') {
+            await AsyncStorage.removeItem('token');
+            RNRestart.restart();
+            navigate.dispatch(DrawerActions.closeDrawer());
+          } if (href === 'Delete') {
+            setIsDeleteOpen?.(true)
+          } else {
+            navigate.navigate(href as any);
+          }
+        }}
         style={[
           globalStyles.flex,
           {
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            padding: 10,
-            gap: 10,
+            padding: 6,
+            marginVertical: 2,
           },
         ]}>
-        <Image
-          source={icon}
-          style={{
-            width: 24,
-            height: 24,
-            tintColor: href === "Delete" || href === 'Login' ? themeColors.red as string : themeColors.black as string,
-          }}
-        />
-        <Text style={{
-          color: href === "Delete" || href === 'Login' ? themeColors.red as string : themeColors.black as string,
-        }}>{t(title as any, english)}</Text>
-      </View>
-      {showArrow && (
-        <Image
-          source={DrawerIcons.Arrow as ImageSourcePropType}
-          style={{
-            width: 16,
-            height: 16,
-            tintColor: themeColors.black as string,
-          }}
-        />
-      )}
-    </TouchableOpacity>
+        <View
+          style={[
+            globalStyles.flex,
+            {
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              padding: 10,
+              gap: 10,
+            },
+          ]}>
+          <Image
+            source={icon}
+            style={{
+              width: 24,
+              height: 24,
+              tintColor: href === "Delete" || href === 'Login' ? themeColors.red as string : themeColors.black as string,
+            }}
+          />
+          <Text style={{
+            color: href === "Delete" || href === 'Login' ? themeColors.red as string : themeColors.black as string,
+          }}>{t(title as any, english)}</Text>
+        </View>
+        {showArrow && (
+          <Image
+            source={DrawerIcons.Arrow as ImageSourcePropType}
+            style={{
+              width: 16,
+              height: 16,
+              tintColor: themeColors.black as string,
+            }}
+          />
+        )}
+      </TouchableOpacity>
+
+    </>
   );
 };
 
