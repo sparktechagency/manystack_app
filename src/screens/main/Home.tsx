@@ -23,12 +23,12 @@ const Home = () => {
     />,
     <ProfitCard
       title="Intervention"
-      count={`${currency}${data?.data?.totalIntervention || 0}` || '0'}
+      count={`${data?.data?.totalIntervention || 0}` || '0'}
       percentage={data?.data?.interventionChange || '0%'}
       key={3}
     />,
     <ProfitCard
-      title={english ? 'Income' : 'revenu'}
+      title={english ? 'Income' : 'Chiffre d’Affaire'}
       count={`${currency}${data?.data?.totalIncome || 0}`}
       percentage={data?.data?.incomeChange || '0%'}
       key={3}
