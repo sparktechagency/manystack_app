@@ -1,4 +1,4 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import {
@@ -10,19 +10,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {DeleteIcon, DownloadPdf, Edit, eye} from '../../constant/images';
-import {deleteInvoice} from '../../hooks/invoiceApiCall';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {IInvoice} from '../../types/DataTypes';
-import {StackTypes} from '../../types/ScreenPropsTypes';
-import {downloadButton} from '../../utils/DownloadPdf';
-import {hexToRGBA} from '../../utils/hexToRGBA';
-import {CardStyles} from '../Intervention/InterventionsCards';
+import { Checkbox, DeleteIcon, DownloadPdf, Edit, eye, Minus } from '../../constant/images';
+import { deleteInvoice } from '../../hooks/invoiceApiCall';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { IInvoice } from '../../types/DataTypes';
+import { StackTypes } from '../../types/ScreenPropsTypes';
+import { downloadButton } from '../../utils/DownloadPdf';
+import { hexToRGBA } from '../../utils/hexToRGBA';
+import { CardStyles } from '../Intervention/InterventionsCards';
 
-const InvoiceCard = ({item}: {item: IInvoice}) => {
+const InvoiceCard = ({ item }: { item: IInvoice }) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
-  const {themeColors, currency} = useGlobalContext();
-  const {deleteInvoiceHandler, isLoading} = deleteInvoice();
+  const { themeColors, currency } = useGlobalContext();
+  const { deleteInvoiceHandler, isLoading } = deleteInvoice();
   return (
     <View
       style={[
@@ -35,7 +35,7 @@ const InvoiceCard = ({item}: {item: IInvoice}) => {
           shadowRadius: 10,
           elevation: 5,
         },
-        {backgroundColor: themeColors.white as string},
+        { backgroundColor: themeColors.white as string },
       ]}>
       <View>
         <View style={CardStyles.headerRow}>
@@ -49,25 +49,17 @@ const InvoiceCard = ({item}: {item: IInvoice}) => {
             {item?.invoiceId}
           </Text>
 
-          <View
-            style={[
-              CardStyles.statusBadge,
-              {
-                backgroundColor:
-                  item.status === 'UNPAID'
-                    ? hexToRGBA(themeColors.yellow as string, 0.4)
-                    : hexToRGBA(themeColors.green as string, 0.4),
-              },
-            ]}>
-            <Text
-              style={[
-                CardStyles.statusText,
-                {
-                  color: hexToRGBA(themeColors.black as string, 0.6),
-                },
-              ]}>
-              {item.status}
-            </Text>
+          <View>
+            <Image
+              source={item?.status === "Unpaid" ? Minus as ImageSourcePropType : Checkbox as ImageSourcePropType}
+              style={{
+                height: 20,
+                width: 20,
+                tintColor: item.status === 'Unpaid'
+                  ? hexToRGBA(themeColors.red as string, 0.9)
+                  : hexToRGBA(themeColors.green as string, 0.9),
+              }}
+            />
           </View>
         </View>
         <Text
@@ -89,18 +81,18 @@ const InvoiceCard = ({item}: {item: IInvoice}) => {
           {item?.services[0]?.selectedService}
         </Text> */}
         <Text
-          style={[CardStyles.amount, {color: themeColors.primary as string}]}>
+          style={[CardStyles.amount, { color: themeColors.primary as string }]}>
           {currency}
           {item?.services
             ?.reduce((acc, curr) => acc + curr.price, 0)
             .toFixed(2)}
         </Text>
 
-        <View style={[CardStyles.actions, {width: '30%'}]}>
+        <View style={[CardStyles.actions, { width: '30%' }]}>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('InvoiceDetails', {
-                params: {id: item._id},
+                params: { id: item._id },
               });
             }}>
             <Image
