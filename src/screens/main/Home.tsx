@@ -36,8 +36,8 @@ const Home = () => {
     />,
     <ProfitCard
       title={t('expanses', english)}
-      count={`${currency}23,787`}
-      percentage="+14%"
+      count={`${currency}${data?.data?.totalExpensesInPrice || 0}`}
+      percentage={`${data?.data?.expenseChange || "0%"}`}
       icon={Loss as ImageSourcePropType}
       key={1}
     />,
