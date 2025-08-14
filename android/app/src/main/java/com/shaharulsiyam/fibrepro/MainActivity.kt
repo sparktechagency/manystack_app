@@ -1,4 +1,4 @@
-package com.many
+package com.shaharulsiyam.fibrepro
 
 import android.os.Bundle
 import com.facebook.react.ReactActivity
