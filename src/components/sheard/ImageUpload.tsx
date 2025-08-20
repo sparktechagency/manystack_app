@@ -5,8 +5,9 @@ import {
   Platform,
   TouchableOpacity,
 } from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
-import {IImageUploadProps} from '../../types/PropsType';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { IImage } from '../../providers/GlobalContextProvider';
+import { IImageUploadProps } from '../../types/PropsType';
 
 export const requestCameraPermission = async () => {
   if (Platform.OS !== 'android') return true;
@@ -55,26 +56,29 @@ const ImageUpload = ({
     }
   };
   const pickImage = async () => {
-    const hasStoragePermission = await requestStoragePermission();
-    if (!hasStoragePermission) {
-      Alert.alert(
-        'Permission denied',
-        'Storage permission is required to select images',
-      );
-      return;
-    }
+
     try {
-      const result = await ImagePicker.openPicker({
-        cropping: false,
+      const result = await launchImageLibrary({
+        mediaType: 'photo',
+        includeBase64: true,
       });
-      const newImage = {
-        uri: result.path,
-        name: result?.filename ?? 'random.jpg',
-        type: result?.mime ?? 'image/jpeg',
-        mimeType: result?.mime ?? 'image/jpeg',
-      };
-      setImages([...images, newImage]);
+      if (result.didCancel) {
+        return Alert.alert('Cancelled', 'Image selection was cancelled');
+      }
+
+      if (result.assets && result.assets.length > 0) {
+        const newImage: IImage = {
+          uri: result.assets[0].uri ?? '',
+          name: result.assets[0].fileName ?? 'random.jpg',
+          type: result.assets[0].type ?? 'image/jpeg',
+          mimeType: result?.assets[0].type ?? 'image/jpeg',
+        };
+        setImages([...images, newImage]);
+      } else {
+        Alert.alert('Error', 'No image selected');
+      }
     } catch (error: any) {
+      console.log(error)
       if (error.code !== 'E_PICKER_CANCELLED') {
         Alert.alert('Error', 'Failed to pick image');
       }

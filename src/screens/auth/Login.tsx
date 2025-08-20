@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import RNRestart from 'react-native-restart';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
@@ -121,100 +122,102 @@ const Login = () => {
     setFirstLoad(false)
   }
   return (
-    <SafeAreaView
-      style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <View style={{ marginTop: -60 }}>
-        <Image source={logo as ImageSourcePropType} height={100} width={100} />
-      </View>
-      {/* form */}
-      <View style={{ width: '100%', paddingHorizontal: 20 }}>
-        {Object.keys(inputValue).map((key, index) => (
-          <View key={index}>
-            <Text style={[globalStyles.inputLabel]}>
-              {english
-                ? key.charAt(0).toUpperCase() + key.slice(1)
-                : key == 'email'
-                  ? 'Email'
-                  : 'Mot de passe'}
-            </Text>
-            <View style={{ position: 'relative' }}>
-              <TextInput
-                value={inputValue[key as keyof ILogin]}
-                onChangeText={text => {
-                  setInputValue({ ...inputValue, [key]: text });
-                  setError({ ...error, [key]: false });
-                }}
-                placeholder={`${t('enter', english)} ${t(key as any, english)}`}
-                secureTextEntry={key === 'password' ? passShow : false}
-                placeholderTextColor={globalStyles.inputPlaceholder.color}
-                style={[
-                  globalStyles.input,
-                  error[key as keyof ILogin] ? globalStyles.inputError : {},
-                ]}
-              />
-              {key === 'password' && (
-                <TouchableOpacity
-                  style={[
-                    {
-                      position: 'absolute',
-                      right: 10,
-                      top: 15,
-                    },
-                  ]}
-                  onPress={() => setPassShow(!passShow)}>
-                  <Image
-                    source={
-                      passShow
-                        ? (eye as ImageSourcePropType)
-                        : (eyeSlash as ImageSourcePropType)
-                    }
-                    style={{ width: 20, height: 20 }}
-                  />
-                </TouchableOpacity>
-              )}
-            </View>
-          </View>
-        ))}
-
-        <Link
-          style={{ textAlign: 'right', marginBottom: 20 }}
-          screen="Forget"
-          params={{}}>
-          <Text>{english ? 'Forgot password?' : 'Mot de passe oublié'}?</Text>
-        </Link>
-
-        <View
-          style={{
-            paddingHorizontal: 25,
-          }}>
-          <GradientButton handler={() => submitHandler()}>
-            {
-              isLoading ? <ActivityIndicator size="small" color="#FFFFFF" /> : <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: 700,
-                  fontSize: 18,
-                }}>
-                {english ? 'Login' : 'Connexion'}
+    <KeyboardAwareScrollView bottomOffset={62}>
+      <SafeAreaView
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ marginTop: 0 }}>
+          <Image source={logo as ImageSourcePropType} height={100} width={100} />
+        </View>
+        {/* form */}
+        <View style={{ width: '100%', paddingHorizontal: 20 }}>
+          {Object.keys(inputValue).map((key, index) => (
+            <View key={index}>
+              <Text style={[globalStyles.inputLabel]}>
+                {english
+                  ? key.charAt(0).toUpperCase() + key.slice(1)
+                  : key == 'email'
+                    ? 'Email'
+                    : 'Mot de passe'}
               </Text>
-            }
-          </GradientButton>
-        </View>
+              <View style={{ position: 'relative' }}>
+                <TextInput
+                  value={inputValue[key as keyof ILogin]}
+                  onChangeText={text => {
+                    setInputValue({ ...inputValue, [key]: text });
+                    setError({ ...error, [key]: false });
+                  }}
+                  placeholder={`${t('enter', english)} ${t(key as any, english)}`}
+                  secureTextEntry={key === 'password' ? passShow : false}
+                  placeholderTextColor={globalStyles.inputPlaceholder.color}
+                  style={[
+                    globalStyles.input,
+                    error[key as keyof ILogin] ? globalStyles.inputError : {},
+                  ]}
+                />
+                {key === 'password' && (
+                  <TouchableOpacity
+                    style={[
+                      {
+                        position: 'absolute',
+                        right: 10,
+                        top: 15,
+                      },
+                    ]}
+                    onPress={() => setPassShow(!passShow)}>
+                    <Image
+                      source={
+                        passShow
+                          ? (eye as ImageSourcePropType)
+                          : (eyeSlash as ImageSourcePropType)
+                      }
+                      style={{ width: 20, height: 20 }}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+          ))}
 
-        <View style={[globalStyles.flex, { marginTop: 20 }]}>
-          <Text style={globalStyles.text}>
-            {english ? "Don't have an account" : "Vous n'avez pas de compte"}?{' '}
-          </Text>
-          <Link screen="SignUp" params={{}}>
-            <Text style={[{ marginLeft: 5 }, globalStyles.text]}>
-              {' '}
-              {english ? 'Sign Up' : 'Inscrivez-vous'}
-            </Text>
+          <Link
+            style={{ textAlign: 'right', marginBottom: 20 }}
+            screen="Forget"
+            params={{}}>
+            <Text>{english ? 'Forgot password?' : 'Mot de passe oublié'}?</Text>
           </Link>
+
+          <View
+            style={{
+              paddingHorizontal: 25,
+            }}>
+            <GradientButton handler={() => submitHandler()}>
+              {
+                isLoading ? <ActivityIndicator size="small" color="#FFFFFF" /> : <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: 700,
+                    fontSize: 18,
+                  }}>
+                  {english ? 'Login' : 'Connexion'}
+                </Text>
+              }
+            </GradientButton>
+          </View>
+
+          <View style={[globalStyles.flex, { marginTop: 20 }]}>
+            <Text style={globalStyles.text}>
+              {english ? "Don't have an account" : "Vous n'avez pas de compte"}?{' '}
+            </Text>
+            <Link screen="SignUp" params={{}}>
+              <Text style={[{ marginLeft: 5 }, globalStyles.text]}>
+                {' '}
+                {english ? 'Sign Up' : 'Inscrivez-vous'}
+              </Text>
+            </Link>
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 };
 

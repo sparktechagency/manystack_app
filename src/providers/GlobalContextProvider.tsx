@@ -46,6 +46,7 @@ interface GlobalProviderProps {
 }
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
 const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
+
   const {
     data,
     isLoading: userLoading,

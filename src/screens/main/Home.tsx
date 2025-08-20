@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList, ImageSourcePropType } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { FlatList, ImageSourcePropType, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FloatingPlus from '../../components/Home/FloatingPlus';
 import Highlights from '../../components/Home/Highlights';
 import OverviewChart from '../../components/Home/OverviewChart';
@@ -14,6 +14,7 @@ import { t } from '../../utils/translate';
 const Home = () => {
   const { english, currency } = useGlobalContext();
   const { data, isLoading, isFetching } = useGetHomePageDataQuery(undefined);
+  const insets = useSafeAreaInsets();
   const elements = [
     <WellCome key={1} />,
     <ProfitCard
@@ -53,7 +54,7 @@ const Home = () => {
     />,
   ];
   return (
-    <SafeAreaView>
+    <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
       <FlatList
         keyExtractor={(item, index) => index.toString()}
         data={elements}
@@ -66,7 +67,7 @@ const Home = () => {
         }}
       />
       <FloatingPlus key={6} />
-    </SafeAreaView>
+    </View>
   );
 };
 

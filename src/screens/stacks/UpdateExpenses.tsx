@@ -1,11 +1,14 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import { SafeAreaView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import ExpensesCreateUpdateForm from '../../components/Expenses/ExpensesCreateUpdateForm';
 
 const UpdateExpenses = () => {
   return (
     <SafeAreaView>
-      <ExpensesCreateUpdateForm />
+      <KeyboardAwareScrollView bottomOffset={62}>
+        <ExpensesCreateUpdateForm />
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

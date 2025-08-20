@@ -14,6 +14,7 @@ import {
   View,
 } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import Address from '../../components/sheard/Address';
@@ -140,230 +141,213 @@ const SignUp = () => {
 
   return (
     <SafeAreaView>
-      <ScrollView
-        style={{
-          width: '100%',
-          height: '100%',
-          paddingHorizontal: 20,
-          paddingVertical: 20,
-        }}>
-        {Object.keys(inputValue).map((key, index, arr) => {
-          if (key === 'last name' && arr[index - 1] === 'first name') {
-            return null;
-          }
-          if (key === 'first name' && arr[index + 1] === 'last name') {
-            return (
-              <View
-                key={`${key}-${arr[index + 1]}`}
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
-                <View style={{ flex: 1, marginRight: 10 }}>
-                  <Text style={globalStyles.inputLabel}>
-                    {t('firstName', english)}
-                  </Text>
-                  <View style={{ position: 'relative' }}>
-                    <TextInput
-                      value={inputValue['first name']}
-                      onChangeText={text => {
-                        setInputValue({ ...inputValue, ['first name']: text });
-                        setError({ ...error, ['first name']: false });
-                      }}
-                      placeholder={`${t('enter', english)} ${t(
-                        'firstName',
-                        english,
-                      )}`}
-                      placeholderTextColor={globalStyles.inputPlaceholder.color}
-                      style={[
-                        globalStyles.input,
-                        error['first name'] ? globalStyles.inputError : {},
-                      ]}
-                    />
+      <KeyboardAwareScrollView bottomOffset={62}>
+        <ScrollView
+          style={{
+            width: '100%',
+            height: '100%',
+            paddingHorizontal: 20,
+            paddingVertical: 20,
+          }}>
+          {Object.keys(inputValue).map((key, index, arr) => {
+            if (key === 'last name' && arr[index - 1] === 'first name') {
+              return null;
+            }
+            if (key === 'first name' && arr[index + 1] === 'last name') {
+              return (
+                <View
+                  key={`${key}-${arr[index + 1]}`}
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={{ flex: 1, marginRight: 10 }}>
+                    <Text style={globalStyles.inputLabel}>
+                      {t('firstName', english)}
+                    </Text>
+                    <View style={{ position: 'relative' }}>
+                      <TextInput
+                        value={inputValue['first name']}
+                        onChangeText={text => {
+                          setInputValue({ ...inputValue, ['first name']: text });
+                          setError({ ...error, ['first name']: false });
+                        }}
+                        placeholder={`${t('enter', english)} ${t(
+                          'firstName',
+                          english,
+                        )}`}
+                        placeholderTextColor={globalStyles.inputPlaceholder.color}
+                        style={[
+                          globalStyles.input,
+                          error['first name'] ? globalStyles.inputError : {},
+                        ]}
+                      />
+                    </View>
+                  </View>
+
+                  <View style={{ flex: 1, marginLeft: 10 }}>
+                    <Text style={globalStyles.inputLabel}>
+                      {t('lastName', english)}
+                    </Text>
+                    <View style={{ position: 'relative' }}>
+                      <TextInput
+                        value={inputValue['last name']}
+                        onChangeText={text => {
+                          setInputValue({ ...inputValue, ['last name']: text });
+                          setError({ ...error, ['last name']: false });
+                        }}
+                        placeholder={`${t('enter', english)} ${t(
+                          'lastName',
+                          english,
+                        )}`.slice(0, 20)}
+                        placeholderTextColor={globalStyles.inputPlaceholder.color}
+                        style={[
+                          globalStyles.input,
+                          error['last name'] ? globalStyles.inputError : {},
+                        ]}
+                      />
+                    </View>
                   </View>
                 </View>
+              );
+            }
 
-                <View style={{ flex: 1, marginLeft: 10 }}>
+            if (key === 'gender') {
+              return (
+                <View key={key}>
                   <Text style={globalStyles.inputLabel}>
-                    {t('lastName', english)}
+                    {t('gender', english)}
                   </Text>
-                  <View style={{ position: 'relative' }}>
-                    <TextInput
-                      value={inputValue['last name']}
-                      onChangeText={text => {
-                        setInputValue({ ...inputValue, ['last name']: text });
-                        setError({ ...error, ['last name']: false });
-                      }}
-                      placeholder={`${t('enter', english)} ${t(
-                        'lastName',
-                        english,
-                      )}`.slice(0, 20)}
-                      placeholderTextColor={globalStyles.inputPlaceholder.color}
-                      style={[
-                        globalStyles.input,
-                        error['last name'] ? globalStyles.inputError : {},
-                      ]}
-                    />
-                  </View>
-                </View>
-              </View>
-            );
-          }
-
-          if (key === 'gender') {
-            return (
-              <View key={key}>
-                <Text style={globalStyles.inputLabel}>
-                  {t('gender', english)}
-                </Text>
-                <Dropdown
-                  style={[
-                    globalStyles.input,
-                    error[key as keyof ILogin] ? globalStyles.inputError : {},
-                  ]}
-                  data={genderData}
-                  labelField="label"
-                  valueField="value"
-                  placeholder={t('selectGender', english)}
-                  value={inputValue.gender}
-                  onChange={item => {
-                    setInputValue({ ...inputValue, gender: item.value });
-                    setError({ ...error, gender: false });
-                  }}
-                  placeholderStyle={{
-                    color: globalStyles.inputPlaceholder.color,
-                  }}
-                  selectedTextStyle={{ color: '#000' }}
-                  containerStyle={{ borderRadius: 5 }}
-                  dropdownPosition="auto"
-                />
-              </View>
-            );
-          }
-          if (key === 'contact') {
-            return (
-              <View key={key}>
-                <Text style={globalStyles.inputLabel}>
-                  {t('contact', english)}
-                </Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <CountryPicker
-                    countryCode={countryCode as any}
-                    withFlag
-                    withCallingCode
-                    withFilter
-                    withCallingCodeButton
-                    onSelect={country => {
-                      setCountryCode(country.cca2);
-                      setCallingCode(country.callingCode[0]);
-                    }}
-                    containerButtonStyle={{
-                      width: 110,
-                      height: 50,
-                      paddingHorizontal: 10,
-                      justifyContent: 'center',
-                      backgroundColor: hexToRGBA(
-                        Colors.light.white as string,
-                        0.4,
-                      ),
-                    }}
-                  />
-
-                  <TextInput
-                    value={inputValue.contact}
-                    onChangeText={text => {
-                      setInputValue({ ...inputValue, contact: text });
-                      setError({ ...error, contact: false });
-                    }}
-                    placeholder={`${t('enter', english)} ${t(
-                      'contact',
-                      english,
-                    )}`}
-                    keyboardType="phone-pad"
-                    placeholderTextColor={globalStyles.inputPlaceholder.color}
+                  <Dropdown
                     style={[
                       globalStyles.input,
-                      {
-                        paddingHorizontal: 12,
-                        borderBottomRightRadius: 8,
-                        borderWidth: 1,
-                        width: width - 150,
-                        marginBottom: 0,
-                      },
-                      error.contact ? globalStyles.inputError : {},
+                      error[key as keyof ILogin] ? globalStyles.inputError : {},
                     ]}
+                    data={genderData}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={t('selectGender', english)}
+                    value={inputValue.gender}
+                    onChange={item => {
+                      setInputValue({ ...inputValue, gender: item.value });
+                      setError({ ...error, gender: false });
+                    }}
+                    placeholderStyle={{
+                      color: globalStyles.inputPlaceholder.color,
+                    }}
+                    selectedTextStyle={{ color: '#000' }}
+                    containerStyle={{ borderRadius: 5 }}
+                    dropdownPosition="auto"
                   />
                 </View>
-              </View>
-            );
-          }
-          if (key === 'address') {
-            return (
-              <Address
-                address={address}
-                setAddress={setAddress}
-                error={error}
-                key={key}
-              />
-            );
-          }
-          if (key === 'currency') {
-            return (
-              <View key={key}>
-                <Text style={globalStyles.inputLabel}>
-                  {english ? 'Currency' : 'Devise'}
-                </Text>
-                <Dropdown
-                  onFocus={() => {
-                    setError({ ...error, currency: false });
-                    setInputValue({ ...inputValue, currency: '' });
-                  }}
-                  style={[
-                    globalStyles.input,
-                    error[key as keyof ILogin] ? globalStyles.inputError : {},
-                  ]}
-                  data={currencyData}
-                  labelField="label"
-                  valueField="value"
-                  placeholder={t('selectCurrency', english)}
-                  value={inputValue.currency}
-                  onChange={item => {
-                    setInputValue({ ...inputValue, currency: item.value });
-                    setError({ ...error, currency: false });
-                  }}
-                  placeholderStyle={{
-                    color: globalStyles.inputPlaceholder.color,
-                  }}
-                  selectedTextStyle={{ color: '#000' }}
-                  containerStyle={{ borderRadius: 5 }}
-                  dropdownPosition="bottom"
+              );
+            }
+            if (key === 'contact') {
+              return (
+                <View key={key}>
+                  <Text style={globalStyles.inputLabel}>
+                    {t('contact', english)}
+                  </Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <CountryPicker
+                      countryCode={countryCode as any}
+                      withFlag
+                      withCallingCode
+                      withFilter
+                      withCallingCodeButton
+                      onSelect={country => {
+                        setCountryCode(country.cca2);
+                        setCallingCode(country.callingCode[0]);
+                      }}
+                      containerButtonStyle={{
+                        width: 110,
+                        height: 50,
+                        paddingHorizontal: 10,
+                        justifyContent: 'center',
+                        backgroundColor: hexToRGBA(
+                          Colors.light.white as string,
+                          0.4,
+                        ),
+                      }}
+                    />
+
+                    <TextInput
+                      value={inputValue.contact}
+                      onChangeText={text => {
+                        setInputValue({ ...inputValue, contact: text });
+                        setError({ ...error, contact: false });
+                      }}
+                      placeholder={`${t('enter', english)} ${t(
+                        'contact',
+                        english,
+                      )}`}
+                      keyboardType="phone-pad"
+                      placeholderTextColor={globalStyles.inputPlaceholder.color}
+                      style={[
+                        globalStyles.input,
+                        {
+                          paddingHorizontal: 12,
+                          borderBottomRightRadius: 8,
+                          borderWidth: 1,
+                          width: width - 150,
+                          marginBottom: 0,
+                        },
+                        error.contact ? globalStyles.inputError : {},
+                      ]}
+                    />
+                  </View>
+                </View>
+              );
+            }
+            if (key === 'address') {
+              return (
+                <Address
+                  address={address}
+                  setAddress={setAddress}
+                  error={error}
+                  key={key}
                 />
-              </View>
-            );
-          }
-          return (
-            <View key={key} style={{}}>
-              <Text style={globalStyles.inputLabel}>
-                {/* {key.charAt(0).toUpperCase() + key.slice(1)} */}
-                {t(
-                  key === 'N°SIREN'
-                    ? 'siren'
-                    : key === 'email'
-                      ? 'email'
-                      : key == 'password'
-                        ? 'password'
-                        : 'confirmPassword',
-                  english,
-                )}
-              </Text>
-              <View style={{ position: 'relative' }}>
-                <TextInput
-                  value={inputValue[key as keyof ILogin]}
-                  onChangeText={text => {
-                    setInputValue({ ...inputValue, [key]: text });
-                    setError({ ...error, [key]: false });
-                  }}
-                  placeholder={`${t('enter', english)} ${t(
+              );
+            }
+            if (key === 'currency') {
+              return (
+                <View key={key}>
+                  <Text style={globalStyles.inputLabel}>
+                    {english ? 'Currency' : 'Devise'}
+                  </Text>
+                  <Dropdown
+                    onFocus={() => {
+                      setError({ ...error, currency: false });
+                      setInputValue({ ...inputValue, currency: '' });
+                    }}
+                    style={[
+                      globalStyles.input,
+                      error[key as keyof ILogin] ? globalStyles.inputError : {},
+                    ]}
+                    data={currencyData}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={t('selectCurrency', english)}
+                    value={inputValue.currency}
+                    onChange={item => {
+                      setInputValue({ ...inputValue, currency: item.value });
+                      setError({ ...error, currency: false });
+                    }}
+                    placeholderStyle={{
+                      color: globalStyles.inputPlaceholder.color,
+                    }}
+                    selectedTextStyle={{ color: '#000' }}
+                    containerStyle={{ borderRadius: 5 }}
+                    dropdownPosition="bottom"
+                  />
+                </View>
+              );
+            }
+            return (
+              <View key={key} style={{}}>
+                <Text style={globalStyles.inputLabel}>
+                  {/* {key.charAt(0).toUpperCase() + key.slice(1)} */}
+                  {t(
                     key === 'N°SIREN'
                       ? 'siren'
                       : key === 'email'
@@ -372,76 +356,95 @@ const SignUp = () => {
                           ? 'password'
                           : 'confirmPassword',
                     english,
-                  )}`}
-                  secureTextEntry={
-                    key === 'password'
-                      ? passShow
-                      : key === 'confirmPassword'
-                        ? cPassShow
-                        : false
-                  }
-                  placeholderTextColor={globalStyles.inputPlaceholder.color}
-                  style={[
-                    globalStyles.input,
-                    error[key as keyof ILogin] ? globalStyles.inputError : {},
-                  ]}
-                />
-                {(key === 'password' || key === 'confirmPassword') && (
-                  <TouchableOpacity
-                    style={{ position: 'absolute', right: 10, top: 15 }}
-                    onPress={() => {
-                      if (key === 'password') {
-                        setPassShow(!passShow);
-                      } else {
-                        setCPassShow(!cPassShow);
-                      }
-                    }}>
-                    <Image
-                      source={
-                        key === 'password'
-                          ? passShow
-                            ? (eye as ImageSourcePropType)
-                            : (eyeSlash as ImageSourcePropType)
-                          : cPassShow
-                            ? (eye as ImageSourcePropType)
-                            : (eyeSlash as ImageSourcePropType)
-                      }
-                      style={{ width: 20, height: 20 }}
-                    />
-                  </TouchableOpacity>
-                )}
+                  )}
+                </Text>
+                <View style={{ position: 'relative' }}>
+                  <TextInput
+                    value={inputValue[key as keyof ILogin]}
+                    onChangeText={text => {
+                      setInputValue({ ...inputValue, [key]: text });
+                      setError({ ...error, [key]: false });
+                    }}
+                    placeholder={`${t('enter', english)} ${t(
+                      key === 'N°SIREN'
+                        ? 'siren'
+                        : key === 'email'
+                          ? 'email'
+                          : key == 'password'
+                            ? 'password'
+                            : 'confirmPassword',
+                      english,
+                    )}`}
+                    secureTextEntry={
+                      key === 'password'
+                        ? passShow
+                        : key === 'confirmPassword'
+                          ? cPassShow
+                          : false
+                    }
+                    placeholderTextColor={globalStyles.inputPlaceholder.color}
+                    style={[
+                      globalStyles.input,
+                      error[key as keyof ILogin] ? globalStyles.inputError : {},
+                    ]}
+                  />
+                  {(key === 'password' || key === 'confirmPassword') && (
+                    <TouchableOpacity
+                      style={{ position: 'absolute', right: 10, top: 15 }}
+                      onPress={() => {
+                        if (key === 'password') {
+                          setPassShow(!passShow);
+                        } else {
+                          setCPassShow(!cPassShow);
+                        }
+                      }}>
+                      <Image
+                        source={
+                          key === 'password'
+                            ? passShow
+                              ? (eye as ImageSourcePropType)
+                              : (eyeSlash as ImageSourcePropType)
+                            : cPassShow
+                              ? (eye as ImageSourcePropType)
+                              : (eyeSlash as ImageSourcePropType)
+                        }
+                        style={{ width: 20, height: 20 }}
+                      />
+                    </TouchableOpacity>
+                  )}
+                </View>
               </View>
-            </View>
-          );
-        })}
+            );
+          })}
 
-        <View style={{ paddingHorizontal: 25 }}>
-          <GradientButton handler={() => submitHandler()}>
-            {isLoading ? (
-              <ActivityIndicator size="large" color="#FFFFFF" />
-            ) : (
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: '700',
-                  fontSize: 18,
-                }}>
-                {t('signUp', english)}
+          <View style={{ paddingHorizontal: 25 }}>
+            <GradientButton handler={() => submitHandler()}>
+              {isLoading ? (
+                <ActivityIndicator size="large" color="#FFFFFF" />
+              ) : (
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: '700',
+                    fontSize: 18,
+                  }}>
+                  {t('signUp', english)}
+                </Text>
+              )}
+            </GradientButton>
+          </View>
+
+          <View style={[globalStyles.flex, { marginTop: 20, marginBottom: 120 }]}>
+            <Text style={globalStyles.text}>{t('alreadyAccount', english)} </Text>
+            <Link screen="Login" params={{}}>
+              <Text style={[{ marginLeft: 5 }, globalStyles.text]}>
+                {t('login', english)}
               </Text>
-            )}
-          </GradientButton>
-        </View>
-
-        <View style={[globalStyles.flex, { marginTop: 20, marginBottom: 120 }]}>
-          <Text style={globalStyles.text}>{t('alreadyAccount', english)} </Text>
-          <Link screen="Login" params={{}}>
-            <Text style={[{ marginLeft: 5 }, globalStyles.text]}>
-              {t('login', english)}
-            </Text>
-          </Link>
-        </View>
-      </ScrollView>
+            </Link>
+          </View>
+        </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
