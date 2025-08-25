@@ -29,6 +29,7 @@ export const requestCameraPermission = async () => {
     return false;
   }
 };
+
 const ImageUpload = ({
   images,
   setImages,

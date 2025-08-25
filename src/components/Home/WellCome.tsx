@@ -6,7 +6,6 @@ import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { generateImageUrl } from '../../utils/baseUrls';
 import { hexToRGBA } from '../../utils/hexToRGBA';
-import { t } from '../../utils/translate';
 
 const WellCome = () => {
   const { english, user } = useGlobalContext();
@@ -27,7 +26,7 @@ const WellCome = () => {
                 color: hexToRGBA(Colors.light.black as string, 0.5),
               },
             ]}>
-            {t('welcome_back', english)}
+            Bienvenue
           </Text>
           <Text style={[globalStyles.inputLabel]}>Many Stake</Text>
         </View>

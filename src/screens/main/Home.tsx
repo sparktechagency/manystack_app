@@ -18,14 +18,8 @@ const Home = () => {
   const elements = [
     <WellCome key={1} />,
     <ProfitCard
-      title={t('profit', english)}
-      count={`${currency}${data?.data?.totalProfit || 0}`}
-      percentage={data?.data?.profitChange || '0%'}
-      key={2}
-    />,
-    <ProfitCard
       title="Intervention"
-      count={`${data?.data?.totalIntervention || 0}` || '0'}
+      count={`${data?.data?.totalInterventions || 0}` || '0'}
       percentage={data?.data?.interventionChange || '0%'}
       key={3}
     />,
@@ -41,6 +35,12 @@ const Home = () => {
       percentage={`${data?.data?.expenseChange || "0%"}`}
       icon={Loss as ImageSourcePropType}
       key={1}
+    />,
+    <ProfitCard
+      title={t('profit', english)}
+      count={`${currency}${data?.data?.totalProfit || 0}`}
+      percentage={data?.data?.profitChange || '0%'}
+      key={2}
     />,
     <OverviewChart monthlyData={data?.data?.monthlyData || []} key={4} />,
     <Highlights
