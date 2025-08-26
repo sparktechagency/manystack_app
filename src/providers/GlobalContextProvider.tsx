@@ -54,7 +54,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
   } = useGetProfileQuery(undefined);
   const { width, height } = Dimensions.get('window');
   const [search, setSearch] = useState<string>('');
-  const [english, setEnglish] = useState<boolean>(false);
+  const [english, setEnglish] = useState<boolean>(true);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [images, setImages] = React.useState<IImage[] | []>([]);
   const [firstLoad, setFirstLoad] = useState<boolean>(true);

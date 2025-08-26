@@ -122,7 +122,8 @@ const Login = () => {
     setFirstLoad(false)
   }
   return (
-    <KeyboardAwareScrollView bottomOffset={62}>
+    <KeyboardAwareScrollView bottomOffset={62}
+    >
       <SafeAreaView
         style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <View style={{ marginTop: 0 }}>

@@ -1,9 +1,9 @@
 // src/navigation/StackLayout.tsx
 
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {useGlobalContext} from '../providers/GlobalContextProvider';
-import {t} from '../utils/translate';
+import { useGlobalContext } from '../providers/GlobalContextProvider';
+import { t } from '../utils/translate';
 
 // Screens & Components
 import InvoiceDetails from '../components/Invoice/InvoiceDetails';
@@ -34,7 +34,7 @@ import TabLayout from './TabLayout';
 const Stack = createNativeStackNavigator();
 
 const StackLayout = () => {
-  const {english} = useGlobalContext();
+  const { english } = useGlobalContext();
 
   return (
     <Stack.Navigator initialRouteName="Login">
@@ -268,7 +268,7 @@ const StackLayout = () => {
       <Stack.Screen
         name="Tabs"
         component={TabLayout}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
