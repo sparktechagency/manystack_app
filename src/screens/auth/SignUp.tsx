@@ -18,6 +18,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import Address from '../../components/sheard/Address';
+import BackButton from '../../components/sheard/BackButton';
 import GradientButton from '../../components/sheard/GradientButton';
 import { Colors } from '../../constant/colors';
 import { currencyData, genderData } from '../../constant/data';
@@ -141,6 +142,7 @@ const SignUp = () => {
 
   return (
     <SafeAreaView>
+      <BackButton text={t('createAccount', english)} />
       <KeyboardAwareScrollView bottomOffset={62}>
         <ScrollView
           style={{

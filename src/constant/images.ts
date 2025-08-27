@@ -23,6 +23,7 @@ import eye from '../asset/eye.png';
 import eyeSlash from '../asset/eyeSlash.png';
 import Filter from '../asset/filter.png';
 import FullLogo from '../asset/fullLogo.png';
+import Back from '../asset/icon/back.png';
 import Drawer from '../asset/icon/Drawer.png';
 import Expanses from '../asset/icon/Expanses.png';
 import Home from '../asset/icon/Home.png';
@@ -57,7 +58,7 @@ export const TabIcons = {
   Expanses,
 };
 export {
-  Calender,
+  Back, Calender,
   Camera, Checkbox, Close,
   DeleteIcon,
   DownloadPdf,
