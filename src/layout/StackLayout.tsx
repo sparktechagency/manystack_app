@@ -60,19 +60,13 @@ const StackLayout = () => {
         component={SignUp}
         options={{
           headerShown: false,
-          // title: t('createAccount', english),
-          // headerTitleAlign: 'center',
-          // headerBackground: () => null,
         }}
       />
       <Stack.Screen
         name="Forget"
         component={ForgetPassword}
         options={{
-          headerShown: true,
-          title: t('forgetPassword', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen
