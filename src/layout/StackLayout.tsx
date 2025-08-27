@@ -80,10 +80,7 @@ const StackLayout = () => {
         name="NewPassword"
         component={NewPassword}
         options={{
-          headerShown: true,
-          title: t('newPassword', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen
