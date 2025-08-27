@@ -121,10 +121,7 @@ const StackLayout = () => {
         name="InterventionDetails"
         component={InterventionDetails}
         options={{
-          headerShown: true,
-          title: t('details', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen

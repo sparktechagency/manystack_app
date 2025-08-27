@@ -1,23 +1,21 @@
 import {
-  NavigationProp,
-  useNavigation,
-  useRoute,
+  useRoute
 } from '@react-navigation/native';
 import React from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import FlexTextOpacity from '../../components/InterventionDetails/FlexTextOpacity';
 import ImageCard from '../../components/InterventionDetails/ImageCard';
+import BackButton from '../../components/sheard/BackButton';
 import GradientButton from '../../components/sheard/GradientButton';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {useGetInterventionByIdQuery} from '../../redux/Apis/interventionApis';
-import {StackTypes} from '../../types/ScreenPropsTypes';
-import {downloadButton} from '../../utils/DownloadPdf';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetInterventionByIdQuery } from '../../redux/Apis/interventionApis';
+import { downloadButton } from '../../utils/DownloadPdf';
+import { t } from '../../utils/translate';
 
 const InterventionDetails = () => {
-  const {width, height, themeColors, currency} = useGlobalContext();
-  const navigation = useNavigation<NavigationProp<StackTypes>>();
-  const {params}: any = useRoute();
-  const {data} = useGetInterventionByIdQuery(params?.params?.id);
+  const { width, height, themeColors, currency, english } = useGlobalContext();
+  const { params }: any = useRoute();
+  const { data } = useGetInterventionByIdQuery(params?.params?.id);
   return (
     <View
       style={{
@@ -25,6 +23,7 @@ const InterventionDetails = () => {
         height: height,
         paddingHorizontal: 16,
       }}>
+      <BackButton text={t('details', english)} />
       <Text
         style={{
           fontSize: 16,
@@ -52,7 +51,7 @@ const InterventionDetails = () => {
         data={data?.intervention?.images ?? []}
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <ImageCard key={item} item={item} id={data?.intervention?._id} />
         )}
         showsVerticalScrollIndicator={false}
