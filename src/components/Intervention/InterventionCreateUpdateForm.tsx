@@ -103,7 +103,7 @@ const InterventionCreateUpdateForm = () => {
   }, [inputValue['category']]);
   return (
     <SafeAreaView>
-      <BackButton text={t('createIntervention', english)} />
+      <BackButton text={params?.params?.id ? t('updateIntervention', english) : t('createIntervention', english)} />
       <KeyboardAwareScrollView bottomOffset={62} >
         <View style={{
           height: height - 200,
