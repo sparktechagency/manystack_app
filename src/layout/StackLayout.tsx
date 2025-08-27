@@ -73,10 +73,7 @@ const StackLayout = () => {
         name="Otp"
         component={Otp}
         options={{
-          headerShown: true,
-          title: t('verifyCode', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen
