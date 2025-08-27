@@ -87,10 +87,7 @@ const StackLayout = () => {
         name="CreateIntervention"
         component={CreateIntervention}
         options={{
-          headerShown: true,
-          title: t('createIntervention', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen

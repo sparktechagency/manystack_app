@@ -4,13 +4,13 @@ import {
   ActivityIndicator,
   Image,
   ImageSourcePropType,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import { paymentStatus } from '../../constant/data';
@@ -28,6 +28,7 @@ import { ICreateInterVentionError } from '../../types/ErrorTypes';
 import { getLocation } from '../../utils/getLocations';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { t } from '../../utils/translate';
+import BackButton from '../sheard/BackButton';
 import GradientButton from '../sheard/GradientButton';
 import ImageUpload from '../sheard/ImageUpload';
 import SingleSelectDropDown from '../sheard/SingleSelectDropDown';
@@ -36,7 +37,7 @@ const InterventionCreateUpdateForm = () => {
   const { params }: any = useRoute();
   const { handleCreateIntervention, isLoading } = createIntervention();
   const { handleUpdateIntervention, isLoading: updating } = updateIntervention();
-  const { themeColors, setImages, images, english } = useGlobalContext();
+  const { themeColors, setImages, images, english, height } = useGlobalContext();
   const [error, setError] = React.useState<ICreateInterVentionError>({
     'intervention id': false,
     category: false,
@@ -102,195 +103,194 @@ const InterventionCreateUpdateForm = () => {
   }, [inputValue['category']]);
   return (
     <SafeAreaView>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{
-          width: '100%',
-          height: '100%',
+      <BackButton text={t('createIntervention', english)} />
+      <KeyboardAwareScrollView bottomOffset={62} >
+        <View style={{
+          height: height - 200,
           paddingHorizontal: 20,
-          marginTop: 10,
-          // paddingVertical: 20,
+          paddingVertical: 20,
         }}>
-        {Object.keys(inputValue).map((key, index, arr) => {
-          if (key === 'status') {
-            return (
-              <View key={key}>
+          {Object.keys(inputValue).map((key, index, arr) => {
+            if (key === 'status') {
+              return (
+                <View key={key}>
+                  <Text style={globalStyles.inputLabel}>
+                    {t('status', english)}
+                  </Text>
+                  <SingleSelectDropDown
+                    placeholder={t('selectStatus', english)}
+                    name={key}
+                    data={paymentStatus}
+                    value={inputValue[key as keyof ICreateInterVention] as string}
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
+                    setError={setError}
+                    error={error}
+                  />
+                </View>
+              );
+            }
+            if (key === 'category') {
+              return (
+                <View key={key}>
+                  <Text style={globalStyles.inputLabel}>
+                    {t('selectCategory', english)}
+                  </Text>
+                  <SingleSelectDropDown
+                    placeholder={t('selectCategory', english)}
+                    name={key}
+                    data={
+                      data?.categories?.map((category: any) => ({
+                        label: category.name,
+                        value: category._id,
+                      })) || []
+                    }
+                    value={inputValue[key as keyof ICreateInterVention] as string}
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
+                    setError={setError}
+                    error={error}
+                  />
+                </View>
+              );
+            }
+            if (key === 'price') {
+              <View key={key} style={{}}>
                 <Text style={globalStyles.inputLabel}>
-                  {t('status', english)}
+                  {t(key as TranslationKey, english)}
                 </Text>
-                <SingleSelectDropDown
-                  placeholder={t('selectStatus', english)}
-                  name={key}
-                  data={paymentStatus}
-                  value={inputValue[key as keyof ICreateInterVention] as string}
-                  inputValue={inputValue}
-                  setInputValue={setInputValue}
-                  setError={setError}
-                  error={error}
-                />
+                <View style={{ position: 'relative' }}>
+                  <TextInput
+                    // editable={false}
+                    value={inputValue[key as keyof ICreateInterVention]}
+                    keyboardType={'numeric'}
+                    placeholder={t(key as TranslationKey, english)}
+                    placeholderTextColor={globalStyles.inputPlaceholder.color}
+                    style={[
+                      globalStyles.input,
+                      error[key as keyof ICreateInterVention]
+                        ? globalStyles.inputError
+                        : {},
+                    ]}
+                  />
+                </View>
+              </View>;
+            }
+            return (
+              <View key={key} style={{}}>
+                <Text style={globalStyles.inputLabel}>
+                  {t(key as TranslationKey, english)}
+                </Text>
+                <View style={{ position: 'relative' }}>
+                  <TextInput
+                    value={inputValue[key as keyof ICreateInterVention]}
+                    onChangeText={text => {
+                      setInputValue({ ...inputValue, [key]: text });
+                      setError({ ...error, [key]: false });
+                    }}
+                    keyboardType={key === 'price' ? 'numeric' : 'default'}
+                    placeholder={t(key as TranslationKey, english)}
+                    placeholderTextColor={globalStyles.inputPlaceholder.color}
+                    style={[
+                      globalStyles.input,
+                      error[key as keyof ICreateInterVention]
+                        ? globalStyles.inputError
+                        : {},
+                    ]}
+                  />
+                </View>
               </View>
             );
-          }
-          if (key === 'category') {
-            return (
-              <View key={key}>
-                <Text style={globalStyles.inputLabel}>
-                  {t('selectCategory', english)}
-                </Text>
-                <SingleSelectDropDown
-                  placeholder={t('selectCategory', english)}
-                  name={key}
-                  data={
-                    data?.categories?.map((category: any) => ({
-                      label: category.name,
-                      value: category._id,
-                    })) || []
-                  }
-                  value={inputValue[key as keyof ICreateInterVention] as string}
-                  inputValue={inputValue}
-                  setInputValue={setInputValue}
-                  setError={setError}
-                  error={error}
-                />
-              </View>
-            );
-          }
-          if (key === 'price') {
-            <View key={key} style={{}}>
-              <Text style={globalStyles.inputLabel}>
-                {t(key as TranslationKey, english)}
-              </Text>
-              <View style={{ position: 'relative' }}>
-                <TextInput
-                  // editable={false}
-                  value={inputValue[key as keyof ICreateInterVention]}
-                  keyboardType={'numeric'}
-                  placeholder={t(key as TranslationKey, english)}
-                  placeholderTextColor={globalStyles.inputPlaceholder.color}
-                  style={[
-                    globalStyles.input,
-                    error[key as keyof ICreateInterVention]
-                      ? globalStyles.inputError
-                      : {},
-                  ]}
-                />
-              </View>
-            </View>;
-          }
-          return (
-            <View key={key} style={{}}>
-              <Text style={globalStyles.inputLabel}>
-                {t(key as TranslationKey, english)}
-              </Text>
-              <View style={{ position: 'relative' }}>
-                <TextInput
-                  value={inputValue[key as keyof ICreateInterVention]}
-                  onChangeText={text => {
-                    setInputValue({ ...inputValue, [key]: text });
-                    setError({ ...error, [key]: false });
-                  }}
-                  keyboardType={key === 'price' ? 'numeric' : 'default'}
-                  placeholder={t(key as TranslationKey, english)}
-                  placeholderTextColor={globalStyles.inputPlaceholder.color}
-                  style={[
-                    globalStyles.input,
-                    error[key as keyof ICreateInterVention]
-                      ? globalStyles.inputError
-                      : {},
-                  ]}
-                />
-              </View>
-            </View>
-          );
-        })}
+          })}
 
-        <ImageUpload images={images} setImages={setImages} maxNumber={5}>
-          <Text style={[globalStyles.inputLabel]}>
-            {t('addImage', english)}
-          </Text>
-          <View
-            style={[
-              globalStyles.flex,
-              {
-                justifyContent: 'flex-start',
-                gap: 10,
-                borderColor: hexToRGBA(themeColors.black as string, 0.2),
-                paddingVertical: 14,
-                paddingHorizontal: 14,
-                borderRadius: 5,
-                borderWidth: 1,
-              },
-            ]}>
-            <Image
-              source={Camera as ImageSourcePropType}
-              style={{ width: 30, height: 30 }}
-            />
-            <View>
-              <Text style={[globalStyles.inputLabel, { fontSize: 16 }]}>
-                {t('selectImage', english)}
-              </Text>
+          <ImageUpload images={images} setImages={setImages} maxNumber={5}>
+            <Text style={[globalStyles.inputLabel]}>
+              {t('addImage', english)}
+            </Text>
+            <View
+              style={[
+                globalStyles.flex,
+                {
+                  justifyContent: 'flex-start',
+                  gap: 10,
+                  borderColor: hexToRGBA(themeColors.black as string, 0.2),
+                  paddingVertical: 14,
+                  paddingHorizontal: 14,
+                  borderRadius: 5,
+                  borderWidth: 1,
+                },
+              ]}>
+              <Image
+                source={Camera as ImageSourcePropType}
+                style={{ width: 30, height: 30 }}
+              />
+              <View>
+                <Text style={[globalStyles.inputLabel, { fontSize: 16 }]}>
+                  {t('selectImage', english)}
+                </Text>
+              </View>
             </View>
-          </View>
-        </ImageUpload>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          {images?.length > 0 &&
-            images.map((image, index) => (
-              <View
-                key={image.uri}
-                style={{ position: 'relative', width: 100, height: 100 }}>
-                <Image
-                  source={{ uri: image?.uri }}
-                  style={{
-                    marginTop: 6,
-                    width: 100,
-                    height: 100,
-                    resizeMode: 'contain',
-                  }}
-                />
-                <TouchableOpacity
-                  onPress={() => {
-                    setImages(prev =>
-                      prev.filter((item, i) => item.uri !== image.uri),
-                    );
-                  }}
-                  style={{
-                    position: 'absolute',
-                    top: 8,
-                    right: 8,
-                    backgroundColor: 'red',
-                    borderRadius: 10,
-                    padding: 3,
-                  }}>
+          </ImageUpload>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+            {images?.length > 0 &&
+              images.map((image, index) => (
+                <View
+                  key={image.uri}
+                  style={{ position: 'relative', width: 100, height: 100 }}>
                   <Image
-                    source={DeleteIcon as ImageSourcePropType}
+                    source={{ uri: image?.uri }}
                     style={{
-                      width: 20,
-                      height: 20,
-                      tintColor: 'white',
+                      marginTop: 6,
+                      width: 100,
+                      height: 100,
+                      resizeMode: 'contain',
                     }}
                   />
-                </TouchableOpacity>
-              </View>
-            ))}
+                  <TouchableOpacity
+                    onPress={() => {
+                      setImages(prev =>
+                        prev.filter((item, i) => item.uri !== image.uri),
+                      );
+                    }}
+                    style={{
+                      position: 'absolute',
+                      top: 8,
+                      right: 8,
+                      backgroundColor: 'red',
+                      borderRadius: 10,
+                      padding: 3,
+                    }}>
+                    <Image
+                      source={DeleteIcon as ImageSourcePropType}
+                      style={{
+                        width: 20,
+                        height: 20,
+                        tintColor: 'white',
+                      }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ))}
+          </View>
+          <View style={{ paddingHorizontal: 25, marginTop: 20, marginBottom: 120 }}>
+            <GradientButton handler={() => submitHandler()}>
+              {isLoading || updating ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : (
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: '700',
+                    fontSize: 18,
+                  }}>
+                  Save
+                </Text>
+              )}
+            </GradientButton>
+          </View>
         </View>
-        <View style={{ paddingHorizontal: 25, marginTop: 20, marginBottom: 120 }}>
-          <GradientButton handler={() => submitHandler()}>
-            {isLoading || updating ? (
-              <ActivityIndicator size="small" color="white" />
-            ) : (
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: '700',
-                  fontSize: 18,
-                }}>
-                Save
-              </Text>
-            )}
-          </GradientButton>
-        </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
