@@ -101,20 +101,14 @@ const StackLayout = () => {
         name="CreateExpenses"
         component={CreateExpenses}
         options={{
-          headerShown: true,
-          title: t('createExpenses', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="UpdateExpenses"
         component={UpdateExpenses}
         options={{
-          headerShown: true,
-          title: t('updateExpenses', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen
