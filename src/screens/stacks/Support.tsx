@@ -11,17 +11,19 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import Toast from 'react-native-toast-message';
+import BackButton from '../../components/sheard/BackButton';
 import GradientButton from '../../components/sheard/GradientButton';
-import {useSupportCreate} from '../../hooks/supportApisCalls';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {t} from '../../utils/translate';
+import { useSupportCreate } from '../../hooks/supportApisCalls';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { t } from '../../utils/translate';
 
 const Support = () => {
-  const {height, width, english} = useGlobalContext();
+  const { height, width, english } = useGlobalContext();
   const [subject, setSubject] = React.useState('');
   const [message, setMessage] = React.useState('');
-  const {handleSupportCreate, isLoading} = useSupportCreate();
+  const { handleSupportCreate, isLoading } = useSupportCreate();
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const handleSubmit = () => {
     if (!subject || !message) {
@@ -30,63 +32,74 @@ const Support = () => {
         text1: 'Subject and message are required',
       });
     }
-    handleSupportCreate({subject, message}, () => navigation.goBack());
+    handleSupportCreate({ subject, message }, () => navigation.goBack());
   };
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          height,
-        },
-      ]}>
-      <Text style={styles.label}>{t('subject', english)}</Text>
-      <TextInput
-        style={[
-          styles.textArea,
-          {
-            height: 45,
-          },
-        ]}
-        placeholder={t('subject', english)}
-        placeholderTextColor="#999"
-        value={subject}
-        onChangeText={setSubject}
-      />
-      <Text style={styles.label}>Message</Text>
-      <TextInput
-        style={styles.textArea}
-        multiline={true}
-        placeholder={t('writeHere', english)}
-        placeholderTextColor="#999"
-        value={message}
-        onChangeText={setMessage}
-      />
-      <View
-        style={{
-          paddingHorizontal: 25,
-          position: 'absolute',
-          bottom: 100,
-          width: width,
-          paddingVertical: 16,
+    <>
+      <BackButton text={t('contactSupport', english)} />
+      <KeyboardAwareScrollView bottomOffset={62} >
+        <View style={{
+          height: height - 200,
+          paddingHorizontal: 20,
+          paddingVertical: 20,
         }}>
-        <GradientButton handler={handleSubmit}>
-          {isLoading ? (
-            <ActivityIndicator size="small" color="white" />
-          ) : (
-            <Text
+          <View
+            style={[
+              styles.container,
+              {
+                height,
+              },
+            ]}>
+            <Text style={styles.label}>{t('subject', english)}</Text>
+            <TextInput
+              style={[
+                styles.textArea,
+                {
+                  height: 45,
+                },
+              ]}
+              placeholder={t('subject', english)}
+              placeholderTextColor="#999"
+              value={subject}
+              onChangeText={setSubject}
+            />
+            <Text style={styles.label}>Message</Text>
+            <TextInput
+              style={styles.textArea}
+              multiline={true}
+              placeholder={t('writeHere', english)}
+              placeholderTextColor="#999"
+              value={message}
+              onChangeText={setMessage}
+            />
+            <View
               style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: 700,
-                fontSize: 18,
+                paddingHorizontal: 25,
+                position: 'absolute',
+                bottom: 100,
+                width: width,
+                paddingVertical: 16,
               }}>
-              {t('submit', english)}
-            </Text>
-          )}
-        </GradientButton>
-      </View>
-    </View>
+              <GradientButton handler={handleSubmit}>
+                {isLoading ? (
+                  <ActivityIndicator size="small" color="white" />
+                ) : (
+                  <Text
+                    style={{
+                      color: 'white',
+                      textAlign: 'center',
+                      fontWeight: 700,
+                      fontSize: 18,
+                    }}>
+                    {t('submit', english)}
+                  </Text>
+                )}
+              </GradientButton>
+            </View>
+          </View>
+        </View>
+      </KeyboardAwareScrollView>
+    </>
   );
 };
 

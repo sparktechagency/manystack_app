@@ -169,40 +169,31 @@ const StackLayout = () => {
         name="CreateInterventionCategory"
         component={CreateInterventionCategory}
         options={{
-          headerShown: true,
-          title: t('createInterventionCategory', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
+
         }}
       />
       <Stack.Screen
         name="UpdateInterventionCategory"
         component={UpdateInterventionCategory}
         options={{
-          headerShown: true,
-          title: t('updateInterventionCategory', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
+
         }}
       />
       <Stack.Screen
         name="Support"
         component={Support}
         options={{
-          headerShown: true,
-          title: t('contactSupport', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="ChangePassword"
         component={ChangePassword}
         options={{
-          headerShown: true,
-          title: t('changePassword', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
+
         }}
       />
       <Stack.Screen

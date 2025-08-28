@@ -9,29 +9,30 @@ import {
   ActivityIndicator,
   Image,
   ImageSourcePropType,
-  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
+import BackButton from '../../components/sheard/BackButton';
 import GradientButton from '../../components/sheard/GradientButton';
-import {eye, eyeSlash} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {useChangePassword} from '../../hooks/userApiCalls';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {IChangePassword} from '../../types/loginType';
-import {t} from '../../utils/translate';
+import { eye, eyeSlash } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useChangePassword } from '../../hooks/userApiCalls';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { IChangePassword } from '../../types/loginType';
+import { t } from '../../utils/translate';
 
 const ChangePassword = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const [passShow, setPassShow] = React.useState(true);
   const [opassShow, setOPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
-  const {changePasswordHandler, isLoading} = useChangePassword();
-  const {english, width, height} = useGlobalContext();
+  const { changePasswordHandler, isLoading } = useChangePassword();
+  const { english, width, height } = useGlobalContext();
 
   const [error, setError] = React.useState({
     'current password': false,
@@ -49,10 +50,10 @@ const ChangePassword = () => {
     let invalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof IChangePassword] === '') {
-        setError(prev => ({...prev, [key]: true}));
+        setError(prev => ({ ...prev, [key]: true }));
         invalid = true;
       } else {
-        setError(prev => ({...prev, [key]: false}));
+        setError(prev => ({ ...prev, [key]: false }));
       }
     });
     if (invalid) {
@@ -82,77 +83,79 @@ const ChangePassword = () => {
         position: 'relative',
         height: height,
       }}>
-      <ScrollView
-        style={{
-          width: '100%',
+      <BackButton text={t('changePassword', english)} />
+      <KeyboardAwareScrollView bottomOffset={62} >
+        <View style={{
+          height: height - 200,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>
-        {Object.keys(inputValue).map((key, index, arr) => {
-          return (
-            <View key={key} style={{}}>
-              <Text style={globalStyles.inputLabel}>
-                {t(key as any, english)}
-              </Text>
-              <View style={{position: 'relative'}}>
-                <TextInput
-                  value={inputValue[key as keyof IChangePassword]}
-                  onChangeText={text => {
-                    setInputValue({...inputValue, [key]: text});
-                    setError({...error, [key]: false});
-                  }}
-                  placeholder={`${t('enter', english)} ${t(
-                    key as any,
-                    english,
-                  )}`}
-                  secureTextEntry={
-                    key === 'new password'
-                      ? passShow
-                      : key === 'confirm password'
-                      ? cPassShow
-                      : opassShow
-                  }
-                  placeholderTextColor={globalStyles.inputPlaceholder.color}
-                  style={[
-                    globalStyles.input,
-                    error[key as keyof IChangePassword]
-                      ? globalStyles.inputError
-                      : {},
-                  ]}
-                />
-                {(key === 'new password' ||
-                  key === 'confirm password' ||
-                  key === 'current password') && (
-                  <TouchableOpacity
-                    style={{position: 'absolute', right: 10, top: 18}}
-                    onPress={() => {
-                      if (key === 'new password') {
-                        setPassShow(!passShow);
-                      } else if (key === 'confirm password') {
-                        setCPassShow(!cPassShow);
-                      } else {
-                        setOPassShow(!opassShow);
-                      }
-                    }}>
-                    <Image
-                      source={
-                        key === 'new password'
-                          ? passShow
-                            ? (eye as ImageSourcePropType)
-                            : (eyeSlash as ImageSourcePropType)
-                          : cPassShow
-                          ? (eye as ImageSourcePropType)
-                          : (eyeSlash as ImageSourcePropType)
-                      }
-                      style={{width: 20, height: 20}}
-                    />
-                  </TouchableOpacity>
-                )}
+          {Object.keys(inputValue).map((key, index, arr) => {
+            return (
+              <View key={key} style={{}}>
+                <Text style={globalStyles.inputLabel}>
+                  {t(key as any, english)}
+                </Text>
+                <View style={{ position: 'relative' }}>
+                  <TextInput
+                    value={inputValue[key as keyof IChangePassword]}
+                    onChangeText={text => {
+                      setInputValue({ ...inputValue, [key]: text });
+                      setError({ ...error, [key]: false });
+                    }}
+                    placeholder={`${t('enter', english)} ${t(
+                      key as any,
+                      english,
+                    )}`}
+                    secureTextEntry={
+                      key === 'new password'
+                        ? passShow
+                        : key === 'confirm password'
+                          ? cPassShow
+                          : opassShow
+                    }
+                    placeholderTextColor={globalStyles.inputPlaceholder.color}
+                    style={[
+                      globalStyles.input,
+                      error[key as keyof IChangePassword]
+                        ? globalStyles.inputError
+                        : {},
+                    ]}
+                  />
+                  {(key === 'new password' ||
+                    key === 'confirm password' ||
+                    key === 'current password') && (
+                      <TouchableOpacity
+                        style={{ position: 'absolute', right: 10, top: 18 }}
+                        onPress={() => {
+                          if (key === 'new password') {
+                            setPassShow(!passShow);
+                          } else if (key === 'confirm password') {
+                            setCPassShow(!cPassShow);
+                          } else {
+                            setOPassShow(!opassShow);
+                          }
+                        }}>
+                        <Image
+                          source={
+                            key === 'new password'
+                              ? passShow
+                                ? (eye as ImageSourcePropType)
+                                : (eyeSlash as ImageSourcePropType)
+                              : cPassShow
+                                ? (eye as ImageSourcePropType)
+                                : (eyeSlash as ImageSourcePropType)
+                          }
+                          style={{ width: 20, height: 20 }}
+                        />
+                      </TouchableOpacity>
+                    )}
+                </View>
               </View>
-            </View>
-          );
-        })}
-      </ScrollView>
+            );
+          })}
+        </View>
+      </KeyboardAwareScrollView>
 
       <View
         style={{
