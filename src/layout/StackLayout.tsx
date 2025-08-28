@@ -200,10 +200,7 @@ const StackLayout = () => {
         name="TermsAndConditions"
         component={TermsAndConditions}
         options={{
-          headerShown: true,
-          title: t('termsAndConditions', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen
