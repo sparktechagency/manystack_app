@@ -159,7 +159,6 @@ const StackLayout = () => {
         component={InterventionCategory}
         options={{
           headerShown: false,
-
         }}
       />
       <Stack.Screen
@@ -167,7 +166,6 @@ const StackLayout = () => {
         component={CreateInterventionCategory}
         options={{
           headerShown: false,
-
         }}
       />
       <Stack.Screen
