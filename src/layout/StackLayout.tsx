@@ -144,10 +144,7 @@ const StackLayout = () => {
         name="EditProfile"
         component={Profile}
         options={{
-          headerShown: true,
-          title: t('editProfile', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -164,10 +161,8 @@ const StackLayout = () => {
         name="InterventionCategory"
         component={InterventionCategory}
         options={{
-          headerShown: true,
-          title: t('interventionCategory', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
+
         }}
       />
       <Stack.Screen
