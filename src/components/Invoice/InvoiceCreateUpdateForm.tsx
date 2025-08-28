@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import CountryPicker from 'react-native-country-picker-modal';
 import { Dropdown } from 'react-native-element-dropdown';
+import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Address from '../../components/sheard/Address';
@@ -154,11 +155,13 @@ const InvoiceCreateUpdateForm = () => {
     <SafeAreaView>
       <BackButton text={params?.params?.id ? t('updateInvoice', english) : t('createInvoice', english)} />
       <KeyboardAwareScrollView bottomOffset={62} >
-        <View style={{
+        <ScrollView style={{
           height: height - 200,
           paddingHorizontal: 20,
           paddingVertical: 20,
-        }}>
+        }}
+          showsVerticalScrollIndicator={false}
+        >
           {Object.keys(inputValue).map((key, index, arr) => {
             // if (key === 'gender') {
             //   return (
@@ -416,7 +419,7 @@ const InvoiceCreateUpdateForm = () => {
               )}
             </GradientButton>
           </View>
-        </View>
+        </ScrollView>
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );

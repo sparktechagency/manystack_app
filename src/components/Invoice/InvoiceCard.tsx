@@ -51,11 +51,11 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
 
           <View>
             <Image
-              source={item?.status === "Unpaid" ? Minus as ImageSourcePropType : Checkbox as ImageSourcePropType}
+              source={item?.status === "UNPAID" ? Minus as ImageSourcePropType : Checkbox as ImageSourcePropType}
               style={{
                 height: 20,
                 width: 20,
-                tintColor: item.status === 'Unpaid'
+                tintColor: item.status === 'UNPAID'
                   ? hexToRGBA(themeColors.red as string, 0.9)
                   : hexToRGBA(themeColors.green as string, 0.9),
               }}

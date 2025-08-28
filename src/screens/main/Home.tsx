@@ -45,10 +45,10 @@ const Home = () => {
     <OverviewChart monthlyData={data?.data?.monthlyData || []} key={4} />,
     <Highlights
       key={5}
-      interventionCount={data?.data?.totalInterventionsInPrice || '0'}
+      interventionCount={data?.data?.todayHighlights?.totalInterventions || '0'}
       priceCount={
         `${currency}${Number(
-          data?.data?.totalExpensesInPrice / 1000 || 0,
+          data?.data?.todayHighlights?.totalPrice || 0,
         ).toFixed(2)}` || '0'
       }
     />,

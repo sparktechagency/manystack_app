@@ -51,7 +51,7 @@ const InterventionCreateUpdateForm = () => {
     category: params?.params?.category || '',
     price: params?.params?.price || '',
     note: params?.params?.note || '',
-    status: params?.params?.status?.toLowerCase() || '',
+    status: params?.params?.status?.toLowerCase() || 'UNPAID',
   });
 
   const submitHandler = async () => {
