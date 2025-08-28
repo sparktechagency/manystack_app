@@ -151,10 +151,7 @@ const StackLayout = () => {
         name="Subscription"
         component={Subscription}
         options={{
-          headerShown: true,
-          title: t('subscription', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen
