@@ -122,30 +122,22 @@ const StackLayout = () => {
         name="InvoiceDetails"
         component={InvoiceDetails}
         options={{
-          headerShown: true,
-          title: t('details', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="CreateInvoice"
         component={CreateInvoice}
         options={{
-          headerShown: true,
-          title: t('createInvoice', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="UpdateInvoice"
         component={UpdateInvoice}
         options={{
-          headerShown: true,
-          title: t('updateInvoice', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
+          headerShown: false,
+
         }}
       />
       <Stack.Screen
