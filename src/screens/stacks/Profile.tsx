@@ -31,8 +31,8 @@ import { t } from '../../utils/translate';
 const Profile = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const { width, user, english, height } = useGlobalContext();
-  const [countryCode, setCountryCode] = React.useState('BD');
-  const [callingCode, setCallingCode] = React.useState('880');
+  const [countryCode, setCountryCode] = React.useState(user?.countryCode?.split('_')?.[1] ? user?.countryCode?.split('_')?.[1] : 'FR');
+  const [callingCode, setCallingCode] = React.useState(user?.countryCode?.split('_')?.[1]);
   const [address, setAddress] = React.useState<IAddress>({
     streetName: user?.address?.streetName || '',
     city: user?.address?.city || '',
@@ -56,17 +56,18 @@ const Profile = () => {
     country: false,
     postalCode: false,
   });
-  console.log(user)
+
   const [inputValue, setInputValue] = React.useState<IUpdateProfile>({
     'first name': user?.firstName as string,
     'last name': user?.lastName as string,
     email: user?.email as string,
-    contact: user?.contact as string,
+    contact: user?.contact?.slice(-user?.countryCode?.length) as string,
     gender: user?.gender as string,
     'N°SIREN': user?.nSiren as string,
     address: 'address',
   });
   const { updateProfileHandler, isLoading } = useUpdateProfile();
+
   const submitHandler = () => {
     let invalid = false;
     type Combined = IUpdateProfile & IAddress;

@@ -34,8 +34,8 @@ const SignUp = () => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
   const [passShow, setPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
-  const [countryCode, setCountryCode] = React.useState('BD');
-  const [callingCode, setCallingCode] = React.useState('880');
+  const [countryCode, setCountryCode] = React.useState('FR');
+  const [callingCode, setCallingCode] = React.useState('33');
   const { width } = Dimensions.get('window');
   const { english } = useGlobalContext();
   const [address, setAddress] = React.useState<IAddress>({
@@ -118,6 +118,7 @@ const SignUp = () => {
       gender: combinedInputValue['gender'],
       password: combinedInputValue['password'],
       currency: combinedInputValue['currency'] || '$',
+      countryCode: `${countryCode}_${callingCode}`,
     };
     register(data)
       .unwrap()
@@ -139,7 +140,7 @@ const SignUp = () => {
         });
       });
   }, [register, inputValue, address]);
-
+  console.log(countryCode)
   return (
     <SafeAreaView>
       <BackButton text={t('createAccount', english)} />
@@ -279,7 +280,7 @@ const SignUp = () => {
                         setInputValue({ ...inputValue, contact: text });
                         setError({ ...error, contact: false });
                       }}
-                      placeholder={`${t('enter', english)} ${t(
+                      placeholder={`${t(
                         'contact',
                         english,
                       )}`}

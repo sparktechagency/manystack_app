@@ -119,6 +119,7 @@ export interface IUserProfile {
   businessLogo: string | null;
   role: string;
   nSiren: string;
+  countryCode: string;
   address: {
     streetNo: string;
     streetName: string;

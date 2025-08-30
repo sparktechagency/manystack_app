@@ -1,4 +1,4 @@
-// export const baseUrl = 'http://10.0.60.70:5000';
+// export const baseUrl = 'http://10.10.20.52:5000';
 export const baseUrl = 'http://13.39.251.121';
 
 

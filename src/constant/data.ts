@@ -38,6 +38,8 @@ export const InterventionCategoryData: IInterventionCategoryData[] = [
 ];
 
 export const currencyData = [
+  { label: 'Euro ', value: '€' },
+  { label: 'Pound ', value: '£' },
   { label: 'Afghani ', value: '؋' },
   { label: 'Algerian Dinar ', value: 'د.ج' },
   { label: 'Kwanza ', value: 'Kz' },
@@ -49,7 +51,6 @@ export const currencyData = [
   { label: 'Boliviano ', value: 'Bs.' },
   { label: 'Convertible Mark ', value: 'KM' },
   { label: 'Real ', value: 'R$' },
-  { label: 'Pound ', value: '£' },
   { label: 'Lev ', value: 'лв' },
   { label: 'Franc ', value: 'FBu' },
   { label: 'Riel ', value: '៛' },
@@ -61,7 +62,6 @@ export const currencyData = [
   { label: 'Koruna ', value: 'Kč' },
   { label: 'Djiboutian Franc ', value: 'Fdj' },
   { label: 'Nakfa ', value: 'Nfk' },
-  { label: 'Euro ', value: '€' },
   { label: 'Dalasi ', value: 'D' },
   { label: 'Lari ', value: '₾' },
   { label: 'Cedi ', value: '₵' },
