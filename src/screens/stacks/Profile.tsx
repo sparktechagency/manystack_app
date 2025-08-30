@@ -56,6 +56,7 @@ const Profile = () => {
     country: false,
     postalCode: false,
   });
+  console.log(user)
   const [inputValue, setInputValue] = React.useState<IUpdateProfile>({
     'first name': user?.firstName as string,
     'last name': user?.lastName as string,

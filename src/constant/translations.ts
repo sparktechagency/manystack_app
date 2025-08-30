@@ -33,7 +33,7 @@ export const translations = {
   termsAndConditions: { en: 'Terms And Conditions', fr: 'Termes et conditions' },
   privacyPolicy: { en: 'Privacy Policy', fr: 'Politique de confidentialité' },
   firstName: { en: 'First Name', fr: 'Prénom' },
-  lastName: { en: 'Last Name', fr: 'Nom de famille' },
+  lastName: { en: 'Last Name', fr: 'Nom' },//de famille
   email: { en: 'Email', fr: 'Email' },
   contact: { en: 'Contact', fr: 'Contact' },
   gender: { en: 'Gender', fr: 'Genre' },
