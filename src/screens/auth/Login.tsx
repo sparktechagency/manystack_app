@@ -50,7 +50,7 @@ const Login = () => {
       }
     });
     if (isInvalid) {
-      Toast.show({
+      return Toast.show({
         type: 'error',
         text1: english ? 'failed to login' : 'échec de la connexion',
         text2: english
