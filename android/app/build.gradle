@@ -82,8 +82,9 @@ android {
         applicationId "com.shaharulsiyam.fibrepro"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0.2"
+        versionCode 7
+        versionName "1.0.3"
+        missingDimensionStrategy "store", "play"
     }
     signingConfigs {
       release {
@@ -119,7 +120,7 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
-
+    implementation project(':react-native-iap')
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {
