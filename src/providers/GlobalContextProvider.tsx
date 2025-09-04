@@ -11,6 +11,7 @@ import { useGetProfileQuery } from '../redux/Apis/userApis';
 import Subscription from '../screens/stacks/Subscription';
 import { IUserProfile } from '../types/DataTypes';
 import { t } from '../utils/translate';
+import SubscriptionsIAP from '../components/Subscriptions/SubscriptionsIAP';
 // import { Provider } from 'react-redux';
 // import { Colors, ITheme } from '../constant/colors';
 // import { store } from '../Redux/store';
@@ -101,7 +102,8 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
               backgroundColor: themeColors.white as string,
             }}>
             <Text style={{ fontSize: 20, fontWeight: 'bold', color: themeColors.black as string, textAlign: 'center' }}>{t('subscription', english)}</Text>
-            <Subscription />
+            {/* <Subscription /> */}
+            <SubscriptionsIAP />
           </View>
         ) : (
           children
