@@ -5,27 +5,40 @@ import { useIAP } from 'react-native-iap'
 export default function SubscriptionsIAP() {
   const {
     connected,
-    subscriptions,
-    fetchSubscriptions,
-    requestSubscription,
+    products,
+    fetchProducts,
+    requestPurchase,
     currentPurchase,
     finishTransaction,
-  } = useIAP() as any
+  } = useIAP({
+    onPurchaseSuccess: (purchase) => {
+      console.log('Purchase successful:', purchase)
+      // handleSuccessfulPurchase(purchase)
+    },
+    onPurchaseError: (error) => {
+      console.error('Purchase failed:', error)
+      // handlePurchaseError(error)
+    },
+  })
 
-  const productIds = ['fibre_pro_subscriptions']
+  const productIds = ['fibre_pro_subscriptions:3-month', 'fibre_pro_subscriptions:monthly'];
+
 
   useEffect(() => {
     if (connected) {
-      fetchSubscriptions({ skus: productIds })
+      fetchProducts({ skus: productIds, type: 'subs' });
     }
-  }, [connected])
+  }, [connected]);
 
   useEffect(() => {
     if (currentPurchase) {
       const completePurchase = async () => {
         try {
           console.log('Purchase completed:', currentPurchase.id)
-          await finishTransaction({ purchase: currentPurchase })
+          await finishTransaction({
+            purchase: currentPurchase,
+            isConsumable: true,
+          })
         } catch (error) {
           console.error('Failed to complete purchase:', error)
         }
@@ -33,26 +46,34 @@ export default function SubscriptionsIAP() {
       completePurchase()
     }
   }, [currentPurchase])
-
   const handlePurchase = async (productId: string) => {
     try {
-      await requestSubscription({ sku: productId })
+      await requestPurchase({
+        request: {
+          ios: {
+            sku: productId,
+          },
+          android: {
+            skus: [productId],
+          },
+        },
+      })
     } catch (error) {
       console.error('Purchase failed:', error)
     }
   }
-
+  console.log(products)
   return (
     <View style={styles.container}>
       <Text style={styles.status}>
         Store: {connected ? 'Connected ✅' : 'Connecting...'}
       </Text>
 
-      {subscriptions.map((product: any) => (
-        <View key={product.productId} style={styles.product}>
+      {products.map((product: any) => (
+        <View key={product.id} style={styles.product}>
           <Text style={styles.title}>{product.title}</Text>
-          <Text style={styles.price}>{product.localizedPrice}</Text>
-          <Button title="Subscribe" onPress={() => handlePurchase(product.productId)} />
+          <Text style={styles.price}>{product.displayPrice}</Text>
+          <Button title="Buy Now" onPress={() => handlePurchase(product.id)} />
         </View>
       ))}
     </View>

@@ -111,7 +111,7 @@ const Profile = () => {
       <BackButton text={t('editProfile', english)} />
       <KeyboardAwareScrollView bottomOffset={62} >
         <View style={{
-          height: height - 200,
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>

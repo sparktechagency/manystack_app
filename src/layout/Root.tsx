@@ -8,8 +8,8 @@ import { Provider } from 'react-redux';
 import GlobalContextProvider from '../providers/GlobalContextProvider';
 import { store } from '../redux/store';
 import DrawerLayout from './DrawerLayout';
-
 const Root = () => {
+
   const isDarkMode = useColorScheme() === 'dark';
 
   return (

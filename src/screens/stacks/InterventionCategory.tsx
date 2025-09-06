@@ -33,7 +33,7 @@ const InterventionCategory = () => {
       <BackButton text={t('interventionCategory', english)} />
       <KeyboardAwareScrollView bottomOffset={62} >
         <View style={{
-          height: height - 200,
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>

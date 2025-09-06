@@ -194,42 +194,51 @@ const OverviewChart = ({ monthlyData }: Props) => {
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
-              height: 14,
-              width: 24,
+              height: 10,
+              width: 16,
               borderRadius: 6,
               backgroundColor: '#49A56F',
               marginRight: 8,
             }}
           />
-          <Text style={globalStyles.inputLabel}>{t('profit', english)}</Text>
+          <Text style={[globalStyles.inputLabel, {
+            fontSize: 12,
+            marginTop: 5,
+          }]}>{t('profit', english)}</Text>
         </View>
 
         {/* Point 02 */}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
-              height: 14,
-              width: 24,
+              height: 10,
+              width: 16,
               borderRadius: 6,
               backgroundColor: '#017FF4',
               marginRight: 8,
             }}
           />
-          <Text style={globalStyles.inputLabel}>Chiffres d’affaires</Text>
+          <Text style={[globalStyles.inputLabel, {
+            fontSize: 12,
+            marginTop: 5,
+          }]}>Chiffres d’affaires</Text>
         </View>
 
         {/* Point 03 */}
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View
             style={{
-              height: 14,
-              width: 24,
+              height: 10,
+              width: 16,
               borderRadius: 6,
               backgroundColor: '#F2C94C',
               marginRight: 8,
             }}
           />
-          <Text style={globalStyles.inputLabel}>{t('expanses', english)}</Text>
+          <Text style={[globalStyles.inputLabel, {
+            fontSize: 12,
+            marginTop: 5,
+          }]}>{t('expanses', english)}</Text>
         </View>
       </View>
     </View>

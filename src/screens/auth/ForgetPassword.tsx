@@ -54,7 +54,7 @@ const ForgetPassword = () => {
       <KeyboardAwareScrollView bottomOffset={62} >
         <View style={{
           flex: 1, justifyContent: 'center', alignItems: 'center', width: '100%',
-          height: height - 200,
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>

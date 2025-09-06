@@ -56,7 +56,7 @@ const InvoiceDetails = () => {
       <BackButton text={t('details', english)} />
       <KeyboardAwareScrollView bottomOffset={62} >
         <View style={{
-          height: height - 200,
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>

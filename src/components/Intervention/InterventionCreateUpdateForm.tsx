@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Image,
   ImageSourcePropType,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -105,8 +106,8 @@ const InterventionCreateUpdateForm = () => {
     <SafeAreaView>
       <BackButton text={params?.params?.id ? t('updateIntervention', english) : t('createIntervention', english)} />
       <KeyboardAwareScrollView bottomOffset={62} >
-        <View style={{
-          height: height - 200,
+        <ScrollView style={{
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>
@@ -289,7 +290,7 @@ const InterventionCreateUpdateForm = () => {
               )}
             </GradientButton>
           </View>
-        </View>
+        </ScrollView>
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );

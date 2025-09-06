@@ -61,7 +61,7 @@ const InterventionCategoryFrom = () => {
       <BackButton text={params?.params?.id ? t('updateInterventionCategory', english) : t('createInterventionCategory', english)} />
       <KeyboardAwareScrollView bottomOffset={62} >
         <View style={{
-          height: height - 200,
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>

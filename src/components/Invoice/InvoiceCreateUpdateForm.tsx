@@ -156,7 +156,7 @@ const InvoiceCreateUpdateForm = () => {
       <BackButton text={params?.params?.id ? t('updateInvoice', english) : t('createInvoice', english)} />
       <KeyboardAwareScrollView bottomOffset={62} >
         <ScrollView style={{
-          height: height - 200,
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}

@@ -1,6 +1,7 @@
 import React from 'react';
+import { SafeAreaView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import InterventionCreateUpdateForm from '../../components/Intervention/InterventionCreateUpdateForm';
 
 const CreateIntervention = () => {
