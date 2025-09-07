@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
-import { useIAP } from 'react-native-iap'
+import { useIAP, } from 'react-native-iap'
 
 export default function SubscriptionsIAP() {
   const {
@@ -21,14 +21,14 @@ export default function SubscriptionsIAP() {
     },
   })
 
-  const productIds = ['fibre_pro_subscriptions:3-month', 'fibre_pro_subscriptions:monthly'];
+  const productIds = ['fibre_pro_subscriptions',];
 
 
   useEffect(() => {
     if (connected) {
       fetchProducts({ skus: productIds, type: 'subs' });
     }
-  }, [connected]);
+  }, [connected, productIds]);
 
   useEffect(() => {
     if (currentPurchase) {
