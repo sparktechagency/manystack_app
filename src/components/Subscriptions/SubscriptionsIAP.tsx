@@ -49,22 +49,31 @@ export default function SubscriptionsIAP() {
       completePurchase()
     }
   }, [currentPurchase])
-  const handlePurchase = async (productId: string) => {
+  const handlePurchase = async (productId: string, offerToken: string) => {
+    console.log(productId, offerToken)
     try {
       await requestPurchase({
         request: {
           ios: {
             sku: productId,
+            // You may need to provide a subscriptionOfferToken here as well for iOS,
+            // depending on your setup.
           },
           android: {
             skus: [productId],
+            subscriptionOffers: [
+              {
+                sku: productId,
+                offerToken: offerToken,
+              },
+            ],
           },
         },
-      })
+      });
     } catch (error) {
-      console.error('Purchase failed:', error)
+      console.error('Purchase failed:', error);
     }
-  }
+  };
   useEffect(() => {
     console.log("Products updated:", products)
   }, [products])
@@ -106,7 +115,7 @@ export default function SubscriptionsIAP() {
               <Text style={{
                 marginBottom: 6
               }}>Cancel anytime</Text>
-              <GradientButton handler={() => { }}>
+              <GradientButton handler={() => handlePurchase(product?.id, item?.offerToken)}>
                 <Text style={{
                   textAlign: "center",
                   fontSize: 16,
