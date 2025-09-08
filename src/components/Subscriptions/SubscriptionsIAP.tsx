@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useMemo } from 'react'
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useIAP, } from 'react-native-iap'
+import BackButton from '../sheard/BackButton'
+import GradientButton from '../sheard/GradientButton'
 
 export default function SubscriptionsIAP() {
   const {
     connected,
     products,
+    subscriptions,
     fetchProducts,
     requestPurchase,
     currentPurchase,
@@ -28,7 +31,7 @@ export default function SubscriptionsIAP() {
     if (connected) {
       fetchProducts({ skus: productIds, type: 'subs' });
     }
-  }, [connected, productIds]);
+  }, [connected]);
 
   useEffect(() => {
     if (currentPurchase) {
@@ -62,26 +65,75 @@ export default function SubscriptionsIAP() {
       console.error('Purchase failed:', error)
     }
   }
-  console.log(products)
-  return (
-    <View style={styles.container}>
-      <Text style={styles.status}>
-        Store: {connected ? 'Connected ✅' : 'Connecting...'}
-      </Text>
+  useEffect(() => {
+    console.log("Products updated:", products)
+  }, [products])
 
-      {products.map((product: any) => (
+  const renderSubscriptions = useMemo(() => {
+    console.log(subscriptions)
+    return <>
+      {subscriptions.map((product: any) => (
         <View key={product.id} style={styles.product}>
-          <Text style={styles.title}>{product.title}</Text>
-          <Text style={styles.price}>{product.displayPrice}</Text>
-          <Button title="Buy Now" onPress={() => handlePurchase(product.id)} />
+          <Text style={[styles.title, { marginBottom: 8 }]}>Current Plan</Text>
+          <Text style={{
+            textAlign: "center",
+            paddingVertical: 10
+          }}>no plan</Text>
+          <Text style={[styles.title, { marginBottom: 8 }]}>Available Plan</Text>
+          {
+            product?.subscriptionOfferDetailsAndroid?.map((item: any) => (<View key={item?.basePlanId}
+              style={{
+                padding: 8,
+                borderRadius: 6,
+                borderColor: "#00000",
+                borderWidth: 1,
+                marginBottom: 8
+              }}
+            >
+              <Text>{item?.basePlanId == "monthly" ? "Monthly Plan" : "3-Month Plan"}</Text>
+              <View style={{
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "flex-end"
+              }}>
+                <Text style={{
+                  color: 'blue',
+                  fontSize: 18,
+                  marginVertical: 6
+                }}>{item?.pricingPhases?.[0]?.formattedPrice} /</Text>
+                <Text>{item?.basePlanId == "monthly" ? "Monthly Plan" : "3-Month Plan"}</Text>
+              </View>
+              <Text style={{
+                marginBottom: 6
+              }}>Cancel anytime</Text>
+              <GradientButton handler={() => { }}>
+                <Text style={{
+                  textAlign: "center",
+                  fontSize: 16,
+                  color: "#FFFFFF"
+                }}>
+                  {item?.pricingPhases?.[0]?.formattedPrice}
+                </Text>
+              </GradientButton>
+            </View>))
+          }
+
         </View>
       ))}
-    </View>
+    </>
+  }, [subscriptions])
+
+  return (
+    <SafeAreaView>
+      <ScrollView>
+        <BackButton text='Subscription' />
+        {renderSubscriptions}
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
   status: { fontSize: 16, marginBottom: 20 },
   product: {
     padding: 15,
