@@ -13,6 +13,8 @@ export default function SubscriptionsIAP() {
     requestPurchase,
     currentPurchase,
     finishTransaction,
+    activeSubscriptions,
+    getActiveSubscriptions
   } = useIAP({
     onPurchaseSuccess: (purchase) => {
       console.log('Purchase successful:', purchase)
@@ -30,6 +32,7 @@ export default function SubscriptionsIAP() {
   useEffect(() => {
     if (connected) {
       fetchProducts({ skus: productIds, type: 'subs' });
+      getActiveSubscriptions()
     }
   }, [connected]);
 
@@ -50,7 +53,6 @@ export default function SubscriptionsIAP() {
     }
   }, [currentPurchase])
   const handlePurchase = async (productId: string, offerToken: string) => {
-    console.log(productId, offerToken)
     try {
       await requestPurchase({
         request: {
