@@ -11,16 +11,6 @@ import {
 import { useIAP } from "react-native-iap";
 import BackButton from "../sheard/BackButton";
 import GradientButton from "../sheard/GradientButton";
-// const checkSubscriptionStatus = async () => {
-//   const subs = await getActiveSubscriptions()
-
-//   // Check if user has specific subscription
-//   const hasActiveSubscription = subs.some(
-//     (sub) => sub.productId === 'com.app.monthly' && sub.isActive
-//   )
-
-//   return hasActiveSubscription
-// }
 export default function SubscriptionsIAP() {
   const {
     connected,
@@ -134,9 +124,7 @@ export default function SubscriptionsIAP() {
 
             {activeSubscriptions.length > 0 ? (
               <>
-                <Text style={styles.activePlan}>
-                  {activeSubscriptions.join(", ")}
-                </Text>
+                <RenderDynamic data={activeSubscriptions} />
                 <GradientButton
                   handler={() => openSubscriptionManagement(product.id)}
                 >
@@ -243,3 +231,56 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 });
+const RenderDynamic = ({ data }: { data: any }) => {
+  if (data === null || data === undefined) return <Text>—</Text>;
+
+  // primitive values
+  if (typeof data === "string" || typeof data === "number" || typeof data === "boolean") {
+    return <Text>{String(data)}</Text>;
+  }
+
+  // array
+  if (Array.isArray(data)) {
+    return (
+      <Text>
+        {data.map((item, index) => {
+          if (typeof item === "object") {
+            return (
+              <Text key={index}>
+                {index > 0 ? ", " : ""}
+                {renderToString(item)}
+              </Text>
+            );
+          }
+          return (index > 0 ? ", " : "") + String(item);
+        })}
+      </Text>
+    );
+  }
+
+  // object
+  if (typeof data === "object") {
+    return (
+      <View style={{ marginLeft: 8 }}>
+        {Object.entries(data).map(([key, value], index) => (
+          <View key={index} style={{ flexDirection: "row", flexWrap: "wrap" }}>
+            <Text style={{ fontWeight: "bold" }}>{key}: </Text>
+            <RenderDynamic data={value} />
+          </View>
+        ))}
+      </View>
+    );
+  }
+
+  return <Text>Unsupported</Text>;
+};
+
+// helper for array joining when nested object
+const renderToString = (obj: any): string => {
+  if (obj === null || obj === undefined) return "—";
+  if (typeof obj !== "object") return String(obj);
+  if (Array.isArray(obj)) return obj.map(renderToString).join(", ");
+  return Object.entries(obj)
+    .map(([k, v]) => `${k}: ${renderToString(v)}`)
+    .join(", ");
+};
