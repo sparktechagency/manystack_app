@@ -1,39 +1,59 @@
-import React, { useEffect, useMemo } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { useIAP, } from 'react-native-iap'
-import RNRestart from 'react-native-restart'
-import BackButton from '../sheard/BackButton'
-import GradientButton from '../sheard/GradientButton'
+import React, { useEffect, useMemo } from "react";
+import {
+  Linking,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { useIAP } from "react-native-iap";
+import BackButton from "../sheard/BackButton";
+import GradientButton from "../sheard/GradientButton";
+// const checkSubscriptionStatus = async () => {
+//   const subs = await getActiveSubscriptions()
+
+//   // Check if user has specific subscription
+//   const hasActiveSubscription = subs.some(
+//     (sub) => sub.productId === 'com.app.monthly' && sub.isActive
+//   )
+
+//   return hasActiveSubscription
+// }
 export default function SubscriptionsIAP() {
   const {
     connected,
-    products,
     subscriptions,
     fetchProducts,
     requestPurchase,
     currentPurchase,
     finishTransaction,
     activeSubscriptions,
-    getActiveSubscriptions
+    getActiveSubscriptions,
+
   } = useIAP({
-    onPurchaseSuccess: (purchase) => {
-      RNRestart.restart()
-      // console.log('Purchase successful:', purchase)
-      // handleSuccessfulPurchase(purchase)
+    onPurchaseSuccess: async (purchase) => {
+      try {
+        await finishTransaction({ purchase, isConsumable: false });
+
+        await sendPurchaseToBackend(purchase);
+
+      } catch (e) {
+        console.error("Purchase success handling failed:", e);
+      }
     },
     onPurchaseError: (error) => {
-      // console.error('Purchase failed:', error)
-      // handlePurchaseError(error)
+      console.error("Purchase failed:", error);
     },
-  })
+  });
 
-  const productIds = ['fibre_pro_subscriptions',];
-
+  const productIds = ["fibre_pro_subscriptions"];
 
   useEffect(() => {
     if (connected) {
-      fetchProducts({ skus: productIds, type: 'subs' });
-      getActiveSubscriptions()
+      fetchProducts({ skus: productIds, type: "subs" });
+      getActiveSubscriptions();
     }
   }, [connected]);
 
@@ -42,9 +62,10 @@ export default function SubscriptionsIAP() {
       const completePurchase = async () => {
         try {
           console.log('Purchase completed:', currentPurchase.id)
+
           await finishTransaction({
             purchase: currentPurchase,
-            isConsumable: true,
+            isConsumable: false,
           })
         } catch (error) {
           console.error('Failed to complete purchase:', error)
@@ -53,14 +74,13 @@ export default function SubscriptionsIAP() {
       completePurchase()
     }
   }, [currentPurchase])
+
   const handlePurchase = async (productId: string, offerToken: string) => {
     try {
       await requestPurchase({
         request: {
           ios: {
             sku: productId,
-            // You may need to provide a subscriptionOfferToken here as well for iOS,
-            // depending on your setup.
           },
           android: {
             skus: [productId],
@@ -74,75 +94,108 @@ export default function SubscriptionsIAP() {
         },
       });
     } catch (error) {
-      console.error('Purchase failed:', error);
+      console.error("Purchase failed:", error);
     }
   };
-  useEffect(() => {
-    console.log("Products updated:", products)
-  }, [products])
+
+  const sendPurchaseToBackend = async (purchase: any) => {
+    try {
+      // await fetch("https://your-api.com/subscription/validate", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({
+      //     productId: purchase.productId,
+      //     transactionId: purchase.transactionId,
+      //     purchaseToken: purchase.purchaseToken, // Android
+      //     receipt: purchase.transactionReceipt, // iOS
+      //   }),
+      // });
+    } catch (e) {
+      console.error("Failed to send purchase to backend:", e);
+    }
+  };
+
+  const openSubscriptionManagement = (productId: string) => {
+    if (Platform.OS === "android") {
+      Linking.openURL(
+        `https://play.google.com/store/account/subscriptions?sku=${productId}&package=${"com.yourapp.package"}`
+      );
+    } else {
+      Linking.openURL("https://apps.apple.com/account/subscriptions");
+    }
+  };
 
   const renderSubscriptions = useMemo(() => {
-    console.log(activeSubscriptions)
-    return <>
-      {subscriptions.map((product: any) => (
-        <View key={product.id} style={styles.product}>
-          <Text style={[styles.title, { marginBottom: 8 }]}>Current Plan</Text>
-          <Text style={{
-            textAlign: "center",
-            paddingVertical: 10
-          }}>no plan</Text>
-          <Text style={[styles.title, { marginBottom: 8 }]}>Available Plan</Text>
-          {
-            product?.subscriptionOfferDetailsAndroid?.map((item: any) => (<View key={item?.basePlanId}
-              style={{
-                padding: 8,
-                borderRadius: 6,
-                borderColor: "#00000",
-                borderWidth: 1,
-                marginBottom: 8
-              }}
-            >
-              <Text>{item?.basePlanId == "monthly" ? "Monthly Plan" : "3-Month Plan"}</Text>
-              <View style={{
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                alignItems: "flex-end"
-              }}>
-                <Text style={{
-                  color: 'blue',
-                  fontSize: 18,
-                  marginVertical: 6
-                }}>{item?.pricingPhases?.[0]?.formattedPrice} /</Text>
-                <Text>{item?.basePlanId == "monthly" ? "Monthly Plan" : "3-Month Plan"}</Text>
-              </View>
-              <Text style={{
-                marginBottom: 6
-              }}>Cancel anytime</Text>
-              <GradientButton handler={() => handlePurchase(product?.id, item?.offerToken)}>
-                <Text style={{
-                  textAlign: "center",
-                  fontSize: 16,
-                  color: "#FFFFFF"
-                }}>
-                  {item?.pricingPhases?.[0]?.formattedPrice}
-                </Text>
-              </GradientButton>
-            </View>))
-          }
+    return (
+      <>
+        {subscriptions.map((product: any) => (
+          <View key={product.id} style={styles.product}>
+            <Text style={[styles.title, { marginBottom: 8 }]}>Current Plan</Text>
 
-        </View>
-      ))}
-    </>
-  }, [subscriptions])
+            {activeSubscriptions.length > 0 ? (
+              <>
+                <Text style={styles.activePlan}>
+                  {activeSubscriptions.join(", ")}
+                </Text>
+                <GradientButton
+                  handler={() => openSubscriptionManagement(product.id)}
+                >
+                  <Text style={styles.manageButton}>
+                    Manage / Cancel Subscription
+                  </Text>
+                </GradientButton>
+              </>
+            ) : (
+              <Text style={styles.noPlan}>No active plan</Text>
+            )}
+
+            <Text style={[styles.title, { marginVertical: 8 }]}>
+              Available Plans
+            </Text>
+            {product?.subscriptionOfferDetailsAndroid?.map((item: any) => (
+              <View
+                key={item?.basePlanId}
+                style={styles.planCard}
+              >
+                <Text>
+                  {item?.basePlanId === "monthly"
+                    ? "Monthly Plan"
+                    : "3-Month Plan"}
+                </Text>
+                <View style={styles.priceRow}>
+                  <Text style={styles.priceText}>
+                    {item?.pricingPhases?.[0]?.formattedPrice} /
+                  </Text>
+                  <Text>
+                    {item?.basePlanId === "monthly"
+                      ? "Monthly"
+                      : "3-Months"}
+                  </Text>
+                </View>
+                <Text style={{ marginBottom: 6 }}>Cancel anytime</Text>
+                <GradientButton
+                  handler={() => handlePurchase(product?.id, item?.offerToken)}
+                >
+                  <Text style={styles.subscribeButton}>
+                    {item?.pricingPhases?.[0]?.formattedPrice}
+                  </Text>
+                </GradientButton>
+              </View>
+            ))}
+          </View>
+        ))}
+      </>
+    );
+  }, [subscriptions, activeSubscriptions]);
 
   return (
     <SafeAreaView>
       <ScrollView>
-        <BackButton text='Subscription' />
+        <BackButton text="Subscription" />
         {renderSubscriptions}
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -150,9 +203,43 @@ const styles = StyleSheet.create({
   product: {
     padding: 15,
     marginVertical: 5,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
     borderRadius: 8,
   },
-  title: { fontSize: 16, fontWeight: 'bold' },
-  price: { fontSize: 14, color: '#666', marginVertical: 5 },
-})
+  title: { fontSize: 16, fontWeight: "bold" },
+  noPlan: { textAlign: "center", paddingVertical: 10 },
+  activePlan: {
+    textAlign: "center",
+    paddingVertical: 10,
+    fontWeight: "600",
+    color: "green",
+  },
+  planCard: {
+    padding: 8,
+    borderRadius: 6,
+    borderColor: "#000000",
+    borderWidth: 1,
+    marginBottom: 8,
+  },
+  priceRow: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "flex-end",
+  },
+  priceText: {
+    color: "blue",
+    fontSize: 18,
+    marginVertical: 6,
+    marginRight: 4,
+  },
+  subscribeButton: {
+    textAlign: "center",
+    fontSize: 16,
+    color: "#FFFFFF",
+  },
+  manageButton: {
+    textAlign: "center",
+    fontSize: 16,
+    color: "#FFFFFF",
+  },
+});

@@ -6,12 +6,11 @@ import React, {
   useState,
 } from 'react';
 import { Dimensions, Text, View } from 'react-native';
+import SubscriptionsIAP from '../components/Subscriptions/SubscriptionsIAP';
 import { Colors, ITheme } from '../constant/colors';
 import { useGetProfileQuery } from '../redux/Apis/userApis';
-import Subscription from '../screens/stacks/Subscription';
 import { IUserProfile } from '../types/DataTypes';
 import { t } from '../utils/translate';
-import SubscriptionsIAP from '../components/Subscriptions/SubscriptionsIAP';
 // import { Provider } from 'react-redux';
 // import { Colors, ITheme } from '../constant/colors';
 // import { store } from '../Redux/store';
@@ -61,6 +60,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
   const [firstLoad, setFirstLoad] = useState<boolean>(true);
   const [showSubscription, setShowSubscription] = useState<boolean>(true);
   const [currency, setCurrency] = useState<string>('$');
+
   const themeColors = Colors.light;
   const values = {
     themeColors,
