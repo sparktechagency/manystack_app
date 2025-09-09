@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useIAP, } from 'react-native-iap'
+import RNRestart from 'react-native-restart'
 import BackButton from '../sheard/BackButton'
 import GradientButton from '../sheard/GradientButton'
-
 export default function SubscriptionsIAP() {
   const {
     connected,
@@ -17,11 +17,12 @@ export default function SubscriptionsIAP() {
     getActiveSubscriptions
   } = useIAP({
     onPurchaseSuccess: (purchase) => {
-      console.log('Purchase successful:', purchase)
+      RNRestart.restart()
+      // console.log('Purchase successful:', purchase)
       // handleSuccessfulPurchase(purchase)
     },
     onPurchaseError: (error) => {
-      console.error('Purchase failed:', error)
+      // console.error('Purchase failed:', error)
       // handlePurchaseError(error)
     },
   })
@@ -81,7 +82,7 @@ export default function SubscriptionsIAP() {
   }, [products])
 
   const renderSubscriptions = useMemo(() => {
-    console.log(subscriptions)
+    console.log(activeSubscriptions)
     return <>
       {subscriptions.map((product: any) => (
         <View key={product.id} style={styles.product}>
