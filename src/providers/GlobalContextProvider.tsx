@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {
   createContext,
   ReactNode,
@@ -5,12 +6,11 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import { Dimensions } from 'react-native';
 import SubscriptionsIAP from '../components/Subscriptions/SubscriptionsIAP';
 import { Colors, ITheme } from '../constant/colors';
 import { useGetProfileQuery } from '../redux/Apis/userApis';
 import { IUserProfile } from '../types/DataTypes';
-import { t } from '../utils/translate';
 // import { Provider } from 'react-redux';
 // import { Colors, ITheme } from '../constant/colors';
 // import { store } from '../Redux/store';
@@ -60,7 +60,6 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
   const [firstLoad, setFirstLoad] = useState<boolean>(true);
   const [showSubscription, setShowSubscription] = useState<boolean>(true);
   const [currency, setCurrency] = useState<string>('$');
-
   const themeColors = Colors.light;
   const values = {
     themeColors,
@@ -88,23 +87,19 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
       setCurrency(data?.data?.currency);
     }
   }, [data]);
-
+  useEffect(() => {
+    const subsCrip = async () => {
+      const active = await AsyncStorage.getItem("isActive")
+      setShowSubscription(active == "true" ? true : false)
+    }
+    subsCrip()
+  }, [data])
   return (
     <GlobalContext.Provider value={values}>
       {/* <Provider store={store}> */}
       {
-        !data?.data?.subscription?.isActive && data?.data?._id && showSubscription ? (
-          <View
-            style={{
-              paddingTop: 20,
-              height,
-              width,
-              backgroundColor: themeColors.white as string,
-            }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: themeColors.black as string, textAlign: 'center' }}>{t('subscription', english)}</Text>
-            {/* <Subscription /> */}
-            <SubscriptionsIAP />
-          </View>
+        data?.data?._id && showSubscription ? (
+          <SubscriptionsIAP />
         ) : (
           children
         )}

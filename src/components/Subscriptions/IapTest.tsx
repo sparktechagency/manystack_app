@@ -1,5 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   Linking,
   Platform,
@@ -10,11 +9,9 @@ import {
   View,
 } from "react-native";
 import { useIAP } from "react-native-iap";
-import RNRestart from 'react-native-restart';
 import BackButton from "../sheard/BackButton";
 import GradientButton from "../sheard/GradientButton";
 export default function SubscriptionsIAP() {
-  const [planId, setPlanId] = useState("")
   const {
     connected,
     subscriptions,
@@ -31,7 +28,7 @@ export default function SubscriptionsIAP() {
         await finishTransaction({ purchase, isConsumable: false });
 
         await sendPurchaseToBackend(purchase);
-        await RNRestart.restart();
+
       } catch (e) {
         console.error("Purchase success handling failed:", e);
       }
@@ -68,9 +65,8 @@ export default function SubscriptionsIAP() {
     }
   }, [currentPurchase])
 
-  const handlePurchase = async (productId: string, offerToken: string, basePlanId: string) => {
+  const handlePurchase = async (productId: string, offerToken: string) => {
     try {
-      await AsyncStorage.setItem("planId", basePlanId)
       await requestPurchase({
         request: {
           ios: {
@@ -94,7 +90,6 @@ export default function SubscriptionsIAP() {
 
   const sendPurchaseToBackend = async (purchase: any) => {
     try {
-      await AsyncStorage.setItem("isActive", "true")
       // await fetch("https://your-api.com/subscription/validate", {
       //   method: "POST",
       //   headers: { "Content-Type": "application/json" },
@@ -119,102 +114,62 @@ export default function SubscriptionsIAP() {
       Linking.openURL("https://apps.apple.com/account/subscriptions");
     }
   };
-  useEffect(() => {
-    const getSub = async () => {
-      const planId = await AsyncStorage.getItem("planId")
-      if (planId) {
-        setPlanId(planId)
-      }
-      if (activeSubscriptions.length > 0) {
-        await AsyncStorage.setItem("isActive", "true")
-      }
-    }
-    getSub()
-  }, [activeSubscriptions])
 
   const renderSubscriptions = useMemo(() => {
     return (
       <>
         {subscriptions.map((product: any) => (
           <View key={product.id} style={styles.product}>
-            <>
-              {activeSubscriptions.length > 0 ? (
-                <>
-                  <Text style={[styles.title, { marginBottom: 8 }]}>Current Plan</Text>
-                  {product?.subscriptionOfferDetailsAndroid?.filter((item: any) => item?.basePlanId == planId)?.map((item: any) => (
-                    <View
-                      key={item?.basePlanId}
-                      style={styles.planCard}
-                    >
-                      <Text>
-                        {item?.basePlanId === "monthly"
-                          ? "Monthly Plan"
-                          : "3-Month Plan"}
-                      </Text>
-                      <View style={styles.priceRow}>
-                        <Text style={styles.priceText}>
-                          {item?.pricingPhases?.[0]?.formattedPrice} /
-                        </Text>
-                        <Text>
-                          {item?.basePlanId === "monthly"
-                            ? "Monthly"
-                            : "3-Months"}
-                        </Text>
-                      </View>
-                      <Text style={{ marginBottom: 6 }}>Cancel anytime</Text>
-                      <GradientButton
-                        handler={async () => {
-                          await AsyncStorage.removeItem("isActive")
-                          openSubscriptionManagement(product.id)
-                        }}
-                      >
-                        <Text style={styles.manageButton}>
-                          Manage / Cancel Subscription
-                        </Text>
-                      </GradientButton>
-                    </View>
-                  ))}
-                </>
-              ) : (
-                <>
-                  <Text style={[styles.title, { marginVertical: 8 }]}>
-                    Available Plans
+            <Text style={[styles.title, { marginBottom: 8 }]}>Current Plan</Text>
+
+            {activeSubscriptions.length > 0 ? (
+              <>
+                <RenderDynamic data={activeSubscriptions} />
+                <GradientButton
+                  handler={() => openSubscriptionManagement(product.id)}
+                >
+                  <Text style={styles.manageButton}>
+                    Manage / Cancel Subscription
                   </Text>
-                  {product?.subscriptionOfferDetailsAndroid?.map((item: any) => (
-                    <View
-                      key={item?.basePlanId}
-                      style={styles.planCard}
-                    >
-                      <Text>
-                        {item?.basePlanId === "monthly"
-                          ? "Monthly Plan"
-                          : "3-Month Plan"}
-                      </Text>
-                      <View style={styles.priceRow}>
-                        <Text style={styles.priceText}>
-                          {item?.pricingPhases?.[0]?.formattedPrice} /
-                        </Text>
-                        <Text>
-                          {item?.basePlanId === "monthly"
-                            ? "Monthly"
-                            : "3-Months"}
-                        </Text>
-                      </View>
-                      <Text style={{ marginBottom: 6 }}>Cancel anytime</Text>
-                      <GradientButton
-                        handler={() => handlePurchase(product?.id, item?.offerToken, item?.basePlanId)}
-                      >
-                        <Text style={styles.subscribeButton}>
-                          {item?.pricingPhases?.[0]?.formattedPrice}
-                        </Text>
-                      </GradientButton>
-                    </View>
-                  ))}
-                </>
-              )}
-            </>
+                </GradientButton>
+              </>
+            ) : (
+              <Text style={styles.noPlan}>No active plan</Text>
+            )}
 
-
+            <Text style={[styles.title, { marginVertical: 8 }]}>
+              Available Plans
+            </Text>
+            {product?.subscriptionOfferDetailsAndroid?.map((item: any) => (
+              <View
+                key={item?.basePlanId}
+                style={styles.planCard}
+              >
+                <Text>
+                  {item?.basePlanId === "monthly"
+                    ? "Monthly Plan"
+                    : "3-Month Plan"}
+                </Text>
+                <View style={styles.priceRow}>
+                  <Text style={styles.priceText}>
+                    {item?.pricingPhases?.[0]?.formattedPrice} /
+                  </Text>
+                  <Text>
+                    {item?.basePlanId === "monthly"
+                      ? "Monthly"
+                      : "3-Months"}
+                  </Text>
+                </View>
+                <Text style={{ marginBottom: 6 }}>Cancel anytime</Text>
+                <GradientButton
+                  handler={() => handlePurchase(product?.id, item?.offerToken)}
+                >
+                  <Text style={styles.subscribeButton}>
+                    {item?.pricingPhases?.[0]?.formattedPrice}
+                  </Text>
+                </GradientButton>
+              </View>
+            ))}
           </View>
         ))}
       </>
