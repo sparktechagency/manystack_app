@@ -285,7 +285,7 @@ const InterventionCreateUpdateForm = () => {
                     fontWeight: '700',
                     fontSize: 18,
                   }}>
-                  Save
+                  Sauvegarder
                 </Text>
               )}
             </GradientButton>

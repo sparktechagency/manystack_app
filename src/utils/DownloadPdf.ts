@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import RNFetchBlob from 'rn-fetch-blob';
-import {baseUrl} from './baseUrls';
+import { baseUrl } from './baseUrls';
 
 export const downloadButton = async (url: string, name?: string) => {
   console.log('download pdf button clicked');

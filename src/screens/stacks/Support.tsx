@@ -74,11 +74,13 @@ const Support = () => {
             />
             <View
               style={{
-                paddingHorizontal: 25,
+                // paddingHorizontal: 25,
                 position: 'absolute',
                 bottom: 100,
-                width: width,
-                paddingVertical: 16,
+                width: "100%",
+                // paddingVertical: 16,
+                flex: 1,
+                marginHorizontal: "auto",
               }}>
               <GradientButton handler={handleSubmit}>
                 {isLoading ? (
@@ -107,7 +109,7 @@ export default Support;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    // padding: 16,
     position: 'relative',
   },
   label: {

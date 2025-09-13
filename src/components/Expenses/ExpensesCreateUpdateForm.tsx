@@ -120,10 +120,15 @@ const ExpensesCreateUpdateForm = () => {
                   <SingleSelectDropDown
                     name={key}
                     data={[
-                      { label: 'Equipment', value: 'Equipment' },
-                      { label: 'Fuel', value: 'Fuel' },
-                      { label: 'Vehicle', value: 'Vehicle' },
+                      { label: 'Équipement', value: 'Équipement' },
+                      { label: 'Fuel', value: 'Carburant' },
+                      { label: 'Vehicle', value: 'Véhicule' },
                     ]}
+                    // data={[
+                    // { label: 'Equipment', value: 'Equipment' },
+                    // { label: 'Fuel', value: 'Fuel' },
+                    // { label: 'Vehicle', value: 'Vehicle' },
+                    // ]}
                     value={inputValue[key as keyof ICreateExpenses]}
                     inputValue={inputValue}
                     setInputValue={setInputValue}
@@ -241,7 +246,7 @@ const ExpensesCreateUpdateForm = () => {
                     fontWeight: '700',
                     fontSize: 18,
                   }}>
-                  Save
+                  Sauvegarder
                 </Text>
               )}
             </GradientButton>

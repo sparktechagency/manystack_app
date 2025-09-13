@@ -176,7 +176,7 @@ const ChangePassword = () => {
                 fontWeight: 700,
                 fontSize: 18,
               }}>
-              Save Changes
+              Sauvegarder
             </Text>
           )}
         </GradientButton>

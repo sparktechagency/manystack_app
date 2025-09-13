@@ -20,7 +20,7 @@ const Home = () => {
     <ProfitCard
       title="Intervention"
       count={`${data?.data?.totalInterventions || 0}` || '0'}
-      percentage={data?.data?.interventionChange || '0%'}
+      percentage={(data?.data?.interventionChange || 0) || '0%'}
       key={3}
     />,
     <ProfitCard

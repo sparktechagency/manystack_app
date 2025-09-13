@@ -38,7 +38,7 @@ const InterventionCategory = () => {
           paddingVertical: 20,
         }}>
 
-          <Text style={[globalStyles.inputLabel]}>All Category</Text>
+          <Text style={[globalStyles.inputLabel]}>Toutes les catégories</Text>
           <View
             style={[
               globalStyles.flex,
@@ -56,7 +56,7 @@ const InterventionCategory = () => {
                 color: textColor,
                 width: width * 0.4,
               }}>
-              Name
+              Nom
             </Text>
             <Text
               style={{
@@ -64,7 +64,7 @@ const InterventionCategory = () => {
                 fontWeight: '600',
                 color: textColor,
               }}>
-              Price
+              Prix
             </Text>
             <Text
               style={{
@@ -72,7 +72,7 @@ const InterventionCategory = () => {
                 fontWeight: '600',
                 color: textColor,
               }}>
-              Actions
+              Actes
             </Text>
           </View>
           {isLoading || isFetching ? (
@@ -109,7 +109,7 @@ const InterventionCategory = () => {
               fontWeight: 700,
               fontSize: 18,
             }}>
-            Add New Category
+            Ajouter un nouveau
           </Text>
         </GradientButton>
       </View>

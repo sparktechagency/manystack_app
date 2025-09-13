@@ -69,6 +69,7 @@ const Profile = () => {
   const { updateProfileHandler, isLoading } = useUpdateProfile();
 
   const submitHandler = () => {
+
     let invalid = false;
     type Combined = IUpdateProfile & IAddress;
     const combinedInputValue: Combined = {
@@ -114,6 +115,7 @@ const Profile = () => {
           height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
+          marginBottom: 50
         }}>
           {Object.keys(inputValue).map((key, index, arr) => {
             if (key === 'last name' && arr[index - 1] === 'first name') {
@@ -293,7 +295,9 @@ const Profile = () => {
           })}
 
           <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
-            <GradientButton handler={submitHandler}>
+            <GradientButton
+              isLoading={isLoading}
+              handler={submitHandler}>
               {isLoading ? (
                 <ActivityIndicator color="white" size="small" />
               ) : (
@@ -304,7 +308,7 @@ const Profile = () => {
                     fontWeight: '700',
                     fontSize: 18,
                   }}>
-                  Save
+                  Sauvegarder
                 </Text>
               )}
             </GradientButton>
