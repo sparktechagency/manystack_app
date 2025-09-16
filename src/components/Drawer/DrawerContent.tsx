@@ -11,19 +11,19 @@ import DrawerLinks from './DrawerLinks';
 const DrawerContent = (props: any) => {
   const { showSubscription } = useGlobalContext();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
-  useEffect(() => {
-    if (showSubscription) {
-      if (!DrawerLinksData?.find((item: any) => item.name === 'subscription')) {
-        DrawerLinksData.push({
-          name: 'subscription',
-          href: 'Subscription',
-          icon: DrawerIcons.Crown,
-        });
-      }
-    } else {
-      DrawerLinksData.pop();
-    }
-  }, [showSubscription]);
+  // useEffect(() => {
+  //   if (showSubscription) {
+  //     if (!DrawerLinksData?.find((item: any) => item.name === 'subscription')) {
+  //       DrawerLinksData.push({
+  //         name: 'subscription',
+  //         href: 'Subscription',
+  //         icon: DrawerIcons.Crown,
+  //       });
+  //     }
+  //   } else {
+  //     DrawerLinksData.pop();
+  //   }
+  // }, [showSubscription]);
 
   return (
     <DrawerContentScrollView {...props}>

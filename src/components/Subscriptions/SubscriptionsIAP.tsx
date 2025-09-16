@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useMemo, useState } from "react";
 import {
   Linking,
@@ -11,9 +12,12 @@ import {
 } from "react-native";
 import { useIAP } from "react-native-iap";
 import RNRestart from 'react-native-restart';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import BackButton from "../sheard/BackButton";
 import GradientButton from "../sheard/GradientButton";
 export default function SubscriptionsIAP() {
+  const { params }: any = useRoute();
+  const { setShowSubscription } = useGlobalContext()
   const [planId, setPlanId] = useState("")
   const {
     connected,
@@ -33,11 +37,9 @@ export default function SubscriptionsIAP() {
         await sendPurchaseToBackend(purchase);
         await RNRestart.restart();
       } catch (e) {
-        console.error("Purchase success handling failed:", e);
       }
     },
     onPurchaseError: (error) => {
-      console.error("Purchase failed:", error);
     },
   });
 
@@ -113,7 +115,7 @@ export default function SubscriptionsIAP() {
   const openSubscriptionManagement = (productId: string) => {
     if (Platform.OS === "android") {
       Linking.openURL(
-        `https://play.google.com/store/account/subscriptions?sku=${productId}&package=${"com.yourapp.package"}`
+        `https://play.google.com/store/account/subscriptions?sku=${productId}&package=${"com.shaharulsiyam.fibrepro"}`
       );
     } else {
       Linking.openURL("https://apps.apple.com/account/subscriptions");
@@ -126,19 +128,20 @@ export default function SubscriptionsIAP() {
         setPlanId(planId)
       }
       if (activeSubscriptions.length > 0) {
-        await AsyncStorage.setItem("isActive", "true")
+        setShowSubscription(false)
+        // await AsyncStorage.setItem("isActive", "true")
       }
     }
     getSub()
   }, [activeSubscriptions])
-
+  console.log(activeSubscriptions, subscriptions)
   const renderSubscriptions = useMemo(() => {
     return (
       <>
         {subscriptions.map((product: any) => (
           <View key={product.id} style={styles.product}>
             <>
-              {activeSubscriptions.length > 0 ? (
+              {activeSubscriptions?.length > 0 ? (
                 <>
                   <Text style={[styles.title, { marginBottom: 8 }]}>Current Plan</Text>
                   {product?.subscriptionOfferDetailsAndroid?.filter((item: any) => item?.basePlanId == planId)?.map((item: any) => (
@@ -220,11 +223,12 @@ export default function SubscriptionsIAP() {
       </>
     );
   }, [subscriptions, activeSubscriptions]);
-
   return (
     <SafeAreaView>
       <ScrollView>
-        <BackButton text="Subscription" />
+        {
+          params?.params?.show && <BackButton text="Subscription" />
+        }
         {renderSubscriptions}
       </ScrollView>
     </SafeAreaView>

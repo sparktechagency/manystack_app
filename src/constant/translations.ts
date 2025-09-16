@@ -199,6 +199,10 @@ export const translations = {
   "category Price": {
     en: "category Price",
     fr: "catégorie Prix"
+  },
+  "PrivacyPolicy": {
+    en: "Privacy Policy",
+    fr: "politique de confidentialité"
   }
 } as const;
 

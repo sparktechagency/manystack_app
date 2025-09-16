@@ -1,5 +1,7 @@
-import React from 'react';
+import { CommonActions, NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import React, { useEffect } from 'react';
 import { FlatList, ImageSourcePropType, View } from 'react-native';
+import { useIAP } from 'react-native-iap';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FloatingPlus from '../../components/Home/FloatingPlus';
 import Highlights from '../../components/Home/Highlights';
@@ -12,6 +14,12 @@ import { useGetHomePageDataQuery } from '../../redux/Apis/userApis';
 import { t } from '../../utils/translate';
 
 const Home = () => {
+  const navigation = useNavigation<NavigationProp<ParamListBase>>()
+  const {
+    connected,
+    getActiveSubscriptions,
+
+  } = useIAP({});
   const { english, currency } = useGlobalContext();
   const { data, isLoading, isFetching } = useGetHomePageDataQuery(undefined);
   const insets = useSafeAreaInsets();
@@ -53,6 +61,32 @@ const Home = () => {
       }
     />,
   ];
+
+  useEffect(() => {
+    if (!connected) return;
+    const checkSubscriptions = async () => {
+      try {
+        const subs = await getActiveSubscriptions();
+        if (subs?.length <= 0) {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'Subscription',
+                  params: { show: false },
+                },
+              ],
+            })
+          );
+        }
+      } catch (error) {
+        console.error("Failed to get active subscriptions:", error);
+      }
+    };
+
+    checkSubscriptions();
+  }, [connected, getActiveSubscriptions, navigation]);
   return (
     <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
       <FlatList
@@ -67,7 +101,7 @@ const Home = () => {
         }}
       />
       <FloatingPlus key={6} />
-    </View>
+    </View >
   );
 };
 

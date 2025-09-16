@@ -203,7 +203,7 @@ const StackLayout = () => {
         name="PrivacyPolicy"
         component={PrivacyPolicy}
         options={{
-          headerShown: true,
+          headerShown: false,
           title: t('privacyPolicy', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,

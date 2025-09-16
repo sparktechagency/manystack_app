@@ -1,13 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {
   createContext,
   ReactNode,
   useContext,
   useEffect,
-  useState,
+  useState
 } from 'react';
 import { Dimensions } from 'react-native';
-import SubscriptionsIAP from '../components/Subscriptions/SubscriptionsIAP';
 import { Colors, ITheme } from '../constant/colors';
 import { useGetProfileQuery } from '../redux/Apis/userApis';
 import { IUserProfile } from '../types/DataTypes';
@@ -39,6 +37,7 @@ interface GlobalContextType {
   setCurrency: React.Dispatch<React.SetStateAction<string>>;
   firstLoad: boolean;
   setFirstLoad: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowSubscription: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface GlobalProviderProps {
@@ -75,11 +74,12 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     setEnglish,
     user: data?.data,
     userLoading: userLoading || isFetching,
-    showSubscription: data?.showSubscription || false,
+    showSubscription,
     currency,
     setCurrency,
     firstLoad,
     setFirstLoad,
+    setShowSubscription
   };
 
   useEffect(() => {
@@ -87,23 +87,10 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
       setCurrency(data?.data?.currency);
     }
   }, [data]);
-  useEffect(() => {
-    const subsCrip = async () => {
-      const active = await AsyncStorage.getItem("isActive")
-      setShowSubscription(active == "true" ? true : false)
-    }
-    subsCrip()
-  }, [data])
+
   return (
     <GlobalContext.Provider value={values}>
-      {/* <Provider store={store}> */}
-      {
-        data?.data?._id && showSubscription ? (
-          <SubscriptionsIAP />
-        ) : (
-          children
-        )}
-      {/* </Provider> */}
+      {children}
     </GlobalContext.Provider>
   );
 };

@@ -1,4 +1,4 @@
-import {IAddress} from './loginType';
+import { IAddress } from './loginType';
 
 // Tabs navigator params (Bottom Tabs inside Stack)
 export type TabsTypes = {
@@ -13,7 +13,7 @@ export type StackTypes = {
   Login: undefined;
   SignUp: undefined;
   Forget: undefined;
-  Otp: {params: {from: 'signup' | 'forget'; email?: string}};
+  Otp: { params: { from: 'signup' | 'forget'; email?: string } };
   NewPassword: undefined;
   Tabs: undefined;
   CreateIntervention: undefined;
@@ -26,7 +26,7 @@ export type StackTypes = {
       status: string;
     };
   };
-  InterventionDetails: {params: {id: string}};
+  InterventionDetails: { params: { id: string } };
   CreateExpenses: undefined;
   UpdateExpenses: {
     params: {
@@ -37,13 +37,13 @@ export type StackTypes = {
       note: string;
     };
   };
-  InvoiceDetails: {params: {id: string}};
+  InvoiceDetails: { params: { id: string } };
   CreateInvoice: undefined;
   UpdateInvoice: {
     params: {
       id: string;
       address: IAddress;
-      service: {selectedService: string; quantity: number; price: number}[];
+      service: { selectedService: string; quantity: number; price: number }[];
       name: string;
       email: string;
       phone: string;
@@ -52,10 +52,12 @@ export type StackTypes = {
     };
   };
   EditProfile: undefined;
-  Subscription: undefined;
+  Subscription: {
+    params: { show: boolean }
+  };
   InterventionCategory: undefined;
   UpdateInterventionCategory: {
-    params: {id: string; name: string; price: string};
+    params: { id: string; name: string; price: string };
   };
   CreateInterventionCategory: undefined;
   Support: undefined;

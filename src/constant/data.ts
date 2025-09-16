@@ -30,6 +30,11 @@ export const DrawerLinksData = [
     icon: DrawerIcons.Terms,
   },
   { name: 'privacy_policy', href: 'PrivacyPolicy', icon: DrawerIcons.Privacy },
+  {
+    name: 'subscription',
+    href: 'Subscription',
+    icon: DrawerIcons.Crown,
+  }
 ];
 
 export const InterventionCategoryData: IInterventionCategoryData[] = [
