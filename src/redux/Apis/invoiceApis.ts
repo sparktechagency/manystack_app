@@ -1,10 +1,10 @@
-import {baseApi} from '../baseApi';
+import { baseApi } from '../baseApi';
 
 const invoiceApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     // get invoices endpoint
     getInvoices: builder.query({
-      query: ({search, limit, fromDate, toDate}) => ({
+      query: ({ search, limit, fromDate, toDate }) => ({
         url: 'api/invoices/get-all',
         method: 'GET',
         params: {
@@ -23,11 +23,11 @@ const invoiceApi = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['invoice'],
+      invalidatesTags: ['invoice', 'home'],
     }),
     // update invoice endpoint
     updateInvoice: builder.mutation({
-      query: ({data, id}) => ({
+      query: ({ data, id }) => ({
         url: `api/invoices/update/${id}`,
         method: 'PUT',
         body: data,

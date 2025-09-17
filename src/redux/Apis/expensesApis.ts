@@ -1,10 +1,10 @@
-import {baseApi} from '../baseApi';
+import { baseApi } from '../baseApi';
 
 const expensesApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     // get expenses endpoint
     getExpenses: builder.query({
-      query: ({limit, fromDate, toDate, search}) => ({
+      query: ({ limit, fromDate, toDate, search }) => ({
         url: 'api/expense/get-all',
         method: 'GET',
         params: {
@@ -23,11 +23,11 @@ const expensesApi = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['expenses'],
+      invalidatesTags: ['expenses', 'home'],
     }),
     // update expense endpoint
     updateExpense: builder.mutation({
-      query: ({data, id}) => ({
+      query: ({ data, id }) => ({
         url: `api/expense/update/${id}`,
         method: 'PUT',
         body: data,

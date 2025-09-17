@@ -56,7 +56,7 @@ const userApi = baseApi.injectEndpoints({
     // get Home  page data
     getHomePageData: builder.query({
       query: () => 'api/home/dashboard',
-      providesTags: ['auth'],
+      providesTags: ['auth', "home"],
     }),
   }),
 });
