@@ -4,6 +4,7 @@ import {
   ActivityIndicator,
   Image,
   ImageSourcePropType,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -86,12 +87,18 @@ const ExpensesCreateUpdateForm = () => {
   return (
     <SafeAreaView>
       <BackButton text={params?.params?.id ? t('updateExpenses', english) : t('createExpenses', english)} />
-      <KeyboardAwareScrollView bottomOffset={62} >
-        <View style={{
-          height: height,
-          paddingHorizontal: 20,
-          paddingVertical: 20,
-        }}>
+      <KeyboardAwareScrollView bottomOffset={62}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          style={{
+            height: height,
+            paddingHorizontal: 20,
+            paddingVertical: 20,
+          }}>
           {Object.keys(inputValue).map((key, index, arr) => {
             if (key === 'status') {
               return (
@@ -251,7 +258,7 @@ const ExpensesCreateUpdateForm = () => {
               )}
             </GradientButton>
           </View>
-        </View>
+        </ScrollView>
       </KeyboardAwareScrollView >
     </SafeAreaView>
   );

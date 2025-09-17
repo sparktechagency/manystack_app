@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import { paymentStatus } from '../../constant/data';
 import { Camera, DeleteIcon } from '../../constant/images';
@@ -39,6 +39,7 @@ const InterventionCreateUpdateForm = () => {
   const { handleCreateIntervention, isLoading } = createIntervention();
   const { handleUpdateIntervention, isLoading: updating } = updateIntervention();
   const { themeColors, setImages, images, english, height } = useGlobalContext();
+  const { top, bottom } = useSafeAreaInsets();
   const [error, setError] = React.useState<ICreateInterVentionError>({
     'intervention id': false,
     category: false,
@@ -103,14 +104,20 @@ const InterventionCreateUpdateForm = () => {
     }
   }, [inputValue['category']]);
   return (
-    <SafeAreaView>
+    <View style={{ paddingTop: top, paddingBottom: bottom, }}>
       <BackButton text={params?.params?.id ? t('updateIntervention', english) : t('createIntervention', english)} />
-      <KeyboardAwareScrollView bottomOffset={62} >
-        <ScrollView style={{
-          height: height,
-          paddingHorizontal: 20,
-          paddingVertical: 20,
-        }}>
+      <KeyboardAwareScrollView bottomOffset={62}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          style={{
+            height: height,
+            paddingHorizontal: 20,
+            paddingVertical: 20,
+          }}>
           {Object.keys(inputValue).map((key, index, arr) => {
             if (key === 'status') {
               return (
@@ -292,7 +299,7 @@ const InterventionCreateUpdateForm = () => {
           </View>
         </ScrollView>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -154,13 +154,18 @@ const InvoiceCreateUpdateForm = () => {
   return (
     <SafeAreaView>
       <BackButton text={params?.params?.id ? t('updateInvoice', english) : t('createInvoice', english)} />
-      <KeyboardAwareScrollView bottomOffset={62} >
-        <ScrollView style={{
-          height: height,
-          paddingHorizontal: 20,
-          paddingVertical: 20,
-        }}
+      <KeyboardAwareScrollView bottomOffset={62}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
+          style={{
+            height: height,
+            paddingHorizontal: 20,
+            paddingVertical: 20,
+          }}
         >
           {Object.keys(inputValue).map((key, index, arr) => {
             // if (key === 'gender') {
