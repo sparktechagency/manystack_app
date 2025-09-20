@@ -196,6 +196,10 @@ const InvoiceDetails = () => {
             user?.address?.country
           }
         />
+        <FlexTextOpacity
+          text1={english ? 'Siren no :' : 'N°SIREN :'}
+          text2={user?.nSiren as string + ""}
+        />
         <Text style={[globalStyles.inputLabel, { marginTop: 20 }]}>
           Customer Details
         </Text>

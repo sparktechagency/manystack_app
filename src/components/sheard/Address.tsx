@@ -102,7 +102,7 @@ const Address = ({
               country: text,
             })
           }
-          keyboardType='numeric'
+          keyboardType='default'
           style={[
             globalStyles.input,
             error?.country ? globalStyles.inputError : {},

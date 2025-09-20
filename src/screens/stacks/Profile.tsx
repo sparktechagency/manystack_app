@@ -31,8 +31,10 @@ import { t } from '../../utils/translate';
 const Profile = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const { width, user, english, height } = useGlobalContext();
-  const [countryCode, setCountryCode] = React.useState(user?.countryCode?.split('_')?.[1] ? user?.countryCode?.split('_')?.[1] : 'FR');
+  const [countryCode, setCountryCode] = React.useState(user?.countryCode?.split('_')?.[0] ? user?.countryCode?.split('_')?.[0] : 'FR');
   const [callingCode, setCallingCode] = React.useState(user?.countryCode?.split('_')?.[1]);
+  // const [countryCode, setCountryCode] = React.useState('FR');
+  // const [callingCode, setCallingCode] = React.useState();
   const [address, setAddress] = React.useState<IAddress>({
     streetName: user?.address?.streetName || '',
     city: user?.address?.city || '',
@@ -56,18 +58,16 @@ const Profile = () => {
     country: false,
     postalCode: false,
   });
-
   const [inputValue, setInputValue] = React.useState<IUpdateProfile>({
     'first name': user?.firstName as string,
     'last name': user?.lastName as string,
     email: user?.email as string,
-    contact: user?.contact?.slice(-user?.countryCode?.length) as string,
+    contact: user?.contact?.slice(user?.countryCode?.split('_')?.[1]?.length) as string,
     gender: user?.gender as string,
     'N°SIREN': user?.nSiren as string,
     address: 'address',
   });
   const { updateProfileHandler, isLoading } = useUpdateProfile();
-
   const submitHandler = () => {
 
     let invalid = false;
@@ -100,6 +100,7 @@ const Profile = () => {
         city: address.city,
         postalCode: address.postalCode,
         country: address.country,
+        countryCode: `${countryCode}_${callingCode}`,
       },
       gender: inputValue.gender,
     };
@@ -110,209 +111,210 @@ const Profile = () => {
   return (
     <SafeAreaView>
       <BackButton text={t('editProfile', english)} />
-      <KeyboardAwareScrollView bottomOffset={62} >
-        <View style={{
+      <KeyboardAwareScrollView
+        style={{
           height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
           marginBottom: 50
-        }}>
-          {Object.keys(inputValue).map((key, index, arr) => {
-            if (key === 'last name' && arr[index - 1] === 'first name') {
-              return null;
-            }
-            if (key === 'first name' && arr[index + 1] === 'last name') {
-              return (
-                <View
-                  key={`${key}-${arr[index + 1]}`}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <View style={{ flex: 1, marginRight: 10 }}>
-                    <Text style={globalStyles.inputLabel}>
-                      {t('firstName', english)}
-                    </Text>
-                    <View style={{ position: 'relative' }}>
-                      <TextInput
-                        value={inputValue['first name']}
-                        onChangeText={text => {
-                          setInputValue({ ...inputValue, ['first name']: text });
-                          setError({ ...error, ['first name']: false });
-                        }}
-                        placeholder="Enter your first name"
-                        placeholderTextColor={globalStyles.inputPlaceholder.color}
-                        style={[
-                          globalStyles.input,
-                          error['first name'] ? globalStyles.inputError : {},
-                        ]}
-                      />
-                    </View>
-                  </View>
+        }}
+        bottomOffset={62} >
 
-                  <View style={{ flex: 1, marginLeft: 10 }}>
-                    <Text style={globalStyles.inputLabel}>
-                      {t('lastName', english)}
-                    </Text>
-                    <View style={{ position: 'relative' }}>
-                      <TextInput
-                        value={inputValue['last name']}
-                        onChangeText={text => {
-                          setInputValue({ ...inputValue, ['last name']: text });
-                          setError({ ...error, ['last name']: false });
-                        }}
-                        placeholder="Enter your last name"
-                        placeholderTextColor={globalStyles.inputPlaceholder.color}
-                        style={[
-                          globalStyles.input,
-                          error['last name'] ? globalStyles.inputError : {},
-                        ]}
-                      />
-                    </View>
-                  </View>
-                </View>
-              );
-            }
-
-            if (key === 'gender') {
-              return (
-                <View key={key}>
+        {Object.keys(inputValue).map((key, index, arr) => {
+          if (key === 'last name' && arr[index - 1] === 'first name') {
+            return null;
+          }
+          if (key === 'first name' && arr[index + 1] === 'last name') {
+            return (
+              <View
+                key={`${key}-${arr[index + 1]}`}
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <View style={{ flex: 1, marginRight: 10 }}>
                   <Text style={globalStyles.inputLabel}>
-                    {t('gender', english)}
+                    {t('firstName', english)}
                   </Text>
-                  <Dropdown
-                    style={[
-                      globalStyles.input,
-                      error[key as keyof ILogin] ? globalStyles.inputError : {},
-                    ]}
-                    data={genderData}
-                    labelField="label"
-                    valueField="value"
-                    placeholder="Select Gender"
-                    value={inputValue.gender}
-                    onChange={item => {
-                      setInputValue({ ...inputValue, gender: item.value });
-                      setError({ ...error, gender: false });
-                    }}
-                    placeholderStyle={{
-                      color: globalStyles.inputPlaceholder.color,
-                    }}
-                    selectedTextStyle={{ color: '#000' }}
-                    containerStyle={{ borderRadius: 5 }}
-                    dropdownPosition="auto"
-                  />
-                </View>
-              );
-            }
-            if (key === 'contact') {
-              return (
-                <View key={key}>
-                  <Text style={globalStyles.inputLabel}>
-                    {t('contact', english)}
-                  </Text>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <CountryPicker
-                      countryCode={countryCode as any}
-                      withFlag
-                      withCallingCode
-                      withFilter
-                      withCallingCodeButton
-                      onSelect={country => {
-                        setCountryCode(country.cca2);
-                      }}
-                      containerButtonStyle={{
-                        width: 110,
-                        height: 50,
-                        paddingHorizontal: 10,
-                        justifyContent: 'center',
-                        backgroundColor: hexToRGBA(
-                          Colors.light.white as string,
-                          0.4,
-                        ),
-                      }}
-                    />
-
+                  <View style={{ position: 'relative' }}>
                     <TextInput
-                      value={inputValue.contact}
+                      value={inputValue['first name']}
                       onChangeText={text => {
-                        setInputValue({ ...inputValue, contact: text });
-                        setError({ ...error, contact: false });
+                        setInputValue({ ...inputValue, ['first name']: text });
+                        setError({ ...error, ['first name']: false });
                       }}
-                      placeholder="Enter your contact number"
-                      keyboardType="phone-pad"
+                      placeholder="Enter your first name"
                       placeholderTextColor={globalStyles.inputPlaceholder.color}
                       style={[
                         globalStyles.input,
-                        {
-                          paddingHorizontal: 12,
-                          borderBottomRightRadius: 8,
-                          borderWidth: 1,
-                          width: width - 150,
-                          marginBottom: 0,
-                        },
-                        error.contact ? globalStyles.inputError : {},
+                        error['first name'] ? globalStyles.inputError : {},
                       ]}
                     />
                   </View>
                 </View>
-              );
-            }
-            if (key === 'address') {
-              return (
-                <Address
-                  address={address}
-                  setAddress={setAddress}
-                  error={error}
-                  key={key}
-                />
-              );
-            }
 
+                <View style={{ flex: 1, marginLeft: 10 }}>
+                  <Text style={globalStyles.inputLabel}>
+                    {t('lastName', english)}
+                  </Text>
+                  <View style={{ position: 'relative' }}>
+                    <TextInput
+                      value={inputValue['last name']}
+                      onChangeText={text => {
+                        setInputValue({ ...inputValue, ['last name']: text });
+                        setError({ ...error, ['last name']: false });
+                      }}
+                      placeholder="Enter your last name"
+                      placeholderTextColor={globalStyles.inputPlaceholder.color}
+                      style={[
+                        globalStyles.input,
+                        error['last name'] ? globalStyles.inputError : {},
+                      ]}
+                    />
+                  </View>
+                </View>
+              </View>
+            );
+          }
+
+          if (key === 'gender') {
             return (
-              <View key={key} style={{}}>
+              <View key={key}>
                 <Text style={globalStyles.inputLabel}>
-                  {t(key as TranslationKey, english)}
+                  {t('gender', english)}
                 </Text>
-                <View style={{ position: 'relative' }}>
-                  <TextInput
-                    value={inputValue[key as keyof IUpdateProfile]}
-                    onChangeText={text => {
-                      setInputValue({ ...inputValue, [key]: text });
-                      setError({ ...error, [key]: false });
+                <Dropdown
+                  style={[
+                    globalStyles.input,
+                    error[key as keyof ILogin] ? globalStyles.inputError : {},
+                  ]}
+                  data={genderData}
+                  labelField="label"
+                  valueField="value"
+                  placeholder="Select Gender"
+                  value={inputValue.gender}
+                  onChange={item => {
+                    setInputValue({ ...inputValue, gender: item.value });
+                    setError({ ...error, gender: false });
+                  }}
+                  placeholderStyle={{
+                    color: globalStyles.inputPlaceholder.color,
+                  }}
+                  selectedTextStyle={{ color: '#000' }}
+                  containerStyle={{ borderRadius: 5 }}
+                  dropdownPosition="auto"
+                />
+              </View>
+            );
+          }
+          if (key === 'contact') {
+            return (
+              <View key={key}>
+                <Text style={globalStyles.inputLabel}>
+                  {t('contact', english)}
+                </Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <CountryPicker
+                    countryCode={countryCode as any}
+                    withFlag
+                    withCallingCode
+                    withFilter
+                    withCallingCodeButton
+                    onSelect={country => {
+                      setCountryCode(country.cca2);
                     }}
-                    placeholder={`Enter your ${key}`}
+                    containerButtonStyle={{
+                      width: 110,
+                      height: 50,
+                      paddingHorizontal: 10,
+                      justifyContent: 'center',
+                      backgroundColor: hexToRGBA(
+                        Colors.light.white as string,
+                        0.4,
+                      ),
+                    }}
+                  />
+
+                  <TextInput
+                    value={inputValue.contact}
+                    onChangeText={text => {
+                      setInputValue({ ...inputValue, contact: text });
+                      setError({ ...error, contact: false });
+                    }}
+                    placeholder="Enter your contact number"
+                    keyboardType="phone-pad"
                     placeholderTextColor={globalStyles.inputPlaceholder.color}
                     style={[
                       globalStyles.input,
-                      error[key as keyof IUpdateProfile]
-                        ? globalStyles.inputError
-                        : {},
+                      {
+                        paddingHorizontal: 12,
+                        borderBottomRightRadius: 8,
+                        borderWidth: 1,
+                        width: width - 150,
+                        marginBottom: 0,
+                      },
+                      error.contact ? globalStyles.inputError : {},
                     ]}
                   />
                 </View>
               </View>
             );
-          })}
+          }
+          if (key === 'address') {
+            return (
+              <Address
+                address={address}
+                setAddress={setAddress}
+                error={error}
+                key={key}
+              />
+            );
+          }
 
-          <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
-            <GradientButton
-              isLoading={isLoading}
-              handler={submitHandler}>
-              {isLoading ? (
-                <ActivityIndicator color="white" size="small" />
-              ) : (
-                <Text
-                  style={{
-                    color: 'white',
-                    textAlign: 'center',
-                    fontWeight: '700',
-                    fontSize: 18,
-                  }}>
-                  Sauvegarder
-                </Text>
-              )}
-            </GradientButton>
-          </View>
+          return (
+            <View key={key} style={{}}>
+              <Text style={globalStyles.inputLabel}>
+                {t(key as TranslationKey, english)}
+              </Text>
+              <View style={{ position: 'relative' }}>
+                <TextInput
+                  value={inputValue[key as keyof IUpdateProfile]}
+                  onChangeText={text => {
+                    setInputValue({ ...inputValue, [key]: text });
+                    setError({ ...error, [key]: false });
+                  }}
+                  placeholder={`Enter your ${key}`}
+                  placeholderTextColor={globalStyles.inputPlaceholder.color}
+                  style={[
+                    globalStyles.input,
+                    error[key as keyof IUpdateProfile]
+                      ? globalStyles.inputError
+                      : {},
+                  ]}
+                />
+              </View>
+            </View>
+          );
+        })}
+
+        <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
+          <GradientButton
+            isLoading={isLoading}
+            handler={submitHandler}>
+            {isLoading ? (
+              <ActivityIndicator color="white" size="small" />
+            ) : (
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: '700',
+                  fontSize: 18,
+                }}>
+                Sauvegarder
+              </Text>
+            )}
+          </GradientButton>
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

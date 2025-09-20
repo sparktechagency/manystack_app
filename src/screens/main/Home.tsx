@@ -1,4 +1,4 @@
-import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import { CommonActions, NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { FlatList, ImageSourcePropType, View } from 'react-native';
 import { useIAP } from 'react-native-iap';
@@ -68,17 +68,17 @@ const Home = () => {
       try {
         const subs = await getActiveSubscriptions();
         if (subs?.length <= 0) {
-          // navigation.dispatch(
-          //   CommonActions.reset({
-          //     index: 0,
-          //     routes: [
-          //       {
-          //         name: 'Subscription',
-          //         params: { show: false },
-          //       },
-          //     ],
-          //   })
-          // );
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'Subscription',
+                  params: { show: false },
+                },
+              ],
+            })
+          );
         }
       } catch (error) {
         console.error("Failed to get active subscriptions:", error);
