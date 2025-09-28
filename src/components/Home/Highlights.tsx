@@ -47,7 +47,7 @@ const Highlights = ({
             key={item.title}>
             <Text
               style={{
-                fontSize: 32,
+                fontSize: 22,
                 color: themeColors.primary as string,
                 fontWeight: 700,
                 lineHeight: 48,

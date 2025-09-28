@@ -1,6 +1,6 @@
-import { CommonActions, NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { FlatList, ImageSourcePropType, View } from 'react-native';
+import { FlatList, ImageSourcePropType, SafeAreaView } from 'react-native';
 import { useIAP } from 'react-native-iap';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FloatingPlus from '../../components/Home/FloatingPlus';
@@ -67,19 +67,19 @@ const Home = () => {
     const checkSubscriptions = async () => {
       try {
         const subs = await getActiveSubscriptions();
-        if (subs?.length <= 0) {
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [
-                {
-                  name: 'Subscription',
-                  params: { show: false },
-                },
-              ],
-            })
-          );
-        }
+        // if (subs?.length <= 0) {
+        //   navigation.dispatch(
+        //     CommonActions.reset({
+        //       index: 0,
+        //       routes: [
+        //         {
+        //           name: 'Subscription',
+        //           params: { show: false },
+        //         },
+        //       ],
+        //     })
+        //   );
+        // }
       } catch (error) {
         console.error("Failed to get active subscriptions:", error);
       }
@@ -88,7 +88,7 @@ const Home = () => {
     checkSubscriptions();
   }, [connected, getActiveSubscriptions, navigation]);
   return (
-    <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
+    <SafeAreaView style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
       <FlatList
         keyExtractor={(item, index) => index.toString()}
         data={elements}
@@ -101,7 +101,7 @@ const Home = () => {
         }}
       />
       <FloatingPlus key={6} />
-    </View >
+    </SafeAreaView >
   );
 };
 

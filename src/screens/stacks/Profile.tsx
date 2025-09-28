@@ -33,6 +33,7 @@ const Profile = () => {
   const { width, user, english, height } = useGlobalContext();
   const [countryCode, setCountryCode] = React.useState(user?.countryCode?.split('_')?.[0] ? user?.countryCode?.split('_')?.[0] : 'FR');
   const [callingCode, setCallingCode] = React.useState(user?.countryCode?.split('_')?.[1]);
+  console.log(user)
   // const [countryCode, setCountryCode] = React.useState('FR');
   // const [callingCode, setCallingCode] = React.useState();
   const [address, setAddress] = React.useState<IAddress>({
