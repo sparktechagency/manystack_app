@@ -10,8 +10,9 @@ const Tabbar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   const insets = useSafeAreaInsets();
   const navigate = useNavigation<DrawerNavigationProp<DrawerTypes>>();
   const { buildHref } = useLinkBuilder();
+  // marginBottom: insets.bottom
   return (
-    <View style={{ flexDirection: 'row', height: 50, marginBottom: insets.bottom }}>
+    <View style={{ flexDirection: 'row', height: 50, }}>
       {state.routes.map((route: any, index: any) => {
         const { options } = descriptors[route.key];
         const label =
