@@ -29,7 +29,7 @@ const Support = () => {
     if (!subject || !message) {
       return Toast.show({
         type: 'error',
-        text1: 'Subject and message are required',
+        text1: english?'Subject and message are required':'Sujet et message sont requis',
       });
     }
     handleSupportCreate({ subject, message }, () => navigation.goBack());

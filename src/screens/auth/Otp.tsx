@@ -45,8 +45,8 @@ const Otp = () => {
     if (code?.length != 6) {
       return Toast.show({
         type: 'error',
-        text1: 'Invalid OTP',
-        text2: 'Please enter a valid 6-digit OTP.',
+        text1: english ? 'Invalid OTP' : "Code OTP invalide",
+        text2: english ? 'Please enter a valid 6-digit OTP.' : "Veuillez entrer un code OTP valide de 6 chiffres.",
       });
     }
     from === 'signup'
@@ -58,8 +58,8 @@ const Otp = () => {
         .then(async res => {
           Toast.show({
             type: 'success',
-            text1: 'Success',
-            text2: res.data?.message || 'OTP verified successfully.',
+            text1: english ? 'Success' : "Succès",
+            text2: res.data?.message || english ?  'OTP verified successfully.' : "OTP vérifié avec succès.",
           });
           await AsyncStorage.removeItem('email');
           navigate.navigate(from == 'signup' ? 'Login' : 'NewPassword');
@@ -67,8 +67,8 @@ const Otp = () => {
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Error',
-            text2: err?.data?.message || 'An unexpected error occurred.',
+            text1: english ? 'Error' : "Erreur",
+            text2: err?.data?.message || english ? 'An unexpected error occurred.' : "Une erreur inattendue est survenue.",
           });
         })
       : verifyOtp({
@@ -78,16 +78,16 @@ const Otp = () => {
         .then(res => {
           Toast.show({
             type: 'success',
-            text1: 'Success',
-            text2: res.data?.message || 'OTP verified successfully.',
+            text1: english ? 'Success' : "Succès",
+            text2: res.data?.message || english ? 'OTP verified successfully.' : "OTP vérifié avec succès.",
           });
           navigate.navigate(from == 'signup' ? 'Login' : 'NewPassword');
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Error',
-            text2: err?.data?.message || 'An unexpected error occurred.',
+            text1: english ? 'Error' : "Erreur",
+            text2: err?.data?.message || english ? 'An unexpected error occurred.' : "Une erreur inattendue est survenue.",
           });
         });
         setLoading(false);

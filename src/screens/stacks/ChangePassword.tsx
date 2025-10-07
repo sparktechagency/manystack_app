@@ -60,7 +60,7 @@ const ChangePassword = () => {
     if (invalid) {
       return Toast.show({
         type: 'error',
-        text1: 'All fields are required',
+        text1: english?'All fields are required':'Tous les champs sont requis',
       });
     }
     const data = {

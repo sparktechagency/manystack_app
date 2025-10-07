@@ -98,8 +98,8 @@ const SignUp = () => {
     if (isInvalid) {
       Toast.show({
         type: 'error',
-        text1: 'Please fill all fields',
-        text2: 'All fields are required',
+        text1: english ? 'Please fill all fields' : "Veuillez remplir tous les champs",
+        text2: english ? 'All fields are required' : "Tous les champs sont requis",
       });
       return;
     }
@@ -129,15 +129,15 @@ const SignUp = () => {
         });
         Toast.show({
           type: 'success',
-          text1: 'registered successfully',
-          text2: res.message,
+          text1: english ? 'registered successfully' : "Enregistré avec succès",
+          text2: res.message || english ? 'registered successfully' : "Enregistré avec succès",
         });
       })
       .catch(err => {
         Toast.show({
           type: 'error',
-          text1: 'registration failed',
-          text2: err.data?.message || 'Something went wrong',
+          text1: english ? 'registration failed' : "Enregistrement échoué",
+          text2: err.data?.message || english ? 'Something went wrong' : "Quelque chose s'est mal passé",
         });
       });
       setLoading(false);
