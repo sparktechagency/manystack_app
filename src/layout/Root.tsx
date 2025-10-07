@@ -15,7 +15,11 @@ const Root = () => {
   return (
     <KeyboardProvider>
       <NavigationContainer>
-        <StatusBar barStyle="dark-content" backgroundColor={Colors.lighter} />
+        <StatusBar barStyle="dark-content"
+        backgroundColor="transparent" 
+        translucent={true}
+        // backgroundColor={Colors.lighter} 
+        />
         <Provider store={store}>
           <GlobalContextProvider>
             <DrawerLayout />

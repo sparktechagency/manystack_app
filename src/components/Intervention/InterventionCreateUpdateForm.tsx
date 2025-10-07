@@ -39,6 +39,7 @@ const InterventionCreateUpdateForm = () => {
   const { handleCreateIntervention, isLoading } = createIntervention();
   const { handleUpdateIntervention, isLoading: updating } = updateIntervention();
   const { themeColors, setImages, images, english, height } = useGlobalContext();
+  const [loading, setLoading] = React.useState(false);
   const { top, bottom } = useSafeAreaInsets();
   const [error, setError] = React.useState<ICreateInterVentionError>({
     'intervention id': false,
@@ -57,6 +58,7 @@ const InterventionCreateUpdateForm = () => {
   });
 
   const submitHandler = async () => {
+    setLoading(true);
     let invalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof ICreateInterVention] === '') {
@@ -89,6 +91,7 @@ const InterventionCreateUpdateForm = () => {
     params?.params?.id
       ? await handleUpdateIntervention(formData, params?.params?.id)
       : await handleCreateIntervention(formData);
+    setLoading(false);
   };
   useEffect(() => {
     if (inputValue['category']) {
@@ -331,7 +334,7 @@ const InterventionCreateUpdateForm = () => {
             ))}
         </View>
         <View style={{ paddingHorizontal: 25, marginTop: 20, marginBottom: 120 }}>
-          <GradientButton handler={() => submitHandler()}>
+          <GradientButton isLoading={loading} handler={() => submitHandler()}>
             {isLoading || updating ? (
               <ActivityIndicator size="small" color="white" />
             ) : (

@@ -11,17 +11,21 @@ import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetInterventionByIdQuery } from '../../redux/Apis/interventionApis';
 import { downloadButton } from '../../utils/DownloadPdf';
 import { t } from '../../utils/translate';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const InterventionDetails = () => {
   const { width, height, themeColors, currency, english } = useGlobalContext();
   const { params }: any = useRoute();
   const { data, isLoading, isFetching } = useGetInterventionByIdQuery(params?.params?.id);
+  const insets = useSafeAreaInsets();
   return (
     <View
       style={{
         position: 'relative',
         height: height,
         paddingHorizontal: 16,
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
       }}>
       <BackButton text={t('details', english)} />
       {

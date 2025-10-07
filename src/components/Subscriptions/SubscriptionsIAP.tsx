@@ -15,7 +15,9 @@ import RNRestart from 'react-native-restart';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import BackButton from "../sheard/BackButton";
 import GradientButton from "../sheard/GradientButton";
+import { SafeAreaInsetsContext, useSafeAreaInsets } from 'react-native-safe-area-context';
 export default function SubscriptionsIAP() {
+  const {top,bottom}=useSafeAreaInsets()
   const { params }: any = useRoute();
   const { setShowSubscription } = useGlobalContext()
   const [planId, setPlanId] = useState("")
@@ -134,7 +136,6 @@ export default function SubscriptionsIAP() {
     }
     getSub()
   }, [activeSubscriptions])
-  console.log(activeSubscriptions, subscriptions)
   const renderSubscriptions = useMemo(() => {
     return (
       <>
@@ -143,7 +144,8 @@ export default function SubscriptionsIAP() {
             <>
               {activeSubscriptions?.length > 0 ? (
                 <>
-                  <Text style={[styles.title, { marginBottom: 8 }]}>Current Plan</Text>
+                  <Text style={[styles.title, { marginBottom: 8 }]}>Forfait actuel
+                  </Text>
                   {product?.subscriptionOfferDetailsAndroid?.filter((item: any) => item?.basePlanId == planId)?.map((item: any) => (
                     <View
                       key={item?.basePlanId}
@@ -151,8 +153,8 @@ export default function SubscriptionsIAP() {
                     >
                       <Text>
                         {item?.basePlanId === "monthly"
-                          ? "Monthly Plan"
-                          : "3-Month Plan"}
+                          ? "Forfait mensuel"
+                          : "Forfait trimestriel"}
                       </Text>
                       <View style={styles.priceRow}>
                         <Text style={styles.priceText}>
@@ -160,11 +162,13 @@ export default function SubscriptionsIAP() {
                         </Text>
                         <Text>
                           {item?.basePlanId === "monthly"
-                            ? "Monthly"
-                            : "3-Months"}
+                            ? "Mensuel"
+                            : "Trimestriel"}
                         </Text>
                       </View>
-                      <Text style={{ marginBottom: 6 }}>Cancel anytime</Text>
+                      <Text style={{ marginBottom: 6 }}>
+                        Annuler à tout moment
+                      </Text>
                       <GradientButton
                         handler={async () => {
                           await AsyncStorage.removeItem("isActive")
@@ -172,7 +176,7 @@ export default function SubscriptionsIAP() {
                         }}
                       >
                         <Text style={styles.manageButton}>
-                          Manage / Cancel Subscription
+                          Gérer / Annuler la souscription
                         </Text>
                       </GradientButton>
                     </View>
@@ -181,7 +185,7 @@ export default function SubscriptionsIAP() {
               ) : (
                 <>
                   <Text style={[styles.title, { marginVertical: 8 }]}>
-                    Available Plans
+                    Plans disponibles
                   </Text>
                   {product?.subscriptionOfferDetailsAndroid?.map((item: any) => (
                     <View
@@ -190,8 +194,8 @@ export default function SubscriptionsIAP() {
                     >
                       <Text>
                         {item?.basePlanId === "monthly"
-                          ? "Monthly Plan"
-                          : "3-Month Plan"}
+                          ? "Forfait mensuel"
+                          : "Forfait trimestriel"}
                       </Text>
                       <View style={styles.priceRow}>
                         <Text style={styles.priceText}>
@@ -199,11 +203,13 @@ export default function SubscriptionsIAP() {
                         </Text>
                         <Text>
                           {item?.basePlanId === "monthly"
-                            ? "Monthly"
-                            : "3-Months"}
+                            ? "Mensuel"
+                            : "Trimestriel"}
                         </Text>
                       </View>
-                      <Text style={{ marginBottom: 6 }}>Cancel anytime</Text>
+                      <Text style={{ marginBottom: 6 }}>
+                        Annuler à tout moment
+                      </Text>
                       <GradientButton
                         handler={() => handlePurchase(product?.id, item?.offerToken, item?.basePlanId)}
                       >
@@ -224,14 +230,19 @@ export default function SubscriptionsIAP() {
     );
   }, [subscriptions, activeSubscriptions]);
   return (
-    <SafeAreaView>
+    <View
+    style={{
+      paddingTop:top,
+      paddingBottom:bottom
+    }}
+    >
       <ScrollView>
         {
           params?.params?.show && <BackButton text="Subscription" />
         }
         {renderSubscriptions}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

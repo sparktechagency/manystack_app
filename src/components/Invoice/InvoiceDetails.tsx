@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   Image,
   ImageSourcePropType,
-  SafeAreaView,
+    SafeAreaView,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -34,6 +34,7 @@ import { CardStyles } from '../Intervention/InterventionsCards';
 import FlexTextOpacity from '../InterventionDetails/FlexTextOpacity';
 import BackButton from '../sheard/BackButton';
 import GradientButton from '../sheard/GradientButton';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const InvoiceDetails = () => {
   const { params }: any = useRoute();
@@ -46,10 +47,13 @@ const InvoiceDetails = () => {
   const { markPaidUnpaidHandler, isLoading: markPaidUnpaidLoading } =
     useMarkPaidUnpaid();
   const invoice = data?.invoice as IInvoice;
+  const insets = useSafeAreaInsets();
   return (
-    <SafeAreaView
+    <View
       style={{
         position: 'relative',
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
       }}>
       <BackButton text={t('details', english)} />
       <ScrollView
@@ -357,7 +361,7 @@ const InvoiceDetails = () => {
           </GradientButton>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

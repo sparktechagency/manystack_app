@@ -1,4 +1,4 @@
-import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import { CommonActions, NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { FlatList, ImageSourcePropType, SafeAreaView } from 'react-native';
 import { useIAP } from 'react-native-iap';
@@ -67,6 +67,21 @@ const Home = () => {
     const checkSubscriptions = async () => {
       try {
         const subs = await getActiveSubscriptions();
+        const isActive = subs?.find(sub => sub.isActive === true);
+        if (!isActive) {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [
+                {
+                  name: 'Subscription',
+                  params: { show: false },
+                },
+              ],
+            })
+          )
+        }
+        
         // if (subs?.length <= 0) {
         //   navigation.dispatch(
         //     CommonActions.reset({

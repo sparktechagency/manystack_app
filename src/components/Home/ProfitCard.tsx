@@ -29,7 +29,8 @@ const ProfitCard = ({
           borderRadius: 10,
         },
       ]}>
-      <View>
+      <View
+      >
         <Text
           style={[
             globalStyles.inputLabel,

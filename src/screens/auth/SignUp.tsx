@@ -37,6 +37,7 @@ const SignUp = () => {
   const [callingCode, setCallingCode] = React.useState('33');
   const { width } = Dimensions.get('window');
   const { english } = useGlobalContext();
+  const [loading, setLoading] = React.useState(false);
   const [address, setAddress] = React.useState<IAddress>({
     streetName: '',
     city: '',
@@ -79,6 +80,7 @@ const SignUp = () => {
   const [register, { isLoading }] = useRegisterMutation();
 
   const submitHandler = useCallback(() => {
+    setLoading(true);
     let isInvalid = false;
     type Combined = ISignUp & IAddress;
     const combinedInputValue: Combined = {
@@ -138,7 +140,8 @@ const SignUp = () => {
           text2: err.data?.message || 'Something went wrong',
         });
       });
-  }, [register, inputValue, address]);
+      setLoading(false);
+  }, [register, inputValue, address, callingCode, countryCode, navigation,]);
   return (
     <SafeAreaView>
       <BackButton text={t('createAccount', english)} />
@@ -420,8 +423,10 @@ const SignUp = () => {
         })}
 
         <View style={{ paddingHorizontal: 25 }}>
-          <GradientButton handler={() => submitHandler()}>
-            {isLoading ? (
+          <GradientButton
+          isLoading={isLoading || loading}
+          handler={() => submitHandler()}>
+            {isLoading || loading ? (
               <ActivityIndicator size="large" color="#FFFFFF" />
             ) : (
               <Text

@@ -36,6 +36,7 @@ const InvoiceCreateUpdateForm = () => {
   const [serviceDate, setServiceDate] = React.useState<Date | undefined>();
   const [countryCode, setCountryCode] = React.useState('FR');
   const [showPicker, setShowPicker] = React.useState(false);
+  const [isSubmitLoading, setIsSubmitLoading] = React.useState(false);
   const { width, themeColors, user, english, height } = useGlobalContext();
   const navigation = useNavigation();
   const [address, setAddress] = React.useState<IAddress>({
@@ -94,7 +95,8 @@ const InvoiceCreateUpdateForm = () => {
   });
   const { createInvoiceHandler, isLoading } = useCreateInvoice();
   const { updateInvoiceHandler, isLoading: updateLoading } = useUpdateInvoice();
-  const submitHandler = () => {
+  const submitHandler =async () => {
+    setIsSubmitLoading(true);
     let invalid = false;
     type Combined = IInvoiceForm & IAddress;
     const combinedInputValue: Combined = {
@@ -109,7 +111,10 @@ const InvoiceCreateUpdateForm = () => {
         setError(prev => ({ ...prev, [key]: false }));
       }
     });
-    if (invalid) return;
+    if (invalid) {
+      setIsSubmitLoading(false);
+      return;
+    }
     const services = service.map((item: any) => ({
       selectedService: item.service,
       quantity: item.quantity,
@@ -127,12 +132,15 @@ const InvoiceCreateUpdateForm = () => {
       user: user?._id,
     };
     params?.params?.id
-      ? updateInvoiceHandler(data, params?.params?.id, () => {
+      ? await updateInvoiceHandler(data, params?.params?.id, () => {
         navigation.goBack();
+        setIsSubmitLoading(false);
       })
-      : createInvoiceHandler(data, () => {
+      : await createInvoiceHandler(data, () => {
         navigation.goBack();
+        setIsSubmitLoading(false);
       });
+    
   };
   const formatDate = (date?: Date) => {
     if (!date) return '00/00/000';
@@ -403,8 +411,8 @@ const InvoiceCreateUpdateForm = () => {
         })}
 
         <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
-          <GradientButton handler={() => submitHandler()}>
-            {isLoading || updateLoading ? (
+          <GradientButton isLoading={isSubmitLoading} handler={() => submitHandler()}>
+            {isSubmitLoading ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
               <Text

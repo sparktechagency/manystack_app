@@ -33,9 +33,7 @@ const Profile = () => {
   const { width, user, english, height } = useGlobalContext();
   const [countryCode, setCountryCode] = React.useState(user?.countryCode?.split('_')?.[0] ? user?.countryCode?.split('_')?.[0] : 'FR');
   const [callingCode, setCallingCode] = React.useState(user?.countryCode?.split('_')?.[1]);
-  console.log(user)
-  // const [countryCode, setCountryCode] = React.useState('FR');
-  // const [callingCode, setCallingCode] = React.useState();
+  const [loading, setLoading] = React.useState(false);
   const [address, setAddress] = React.useState<IAddress>({
     streetName: user?.address?.streetName || '',
     city: user?.address?.city || '',
@@ -70,7 +68,7 @@ const Profile = () => {
   });
   const { updateProfileHandler, isLoading } = useUpdateProfile();
   const submitHandler = () => {
-
+    setLoading(true);
     let invalid = false;
     type Combined = IUpdateProfile & IAddress;
     const combinedInputValue: Combined = {
@@ -108,6 +106,7 @@ const Profile = () => {
     updateProfileHandler(data, () => {
       navigation.goBack();
     });
+    setLoading(false);
   };
   return (
     <SafeAreaView>
@@ -300,9 +299,9 @@ const Profile = () => {
 
         <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
           <GradientButton
-            isLoading={isLoading}
+            isLoading={isLoading || loading}
             handler={submitHandler}>
-            {isLoading ? (
+            {isLoading || loading ? (
               <ActivityIndicator color="white" size="small" />
             ) : (
               <Text

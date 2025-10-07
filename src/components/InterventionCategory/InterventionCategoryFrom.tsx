@@ -31,6 +31,7 @@ const InterventionCategoryFrom = () => {
   const { handleCreateCategory, isLoading } = useCreateCategory();
   const { handleUpdateCategory, isLoading: updating } = useUpdateCategory();
   const { height, width, english } = useGlobalContext();
+  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState({
     'category Name': false,
     'category Price': false,
@@ -41,6 +42,7 @@ const InterventionCategoryFrom = () => {
     'category Price': params?.params?.price,
   });
   const submitHandler = async () => {
+    setLoading(true);
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof IInterventionCategory] === '') {
         setError(prev => ({ ...prev, [key]: true }));
@@ -56,11 +58,15 @@ const InterventionCategoryFrom = () => {
       ? await handleUpdateCategory(data, params?.params?.id)
       : await handleCreateCategory(data);
     navigation.goBack();
+    setLoading(false);
   };
   return (
     <SafeAreaView>
       <BackButton text={params?.params?.id ? t('updateInterventionCategory', english) : t('createInterventionCategory', english)} />
-      <KeyboardAwareScrollView bottomOffset={62} >
+      <KeyboardAwareScrollView
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      bottomOffset={62} >
         <View style={{
           height: height,
           paddingHorizontal: 20,
@@ -106,8 +112,10 @@ const InterventionCategoryFrom = () => {
                 width: "100%",
                 paddingVertical: 16,
               }}>
-              <GradientButton handler={submitHandler}>
-                {isLoading || updating ? (
+              <GradientButton
+              isLoading={isLoading || updating || loading}
+              handler={submitHandler}>
+                {isLoading || updating || loading ? (
                   <ActivityIndicator size="large" color="white" />
                 ) : (
                   <Text

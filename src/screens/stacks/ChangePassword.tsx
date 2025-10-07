@@ -33,7 +33,7 @@ const ChangePassword = () => {
   const [cPassShow, setCPassShow] = React.useState(true);
   const { changePasswordHandler, isLoading } = useChangePassword();
   const { english, width, height } = useGlobalContext();
-
+  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState({
     'current password': false,
     'new password': false,
@@ -47,6 +47,7 @@ const ChangePassword = () => {
   });
 
   const submitHandler = () => {
+    setLoading(true);
     let invalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof IChangePassword] === '') {
@@ -67,6 +68,7 @@ const ChangePassword = () => {
       newPassword: inputValue['new password'],
       confirmPassword: inputValue['confirm password'],
     };
+  
     changePasswordHandler(data, () => {
       setInputValue({
         'current password': '',
@@ -74,6 +76,7 @@ const ChangePassword = () => {
         'confirm password': '',
       });
       navigation.goBack();
+      setLoading(false);
     });
   };
 
@@ -165,8 +168,10 @@ const ChangePassword = () => {
           width: width,
           paddingVertical: 16,
         }}>
-        <GradientButton handler={submitHandler}>
-          {isLoading ? (
+        <GradientButton
+          isLoading={isLoading || loading}
+          handler={submitHandler}>
+          {isLoading || loading ? (
             <ActivityIndicator color="white" />
           ) : (
             <Text

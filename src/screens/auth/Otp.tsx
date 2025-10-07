@@ -36,11 +36,12 @@ const Otp = () => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const { english, height } = useGlobalContext();
   const [code, setCode] = useState('');
-
+  const [loading, setLoading] = useState(false);
   const [verify, { isLoading }] = useVerifyEmailMutation();
   const [verifyOtp, { isLoading: otpLoading }] = useVerifyOtpMutation();
 
   const handleOtpChange = useCallback(() => {
+    setLoading(true);
     if (code?.length != 6) {
       return Toast.show({
         type: 'error',
@@ -89,7 +90,8 @@ const Otp = () => {
             text2: err?.data?.message || 'An unexpected error occurred.',
           });
         });
-  }, [code, verify, from]);
+        setLoading(false);
+  }, [code, verify, from, navigate, setLoading]);
 
   return (
     <SafeAreaView>
@@ -156,8 +158,10 @@ const Otp = () => {
                 paddingHorizontal: 25,
                 marginTop: 40,
               }}>
-              <GradientButton handler={handleOtpChange}>
-                {isLoading ? (
+              <GradientButton
+              isLoading={isLoading || loading}
+              handler={handleOtpChange}>
+                {isLoading || loading ? (
                   <ActivityIndicator size="small" color="#0000ff" />
                 ) : (
                   <Text

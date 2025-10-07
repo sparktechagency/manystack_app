@@ -35,7 +35,7 @@ const ExpensesCreateUpdateForm = () => {
   const { params }: any = useRoute();
   const { handleCreateExpenses, isLoading } = createExpenses();
   const { handleUpdateExpenses, isLoading: updating } = updateExpenses();
-
+const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<IExpensesError>({
     'Expense Name': false,
     category: false,
@@ -52,6 +52,7 @@ const ExpensesCreateUpdateForm = () => {
   });
 
   const submitHandler = async () => {
+    setLoading(true);
     let invalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof ICreateExpenses] === '') {
@@ -83,7 +84,8 @@ const ExpensesCreateUpdateForm = () => {
     params?.params?.id
       ? await handleUpdateExpenses(formData, params?.params?.id)
       : await handleCreateExpenses(formData);
-  };
+    setLoading(false);
+    };
   return (
     <SafeAreaView>
       <BackButton text={params?.params?.id ? t('updateExpenses', english) : t('createExpenses', english)} />
@@ -240,7 +242,7 @@ const ExpensesCreateUpdateForm = () => {
             ))}
         </View>
         <View style={{ paddingHorizontal: 25, marginTop: 20, marginBottom: 150 }}>
-          <GradientButton handler={() => submitHandler()}>
+          <GradientButton isLoading={loading} handler={() => submitHandler()}>
             {isLoading || updating ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
