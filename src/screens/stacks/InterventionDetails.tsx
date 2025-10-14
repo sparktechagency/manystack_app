@@ -52,11 +52,11 @@ const InterventionDetails = () => {
             text2={data?.intervention?.createdAt?.split('T')[0]}
           />
           <FlexTextOpacity
-            text1="Category :"
+            text1="Catégorie :"
             text2={data?.intervention?.category?.name}
           />
           <FlexTextOpacity
-            text1="Price :"
+            text1="Prix :"
             text2={`${currency}${data?.intervention?.price}`}
             color={themeColors.primary as string}
           />
@@ -100,7 +100,7 @@ const InterventionDetails = () => {
                   fontWeight: 700,
                   fontSize: 18,
                 }}>
-                Export PDF
+               Exporter un PDF
               </Text>
             </GradientButton>
           </View>

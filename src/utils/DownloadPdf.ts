@@ -4,7 +4,6 @@ import Toast from 'react-native-toast-message';
 import { baseUrl } from './baseUrls';
 
 export const downloadButton = async (url: string, name?: string) => {
-  console.log('download pdf button clicked');
   const token = await AsyncStorage.getItem('token');
   try {
     let dirs = ReactNativeBlobUtil.fs.dirs;
@@ -16,7 +15,7 @@ export const downloadButton = async (url: string, name?: string) => {
         useDownloadManager: true,
         notification: true,
         title: fileName,
-        description: `Your expense is being downloaded`,
+        description: 'Votre dépense est en cours de téléchargement',
         mime: 'application/pdf',
         path: dirs.DownloadDir + '/' + fileName,
         mediaScannable: true,
@@ -27,27 +26,25 @@ export const downloadButton = async (url: string, name?: string) => {
         Authorization: `Bearer ${token}`,
       })
       .then(res => {
-        console.log(res);
         Toast.show({
           type: 'success',
-          text1: 'Download complete!',
-          text2: `File saved to:\n${res.path()}`,
+          text1:'Téléchargement terminé!',
+          text2: `Fichier enregistré dans:\n${res.path()}`,
         });
       })
       .catch(error => {
         console.log(error);
         Toast.show({
           type: 'error',
-          text1: 'Download failed!',
+          text1:'Téléchargement échoué!',
           text2: error.message,
         });
       });
   } catch (error: any) {
-    console.log(error);
     Toast.show({
       type: 'error',
-      text1: 'Download failed!',
-      text2: error.message || 'Unknown error occurred.',
+      text1:'Téléchargement échoué!',
+      text2: error.message || "Une erreur inconnue est survenue.",
     });
   }
 };

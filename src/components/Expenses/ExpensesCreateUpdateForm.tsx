@@ -125,6 +125,7 @@ const [loading, setLoading] = React.useState(false);
                   {t('selectCategory', english)}
                 </Text>
                 <SingleSelectDropDown
+                placeholder='sélectionner une catégorie'
                   name={key}
                   data={[
                     { label: 'Équipement', value: 'Équipement' },

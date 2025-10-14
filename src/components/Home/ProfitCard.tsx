@@ -63,7 +63,7 @@ const ProfitCard = ({
       </View>
       <Image
         source={icon ? icon : (Profit as ImageSourcePropType)}
-        style={{width: 150, height: 60}}
+        style={{width: 100, height: 40}}
       />
     </View>
   );
@@ -71,4 +71,3 @@ const ProfitCard = ({
 
 export default ProfitCard;
 
-const styles = StyleSheet.create({});

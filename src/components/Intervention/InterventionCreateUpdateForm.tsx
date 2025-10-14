@@ -81,8 +81,8 @@ const InterventionCreateUpdateForm = () => {
     if (Object.values(location as any).some(value => value === undefined)) {
       return Toast.show({
         type: 'error',
-        text1: 'Error',
-        text2: 'Please enable location',
+        text1: english?'Error':'Erreur',
+        text2: english?'Please enable location':'Veuillez activer votre localisation',
       });
     }
     formData.append('latitude', location?.latitude);

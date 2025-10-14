@@ -9,7 +9,7 @@ import {
 import {TabsTypes} from '../types/ScreenPropsTypes';
 
 export const createIntervention = () => {
-  const {setImages} = useGlobalContext();
+  const {setImages,english} = useGlobalContext();
   const navigation = useNavigation<NavigationProp<TabsTypes>>();
   const [create, {isLoading}] = useCreateInterventionMutation();
   const handleCreateIntervention = async (data: any) => {
@@ -19,7 +19,7 @@ export const createIntervention = () => {
         .then(res => {
           Toast.show({
             type: 'success',
-            text1: 'intervention created',
+            text1: english?'intervention created':'intervention créée',
             text2: res.data?.message || 'Intervention created successfully.',
           });
           navigation.goBack();
@@ -28,8 +28,8 @@ export const createIntervention = () => {
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to create intervention',
-            text2: err.data?.message || 'Failed to create intervention.',
+            text1: english?'Failed to create intervention':'Échec de la création de l’intervention',
+            text2: err.data?.message || english?'Failed to create intervention':'Échec de la création de l’intervention.',
           });
         });
       return true;
@@ -43,7 +43,7 @@ export const createIntervention = () => {
 };
 
 export const updateIntervention = () => {
-  const {setImages} = useGlobalContext();
+  const {setImages,english} = useGlobalContext();
   const navigation = useNavigation<NavigationProp<TabsTypes>>();
   const [update, {isLoading}] = useUpdateInterventionMutation();
   const handleUpdateIntervention = async (
@@ -58,8 +58,8 @@ export const updateIntervention = () => {
           action &&
             Toast.show({
               type: 'success',
-              text1: 'intervention updated',
-              text2: res.data?.message || 'Intervention updated successfully.',
+              text1: english?'intervention updated':'intervention mise à jour',
+              text2: res.data?.message || english?'Intervention updated successfully':'Intervention mise à jour avec succès.',
             });
           action && navigation.goBack();
           action && setImages([]);
@@ -67,8 +67,8 @@ export const updateIntervention = () => {
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to update intervention',
-            text2: err.data?.message || 'Failed to update intervention.',
+            text1: english?'Failed to update intervention':'Échec de la mise à jour de l’intervention',
+            text2: err.data?.message || english?'Failed to update intervention':'Échec de la mise à jour de l’intervention.',
           });
         });
       return true;
@@ -82,6 +82,7 @@ export const updateIntervention = () => {
 };
 
 export const useDeleteIntervention = () => {
+  const {english} = useGlobalContext();
   const [deleteIntervention, {isLoading}] = useDeleteInterventionMutation();
   const handleDeleteIntervention = async (
     id: string,
@@ -94,15 +95,15 @@ export const useDeleteIntervention = () => {
           action &&
             Toast.show({
               type: 'success',
-              text1: 'intervention deleted',
-              text2: res.data?.message || 'Intervention deleted successfully.',
+              text1: english?'intervention deleted':'intervention supprimée',
+              text2: res.data?.message || english?'Intervention deleted successfully':'Intervention supprimée avec succès.',
             });
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to delete intervention',
-            text2: err.data?.message || 'Failed to delete intervention.',
+            text1: english?'Failed to delete intervention':'Échec de la suppression de l’intervention',
+            text2: err.data?.message || english?'Failed to delete intervention':'Échec de la suppression de l’intervention.',
           });
         });
       return true;

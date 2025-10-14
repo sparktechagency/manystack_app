@@ -131,6 +131,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
                   phone: item.phone,
                   nSiren: item.nSiren,
                   status: item.status,
+                  date: item.data,
                 },
               });
             }}>

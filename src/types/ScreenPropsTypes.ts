@@ -49,6 +49,7 @@ export type StackTypes = {
       phone: string;
       nSiren: string;
       status: string;
+      date: string;
     };
   };
   EditProfile: undefined;

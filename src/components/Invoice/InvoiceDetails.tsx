@@ -105,7 +105,7 @@ const InvoiceDetails = () => {
         </View>
 
         <Text style={[globalStyles.inputLabel, { marginTop: 20 }]}>
-          User Details
+          {english ? 'User Details' : "Détails de l'utilisateur"}
         </Text>
         <View
           style={[
@@ -138,6 +138,7 @@ const InvoiceDetails = () => {
                   phone: invoice?.phone,
                   nSiren: invoice?.nSiren,
                   status: invoice?.status,
+                  date: invoice?.data,
                 },
               });
             }}>
@@ -205,7 +206,7 @@ const InvoiceDetails = () => {
           text2={user?.nSiren as string + ""}
         />
         <Text style={[globalStyles.inputLabel, { marginTop: 20 }]}>
-          Customer Details
+          {english ? 'Customer Details' : 'Détails du client'}
         </Text>
         <FlexTextOpacity
           text1={english ? 'Name :' : 'Nom :'}
@@ -333,7 +334,7 @@ const InvoiceDetails = () => {
             paddingHorizontal: 25,
             // position: 'absolute',
             // bottom: 100,
-            marginBottom: 100,
+            marginBottom: 120,
             width: '100%',
             paddingVertical: 16,
           }}>

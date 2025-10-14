@@ -238,7 +238,7 @@ export default function SubscriptionsIAP() {
     >
       <ScrollView>
         {
-          params?.params?.show && <BackButton text="Subscription" />
+          params?.params?.show && <BackButton text={'Souscription'} />
         }
         {renderSubscriptions}
       </ScrollView>

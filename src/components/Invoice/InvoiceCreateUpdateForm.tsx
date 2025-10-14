@@ -33,12 +33,13 @@ import BackButton from '../sheard/BackButton';
 import InvoiceService from './InvoiceService';
 const InvoiceCreateUpdateForm = () => {
   const { params }: any = useRoute();
-  const [serviceDate, setServiceDate] = React.useState<Date | undefined>();
+  const [serviceDate, setServiceDate] = React.useState<Date | undefined>(new Date(params?.params?.date));
   const [countryCode, setCountryCode] = React.useState('FR');
   const [showPicker, setShowPicker] = React.useState(false);
   const [isSubmitLoading, setIsSubmitLoading] = React.useState(false);
   const { width, themeColors, user, english, height } = useGlobalContext();
   const navigation = useNavigation();
+  
   const [address, setAddress] = React.useState<IAddress>({
     streetName: params?.params?.address?.streetName,
     city: params?.params?.address?.city,
@@ -46,6 +47,7 @@ const InvoiceCreateUpdateForm = () => {
     country: params?.params?.address?.country,
     postalCode: params?.params?.address?.postalCode,
   });
+
   const [service, setService] = React.useState<IInvoiceService[]>(
     params?.params?.service.map((item: any) => ({
       id: generateRandom(),
@@ -90,12 +92,12 @@ const InvoiceCreateUpdateForm = () => {
     'N°SIREN': params?.params?.nSiren,
     address: 'Dhaka',
     services: 'web development',
-    date: '01/01/2023',
-    status: params?.params?.status?.toLowerCase(),
+    date: params?.params?.date,
+    status: params?.params?.status,
   });
   const { createInvoiceHandler, isLoading } = useCreateInvoice();
   const { updateInvoiceHandler, isLoading: updateLoading } = useUpdateInvoice();
-  const submitHandler =async () => {
+  const submitHandler = async () => {
     setIsSubmitLoading(true);
     let invalid = false;
     type Combined = IInvoiceForm & IAddress;
@@ -140,7 +142,7 @@ const InvoiceCreateUpdateForm = () => {
         navigation.goBack();
         setIsSubmitLoading(false);
       });
-    
+
   };
   const formatDate = (date?: Date) => {
     if (!date) return '00/00/000';
@@ -267,10 +269,7 @@ const InvoiceCreateUpdateForm = () => {
                       setInputValue({ ...inputValue, contact: text });
                       setError({ ...error, contact: false });
                     }}
-                    placeholder={`${t('enter', english)} ${t(
-                      'contact',
-                      english,
-                    )}`}
+                    placeholder={`Téléphone société`}
                     keyboardType="phone-pad"
                     placeholderTextColor={globalStyles.inputPlaceholder.color}
                     style={[
@@ -393,10 +392,7 @@ const InvoiceCreateUpdateForm = () => {
                     setInputValue({ ...inputValue, [key]: text });
                     setError({ ...error, [key]: false });
                   }}
-                  placeholder={`${t('enter', english)} ${t(
-                    key as TranslationKey,
-                    english,
-                  )}`}
+                  placeholder= {key=="name"?"Nom de la société":key=="email"?"E-mail société":key=="contact"?"Téléphone société":key=="N°SIREN"?"N°- SIREN société":key=="address"?"Adresse société":key=="services"?"Services":key=="date"?"Date":key=="status"?"Status":""}
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
                     globalStyles.input,
@@ -422,7 +418,7 @@ const InvoiceCreateUpdateForm = () => {
                   fontWeight: '700',
                   fontSize: 18,
                 }}>
-                Submit
+                Soumettre
               </Text>
             )}
           </GradientButton>

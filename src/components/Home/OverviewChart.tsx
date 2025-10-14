@@ -19,7 +19,7 @@ const OverviewChart = ({ monthlyData }: Props) => {
   const mapMonthlyDataToBarData = (monthlyData: MonthlyData[]) => {
     return monthlyData.flatMap(item => [
       {
-        value: item.income,
+        value: item.income <0 ? 0 : item.income,
         label: item.month,
         spacing: 2,
         labelWidth: 30,
@@ -27,12 +27,12 @@ const OverviewChart = ({ monthlyData }: Props) => {
         frontColor: '#017FF4',
       },
       {
-        value: item.expenses,
+        value: item.expenses <0 ? 0 : item.expenses,
         frontColor: '#4CAF50',
         spacing: 2,
       },
       {
-        value: item.profit,
+        value: item.profit <0 ? 0 : item.profit,
         frontColor: '#F2C94C',
       },
     ]);

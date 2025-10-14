@@ -5,8 +5,10 @@ import {
   useMarkInvoiceAsPaidMutation,
   useUpdateInvoiceMutation,
 } from '../redux/Apis/invoiceApis';
+import { useGlobalContext } from '../providers/GlobalContextProvider';
 
 export const useCreateInvoice = () => {
+  const {english} = useGlobalContext();
   const [createInvoice, {isLoading}] = useCreateInvoiceMutation();
   const createInvoiceHandler = (data: any, handler?: () => void) => {
     createInvoice(data)
@@ -15,16 +17,16 @@ export const useCreateInvoice = () => {
         console.log(res);
         Toast.show({
           type: 'success',
-          text1: 'Invoice created',
-          text2: res?.message || 'Invoice created successfully.',
+          text1: english?'Invoice created':'Facture créée',
+          text2: res?.message || english?'Invoice created successfully.' : "Facture créée avec succès.",
         });
         handler?.();
       })
       .catch(err => {
         Toast.show({
           type: 'error',
-          text1: 'Failed to create invoice',
-          text2: err.data?.message || 'Failed to create invoice.',
+          text1: english?'Failed to create invoice':'Échec de la création de la facture',
+          text2: err.data?.message || english?'Failed to create invoice.' : "Échec de la création de la facture.",
         });
       });
   };
@@ -32,6 +34,7 @@ export const useCreateInvoice = () => {
 };
 
 export const useUpdateInvoice = () => {
+  const {english} = useGlobalContext();
   const [updateInvoice, {isLoading}] = useUpdateInvoiceMutation();
   const updateInvoiceHandler = (
     data: any,
@@ -43,16 +46,16 @@ export const useUpdateInvoice = () => {
       .then(res => {
         Toast.show({
           type: 'success',
-          text1: 'Invoice updated',
-          text2: res.data?.message || 'Invoice updated successfully.',
+          text1: english?'Invoice updated':'Facture mise à jour',
+          text2: res.data?.message || english?'Invoice updated successfully.' : "Facture mise à jour avec succès.",
         });
         handler?.();
       })
       .catch(err => {
         Toast.show({
           type: 'error',
-          text1: 'Failed to update invoice',
-          text2: err.data?.message || 'Failed to update invoice.',
+          text1: english?'Failed to update invoice':'Échec de la mise à jour de la facture',
+          text2: err.data?.message || english?'Failed to update invoice.' : "Échec de la mise à jour de la facture.",
         });
       });
   };
@@ -60,6 +63,7 @@ export const useUpdateInvoice = () => {
 };
 
 export const deleteInvoice = () => {
+  const {english} = useGlobalContext();
   const [deleteInvoice, {isLoading}] = useDeleteInvoiceMutation();
   const deleteInvoiceHandler = (id: string, handler?: () => void) => {
     deleteInvoice(id)
@@ -67,16 +71,16 @@ export const deleteInvoice = () => {
       .then(res => {
         Toast.show({
           type: 'success',
-          text1: 'Invoice deleted',
-          text2: res.data?.message || 'Invoice deleted successfully.',
+          text1: english?'Invoice deleted':'Facture supprimée',
+          text2: res.data?.message || english?'Invoice deleted successfully.' : "Facture supprimée avec succès.",
         });
         handler?.();
       })
       .catch(err => {
         Toast.show({
           type: 'error',
-          text1: 'Failed to delete invoice',
-          text2: err.data?.message || 'Failed to delete invoice.',
+          text1: english?'Failed to delete invoice':'Échec de la suppression de la facture',
+          text2: err.data?.message || english?'Failed to delete invoice.' : "Échec de la suppression de la facture.",
         });
       });
   };
@@ -84,6 +88,7 @@ export const deleteInvoice = () => {
 };
 
 export const useMarkPaidUnpaid = () => {
+  const {english} = useGlobalContext();
   const [markPaidUnpaid, {isLoading}] = useMarkInvoiceAsPaidMutation();
   const markPaidUnpaidHandler = (id: string, handler?: () => void) => {
     markPaidUnpaid(id)
@@ -91,8 +96,8 @@ export const useMarkPaidUnpaid = () => {
       .then(res => {
         Toast.show({
           type: 'success',
-          text1: 'Invoice marked as paid',
-          text2: res?.message || 'Invoice marked as paid successfully.',
+          text1: english?'Invoice marked as paid':'Facture marquée comme payée',
+          text2: res?.message || english?'Invoice marked as paid successfully.' : "Facture marquée comme payée avec succès.",
         });
         handler?.();
       })
@@ -100,8 +105,8 @@ export const useMarkPaidUnpaid = () => {
         console.log(err);
         Toast.show({
           type: 'error',
-          text1: 'Failed to mark invoice as paid',
-          text2: err.data?.message || 'Failed to mark invoice as paid.',
+          text1: english?'Failed to mark invoice as paid':'Échec de la mise à jour de la facture',
+          text2: err.data?.message || english?'Failed to mark invoice as paid.' : "Échec de la mise à jour de la facture.",
         });
       });
   };
