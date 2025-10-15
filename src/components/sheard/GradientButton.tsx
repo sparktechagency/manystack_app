@@ -28,13 +28,7 @@ const GradientButton = ({
         ]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        style={{
-          paddingVertical: 14,
-          paddingHorizontal: 16,
-          borderRadius: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+        style={{ borderRadius: 10, boxSizing: "border-box", height: 60, flex: 1, justifyContent: "center" }}>
         {children}
       </LinearGradient>
     </TouchableOpacity>
