@@ -23,7 +23,7 @@ const expensesApi = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['expenses', 'home'],
+      invalidatesTags: ['expenses', 'home', 'auth'],
     }),
     // update expense endpoint
     updateExpense: builder.mutation({
@@ -32,7 +32,7 @@ const expensesApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['expenses'],
+      invalidatesTags: ['expenses', 'home', 'auth'],
     }),
     // delete expense endpoint
     deleteExpense: builder.mutation({
@@ -40,7 +40,7 @@ const expensesApi = baseApi.injectEndpoints({
         url: `api/expense/delete/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['expenses'],
+      invalidatesTags: ['expenses', 'home', 'auth'],
     }),
     // get expense by id endpoint
     getExpenseById: builder.query({
