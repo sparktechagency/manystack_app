@@ -23,7 +23,7 @@ const invoiceApi = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['invoice', 'home'],
+      invalidatesTags: ['invoice', 'home', 'auth'],
     }),
     // update invoice endpoint
     updateInvoice: builder.mutation({
@@ -32,7 +32,7 @@ const invoiceApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['invoice'],
+      invalidatesTags: ['invoice', 'home', 'auth'],
     }),
     // delete invoice endpoint
     deleteInvoice: builder.mutation({
@@ -40,7 +40,7 @@ const invoiceApi = baseApi.injectEndpoints({
         url: `api/invoices/delete/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['invoice'],
+      invalidatesTags: ['invoice', 'home', 'auth'],
     }),
     // get invoice by id endpoint
     getInvoiceById: builder.query({
@@ -52,7 +52,7 @@ const invoiceApi = baseApi.injectEndpoints({
         url: `api/invoices/paid-unpaid/${id}`,
         method: 'PUT',
       }),
-      invalidatesTags: ['invoice'],
+      invalidatesTags: ['invoice', 'home', 'auth'],
     }),
   }),
 });

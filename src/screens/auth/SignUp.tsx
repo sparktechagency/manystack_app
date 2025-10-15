@@ -140,7 +140,7 @@ const SignUp = () => {
           text2: err.data?.message || english ? 'Something went wrong' : "Quelque chose s'est mal passé",
         });
       });
-      setLoading(false);
+    setLoading(false);
   }, [register, inputValue, address, callingCode, countryCode, navigation,]);
   return (
     <SafeAreaView>
@@ -282,12 +282,9 @@ const SignUp = () => {
                       setInputValue({ ...inputValue, contact: text });
                       setError({ ...error, contact: false });
                     }}
-                    placeholder={`${t(
-                      'contact',
-                      english,
-                    )}`}
                     keyboardType="phone-pad"
                     placeholderTextColor={globalStyles.inputPlaceholder.color}
+                    placeholder={`Téléphone société`}
                     style={[
                       globalStyles.input,
                       {
@@ -370,16 +367,17 @@ const SignUp = () => {
                     setInputValue({ ...inputValue, [key]: text });
                     setError({ ...error, [key]: false });
                   }}
-                  placeholder={`${t('enter', english)} ${t(
-                    key === 'N°SIREN'
-                      ? 'siren'
-                      : key === 'email'
-                        ? 'email'
-                        : key == 'password'
-                          ? 'password'
-                          : 'confirmPassword',
-                    english,
-                  )}`}
+                  placeholder={key == "name" ? "Nom de la société" : key == "email" ? "E-mail société" : key == "contact" ? "Téléphone société" : key == "N°SIREN" ? "N°- SIREN société" : key == "address" ? "Adresse société" : key == "services" ? "Services" : key == "date" ? "Date" : key == "status" ? "Status" : key == "password" ? "Mot de passe" : key == "confirmPassword" ? "Confirmer le mot de passe" : ""}
+                  // placeholder={`${t('enter', english)} ${t(
+                  //   key === 'N°SIREN'
+                  //     ? 'siren'
+                  //     : key === 'email'
+                  //       ? 'email'
+                  //       : key == 'password'
+                  //         ? 'password'
+                  //         : 'confirmPassword',
+                  //   english,
+                  // )}`}
                   secureTextEntry={
                     key === 'password'
                       ? passShow
@@ -424,8 +422,8 @@ const SignUp = () => {
 
         <View style={{ paddingHorizontal: 25 }}>
           <GradientButton
-          isLoading={isLoading || loading}
-          handler={() => submitHandler()}>
+            isLoading={isLoading || loading}
+            handler={() => submitHandler()}>
             {isLoading || loading ? (
               <ActivityIndicator size="large" color="#FFFFFF" />
             ) : (

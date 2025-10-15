@@ -23,7 +23,7 @@ const interventionApi = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      invalidatesTags: ['intervention', "home"],
+      invalidatesTags: ['intervention', "home", "auth"],
     }),
     // update intervention endpoint
     updateIntervention: builder.mutation({
@@ -32,7 +32,7 @@ const interventionApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: ['intervention'],
+      invalidatesTags: ['intervention', "home", "auth"],
     }),
     // delete intervention endpoint
     deleteIntervention: builder.mutation({
@@ -40,7 +40,7 @@ const interventionApi = baseApi.injectEndpoints({
         url: `api/intervention/delete/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['intervention'],
+      invalidatesTags: ['intervention', "home", "auth"],
     }),
     //delete image endpoint
     deleteImage: builder.mutation({
@@ -49,13 +49,13 @@ const interventionApi = baseApi.injectEndpoints({
         method: 'DELETE',
         body: data,
       }),
-      invalidatesTags: ['intervention'],
+      invalidatesTags: ['intervention', "home", "auth"],
     }),
 
     // get intervention by id endpoint
     getInterventionById: builder.query({
       query: id => `api/intervention/get-by-id/${id}`,
-      providesTags: ['intervention'],
+      providesTags: ['intervention', "home", "auth"],
     }),
   }),
 });
