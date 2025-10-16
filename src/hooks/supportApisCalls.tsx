@@ -1,7 +1,9 @@
 import Toast from 'react-native-toast-message';
 import {useSupportMutation} from '../redux/Apis/userApis';
+import { useGlobalContext } from '../providers/GlobalContextProvider';
 
 export const useSupportCreate = () => {
+  const {english}=useGlobalContext()
   const [supportMutation, {data, isLoading, error}] = useSupportMutation();
 
   const handleSupportCreate = async (data: any, handler?: () => void) => {
@@ -11,16 +13,16 @@ export const useSupportCreate = () => {
         .then(res => {
           Toast.show({
             type: 'success',
-            text1: 'Support created',
-            text2: res?.message || 'Support created successfully.',
+            text1: english?'Support created':'Support créé',
+            text2: res?.message || english?'Support created successfully.' : "Support créé avec succès.",
           });
           handler?.();
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to create support',
-            text2: err.data?.message || 'Failed to create support.',
+            text1: english?'Failed to create support':'Échec de la création du support',
+            text2: err.data?.message || english?'Failed to create support.' : "Échec de la création du support.",
           });
         });
       return true;

@@ -33,7 +33,7 @@ const ChangePassword = () => {
   const [cPassShow, setCPassShow] = React.useState(true);
   const { changePasswordHandler, isLoading } = useChangePassword();
   const { english, width, height } = useGlobalContext();
-
+  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState({
     'current password': false,
     'new password': false,
@@ -47,6 +47,7 @@ const ChangePassword = () => {
   });
 
   const submitHandler = () => {
+    setLoading(true);
     let invalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof IChangePassword] === '') {
@@ -59,7 +60,7 @@ const ChangePassword = () => {
     if (invalid) {
       return Toast.show({
         type: 'error',
-        text1: 'All fields are required',
+        text1: english?'All fields are required':'Tous les champs sont requis',
       });
     }
     const data = {
@@ -67,6 +68,7 @@ const ChangePassword = () => {
       newPassword: inputValue['new password'],
       confirmPassword: inputValue['confirm password'],
     };
+  
     changePasswordHandler(data, () => {
       setInputValue({
         'current password': '',
@@ -74,6 +76,7 @@ const ChangePassword = () => {
         'confirm password': '',
       });
       navigation.goBack();
+      setLoading(false);
     });
   };
 
@@ -86,7 +89,7 @@ const ChangePassword = () => {
       <BackButton text={t('changePassword', english)} />
       <KeyboardAwareScrollView bottomOffset={62} >
         <View style={{
-          height: height - 200,
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>
@@ -165,8 +168,10 @@ const ChangePassword = () => {
           width: width,
           paddingVertical: 16,
         }}>
-        <GradientButton handler={submitHandler}>
-          {isLoading ? (
+        <GradientButton
+          isLoading={isLoading || loading}
+          handler={submitHandler}>
+          {isLoading || loading ? (
             <ActivityIndicator color="white" />
           ) : (
             <Text
@@ -176,7 +181,7 @@ const ChangePassword = () => {
                 fontWeight: 700,
                 fontSize: 18,
               }}>
-              Save Changes
+              Sauvegarder
             </Text>
           )}
         </GradientButton>

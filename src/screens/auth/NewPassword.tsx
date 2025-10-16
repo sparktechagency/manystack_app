@@ -47,9 +47,9 @@ const NewPassword = () => {
     }
     if (inputValue.password !== inputValue.confirmPassword) {
       Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: 'Passwords do not match.',
+        type: 'error' ,
+        text1: english ? 'Error' : "Erreur",
+        text2: english ? 'Passwords do not match.' : "Les mots de passe ne correspondent pas.",
       });
       return setError({
         password: true,
@@ -65,8 +65,8 @@ const NewPassword = () => {
       .then(async (res: any) => {
         Toast.show({
           type: 'success',
-          text1: 'Success',
-          text2: res?.message || 'Password reset successfully.',
+          text1: english ? 'Success' : "Succès",
+          text2: res?.message || english ? 'Password reset successfully.' : "Le mot de passe a été réinitialisé avec succès.",
         });
         await AsyncStorage.removeItem('email');
         navigate.navigate('Login');
@@ -74,8 +74,8 @@ const NewPassword = () => {
       .catch((err: any) => {
         Toast.show({
           type: 'error',
-          text1: 'Error',
-          text2: err?.data?.message || 'An unexpected error occurred.',
+          text1: english ? 'Error' : "Erreur",
+          text2: err?.data?.message || english ? 'An unexpected error occurred.' : "Une erreur inattendue est survenue.",
         });
       });
   };
@@ -85,7 +85,7 @@ const NewPassword = () => {
       <KeyboardAwareScrollView bottomOffset={62} >
         <View style={{
           flex: 1, justifyContent: 'center', alignItems: 'center', width: '100%',
-          height: height - 200,
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>

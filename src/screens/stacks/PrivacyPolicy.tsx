@@ -1,21 +1,24 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import RenderHtml from 'react-native-render-html';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {usePrivacyPolicyQuery} from '../../redux/Apis/settingApis';
+import { StyleSheet, View } from 'react-native';
+import RenderHTML from 'react-native-render-html';
+import BackButton from '../../components/sheard/BackButton';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { usePrivacyPolicyQuery } from '../../redux/Apis/settingApis';
+import { t } from '../../utils/translate';
 const PrivacyPolicy = () => {
-  const {width} = useGlobalContext();
-  const {data, isLoading} = usePrivacyPolicyQuery(undefined);
-  console.log(data?.data?.content);
+  const { width, english } = useGlobalContext();
+  const { data, isLoading } = usePrivacyPolicyQuery(undefined);
   return (
-    <View style={{paddingHorizontal: 20}}>
-      <RenderHtml
-        contentWidth={width}
-        source={{
-          html: data?.data?.content || '<p>Privacy Policy</p>',
-        }}
-      />
-    </View>
+    <>
+      <BackButton text={t('PrivacyPolicy', english)} />
+      <View style={{ paddingHorizontal: 20, marginTop: 8 }}>
+        <RenderHTML
+          contentWidth={width}
+          source={{
+            html: data?.data?.content || '<p>Privacy Policy</p>',
+          }}
+        />
+      </View></>
   );
 };
 

@@ -7,6 +7,7 @@ import { t } from '../utils/translate';
 
 // Screens & Components
 import InvoiceDetails from '../components/Invoice/InvoiceDetails';
+import SubscriptionsIAP from '../components/Subscriptions/SubscriptionsIAP';
 import ForgetPassword from '../screens/auth/ForgetPassword';
 import Login from '../screens/auth/Login';
 import NewPassword from '../screens/auth/NewPassword';
@@ -22,7 +23,6 @@ import InterventionDetails from '../screens/stacks/InterventionDetails';
 import Payment from '../screens/stacks/Payment';
 import PrivacyPolicy from '../screens/stacks/PrivacyPolicy';
 import Profile from '../screens/stacks/Profile';
-import Subscription from '../screens/stacks/Subscription';
 import Support from '../screens/stacks/Support';
 import TermsAndConditions from '../screens/stacks/TermsAndConditions';
 import UpdateExpenses from '../screens/stacks/UpdateExpenses';
@@ -149,7 +149,8 @@ const StackLayout = () => {
       />
       <Stack.Screen
         name="Subscription"
-        component={Subscription}
+        // component={Subscription}
+        component={SubscriptionsIAP}
         options={{
           headerShown: false,
         }}
@@ -202,7 +203,7 @@ const StackLayout = () => {
         name="PrivacyPolicy"
         component={PrivacyPolicy}
         options={{
-          headerShown: true,
+          headerShown: false,
           title: t('privacyPolicy', english),
           headerTitleAlign: 'center',
           headerBackground: () => null,

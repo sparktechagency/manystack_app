@@ -37,7 +37,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
         },
         { backgroundColor: themeColors.white as string },
       ]}>
-      <View>
+      <View >
         <View style={CardStyles.headerRow}>
           <Text
             style={[
@@ -131,6 +131,7 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
                   phone: item.phone,
                   nSiren: item.nSiren,
                   status: item.status,
+                  date: item.data,
                 },
               });
             }}>

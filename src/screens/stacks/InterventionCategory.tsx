@@ -26,71 +26,69 @@ const InterventionCategory = () => {
   return (
     <SafeAreaView
       style={{
-        paddingHorizontal: 20,
         position: 'relative',
-        height: height,
       }}>
       <BackButton text={t('interventionCategory', english)} />
-      <KeyboardAwareScrollView bottomOffset={62} >
-        <View style={{
-          height: height - 200,
+      <KeyboardAwareScrollView
+        style={{
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
-        }}>
+        }}
+        bottomOffset={62} >
 
-          <Text style={[globalStyles.inputLabel]}>All Category</Text>
-          <View
-            style={[
-              globalStyles.flex,
-              {
-                justifyContent: 'space-between',
-                borderBottomWidth: 1,
-                borderBottomColor: textColor,
-                paddingBottom: 5,
-              },
-            ]}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: '600',
-                color: textColor,
-                width: width * 0.4,
-              }}>
-              Name
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: '600',
-                color: textColor,
-              }}>
-              Price
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: '600',
-                color: textColor,
-              }}>
-              Actions
-            </Text>
-          </View>
-          {isLoading || isFetching ? (
-            <ActivityIndicator
-              color={themeColors.primary as string}
-              size="large"
-            />
-          ) : (
-            data?.categories?.map((item: any) => (
-              <CategoryListItem
-                key={item._id}
-                title={item.name}
-                price={item.price}
-                id={item._id}
-              />
-            ))
-          )}
+        <Text style={[globalStyles.inputLabel]}>Toutes les catégories</Text>
+        <View
+          style={[
+            globalStyles.flex,
+            {
+              justifyContent: 'space-between',
+              borderBottomWidth: 1,
+              borderBottomColor: textColor,
+              paddingBottom: 5,
+            },
+          ]}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: '600',
+              color: textColor,
+              width: width * 0.4,
+            }}>
+            Nom
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: '600',
+              color: textColor,
+            }}>
+            Prix
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: '600',
+              color: textColor,
+            }}>
+            Actes
+          </Text>
         </View>
+        {isLoading || isFetching ? (
+          <ActivityIndicator
+            color={themeColors.primary as string}
+            size="large"
+          />
+        ) : (
+          data?.categories?.map((item: any) => (
+            <CategoryListItem
+              key={item._id}
+              title={item.name}
+              price={item.price}
+              id={item._id}
+            />
+          ))
+        )}
       </KeyboardAwareScrollView>
       <View
         style={{
@@ -109,7 +107,7 @@ const InterventionCategory = () => {
               fontWeight: 700,
               fontSize: 18,
             }}>
-            Add New Category
+            Ajouter un nouveau
           </Text>
         </GradientButton>
       </View>

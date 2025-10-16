@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Link, NavigationProp, useNavigation } from '@react-navigation/native';
+import { CommonActions, Link, NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -109,7 +109,15 @@ const Login = () => {
     )
   }
   if (user?._id && firstLoad) {
-    navigate.navigate('Tabs');
+    navigate.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'Tabs',
+          },
+        ],
+      }));
     setTimeout(() => {
       SplashScreen.hide();
     }, 1000);

@@ -3,8 +3,10 @@ import {
   useCancelSubscriptionMutation,
   useSubscriptionPaymentMutation,
 } from '../redux/Apis/subscriptionApis';
+import { useGlobalContext } from '../providers/GlobalContextProvider';
 
 export const useSubscriptionPayment = () => {
+  const {english} = useGlobalContext();
   const [subscriptionPayment, {isLoading}] = useSubscriptionPaymentMutation();
   const handleSubscriptionPayment = async (
     data: any,
@@ -16,16 +18,16 @@ export const useSubscriptionPayment = () => {
         .then(res => {
           Toast.show({
             type: 'success',
-            text1: 'Subscription payment',
-            text2: res?.message || 'Subscription payment successfully.',
+            text1: english?'Subscription payment':'Paiement de la souscription',
+            text2: res?.message || english?'Subscription payment successfully.' : "Paiement de la souscription avec succès.",
           });
           handler?.(res?.url);
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to subscription payment',
-            text2: err?.data?.message || 'Failed to subscription payment.',
+            text1: english?'Failed to subscription payment':'Échec du paiement de la souscription',
+            text2: err?.data?.message || english?'Failed to subscription payment.' : "Échec du paiement de la souscription.",
           });
         });
       return true;
@@ -39,6 +41,7 @@ export const useSubscriptionPayment = () => {
 };
 
 export const useCancelSubscription = () => {
+  const {english} = useGlobalContext();
   const [cancelSubscription, {isLoading}] = useCancelSubscriptionMutation();
   const handleCancelSubscription = async () => {
     try {
@@ -47,15 +50,15 @@ export const useCancelSubscription = () => {
         .then(res => {
           Toast.show({
             type: 'success',
-            text1: 'Subscription canceled',
-            text2: res?.message || 'Subscription canceled successfully.',
+            text1: english?'Subscription canceled':'Souscription annulée',
+            text2: res?.message || english?'Subscription canceled successfully.' : "Souscription annulée avec succès.",
           });
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to cancel subscription',
-            text2: err?.data?.message || 'Failed to cancel subscription.',
+            text1: english?'Failed to cancel subscription':'Échec de l\'annulation de la souscription',
+            text2: err?.data?.message || english?'Failed to cancel subscription.' : "Échec de l\'annulation de la souscription.",
           });
         });
       return true;

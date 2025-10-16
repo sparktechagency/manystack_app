@@ -6,8 +6,10 @@ import {
   useUpdateExpenseMutation,
 } from '../redux/Apis/expensesApis';
 import {TabsTypes} from '../types/ScreenPropsTypes';
+import { useGlobalContext } from '../providers/GlobalContextProvider';
 
 export const createExpenses = () => {
+  const {english} = useGlobalContext();
   const navigation = useNavigation<NavigationProp<TabsTypes>>();
   const [create, {isLoading}] = useCreateExpenseMutation();
   const handleCreateExpenses = async (data: any) => {
@@ -17,16 +19,16 @@ export const createExpenses = () => {
         .then(res => {
           Toast.show({
             type: 'success',
-            text1: 'expenses created',
-            text2: res.data?.message || 'Expenses created successfully.',
+            text1: english?'expenses created':'Dépenses créées',
+            text2: res.data?.message || english?'Expenses created successfully.' : "Dépenses créées avec succès.",
           });
           navigation.goBack();
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to create expenses',
-            text2: err.data?.message || 'Failed to create expenses.',
+            text1: english?'Failed to create expenses':'Échec de la création des dépenses',
+            text2: err.data?.message || english?'Failed to create expenses.' : "Échec de la création des dépenses.",
           });
         });
       return true;
@@ -40,6 +42,7 @@ export const createExpenses = () => {
 };
 
 export const updateExpenses = () => {
+  const {english} = useGlobalContext();
   const navigation = useNavigation<NavigationProp<TabsTypes>>();
   const [update, {isLoading}] = useUpdateExpenseMutation();
   const handleUpdateExpenses = async (
@@ -54,16 +57,16 @@ export const updateExpenses = () => {
           action &&
             Toast.show({
               type: 'success',
-              text1: 'expenses updated',
-              text2: res.data?.message || 'Expenses updated successfully.',
+              text1: english?'expenses updated':'Dépenses mises à jour',
+              text2: res.data?.message || english?'Expenses updated successfully.' : "Dépenses mises à jour avec succès.",
             });
           action && navigation.goBack();
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to update expenses',
-            text2: err.data?.message || 'Failed to update expenses.',
+            text1: english?'Failed to update expenses':'Échec de la mise à jour des dépenses',
+            text2: err.data?.message || english?'Failed to update expenses.' : "Échec de la mise à jour des dépenses.",
           });
         });
       return true;
@@ -77,6 +80,7 @@ export const updateExpenses = () => {
 };
 
 export const useDeleteExpenses = () => {
+  const {english} = useGlobalContext();
   const [deleteExpenses, {isLoading}] = useDeleteExpenseMutation();
   const handleDeleteExpenses = async (id: string, action: boolean = true) => {
     try {
@@ -86,15 +90,15 @@ export const useDeleteExpenses = () => {
           action &&
             Toast.show({
               type: 'success',
-              text1: 'expenses deleted',
-              text2: res.data?.message || 'Expenses deleted successfully.',
+              text1: english?'expenses deleted':'Dépenses supprimées',
+              text2: res.data?.message || english?'Expenses deleted successfully.' : "Dépenses supprimées avec succès.",
             });
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to delete expenses',
-            text2: err.data?.message || 'Failed to delete expenses.',
+            text1: english?'Failed to delete expenses':'Échec de la suppression des dépenses',
+            text2: err.data?.message || english?'Failed to delete expenses.' : "Échec de la suppression des dépenses.",
           });
         });
       return true;

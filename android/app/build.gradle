@@ -76,14 +76,18 @@ android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
-
+packagingOptions {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
     namespace "com.shaharulsiyam.fibrepro"
     defaultConfig {
         applicationId "com.shaharulsiyam.fibrepro"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.0.3"
+        versionCode 32
+        versionName "1.0.9"
         missingDimensionStrategy "store", "play"
     }
     signingConfigs {
@@ -121,6 +125,9 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation project(':react-native-iap')
+    implementation "com.android.billingclient:billing-ktx:8.0.0"
+    implementation "com.google.android.gms:play-services-base:18.1.0"
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {

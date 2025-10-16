@@ -29,7 +29,7 @@ const Support = () => {
     if (!subject || !message) {
       return Toast.show({
         type: 'error',
-        text1: 'Subject and message are required',
+        text1: english?'Subject and message are required':'Sujet et message sont requis',
       });
     }
     handleSupportCreate({ subject, message }, () => navigation.goBack());
@@ -39,7 +39,7 @@ const Support = () => {
       <BackButton text={t('contactSupport', english)} />
       <KeyboardAwareScrollView bottomOffset={62} >
         <View style={{
-          height: height - 200,
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>
@@ -74,11 +74,13 @@ const Support = () => {
             />
             <View
               style={{
-                paddingHorizontal: 25,
+                // paddingHorizontal: 25,
                 position: 'absolute',
                 bottom: 100,
-                width: width,
-                paddingVertical: 16,
+                width: "100%",
+                // paddingVertical: 16,
+                flex: 1,
+                marginHorizontal: "auto",
               }}>
               <GradientButton handler={handleSubmit}>
                 {isLoading ? (
@@ -107,7 +109,7 @@ export default Support;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    // padding: 16,
     position: 'relative',
   },
   label: {

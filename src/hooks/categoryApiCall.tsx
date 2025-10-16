@@ -4,8 +4,10 @@ import {
   useDeleteCategoryMutation,
   useUpdateCategoryMutation,
 } from '../redux/Apis/categoryApis';
+import { useGlobalContext } from '../providers/GlobalContextProvider';
 
 export const useCreateCategory = () => {
+  const {english}=useGlobalContext()
   const [createCategory, {isLoading, error, data}] =
     useCreateCategoryMutation();
 
@@ -16,15 +18,15 @@ export const useCreateCategory = () => {
         .then(res => {
           Toast.show({
             type: 'success',
-            text1: 'category created',
-            text2: res.data?.message || 'Category created successfully.',
+            text1: english?'category created':'Catégorie créée',
+            text2: res.data?.message || english?'Category created successfully.' : "Catégorie créée avec succès.",
           });
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to create category',
-            text2: err.data?.message || 'Failed to create category.',
+            text1: english?'Failed to create category':'Échec de la création de la catégorie',
+            text2: err.data?.message || english?'Failed to create category.' : "Échec de la création de la catégorie.",
           });
         });
       return true;
@@ -37,6 +39,7 @@ export const useCreateCategory = () => {
   return {handleCreateCategory, isLoading, error, data};
 };
 export const useUpdateCategory = () => {
+  const {english}=useGlobalContext()
   const [updateCategory, {isLoading, error, data}] =
     useUpdateCategoryMutation();
 
@@ -47,15 +50,15 @@ export const useUpdateCategory = () => {
         .then(res => {
           Toast.show({
             type: 'success',
-            text1: 'category updated',
-            text2: res.data?.message || 'Category updated successfully.',
+            text1: english?'category updated':'Catégorie mise à jour',
+            text2: res.data?.message || english?'Category updated successfully.' : "Catégorie mise à jour avec succès.",
           });
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to update category',
-            text2: err.data?.message || 'Failed to update category.',
+            text1: english?'Failed to update category':'Échec de la mise à jour de la catégorie',
+            text2: err.data?.message || english?'Failed to update category.' : "Échec de la mise à jour de la catégorie.",
           });
         });
       return true;
@@ -69,6 +72,7 @@ export const useUpdateCategory = () => {
 };
 
 export const useDeleteCategory = () => {
+  const {english}=useGlobalContext()
   const [deleteCategory, {isLoading, error, data}] =
     useDeleteCategoryMutation();
 
@@ -79,15 +83,15 @@ export const useDeleteCategory = () => {
         .then(res => {
           Toast.show({
             type: 'success',
-            text1: 'category deleted',
-            text2: res.data?.message || 'Category deleted successfully.',
+            text1: english?'category deleted':'Catégorie supprimée',
+            text2: res.data?.message || english?'Category deleted successfully.' : "Catégorie supprimée avec succès.",
           });
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Failed to delete category',
-            text2: err.data?.message || 'Failed to delete category.',
+            text1: english?'Failed to delete category':'Échec de la suppression de la catégorie',
+            text2: err.data?.message || english?'Failed to delete category.' : "Échec de la suppression de la catégorie.",
           });
         });
       return true;

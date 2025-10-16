@@ -192,6 +192,18 @@ export const translations = {
     en: 'Delete Account',
     fr: 'Supprimer le compte',
   },
+  "category Name": {
+    en: "category Name",
+    fr: "Nom de la catégorie"
+  },
+  "category Price": {
+    en: "category Price",
+    fr: "catégorie Prix"
+  },
+  "PrivacyPolicy": {
+    en: "Privacy Policy",
+    fr: "politique de confidentialité"
+  }
 } as const;
 
 export type TranslationKey = keyof typeof translations;

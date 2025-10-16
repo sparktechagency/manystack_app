@@ -28,7 +28,7 @@ const WellCome = () => {
             ]}>
             Bienvenue
           </Text>
-          <Text style={[globalStyles.inputLabel]}>Many Stake</Text>
+          <Text style={[globalStyles.inputLabel]}>{user?.firstName} {user?.lastName}</Text>
         </View>
       </View>
       <Image

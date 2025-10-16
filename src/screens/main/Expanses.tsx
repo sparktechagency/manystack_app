@@ -35,7 +35,7 @@ const Expanses = () => {
         <Heading
           setSearch={setSearch}
           title={t('expanses', english)}
-          options={['Equipment', 'Fuel', 'Vehicle']}
+          options={['Équipement', 'Carburant', 'Véhicule']}
         />
         <FlatList
           refreshing={refreshing}

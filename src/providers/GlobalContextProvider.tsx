@@ -3,14 +3,12 @@ import React, {
   ReactNode,
   useContext,
   useEffect,
-  useState,
+  useState
 } from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Colors, ITheme } from '../constant/colors';
 import { useGetProfileQuery } from '../redux/Apis/userApis';
-import Subscription from '../screens/stacks/Subscription';
 import { IUserProfile } from '../types/DataTypes';
-import { t } from '../utils/translate';
 // import { Provider } from 'react-redux';
 // import { Colors, ITheme } from '../constant/colors';
 // import { store } from '../Redux/store';
@@ -39,6 +37,7 @@ interface GlobalContextType {
   setCurrency: React.Dispatch<React.SetStateAction<string>>;
   firstLoad: boolean;
   setFirstLoad: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowSubscription: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface GlobalProviderProps {
@@ -75,11 +74,12 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
     setEnglish,
     user: data?.data,
     userLoading: userLoading || isFetching,
-    showSubscription: data?.showSubscription || false,
+    showSubscription,
     currency,
     setCurrency,
     firstLoad,
     setFirstLoad,
+    setShowSubscription
   };
 
   useEffect(() => {
@@ -90,23 +90,7 @@ const GlobalContextProvider = ({ children }: GlobalProviderProps) => {
 
   return (
     <GlobalContext.Provider value={values}>
-      {/* <Provider store={store}> */}
-      {
-        !data?.data?.subscription?.isActive && data?.data?._id && showSubscription ? (
-          <View
-            style={{
-              paddingTop: 20,
-              height,
-              width,
-              backgroundColor: themeColors.white as string,
-            }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold', color: themeColors.black as string, textAlign: 'center' }}>{t('subscription', english)}</Text>
-            <Subscription />
-          </View>
-        ) : (
-          children
-        )}
-      {/* </Provider> */}
+      {children}
     </GlobalContext.Provider>
   );
 };

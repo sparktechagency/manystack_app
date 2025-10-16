@@ -14,6 +14,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { globalStyles } from '../../constant/styles';
+import { TranslationKey } from '../../constant/translations';
 import {
   useCreateCategory,
   useUpdateCategory,
@@ -30,6 +31,7 @@ const InterventionCategoryFrom = () => {
   const { handleCreateCategory, isLoading } = useCreateCategory();
   const { handleUpdateCategory, isLoading: updating } = useUpdateCategory();
   const { height, width, english } = useGlobalContext();
+  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState({
     'category Name': false,
     'category Price': false,
@@ -40,6 +42,7 @@ const InterventionCategoryFrom = () => {
     'category Price': params?.params?.price,
   });
   const submitHandler = async () => {
+    setLoading(true);
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof IInterventionCategory] === '') {
         setError(prev => ({ ...prev, [key]: true }));
@@ -55,13 +58,17 @@ const InterventionCategoryFrom = () => {
       ? await handleUpdateCategory(data, params?.params?.id)
       : await handleCreateCategory(data);
     navigation.goBack();
+    setLoading(false);
   };
   return (
     <SafeAreaView>
       <BackButton text={params?.params?.id ? t('updateInterventionCategory', english) : t('createInterventionCategory', english)} />
-      <KeyboardAwareScrollView bottomOffset={62} >
+      <KeyboardAwareScrollView
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      bottomOffset={62} >
         <View style={{
-          height: height - 200,
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>
@@ -69,13 +76,13 @@ const InterventionCategoryFrom = () => {
             style={{
               width: '100%',
               height,
-              paddingHorizontal: 20,
+              // paddingHorizontal: 20,
               position: 'relative',
             }}>
             {Object.keys(inputValue).map((key, index) => (
               <View key={index}>
                 <Text style={[globalStyles.inputLabel]}>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
+                  {t(key as TranslationKey, english)}
                 </Text>
                 <View style={{ position: 'relative' }}>
                   <TextInput
@@ -85,7 +92,7 @@ const InterventionCategoryFrom = () => {
                       setError({ ...error, [key]: false });
                     }}
                     keyboardType={key === 'category Price' ? 'numeric' : 'default'}
-                    placeholder={`Enter your ${key}`}
+                    placeholder={t(key as TranslationKey, english)}
                     placeholderTextColor={globalStyles.inputPlaceholder.color}
                     style={[
                       globalStyles.input,
@@ -99,14 +106,16 @@ const InterventionCategoryFrom = () => {
             ))}
             <View
               style={{
-                paddingHorizontal: 25,
+                // paddingHorizontal: 25,
                 position: 'absolute',
                 bottom: 100,
-                width: width,
+                width: "100%",
                 paddingVertical: 16,
               }}>
-              <GradientButton handler={submitHandler}>
-                {isLoading || updating ? (
+              <GradientButton
+              isLoading={isLoading || updating || loading}
+              handler={submitHandler}>
+                {isLoading || updating || loading ? (
                   <ActivityIndicator size="large" color="white" />
                 ) : (
                   <Text
@@ -116,7 +125,7 @@ const InterventionCategoryFrom = () => {
                       fontWeight: 700,
                       fontSize: 18,
                     }}>
-                    Submit
+                    Soumettre
                   </Text>
                 )}
               </GradientButton>

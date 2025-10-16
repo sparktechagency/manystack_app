@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {baseUrl} from '../utils/baseUrls';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseUrl } from '../utils/baseUrls';
 
 export const baseApi = createApi({
   reducerPath: 'baseApi',
@@ -24,5 +24,6 @@ export const baseApi = createApi({
     'invoice',
     'expenses',
     'subscription',
+    'home',
   ],
 });

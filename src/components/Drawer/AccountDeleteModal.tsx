@@ -8,7 +8,7 @@ import { useDeleteAccount } from '../../hooks/authApisCall'
 import { useGlobalContext } from '../../providers/GlobalContextProvider'
 import { hexToRGBA } from '../../utils/hexToRGBA'
 const AccountDeleteModal = ({ setIsDeleteOpen }: { setIsDeleteOpen: Dispatch<SetStateAction<boolean>> }) => {
-  const { themeColors } = useGlobalContext();
+  const { themeColors,english } = useGlobalContext();
   const { deleteAccount, isLoading } = useDeleteAccount()
   const navigate = useNavigation<NavigationProp<ParamListBase>>();
   const handleDelete = () => {
@@ -53,13 +53,13 @@ const AccountDeleteModal = ({ setIsDeleteOpen }: { setIsDeleteOpen: Dispatch<Set
           fontSize: 22,
           color: themeColors.red as string
         }}>
-          Confirm delete your account?
+          {english ? "Confirm delete your account?" : "Confirmer la suppression de votre compte?"}
         </Text>
         <Text style={{
           textAlign: "center",
           color: hexToRGBA(themeColors.black as string, .7)
         }}>
-          If you delete your account, all your data will be permanently removed and cannot be retrieved.
+          {english?"If you delete your account, all your data will be permanently removed and cannot be retrieved.":"Si vous supprimez votre compte, toutes vos données seront définitivement supprimées et ne pourront pas être récupérées."}
         </Text>
         <View style={{
           flexDirection: "row",
@@ -80,7 +80,7 @@ const AccountDeleteModal = ({ setIsDeleteOpen }: { setIsDeleteOpen: Dispatch<Set
             }}>
             <Text style={{ color: "white", textAlign: "center", fontWeight: "bold" }}>
               {
-                isLoading ? <ActivityIndicator size='small' /> : "Delete"
+                isLoading ? <ActivityIndicator size='small' /> : english ? "Delete" : "Supprimer"
               }
             </Text>
           </TouchableOpacity>
@@ -94,7 +94,7 @@ const AccountDeleteModal = ({ setIsDeleteOpen }: { setIsDeleteOpen: Dispatch<Set
               marginLeft: 5
             }}>
             <Text style={{ color: "white", textAlign: "center", fontWeight: "bold" }}>
-              Cancel
+              {english ? "Cancel" : "Annuler"}
             </Text>
           </TouchableOpacity>
         </View>

@@ -8,14 +8,18 @@ import { Provider } from 'react-redux';
 import GlobalContextProvider from '../providers/GlobalContextProvider';
 import { store } from '../redux/store';
 import DrawerLayout from './DrawerLayout';
-
 const Root = () => {
+
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
     <KeyboardProvider>
       <NavigationContainer>
-        <StatusBar barStyle="dark-content" backgroundColor={Colors.lighter} />
+        <StatusBar barStyle="dark-content"
+        backgroundColor="transparent" 
+        translucent={true}
+        // backgroundColor={Colors.lighter} 
+        />
         <Provider store={store}>
           <GlobalContextProvider>
             <DrawerLayout />

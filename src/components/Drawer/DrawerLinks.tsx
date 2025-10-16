@@ -33,15 +33,18 @@ const DrawerLinks = ({
     <>
       <TouchableOpacity
         onPress={async () => {
-          if (href === 'Login') {
+          if (href === "Login") {
             await AsyncStorage.removeItem('token');
             RNRestart.restart();
             navigate.dispatch(DrawerActions.closeDrawer());
-          } if (href === 'Delete') {
-            setIsDeleteOpen?.(true)
+          } else if (href === "Delete") {
+            setIsDeleteOpen?.(true);
+          } else if (href === "Subscription") {
+            navigate.navigate("Subscription", { params: { show: true } })
           } else {
             navigate.navigate(href as any);
           }
+
         }}
         style={[
           globalStyles.flex,

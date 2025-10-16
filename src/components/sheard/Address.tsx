@@ -20,6 +20,7 @@ const Address = ({
       <Text style={globalStyles.inputLabel}>{t('address', english)}</Text>
       <View style={styles.row}>
         <TextInput
+          numberOfLines={1}
           value={address?.streetNo}
           onChangeText={text =>
             setAddress({
@@ -36,6 +37,7 @@ const Address = ({
           placeholderTextColor={globalStyles.inputPlaceholder.color}
         />
         <TextInput
+          numberOfLines={1}
           value={address?.streetName}
           onChangeText={text =>
             setAddress({
@@ -53,6 +55,7 @@ const Address = ({
           placeholderTextColor={globalStyles.inputPlaceholder.color}
         />
         <TextInput
+          numberOfLines={1}
           value={address?.city}
           onChangeText={text =>
             setAddress({
@@ -72,6 +75,7 @@ const Address = ({
 
       <View style={styles.row}>
         <TextInput
+          numberOfLines={1}
           value={address?.postalCode}
           onChangeText={text =>
             setAddress({
@@ -90,6 +94,7 @@ const Address = ({
           placeholderTextColor={globalStyles.inputPlaceholder.color}
         />
         <TextInput
+          numberOfLines={1}
           value={address?.country}
           onChangeText={text =>
             setAddress({
@@ -97,7 +102,7 @@ const Address = ({
               country: text,
             })
           }
-          keyboardType='numeric'
+          keyboardType='default'
           style={[
             globalStyles.input,
             error?.country ? globalStyles.inputError : {},

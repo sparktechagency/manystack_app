@@ -36,16 +36,17 @@ const Otp = () => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const { english, height } = useGlobalContext();
   const [code, setCode] = useState('');
-
+  const [loading, setLoading] = useState(false);
   const [verify, { isLoading }] = useVerifyEmailMutation();
   const [verifyOtp, { isLoading: otpLoading }] = useVerifyOtpMutation();
 
   const handleOtpChange = useCallback(() => {
+    setLoading(true);
     if (code?.length != 6) {
       return Toast.show({
         type: 'error',
-        text1: 'Invalid OTP',
-        text2: 'Please enter a valid 6-digit OTP.',
+        text1: english ? 'Invalid OTP' : "Code OTP invalide",
+        text2: english ? 'Please enter a valid 6-digit OTP.' : "Veuillez entrer un code OTP valide de 6 chiffres.",
       });
     }
     from === 'signup'
@@ -57,8 +58,8 @@ const Otp = () => {
         .then(async res => {
           Toast.show({
             type: 'success',
-            text1: 'Success',
-            text2: res.data?.message || 'OTP verified successfully.',
+            text1: english ? 'Success' : "Succès",
+            text2: res.data?.message || english ?  'OTP verified successfully.' : "OTP vérifié avec succès.",
           });
           await AsyncStorage.removeItem('email');
           navigate.navigate(from == 'signup' ? 'Login' : 'NewPassword');
@@ -66,8 +67,8 @@ const Otp = () => {
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Error',
-            text2: err?.data?.message || 'An unexpected error occurred.',
+            text1: english ? 'Error' : "Erreur",
+            text2: err?.data?.message || english ? 'An unexpected error occurred.' : "Une erreur inattendue est survenue.",
           });
         })
       : verifyOtp({
@@ -77,19 +78,20 @@ const Otp = () => {
         .then(res => {
           Toast.show({
             type: 'success',
-            text1: 'Success',
-            text2: res.data?.message || 'OTP verified successfully.',
+            text1: english ? 'Success' : "Succès",
+            text2: res.data?.message || english ? 'OTP verified successfully.' : "OTP vérifié avec succès.",
           });
           navigate.navigate(from == 'signup' ? 'Login' : 'NewPassword');
         })
         .catch(err => {
           Toast.show({
             type: 'error',
-            text1: 'Error',
-            text2: err?.data?.message || 'An unexpected error occurred.',
+            text1: english ? 'Error' : "Erreur",
+            text2: err?.data?.message || english ? 'An unexpected error occurred.' : "Une erreur inattendue est survenue.",
           });
         });
-  }, [code, verify, from]);
+        setLoading(false);
+  }, [code, verify, from, navigate, setLoading]);
 
   return (
     <SafeAreaView>
@@ -97,7 +99,7 @@ const Otp = () => {
       <KeyboardAwareScrollView bottomOffset={62} >
         <View style={{
           flex: 1, justifyContent: 'center', alignItems: 'center', width: '100%',
-          height: height - 200,
+          height: height,
           paddingHorizontal: 20,
           paddingVertical: 20,
         }}>
@@ -156,8 +158,10 @@ const Otp = () => {
                 paddingHorizontal: 25,
                 marginTop: 40,
               }}>
-              <GradientButton handler={handleOtpChange}>
-                {isLoading ? (
+              <GradientButton
+              isLoading={isLoading || loading}
+              handler={handleOtpChange}>
+                {isLoading || loading ? (
                   <ActivityIndicator size="small" color="#0000ff" />
                 ) : (
                   <Text

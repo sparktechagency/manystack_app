@@ -6,9 +6,7 @@ import InvoiceCreateUpdateForm from '../../components/Invoice/InvoiceCreateUpdat
 const UpdateInvoice = () => {
   return (
     <SafeAreaView>
-      <KeyboardAwareScrollView bottomOffset={62}>
         <InvoiceCreateUpdateForm />
-      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

@@ -51,8 +51,10 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
 
   return (
     <View
-      style={[CardStyles.card, { backgroundColor: themeColors.white as string }]}>
-      <View>
+      style={[CardStyles.card, { backgroundColor: themeColors.white as string,}]}>
+      <View style={{
+        width:"60%",
+      }}>
         <View style={CardStyles.headerRow}>
           <Text
             style={[
