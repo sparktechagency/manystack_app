@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions, Link, NavigationProp, useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -38,6 +38,36 @@ const Login = () => {
     email: '',
     password: '',
   });
+
+  const hasHandledInitialNav = useRef(false);
+
+  useEffect(() => {
+    if (userLoading) return;
+    if (hasHandledInitialNav.current) return;
+    if (user?._id && firstLoad) {
+      navigate.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'Tabs',
+            },
+          ],
+        }));
+      setTimeout(() => {
+        SplashScreen.hide();
+      }, 1000);
+      setFirstLoad(false)
+      hasHandledInitialNav.current = true;
+      return
+    } else {
+      setTimeout(() => {
+        SplashScreen.hide();
+      }, 1000);
+      setFirstLoad(false)
+      hasHandledInitialNav.current = true;
+    }
+  }, [user?._id, firstLoad, userLoading]);
 
   const submitHandler = () => {
     let isInvalid = false;
@@ -107,27 +137,6 @@ const Login = () => {
         />
       </View>
     )
-  }
-  if (user?._id && firstLoad) {
-    navigate.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [
-          {
-            name: 'Tabs',
-          },
-        ],
-      }));
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 1000);
-    setFirstLoad(false)
-    return
-  } else {
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 1000);
-    setFirstLoad(false)
   }
   return (
     <KeyboardAwareScrollView bottomOffset={62}
