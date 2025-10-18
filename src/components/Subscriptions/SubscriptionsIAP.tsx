@@ -4,7 +4,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import {
   Linking,
   Platform,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,9 +14,9 @@ import RNRestart from 'react-native-restart';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import BackButton from "../sheard/BackButton";
 import GradientButton from "../sheard/GradientButton";
-import { SafeAreaInsetsContext, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 export default function SubscriptionsIAP() {
-  const {top,bottom}=useSafeAreaInsets()
+  const { top, bottom } = useSafeAreaInsets()
   const { params }: any = useRoute();
   const { setShowSubscription } = useGlobalContext()
   const [planId, setPlanId] = useState("")
@@ -46,7 +45,6 @@ export default function SubscriptionsIAP() {
   });
 
   const productIds = ["fibre_pro_subscriptions"];
-
   useEffect(() => {
     if (connected) {
       fetchProducts({ skus: productIds, type: "subs" });
@@ -231,10 +229,10 @@ export default function SubscriptionsIAP() {
   }, [subscriptions, activeSubscriptions]);
   return (
     <View
-    style={{
-      paddingTop:top,
-      paddingBottom:bottom
-    }}
+      style={{
+        paddingTop: top,
+        paddingBottom: bottom
+      }}
     >
       <ScrollView>
         {
