@@ -68,19 +68,19 @@ const Home = () => {
       try {
         const subs = await getActiveSubscriptions();
         const isActive = subs?.find(sub => sub.isActive === true);
-        if (!isActive) {
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [
-                {
-                  name: 'Subscription',
-                  params: { show: false },
-                },
-              ],
-            })
-          )
-        }
+        // if (!isActive) {
+        //   navigation.dispatch(
+        //     CommonActions.reset({
+        //       index: 0,
+        //       routes: [
+        //         {
+        //           name: 'Subscription',
+        //           params: { show: false },
+        //         },
+        //       ],
+        //     })
+        //   )
+        // }
         
         // if (subs?.length <= 0) {
         //   navigation.dispatch(
