@@ -20,6 +20,35 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const IAPSubsciptionsIOS = () => {
   const { top, bottom } = useSafeAreaInsets()
     const { params }: any = useRoute();
+
+    // Helper function to format subscription period dynamically
+    const formatSubscriptionPeriod = (unit: string, number: string) => {
+        const num = parseInt(number, 10);
+        
+        if (unit === "MONTH") {
+            if (num === 1) return "Mensuel";
+            if (num === 3) return "Trimestriel";
+            if (num === 6) return "Semestriel";
+            return `${num} mois`;
+        }
+        
+        if (unit === "YEAR") {
+            if (num === 1) return "Annuel";
+            return `${num} ans`;
+        }
+        
+        if (unit === "WEEK") {
+            if (num === 1) return "Hebdomadaire";
+            return `${num} semaines`;
+        }
+        
+        if (unit === "DAY") {
+            if (num === 1) return "Quotidien";
+            return `${num} jours`;
+        }
+        
+        return "Abonnement";
+    };
     const { setShowSubscription } = useGlobalContext()
     const [planId, setPlanId] = useState("")
     const [is_active, setIsactive] = useState(false)
@@ -153,13 +182,7 @@ const IAPSubsciptionsIOS = () => {
                                                 {product.localizedPrice} /
                                             </Text>
                                             <Text>
-                                                {product.subscriptionPeriodUnitIOS === "MONTH" && product.subscriptionPeriodNumberIOS === "1"
-                                                    ? "Mensuel"
-                                                    : product.subscriptionPeriodUnitIOS === "MONTH" && product.subscriptionPeriodNumberIOS === "3"
-                                                    ? "Trimestriel"
-                                                    : product.subscriptionPeriodUnitIOS === "YEAR"
-                                                    ? "Annuel"
-                                                    : product.subscriptionPeriodUnitIOS || "Abonnement"}
+                                                {formatSubscriptionPeriod(product.subscriptionPeriodUnitIOS, product.subscriptionPeriodNumberIOS)}
                                             </Text>
                                         </View>
                                         <Text style={{ marginBottom: 6 }}>
@@ -196,13 +219,7 @@ const IAPSubsciptionsIOS = () => {
                                         {product.localizedPrice} /
                                     </Text>
                                     <Text>
-                                        {product.subscriptionPeriodUnitIOS === "MONTH" && product.subscriptionPeriodNumberIOS === "1"
-                                            ? "Mensuel"
-                                            : product.subscriptionPeriodUnitIOS === "MONTH" && product.subscriptionPeriodNumberIOS === "3"
-                                            ? "Trimestriel"
-                                            : product.subscriptionPeriodUnitIOS === "YEAR"
-                                            ? "Annuel"
-                                            : product.subscriptionPeriodUnitIOS || "Abonnement"}
+                                        {formatSubscriptionPeriod(product.subscriptionPeriodUnitIOS, product.subscriptionPeriodNumberIOS)}
                                     </Text>
                                 </View>
                                 <Text style={{ marginBottom: 6 }}>
