@@ -7,7 +7,6 @@ import { t } from '../utils/translate';
 
 // Screens & Components
 import InvoiceDetails from '../components/Invoice/InvoiceDetails';
-import SubscriptionsIAP from '../components/Subscriptions/SubscriptionsIAP';
 import ForgetPassword from '../screens/auth/ForgetPassword';
 import Login from '../screens/auth/Login';
 import NewPassword from '../screens/auth/NewPassword';
@@ -30,6 +29,9 @@ import UpdateIntervention from '../screens/stacks/UpdateIntervention';
 import UpdateInterventionCategory from '../screens/stacks/UpdateInterventionCategory';
 import UpdateInvoice from '../screens/stacks/UpdateInvoice';
 import TabLayout from './TabLayout';
+import IAPSubscriptionAndroid from '../components/Subscriptions/IAPSubscriptionAndroid';
+import IAPSubsciptionsIOS from '../components/Subscriptions/IAPSubsciptionsIOS';
+import { Platform } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -150,7 +152,7 @@ const StackLayout = () => {
       <Stack.Screen
         name="Subscription"
         // component={Subscription}
-        component={SubscriptionsIAP}
+        component={Platform.OS === "android" ? IAPSubscriptionAndroid : IAPSubsciptionsIOS}
         options={{
           headerShown: false,
         }}
