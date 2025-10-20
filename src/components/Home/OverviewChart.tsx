@@ -45,139 +45,7 @@ const OverviewChart = ({ monthlyData }: Props) => {
     }, 0);
   };
 
-  const barData = [
-    // Jan
-    {
-      value: 40,
-      label: 'Jan',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 20, frontColor: '#4CAF50', spacing: 2 },
-    { value: 30, frontColor: '#F2C94C' },
 
-    // Feb
-    {
-      value: 50,
-      label: 'Feb',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 40, frontColor: '#4CAF50', spacing: 2 },
-    { value: 35, frontColor: '#F2C94C' },
-
-    // Mar
-    {
-      value: 75,
-      label: 'Mar',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 25, frontColor: '#4CAF50', spacing: 2 },
-    { value: 45, frontColor: '#F2C94C' },
-
-    // Apr
-    {
-      value: 30,
-      label: 'Apr',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 20, frontColor: '#4CAF50', spacing: 2 },
-    { value: 28, frontColor: '#F2C94C' },
-
-    // May
-    {
-      value: 60,
-      label: 'May',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 40, frontColor: '#4CAF50', spacing: 2 },
-    { value: 50, frontColor: '#F2C94C' },
-
-    // Jun
-    {
-      value: 65,
-      label: 'Jun',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 30, frontColor: '#4CAF50', spacing: 2 },
-    { value: 40, frontColor: '#F2C94C' },
-    {
-      value: 65,
-      label: 'July',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 30, frontColor: '#4CAF50', spacing: 2 },
-    { value: 40, frontColor: '#F2C94C' },
-    {
-      value: 65,
-      label: 'Aug',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 30, frontColor: '#4CAF50', spacing: 2 },
-    { value: 40, frontColor: '#F2C94C' },
-    {
-      value: 65,
-      label: 'Sept',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 30, frontColor: '#4CAF50', spacing: 2 },
-    { value: 40, frontColor: '#F2C94C' },
-    {
-      value: 65,
-      label: 'Oct',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 30, frontColor: '#4CAF50', spacing: 2 },
-    { value: 40, frontColor: '#F2C94C' },
-    {
-      value: 65,
-      label: 'Nov',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 30, frontColor: '#4CAF50', spacing: 2 },
-    { value: 40, frontColor: '#F2C94C' },
-    {
-      value: 65,
-      label: 'Dec',
-      spacing: 2,
-      labelWidth: 30,
-      labelTextStyle: { color: 'gray' },
-      frontColor: '#017FF4',
-    },
-    { value: 30, frontColor: '#4CAF50', spacing: 2 },
-    { value: 40, frontColor: '#F2C94C' },
-  ];
 
   const renderTitle = () => (
     <View style={{ marginVertical: 10 }}>
@@ -197,7 +65,7 @@ const OverviewChart = ({ monthlyData }: Props) => {
               height: 10,
               width: 16,
               borderRadius: 6,
-              backgroundColor: '#49A56F',
+              backgroundColor: '#F2C94C',
               marginRight: 8,
             }}
           />
@@ -231,7 +99,7 @@ const OverviewChart = ({ monthlyData }: Props) => {
               height: 10,
               width: 16,
               borderRadius: 6,
-              backgroundColor: '#F2C94C',
+              backgroundColor: '#4CAF50',
               marginRight: 8,
             }}
           />
