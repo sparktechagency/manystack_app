@@ -81,7 +81,7 @@ const Home = () => {
         //     })
         //   )
         // }
-        
+
         // if (subs?.length <= 0) {
         //   navigation.dispatch(
         //     CommonActions.reset({

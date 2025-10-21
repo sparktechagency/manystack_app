@@ -17,16 +17,20 @@ import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
 import { StackTypes } from '../../types/ScreenPropsTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { t } from '../../utils/translate';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const InterventionCategory = () => {
   const { themeColors, width, height, english } = useGlobalContext();
   const textColor = hexToRGBA(themeColors.black as string, 0.6);
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const { data, isLoading, isFetching } = useGetCategoriesQuery(undefined);
+  const {bottom,top}=useSafeAreaInsets()
   return (
-    <SafeAreaView
+    <View
       style={{
         position: 'relative',
+        paddingTop:top,
+        paddingBottom:bottom
       }}>
       <BackButton text={t('interventionCategory', english)} />
       <KeyboardAwareScrollView
@@ -111,7 +115,7 @@ const InterventionCategory = () => {
           </Text>
         </GradientButton>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

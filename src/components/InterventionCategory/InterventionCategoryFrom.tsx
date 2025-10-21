@@ -64,9 +64,9 @@ const InterventionCategoryFrom = () => {
     <SafeAreaView>
       <BackButton text={params?.params?.id ? t('updateInterventionCategory', english) : t('createInterventionCategory', english)} />
       <KeyboardAwareScrollView
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
-      bottomOffset={62} >
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        bottomOffset={62} >
         <View style={{
           height: height,
           paddingHorizontal: 20,
@@ -75,7 +75,6 @@ const InterventionCategoryFrom = () => {
           <View
             style={{
               width: '100%',
-              height,
               // paddingHorizontal: 20,
               position: 'relative',
             }}>
@@ -104,35 +103,43 @@ const InterventionCategoryFrom = () => {
                 </View>
               </View>
             ))}
-            <View
-              style={{
-                // paddingHorizontal: 25,
-                position: 'absolute',
-                bottom: 100,
-                width: "100%",
-                paddingVertical: 16,
-              }}>
-              <GradientButton
-              isLoading={isLoading || updating || loading}
-              handler={submitHandler}>
-                {isLoading || updating || loading ? (
-                  <ActivityIndicator size="large" color="white" />
-                ) : (
-                  <Text
-                    style={{
-                      color: 'white',
-                      textAlign: 'center',
-                      fontWeight: 700,
-                      fontSize: 18,
-                    }}>
-                    Soumettre
-                  </Text>
-                )}
-              </GradientButton>
-            </View>
+
           </View>
+
         </View>
       </KeyboardAwareScrollView>
+      <View style={{
+        paddingHorizontal: 16,
+        marginLeft:32
+      }}>
+        <View
+          style={{
+            // paddingHorizontal: 25,
+            position: 'absolute',
+            bottom: 100,
+            width: "100%",
+            paddingVertical: 16,
+            // marginLeft: 20
+          }}>
+          <GradientButton
+            isLoading={isLoading || updating || loading}
+            handler={submitHandler}>
+            {isLoading || updating || loading ? (
+              <ActivityIndicator size="large" color="white" />
+            ) : (
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: 700,
+                  fontSize: 18,
+                }}>
+                Soumettre
+              </Text>
+            )}
+          </GradientButton>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
