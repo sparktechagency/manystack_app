@@ -17,7 +17,6 @@ import BackButton from "../sheard/BackButton";
 import GradientButton from "../sheard/GradientButton";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-
 const IAPSubsciptionsIOS = () => {
     const { top, bottom } = useSafeAreaInsets()
     const { params }: any = useRoute();
@@ -50,6 +49,7 @@ const IAPSubsciptionsIOS = () => {
 
         return "Abonnement";
     };
+
     const { setShowSubscription } = useGlobalContext();
     const [planId, setPlanId] = useState("");
     const [is_active, setIsactive] = useState(false);
@@ -79,7 +79,6 @@ const IAPSubsciptionsIOS = () => {
         finishTransaction,
         activeSubscriptions,
         getActiveSubscriptions,
-        validateReceipt
     } = useIAP({
         onPurchaseSuccess: async (purchase) => {
             console.log('Purchase successful:', purchase);
@@ -102,10 +101,10 @@ const IAPSubsciptionsIOS = () => {
         },
     });
 
-    const productIds = ["fibre_pro_subscriptions","3mois","6mois"];
+    const productIds = ["fibre_pro_subscriptions", "3mois", "6mois"];
     useEffect(() => {
         if (connected) {
-            fetchProducts({ skus: productIds, type: "subs" });
+            fetchProducts({ skus: productIds, type: 'inapp' });
             getActiveSubscriptions();
         }
     }, [connected]);
@@ -147,12 +146,14 @@ const IAPSubsciptionsIOS = () => {
         }
         getSub()
     }, [activeSubscriptions])
+
     useEffect(() => {
         const isActive = activeSubscriptions?.find(sub => sub.isActive === true);
         if (isActive) {
             setIsactive(true)
         }
     }, [activeSubscriptions])
+
     const renderSubscriptions = useMemo(() => {
         return (
             <>
@@ -282,6 +283,7 @@ const IAPSubsciptionsIOS = () => {
             </>
         );
     }, [subscriptions, activeSubscriptions, is_active, planId]);
+    
     return (
         <View
             style={{
