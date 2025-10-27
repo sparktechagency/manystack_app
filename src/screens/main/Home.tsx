@@ -12,6 +12,7 @@ import { Loss } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetHomePageDataQuery } from '../../redux/Apis/userApis';
 import { t } from '../../utils/translate';
+import MonthButton from '../../components/Home/MonthButton';
 
 const Home = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>()
@@ -25,6 +26,7 @@ const Home = () => {
   const insets = useSafeAreaInsets();
   const elements = [
     <WellCome key={1} />,
+    <MonthButton key={8} />,
     <ProfitCard
       title="Intervention"
       count={`${data?.data?.totalInterventions || 0}` || '0'}
