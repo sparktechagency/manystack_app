@@ -1,10 +1,11 @@
 import { CommonActions, NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, ImageSourcePropType, SafeAreaView } from 'react-native';
 import { useIAP } from 'react-native-iap';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FloatingPlus from '../../components/Home/FloatingPlus';
 import Highlights from '../../components/Home/Highlights';
+import MonthButton from '../../components/Home/MonthButton';
 import OverviewChart from '../../components/Home/OverviewChart';
 import ProfitCard from '../../components/Home/ProfitCard';
 import WellCome from '../../components/Home/WellCome';
@@ -12,8 +13,8 @@ import { Loss } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetHomePageDataQuery } from '../../redux/Apis/userApis';
 import { t } from '../../utils/translate';
-import MonthButton from '../../components/Home/MonthButton';
-
+import moment from 'moment';
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const Home = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>()
   const {
@@ -21,12 +22,19 @@ const Home = () => {
     getActiveSubscriptions,
 
   } = useIAP({});
+
+  const [selectedMonth, setSelectedMonth] = useState(moment().month())
+
   const { english, currency, user } = useGlobalContext();
-  const { data, isLoading, isFetching } = useGetHomePageDataQuery(undefined);
+  const { data, isLoading, isFetching } = useGetHomePageDataQuery(months[selectedMonth]);
   const insets = useSafeAreaInsets();
   const elements = [
     <WellCome key={1} />,
-    <MonthButton key={8} />,
+    <MonthButton
+      selectedMonth={selectedMonth}
+      setSelectedMonth={setSelectedMonth}
+      key={8}
+    />,
     <ProfitCard
       title="Intervention"
       count={`${data?.data?.totalInterventions || 0}` || '0'}

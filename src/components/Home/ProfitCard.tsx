@@ -1,9 +1,8 @@
 import React from 'react';
-import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
-import {Profit} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { ImageSourcePropType, Text, View } from 'react-native';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 
 const ProfitCard = ({
   title,
@@ -16,7 +15,7 @@ const ProfitCard = ({
   percentage: string;
   icon?: ImageSourcePropType;
 }) => {
-  const {themeColors} = useGlobalContext();
+  const { themeColors } = useGlobalContext();
   return (
     <View
       style={[
@@ -34,17 +33,17 @@ const ProfitCard = ({
         <Text
           style={[
             globalStyles.inputLabel,
-            {fontSize: 18, color: themeColors.black as string, fontWeight: 700},
+            { fontSize: 18, color: themeColors.black as string, fontWeight: 700 },
           ]}>
           {title}
         </Text>
         <View
           style={[
             globalStyles.flex,
-            {justifyContent: 'flex-start', gap: 5, marginTop: 5},
+            { justifyContent: 'flex-start', gap: 5, marginTop: 5 },
           ]}>
           <Text
-            style={[globalStyles.inputLabel, {fontSize: 20, fontWeight: 400}]}>
+            style={[globalStyles.inputLabel, { fontSize: 20, fontWeight: 400 }]}>
             {count}
           </Text>
           <Text
@@ -61,10 +60,10 @@ const ProfitCard = ({
           </Text>
         </View>
       </View>
-      <Image
+      {/* <Image
         source={icon ? icon : (Profit as ImageSourcePropType)}
         style={{width: 100, height: 40}}
-      />
+      /> */}
     </View>
   );
 };

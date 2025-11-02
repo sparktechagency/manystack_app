@@ -1,13 +1,19 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
-import moment from 'moment'
+import moment from 'moment';
+import 'moment/locale/fr';
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const MonthButton = () => {
-  const [selectedMonth, setSelectedMonth] = useState(moment().month())
-
+const MonthButton = ({
+  selectedMonth,
+  setSelectedMonth,
+}: {
+  selectedMonth: number;
+  setSelectedMonth: (month: number) => void;
+}) => {
+  moment.locale('fr');
   const months = Array.from({ length: 12 }, (_, i) => ({
     index: i,
-    name: moment().month(i).format('MMMM')
+    name: moment().month(i).format('MMM')
   }))
 
   return (
@@ -29,7 +35,10 @@ const MonthButton = () => {
             <Text
               style={[
                 styles.monthText,
-                selectedMonth === month.index && styles.selectedText
+                selectedMonth === month.index && styles.selectedText,
+                {
+                  textTransform: "capitalize"
+                }
               ]}
             >
               {month.name}

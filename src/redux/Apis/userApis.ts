@@ -55,7 +55,15 @@ const userApi = baseApi.injectEndpoints({
     }),
     // get Home  page data
     getHomePageData: builder.query({
-      query: () => 'api/home/dashboard',
+      query: (month) =>{
+        return {
+          url: 'api/home/dashboard',
+          method: 'GET',
+          params: {
+            month: month
+          }
+        }
+      },
       providesTags: ['auth', "home"],
     }),
   }),
