@@ -34,6 +34,7 @@
     "react-native-linear-gradient": "^2.8.3",
     "react-native-nitro-modules": "^0.29.2",
     "react-native-otp-entry": "^1.8.4",
+    "react-native-purchases": "^9.6.7",
     "react-native-reanimated": "^3.17.5",
     "react-native-render-html": "^6.3.4",
     "react-native-restart": "^0.0.27",

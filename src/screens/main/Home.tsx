@@ -1,7 +1,8 @@
 import { CommonActions, NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { FlatList, ImageSourcePropType, SafeAreaView } from 'react-native';
-import { useIAP } from 'react-native-iap';
+import Purchases from 'react-native-purchases';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FloatingPlus from '../../components/Home/FloatingPlus';
 import Highlights from '../../components/Home/Highlights';
@@ -13,15 +14,9 @@ import { Loss } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetHomePageDataQuery } from '../../redux/Apis/userApis';
 import { t } from '../../utils/translate';
-import moment from 'moment';
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const Home = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>()
-  const {
-    connected,
-    getActiveSubscriptions,
-
-  } = useIAP({});
 
   const [selectedMonth, setSelectedMonth] = useState(moment().month())
 
@@ -73,12 +68,15 @@ const Home = () => {
   ];
 
   useEffect(() => {
-    if (!connected) return;
     const checkSubscriptions = async () => {
       try {
-        const subs = await getActiveSubscriptions();
-        const isActive = subs?.find(sub => sub.isActive === true);
-        if (!isActive) {
+        const customerInfo = await Purchases.getCustomerInfo();
+        console.log({ customerInfo })
+        const hasActive =
+          (customerInfo.activeSubscriptions && customerInfo.activeSubscriptions.length > 0) ||
+          (customerInfo.entitlements && Object.values(customerInfo.entitlements.active || {}).length > 0);
+
+        if (!hasActive) {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
@@ -89,29 +87,15 @@ const Home = () => {
                 },
               ],
             })
-          )
+          );
         }
-
-        // if (subs?.length <= 0) {
-        //   navigation.dispatch(
-        //     CommonActions.reset({
-        //       index: 0,
-        //       routes: [
-        //         {
-        //           name: 'Subscription',
-        //           params: { show: false },
-        //         },
-        //       ],
-        //     })
-        //   );
-        // }
       } catch (error) {
-        console.error("Failed to get active subscriptions:", error);
+        console.error('Failed to get active subscriptions from RevenueCat:', error);
       }
     };
 
     checkSubscriptions();
-  }, [connected, getActiveSubscriptions, navigation]);
+  }, [navigation]);
   return (
     <SafeAreaView style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
       <FlatList
