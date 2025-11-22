@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Purchases, { PurchasesOffering, PurchasesPackage } from 'react-native-purchases';
 import RNRestart from 'react-native-restart';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,6 +11,7 @@ const RevenueCatSubscription = () => {
   const [offerings, setOfferings] = useState<PurchasesOffering | null>(null);
   const [loading, setLoading] = useState(true);
   const [processingPackageId, setProcessingPackageId] = useState<string | null>(null);
+  const [activeProductIds, setActiveProductIds] = useState<string[]>([]);
   const { params }: any = useRoute();
   useEffect(() => {
     const apiKey = Platform.OS === 'ios'
@@ -19,19 +20,23 @@ const RevenueCatSubscription = () => {
 
     Purchases.configure({ apiKey });
 
-    const fetchOfferings = async () => {
+    const fetchData = async () => {
       try {
         const data = await Purchases.getOfferings();
         if (data.current) {
           setOfferings(data.current);
         }
+
+        const customerInfo = await Purchases.getCustomerInfo();
+        const activeSubs = customerInfo.activeSubscriptions || [];
+        setActiveProductIds(activeSubs as string[]);
       } catch (error) {
       } finally {
         setLoading(false);
       }
     };
 
-    fetchOfferings();
+    fetchData();
   }, []);
 
   const handlePurchase = async (pack: PurchasesPackage) => {
@@ -45,6 +50,16 @@ const RevenueCatSubscription = () => {
     } catch (error) {
     } finally {
       setProcessingPackageId(null);
+    }
+  };
+
+  const openSubscriptionManagement = (productId: string) => {
+    if (Platform.OS === 'android') {
+      Linking.openURL(
+        `https://play.google.com/store/account/subscriptions?sku=${productId}&package=${'com.shaharulsiyam.fibrepro'}`,
+      );
+    } else {
+      Linking.openURL('https://apps.apple.com/account/subscriptions');
     }
   };
 
@@ -70,35 +85,58 @@ const RevenueCatSubscription = () => {
         {
           params?.params?.show && <BackButton text={'Souscription'} />
         }
-        {offerings.availablePackages.map(pack => (
-          <View
-            key={pack.identifier}
-            style={{
-              marginTop: 16,
-              padding: 16,
-              borderRadius: 12,
-              borderWidth: 1,
-              borderColor: '#e5e5e5',
-            }}>
-            <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 4 }}>
-              {pack.product.priceString}
-            </Text>
-            <Text style={{ marginBottom: 12 }}>{pack.product.description}</Text>
-            <TouchableOpacity
-              disabled={processingPackageId === pack.identifier}
-              onPress={() => handlePurchase(pack)}
+        {offerings.availablePackages.map(pack => {
+          const isActive = activeProductIds.includes(pack.product.identifier);
+
+          return (
+            <View
+              key={pack.identifier}
               style={{
-                backgroundColor: '#2563eb',
-                paddingVertical: 10,
-                borderRadius: 9999,
-                alignItems: 'center',
+                marginTop: 16,
+                padding: 16,
+                borderRadius: 12,
+                borderWidth: 1,
+                borderColor: '#e5e5e5',
               }}>
-              <Text style={{ color: '#ffffff', fontWeight: '600' }}>
-                {processingPackageId === pack.identifier ? 'Processing...' : 'Subscribe'}
+              <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 4 }}>
+                {pack.product.priceString}
               </Text>
-            </TouchableOpacity>
-          </View>
-        ))}
+              <Text style={{ marginBottom: 4 }}>{pack.product.description}</Text>
+
+              {isActive ? (
+                <>
+                  <Text style={{ marginBottom: 8 }}>Forfait actuel</Text>
+                  <TouchableOpacity
+                    onPress={() => openSubscriptionManagement(pack.product.identifier)}
+                    style={{
+                      backgroundColor: '#4b5563',
+                      paddingVertical: 10,
+                      borderRadius: 9999,
+                      alignItems: 'center',
+                    }}>
+                    <Text style={{ color: '#ffffff', fontWeight: '600' }}>
+                      Gérer / Annuler la souscription
+                    </Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <TouchableOpacity
+                  disabled={processingPackageId === pack.identifier}
+                  onPress={() => handlePurchase(pack)}
+                  style={{
+                    backgroundColor: '#2563eb',
+                    paddingVertical: 10,
+                    borderRadius: 9999,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{ color: '#ffffff', fontWeight: '600' }}>
+                    {processingPackageId === pack.identifier ? 'Processing...' : 'Souscrire'}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          );
+        })}
       </ScrollView>
     </View>
   );
