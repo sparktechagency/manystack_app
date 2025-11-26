@@ -124,6 +124,7 @@ const SignUp = () => {
     register(data)
       .unwrap()
       .then(res => {
+        console.log(res);
         navigation.navigate('Otp', {
           params: { from: 'signup', email: combinedInputValue['email'] },
         });
@@ -134,10 +135,11 @@ const SignUp = () => {
         });
       })
       .catch(err => {
+        console.log(err?.data?.message);
         Toast.show({
           type: 'error',
           text1: english ? 'registration failed' : "Enregistrement échoué",
-          text2: err.data?.message || english ? 'Something went wrong' : "Quelque chose s'est mal passé",
+          text2: err?.data?.message ? err?.data?.message : english ? 'Something went wrong' : "Quelque chose s'est mal passé",
         });
       });
     setLoading(false);

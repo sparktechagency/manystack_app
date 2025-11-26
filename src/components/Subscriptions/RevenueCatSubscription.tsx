@@ -4,6 +4,7 @@ import { ActivityIndicator, Linking, Platform, ScrollView, Text, TouchableOpacit
 import Purchases, { PurchasesOffering, PurchasesPackage } from 'react-native-purchases';
 import RNRestart from 'react-native-restart';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useGetProfileQuery } from '../../redux/Apis/userApis';
 import BackButton from '../sheard/BackButton';
 
 const RevenueCatSubscription = () => {
@@ -13,12 +14,13 @@ const RevenueCatSubscription = () => {
   const [processingPackageId, setProcessingPackageId] = useState<string | null>(null);
   const [activeProductIds, setActiveProductIds] = useState<string[]>([]);
   const { params }: any = useRoute();
+  const { data } = useGetProfileQuery(undefined);
   useEffect(() => {
     const apiKey = Platform.OS === 'ios'
       ? 'appl_tHakSyAztiXzbzeqtARsyrRdgpp'
       : 'goog_yTkIkCOSSUxCAjntXwSjguTpAWP';
 
-    Purchases.configure({ apiKey });
+    Purchases.configure({ apiKey, appUserID: data?.data?._id });
 
     const fetchData = async () => {
       try {

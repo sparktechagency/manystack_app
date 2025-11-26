@@ -15,7 +15,7 @@ const GradientButton = ({
 }) => {
   return (
     <TouchableOpacity
-      style={{ borderRadius: 10, overflow: 'hidden' }}
+      style={{ borderRadius: 10, overflow: 'hidden', width: '100%' }}
       disabled={isLoading}
       activeOpacity={0.8}
       onPress={() => {
@@ -28,7 +28,7 @@ const GradientButton = ({
         ]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        style={{ borderRadius: 10, boxSizing: "border-box", height: 60,minWidth:60, flex: 1, justifyContent: "center" ,flexDirection: "row",alignItems: "center" }}>
+        style={{ borderRadius: 10, boxSizing: "border-box", height: 60, minWidth: 60, width: '100%', justifyContent: "center", flexDirection: "row", alignItems: "center" }}>
         {children}
       </LinearGradient>
     </TouchableOpacity>

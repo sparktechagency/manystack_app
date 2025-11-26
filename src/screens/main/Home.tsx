@@ -2,7 +2,6 @@ import { CommonActions, NavigationProp, ParamListBase, useNavigation } from '@re
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { FlatList, ImageSourcePropType, SafeAreaView } from 'react-native';
-import Purchases from 'react-native-purchases';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FloatingPlus from '../../components/Home/FloatingPlus';
 import Highlights from '../../components/Home/Highlights';
@@ -12,16 +11,15 @@ import ProfitCard from '../../components/Home/ProfitCard';
 import WellCome from '../../components/Home/WellCome';
 import { Loss } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
-import { useGetHomePageDataQuery } from '../../redux/Apis/userApis';
+import { useGetHomePageDataQuery, useGetProfileQuery } from '../../redux/Apis/userApis';
 import { t } from '../../utils/translate';
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const Home = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>()
-
+  const { data: dataProfile, isLoading } = useGetProfileQuery(undefined)
   const [selectedMonth, setSelectedMonth] = useState(moment().month())
-
   const { english, currency, user } = useGlobalContext();
-  const { data, isLoading, isFetching } = useGetHomePageDataQuery(months[selectedMonth]);
+  const { data, isLoading: isLoadingHome } = useGetHomePageDataQuery(months[selectedMonth]);
   const insets = useSafeAreaInsets();
   const elements = [
     <WellCome key={1} />,
@@ -68,34 +66,24 @@ const Home = () => {
   ];
 
   useEffect(() => {
-    const checkSubscriptions = async () => {
-      try {
-        const customerInfo = await Purchases.getCustomerInfo();
-        console.log({ customerInfo })
-        const hasActive =
-          (customerInfo.activeSubscriptions && customerInfo.activeSubscriptions.length > 0) ||
-          (customerInfo.entitlements && Object.values(customerInfo.entitlements.active || {}).length > 0);
+    if (isLoading || isLoadingHome) {
+      return;
+    }
+    if (!dataProfile?.data?.subscription?.isActive) {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'Subscription',
+              params: { show: false },
+            },
+          ],
+        })
+      );
+    }
 
-        if (!hasActive) {
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [
-                {
-                  name: 'Subscription',
-                  params: { show: false },
-                },
-              ],
-            })
-          );
-        }
-      } catch (error) {
-        console.error('Failed to get active subscriptions from RevenueCat:', error);
-      }
-    };
-
-    checkSubscriptions();
-  }, [navigation]);
+  }, [dataProfile, dataProfile?.data?.subscription?.isActive, isLoading, isLoadingHome]);
   return (
     <SafeAreaView style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
       <FlatList

@@ -43,6 +43,7 @@ const Otp = () => {
   const handleOtpChange = useCallback(() => {
     setLoading(true);
     if (code?.length != 6) {
+      setLoading(false);
       return Toast.show({
         type: 'error',
         text1: english ? 'Invalid OTP' : "Code OTP invalide",
@@ -59,7 +60,7 @@ const Otp = () => {
           Toast.show({
             type: 'success',
             text1: english ? 'Success' : "Succès",
-            text2: res.data?.message || english ?  'OTP verified successfully.' : "OTP vérifié avec succès.",
+            text2: res.data?.message || (english ? 'OTP verified successfully.' : "OTP vérifié avec succès."),
           });
           await AsyncStorage.removeItem('email');
           navigate.navigate(from == 'signup' ? 'Login' : 'NewPassword');
@@ -68,9 +69,10 @@ const Otp = () => {
           Toast.show({
             type: 'error',
             text1: english ? 'Error' : "Erreur",
-            text2: err?.data?.message || english ? 'An unexpected error occurred.' : "Une erreur inattendue est survenue.",
+            text2: err?.data?.message || (english ? 'An unexpected error occurred.' : "Une erreur inattendue est survenue."),
           });
         })
+        .finally(() => setLoading(false))
       : verifyOtp({
         code,
       })
@@ -79,7 +81,7 @@ const Otp = () => {
           Toast.show({
             type: 'success',
             text1: english ? 'Success' : "Succès",
-            text2: res.data?.message || english ? 'OTP verified successfully.' : "OTP vérifié avec succès.",
+            text2: res.data?.message || (english ? 'OTP verified successfully.' : "OTP vérifié avec succès."),
           });
           navigate.navigate(from == 'signup' ? 'Login' : 'NewPassword');
         })
@@ -87,10 +89,10 @@ const Otp = () => {
           Toast.show({
             type: 'error',
             text1: english ? 'Error' : "Erreur",
-            text2: err?.data?.message || english ? 'An unexpected error occurred.' : "Une erreur inattendue est survenue.",
+            text2: err?.data?.message || (english ? 'An unexpected error occurred.' : "Une erreur inattendue est survenue."),
           });
-        });
-        setLoading(false);
+        })
+        .finally(() => setLoading(false));
   }, [code, verify, from, navigate, setLoading]);
 
   return (
@@ -159,20 +161,22 @@ const Otp = () => {
                 marginTop: 40,
               }}>
               <GradientButton
-              isLoading={isLoading || loading}
-              handler={handleOtpChange}>
+                isLoading={isLoading || loading}
+                handler={handleOtpChange}>
                 {isLoading || loading ? (
                   <ActivityIndicator size="small" color="#0000ff" />
                 ) : (
-                  <Text
-                    style={{
-                      color: 'white',
-                      textAlign: 'center',
-                      fontWeight: '700',
-                      fontSize: 18,
-                    }}>
-                    {t('submit', english)}
-                  </Text>
+                  <View>
+                    <Text
+                      style={{
+                        color: 'white',
+                        textAlign: 'center',
+                        fontWeight: '700',
+                        fontSize: 18,
+                      }}>
+                      {t('submit', english)}
+                    </Text>
+                  </View>
                 )}
               </GradientButton>
             </View>
