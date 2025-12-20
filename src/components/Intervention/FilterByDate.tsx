@@ -197,6 +197,7 @@ const FilterByDate = ({
           {t(getAllTitleKey(), english)}
         </Text>
         <GradientButton
+          style={{ width: 70 }}
           handler={() => {
             if (title === 'Expenses') {
               navigate.navigate('CreateExpenses');

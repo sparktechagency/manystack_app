@@ -130,16 +130,16 @@ const SignUp = () => {
         });
         Toast.show({
           type: 'success',
-          text1: english ? 'registered successfully' : "Enregistré avec succès",
-          text2: res.message || english ? 'registered successfully' : "Enregistré avec succès",
+          text1: "Enregistré avec succès",
+          text2: res.message || "Enregistré avec succès",
         });
       })
       .catch(err => {
         console.log(err?.data?.message);
         Toast.show({
           type: 'error',
-          text1: english ? 'registration failed' : "Enregistrement échoué",
-          text2: err?.data?.message ? err?.data?.message : english ? 'Something went wrong' : "Quelque chose s'est mal passé",
+          text1: "Enregistrement échoué",
+          text2: err?.data?.message ? err?.data?.message : "Quelque chose s'est mal passé",
         });
       });
     setLoading(false);
