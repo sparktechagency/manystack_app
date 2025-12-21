@@ -80,7 +80,6 @@ const RevenueCatSubscription = () => {
       </View>
     );
   }
-
   return (
     <View style={{ flex: 1, paddingTop: top, paddingBottom: bottom }}>
       <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16 }}>
@@ -100,10 +99,13 @@ const RevenueCatSubscription = () => {
                 borderWidth: 1,
                 borderColor: '#e5e5e5',
               }}>
+              <Text style={{ fontSize: 14, fontWeight: '500', marginBottom: 4 }}>
+                {pack.product.title || pack.product.identifier}
+              </Text>
               <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 4 }}>
                 {pack.product.priceString}
               </Text>
-              <Text style={{ marginBottom: 4 }}>{pack.product.description}</Text>
+              <Text style={{ fontSize: 14, marginBottom: 4 }}>{pack.product.description || "Manage finance, invoices, expenses, and PDFs with source access."}</Text>
 
               {isActive ? (
                 <>
