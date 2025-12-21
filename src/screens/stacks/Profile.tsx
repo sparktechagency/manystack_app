@@ -5,7 +5,6 @@ import {
 } from '@react-navigation/native';
 import React from 'react';
 import {
-  ActivityIndicator,
   Text,
   TextInput,
   View
@@ -83,11 +82,14 @@ const Profile = () => {
         setError(prev => ({ ...prev, [key]: false }));
       }
     });
-    if (invalid)
-      return Toast.show({
+    if (invalid) {
+      Toast.show({
         type: 'error',
         text1: 'Please fill all the fields',
       });
+      setLoading(false);
+      return;
+    }
     const data = {
       firstName: inputValue['first name'],
       lastName: inputValue['last name'],
@@ -106,7 +108,10 @@ const Profile = () => {
     updateProfileHandler(data, () => {
       navigation.goBack();
     });
-    setLoading(false);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+    return () => clearTimeout(timer);
   };
   return (
     <SafeAreaView>
@@ -301,19 +306,15 @@ const Profile = () => {
           <GradientButton
             isLoading={isLoading || loading}
             handler={submitHandler}>
-            {isLoading || loading ? (
-              <ActivityIndicator color="white" size="small" />
-            ) : (
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: '700',
-                  fontSize: 18,
-                }}>
-                Sauvegarder
-              </Text>
-            )}
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: '700',
+                fontSize: 18,
+              }}>
+              Sauvegarder
+            </Text>
           </GradientButton>
         </View>
       </KeyboardAwareScrollView>

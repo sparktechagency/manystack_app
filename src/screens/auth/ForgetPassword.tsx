@@ -2,13 +2,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
-  ActivityIndicator,
   Image,
   ImageSourcePropType,
   StyleSheet,
   Text,
   TextInput,
-  View,
+  View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -28,23 +27,30 @@ const ForgetPassword = () => {
   const [error, setError] = React.useState({
     email: false,
   });
-
+  const [loading, setLoading] = React.useState(false);
   const [inputValue, setInputValue] = React.useState<IForget>({
     email: '',
   });
   const { forgetPasswordHandler, isLoading } = useForgetPassword();
   const submitHandler = () => {
+    setLoading(true);
     if (inputValue.email === '') {
+      setLoading(false);
       return setError({
         email: true,
       });
     }
     forgetPasswordHandler({ email: inputValue.email }, async () => {
       await AsyncStorage.setItem('email', inputValue?.email);
+      setLoading(false);
       navigate.navigate('Otp', {
         params: { from: 'forget', email: inputValue.email },
       });
-    });
+    })
+    const timer = setTimeout(() => {
+      setLoading(false);
+      clearTimeout(timer);
+    }, 1000);
   };
 
   return (
@@ -91,20 +97,16 @@ const ForgetPassword = () => {
                 paddingHorizontal: 25,
                 marginTop: 20,
               }}>
-              <GradientButton handler={() => submitHandler()}>
-                {isLoading ? (
-                  <ActivityIndicator size="small" color="white" />
-                ) : (
-                  <Text
-                    style={{
-                      color: 'white',
-                      textAlign: 'center',
-                      fontWeight: 700,
-                      fontSize: 18,
-                    }}>
-                    {t('submit', english)}
-                  </Text>
-                )}
+              <GradientButton isLoading={loading} handler={() => submitHandler()}>
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: 700,
+                    fontSize: 18,
+                  }}>
+                  {t('submit', english)}
+                </Text>
               </GradientButton>
             </View>
           </View>

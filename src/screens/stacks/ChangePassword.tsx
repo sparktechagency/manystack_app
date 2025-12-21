@@ -6,7 +6,6 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {
-  ActivityIndicator,
   Image,
   ImageSourcePropType,
   Text,
@@ -58,9 +57,10 @@ const ChangePassword = () => {
       }
     });
     if (invalid) {
+      setLoading(false);
       return Toast.show({
         type: 'error',
-        text1: english?'All fields are required':'Tous les champs sont requis',
+        text1: english ? 'All fields are required' : 'Tous les champs sont requis',
       });
     }
     const data = {
@@ -68,7 +68,7 @@ const ChangePassword = () => {
       newPassword: inputValue['new password'],
       confirmPassword: inputValue['confirm password'],
     };
-  
+
     changePasswordHandler(data, () => {
       setInputValue({
         'current password': '',
@@ -78,6 +78,10 @@ const ChangePassword = () => {
       navigation.goBack();
       setLoading(false);
     });
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+    return () => clearTimeout(timer);
   };
 
   return (
@@ -171,19 +175,15 @@ const ChangePassword = () => {
         <GradientButton
           isLoading={isLoading || loading}
           handler={submitHandler}>
-          {isLoading || loading ? (
-            <ActivityIndicator color="white" />
-          ) : (
-            <Text
-              style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: 700,
-                fontSize: 18,
-              }}>
-              Sauvegarder
-            </Text>
-          )}
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              fontWeight: 700,
+              fontSize: 18,
+            }}>
+            Sauvegarder
+          </Text>
         </GradientButton>
       </View>
     </SafeAreaView>

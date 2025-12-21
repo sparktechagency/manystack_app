@@ -5,11 +5,10 @@ import {
 } from '@react-navigation/native';
 import React from 'react';
 import {
-  ActivityIndicator,
   StyleSheet,
   Text,
   TextInput,
-  View,
+  View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import Toast from 'react-native-toast-message';
@@ -24,15 +23,25 @@ const Support = () => {
   const [subject, setSubject] = React.useState('');
   const [message, setMessage] = React.useState('');
   const { handleSupportCreate, isLoading } = useSupportCreate();
+  const [loading, setLoading] = React.useState(false);
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const handleSubmit = () => {
+    setLoading(true);
     if (!subject || !message) {
+      setLoading(false);
       return Toast.show({
         type: 'error',
-        text1: english?'Subject and message are required':'Sujet et message sont requis',
+        text1: english ? 'Subject and message are required' : 'Sujet et message sont requis',
       });
     }
-    handleSupportCreate({ subject, message }, () => navigation.goBack());
+    handleSupportCreate({ subject, message }, () => {
+      setLoading(false);
+      navigation.goBack();
+    });
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+    return () => clearTimeout(timer);
   };
   return (
     <>
@@ -82,20 +91,16 @@ const Support = () => {
                 flex: 1,
                 marginHorizontal: "auto",
               }}>
-              <GradientButton handler={handleSubmit}>
-                {isLoading ? (
-                  <ActivityIndicator size="small" color="white" />
-                ) : (
-                  <Text
-                    style={{
-                      color: 'white',
-                      textAlign: 'center',
-                      fontWeight: 700,
-                      fontSize: 18,
-                    }}>
-                    {t('submit', english)}
-                  </Text>
-                )}
+              <GradientButton isLoading={loading} handler={handleSubmit}>
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: 700,
+                    fontSize: 18,
+                  }}>
+                  {t('submit', english)}
+                </Text>
               </GradientButton>
             </View>
           </View>

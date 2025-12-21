@@ -5,11 +5,10 @@ import {
 } from '@react-navigation/native';
 import React from 'react';
 import {
-  ActivityIndicator,
   StyleSheet,
   Text,
   TextInput,
-  View,
+  View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -43,13 +42,19 @@ const InterventionCategoryFrom = () => {
   });
   const submitHandler = async () => {
     setLoading(true);
+    let invalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof IInterventionCategory] === '') {
         setError(prev => ({ ...prev, [key]: true }));
+        invalid = true;
       } else {
         setError(prev => ({ ...prev, [key]: false }));
       }
     });
+    if (invalid) {
+      setLoading(false);
+      return;
+    }
     const data = {
       name: inputValue['category Name'],
       price: inputValue['category Price'],
@@ -110,7 +115,7 @@ const InterventionCategoryFrom = () => {
       </KeyboardAwareScrollView>
       <View style={{
         paddingHorizontal: 16,
-        marginLeft:32
+        marginLeft: 32
       }}>
         <View
           style={{
@@ -124,19 +129,17 @@ const InterventionCategoryFrom = () => {
           <GradientButton
             isLoading={isLoading || updating || loading}
             handler={submitHandler}>
-            {isLoading || updating || loading ? (
-              <ActivityIndicator size="large" color="white" />
-            ) : (
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: 700,
-                  fontSize: 18,
-                }}>
-                Soumettre
-              </Text>
-            )}
+
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: 700,
+                fontSize: 18,
+              }}>
+              Soumettre
+            </Text>
+
           </GradientButton>
         </View>
       </View>

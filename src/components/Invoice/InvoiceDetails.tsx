@@ -9,13 +9,13 @@ import {
   ActivityIndicator,
   Image,
   ImageSourcePropType,
-    SafeAreaView,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
   View
 } from 'react-native';
 import { Text } from 'react-native-gesture-handler';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DeleteIcon, DownloadPdf, Edit, FullLogo } from '../../constant/images';
 import { globalStyles } from '../../constant/styles';
 import {
@@ -34,7 +34,6 @@ import { CardStyles } from '../Intervention/InterventionsCards';
 import FlexTextOpacity from '../InterventionDetails/FlexTextOpacity';
 import BackButton from '../sheard/BackButton';
 import GradientButton from '../sheard/GradientButton';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const InvoiceDetails = () => {
   const { params }: any = useRoute();
@@ -338,27 +337,23 @@ const InvoiceDetails = () => {
             width: '100%',
             paddingVertical: 16,
           }}>
-          <GradientButton handler={() => markPaidUnpaidHandler(invoice?._id)}>
-            {markPaidUnpaidLoading ? (
-              <ActivityIndicator size="small" color="white" />
-            ) : (
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: 700,
-                  fontSize: 18,
-                }}>
-                Mark As{' '}
-                {english
-                  ? invoice?.status === 'UNPAID'
-                    ? 'Paid'
-                    : 'Unpaid'
-                  : invoice?.status === 'UNPAID'
-                    ? 'Payé'
-                    : 'Non payé'}
-              </Text>
-            )}
+          <GradientButton isLoading={markPaidUnpaidLoading} handler={() => markPaidUnpaidHandler(invoice?._id)}>
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: 700,
+                fontSize: 18,
+              }}>
+              Mark As{' '}
+              {english
+                ? invoice?.status === 'UNPAID'
+                  ? 'Paid'
+                  : 'Unpaid'
+                : invoice?.status === 'UNPAID'
+                  ? 'Payé'
+                  : 'Non payé'}
+            </Text>
           </GradientButton>
         </View>
       </ScrollView>

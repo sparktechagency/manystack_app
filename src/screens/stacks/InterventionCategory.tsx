@@ -2,12 +2,12 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {
   ActivityIndicator,
-  SafeAreaView,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CategoryListItem from '../../components/InterventionCategory/CategoryListItem';
 import BackButton from '../../components/sheard/BackButton';
 import GradientButton from '../../components/sheard/GradientButton';
@@ -17,20 +17,19 @@ import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
 import { StackTypes } from '../../types/ScreenPropsTypes';
 import { hexToRGBA } from '../../utils/hexToRGBA';
 import { t } from '../../utils/translate';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const InterventionCategory = () => {
   const { themeColors, width, height, english } = useGlobalContext();
   const textColor = hexToRGBA(themeColors.black as string, 0.6);
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const { data, isLoading, isFetching } = useGetCategoriesQuery(undefined);
-  const {bottom,top}=useSafeAreaInsets()
+  const { bottom, top } = useSafeAreaInsets()
   return (
     <View
       style={{
         position: 'relative',
-        paddingTop:top,
-        paddingBottom:bottom
+        paddingTop: top,
+        paddingBottom: bottom
       }}>
       <BackButton text={t('interventionCategory', english)} />
       <KeyboardAwareScrollView

@@ -39,7 +39,7 @@ const InvoiceCreateUpdateForm = () => {
   const [isSubmitLoading, setIsSubmitLoading] = React.useState(false);
   const { width, themeColors, user, english, height } = useGlobalContext();
   const navigation = useNavigation();
-  
+
   const [address, setAddress] = React.useState<IAddress>({
     streetName: params?.params?.address?.streetName,
     city: params?.params?.address?.city,
@@ -392,7 +392,7 @@ const InvoiceCreateUpdateForm = () => {
                     setInputValue({ ...inputValue, [key]: text });
                     setError({ ...error, [key]: false });
                   }}
-                  placeholder= {key=="name"?"Nom de la société":key=="email"?"E-mail société":key=="contact"?"Téléphone société":key=="N°SIREN"?"N°- SIREN société":key=="address"?"Adresse société":key=="services"?"Services":key=="date"?"Date":key=="status"?"Status":""}
+                  placeholder={key == "name" ? "Nom de la société" : key == "email" ? "E-mail société" : key == "contact" ? "Téléphone société" : key == "N°SIREN" ? "N°- SIREN société" : key == "address" ? "Adresse société" : key == "services" ? "Services" : key == "date" ? "Date" : key == "status" ? "Status" : ""}
                   placeholderTextColor={globalStyles.inputPlaceholder.color}
                   style={[
                     globalStyles.input,
@@ -408,19 +408,15 @@ const InvoiceCreateUpdateForm = () => {
 
         <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
           <GradientButton isLoading={isSubmitLoading} handler={() => submitHandler()}>
-            {isSubmitLoading ? (
-              <ActivityIndicator size="small" color="white" />
-            ) : (
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: '700',
-                  fontSize: 18,
-                }}>
-                Soumettre
-              </Text>
-            )}
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: '700',
+                fontSize: 18,
+              }}>
+              Soumettre
+            </Text>
           </GradientButton>
         </View>
       </KeyboardAwareScrollView>

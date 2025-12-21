@@ -3,7 +3,6 @@ import React, { useCallback } from 'react';
 import CountryPicker from 'react-native-country-picker-modal';
 
 import {
-  ActivityIndicator,
   Dimensions,
   Image,
   ImageSourcePropType,
@@ -96,6 +95,7 @@ const SignUp = () => {
       }
     });
     if (isInvalid) {
+      setLoading(false);
       Toast.show({
         type: 'error',
         text1: english ? 'Please fill all fields' : "Veuillez remplir tous les champs",
@@ -124,7 +124,7 @@ const SignUp = () => {
     register(data)
       .unwrap()
       .then(res => {
-        console.log(res);
+        setLoading(false);
         navigation.navigate('Otp', {
           params: { from: 'signup', email: combinedInputValue['email'] },
         });
@@ -135,7 +135,7 @@ const SignUp = () => {
         });
       })
       .catch(err => {
-        console.log(err?.data?.message);
+        setLoading(false);
         Toast.show({
           type: 'error',
           text1: "Enregistrement échoué",
@@ -426,19 +426,15 @@ const SignUp = () => {
           <GradientButton
             isLoading={isLoading || loading}
             handler={() => submitHandler()}>
-            {isLoading || loading ? (
-              <ActivityIndicator size="large" color="#FFFFFF" />
-            ) : (
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: '700',
-                  fontSize: 18,
-                }}>
-                {t('signUp', english)}
-              </Text>
-            )}
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: '700',
+                fontSize: 18,
+              }}>
+              {t('signUp', english)}
+            </Text>
           </GradientButton>
         </View>
 

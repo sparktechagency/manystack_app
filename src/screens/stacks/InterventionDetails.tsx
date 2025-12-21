@@ -3,6 +3,7 @@ import {
 } from '@react-navigation/native';
 import React from 'react';
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FlexTextOpacity from '../../components/InterventionDetails/FlexTextOpacity';
 import ImageCard from '../../components/InterventionDetails/ImageCard';
 import BackButton from '../../components/sheard/BackButton';
@@ -11,7 +12,6 @@ import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetInterventionByIdQuery } from '../../redux/Apis/interventionApis';
 import { downloadButton } from '../../utils/DownloadPdf';
 import { t } from '../../utils/translate';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const InterventionDetails = () => {
   const { width, height, themeColors, currency, english } = useGlobalContext();
@@ -100,7 +100,7 @@ const InterventionDetails = () => {
                   fontWeight: 700,
                   fontSize: 18,
                 }}>
-               Exporter un PDF
+                Exporter un PDF
               </Text>
             </GradientButton>
           </View>

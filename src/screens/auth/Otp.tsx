@@ -6,12 +6,11 @@ import {
 } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import {
-  ActivityIndicator,
   Image,
   ImageSourcePropType,
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { OtpInput } from 'react-native-otp-entry';
@@ -57,6 +56,7 @@ const Otp = () => {
       })
         .unwrap()
         .then(async res => {
+          setLoading(false);
           Toast.show({
             type: 'success',
             text1: english ? 'Success' : "Succès",
@@ -78,6 +78,7 @@ const Otp = () => {
       })
         .unwrap()
         .then(res => {
+          setLoading(false);
           Toast.show({
             type: 'success',
             text1: english ? 'Success' : "Succès",
@@ -86,6 +87,7 @@ const Otp = () => {
           navigate.navigate(from == 'signup' ? 'Login' : 'NewPassword');
         })
         .catch(err => {
+          setLoading(false);
           Toast.show({
             type: 'error',
             text1: english ? 'Error' : "Erreur",
@@ -163,21 +165,17 @@ const Otp = () => {
               <GradientButton
                 isLoading={isLoading || loading}
                 handler={handleOtpChange}>
-                {isLoading || loading ? (
-                  <ActivityIndicator size="small" color="#0000ff" />
-                ) : (
-                  <View>
-                    <Text
-                      style={{
-                        color: 'white',
-                        textAlign: 'center',
-                        fontWeight: '700',
-                        fontSize: 18,
-                      }}>
-                      {t('submit', english)}
-                    </Text>
-                  </View>
-                )}
+                <View>
+                  <Text
+                    style={{
+                      color: 'white',
+                      textAlign: 'center',
+                      fontWeight: '700',
+                      fontSize: 18,
+                    }}>
+                    {t('submit', english)}
+                  </Text>
+                </View>
               </GradientButton>
             </View>
           </View>

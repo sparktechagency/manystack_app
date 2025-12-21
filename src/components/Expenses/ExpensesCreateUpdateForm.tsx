@@ -1,7 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import {
-  ActivityIndicator,
   Image,
   ImageSourcePropType,
   StyleSheet,
@@ -35,7 +34,7 @@ const ExpensesCreateUpdateForm = () => {
   const { params }: any = useRoute();
   const { handleCreateExpenses, isLoading } = createExpenses();
   const { handleUpdateExpenses, isLoading: updating } = updateExpenses();
-const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<IExpensesError>({
     'Expense Name': false,
     category: false,
@@ -62,9 +61,13 @@ const [loading, setLoading] = React.useState(false);
         setError(prev => ({ ...prev, [key]: false }));
       }
     });
-    if (invalid) return;
+    if (invalid) {
+      setLoading(false);
+      return;
+    }
     const location: any = await getLocation();
     if (Object.values(location as any).some(value => value === undefined)) {
+      setLoading(false);
       return Toast.show({
         type: 'error',
         text1: 'Error',
@@ -85,7 +88,7 @@ const [loading, setLoading] = React.useState(false);
       ? await handleUpdateExpenses(formData, params?.params?.id)
       : await handleCreateExpenses(formData);
     setLoading(false);
-    };
+  };
   return (
     <SafeAreaView>
       <BackButton text={params?.params?.id ? t('updateExpenses', english) : t('createExpenses', english)} />
@@ -125,7 +128,7 @@ const [loading, setLoading] = React.useState(false);
                   {t('selectCategory', english)}
                 </Text>
                 <SingleSelectDropDown
-                placeholder='sélectionner une catégorie'
+                  placeholder='sélectionner une catégorie'
                   name={key}
                   data={[
                     { label: 'Équipement', value: 'Équipement' },
@@ -244,19 +247,15 @@ const [loading, setLoading] = React.useState(false);
         </View>
         <View style={{ paddingHorizontal: 25, marginTop: 20, marginBottom: 150 }}>
           <GradientButton isLoading={loading} handler={() => submitHandler()}>
-            {isLoading || updating ? (
-              <ActivityIndicator size="small" color="white" />
-            ) : (
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: '700',
-                  fontSize: 18,
-                }}>
-                Sauvegarder
-              </Text>
-            )}
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: '700',
+                fontSize: 18,
+              }}>
+              Sauvegarder
+            </Text>
           </GradientButton>
         </View>
       </KeyboardAwareScrollView >

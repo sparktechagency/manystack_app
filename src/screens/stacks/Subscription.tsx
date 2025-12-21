@@ -6,7 +6,6 @@ import {
 import moment from 'moment';
 import React from 'react';
 import {
-  ActivityIndicator,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -187,19 +186,15 @@ const Subscription = () => {
               marginBottom: 120,
             }}>
             <GradientButton handler={handlePayment}>
-              {isLoading ? (
-                <ActivityIndicator color="white" />
-              ) : (
-                <Text
-                  style={{
-                    color: 'white',
-                    textAlign: 'center',
-                    fontWeight: 700,
-                    fontSize: 18,
-                  }}>
-                  Upgrade Now
-                </Text>
-              )}
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: 700,
+                  fontSize: 18,
+                }}>
+                Upgrade Now
+              </Text>
             </GradientButton>
           </View>
         </View>

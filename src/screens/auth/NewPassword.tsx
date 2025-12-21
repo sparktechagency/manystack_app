@@ -23,6 +23,7 @@ import { StackTypes } from '../../types/ScreenPropsTypes';
 import { t } from '../../utils/translate';
 const NewPassword = () => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
+  const [loading, setLoading] = React.useState(false);
   const [passShow, setPassShow] = React.useState(true);
   const [cPassShow, setCPassShow] = React.useState(true);
   const { english, height } = useGlobalContext();
@@ -39,15 +40,19 @@ const NewPassword = () => {
   });
 
   const submitHandler = async () => {
+
+    setLoading(true);
     if (!inputValue.password || !inputValue.confirmPassword) {
+      setLoading(false);
       return setError({
         password: true,
         confirmPassword: true,
       });
     }
     if (inputValue.password !== inputValue.confirmPassword) {
+      setLoading(false);
       Toast.show({
-        type: 'error' ,
+        type: 'error',
         text1: english ? 'Error' : "Erreur",
         text2: english ? 'Passwords do not match.' : "Les mots de passe ne correspondent pas.",
       });
@@ -63,6 +68,7 @@ const NewPassword = () => {
     })
       .unwrap()
       .then(async (res: any) => {
+        setLoading(false);
         Toast.show({
           type: 'success',
           text1: english ? 'Success' : "Succès",
@@ -72,6 +78,7 @@ const NewPassword = () => {
         navigate.navigate('Login');
       })
       .catch((err: any) => {
+        setLoading(false);
         Toast.show({
           type: 'error',
           text1: english ? 'Error' : "Erreur",
@@ -157,7 +164,7 @@ const NewPassword = () => {
               style={{
                 paddingHorizontal: 25,
               }}>
-              <GradientButton handler={() => submitHandler()}>
+              <GradientButton isLoading={loading} handler={() => submitHandler()}>
                 <Text
                   style={{
                     color: 'white',

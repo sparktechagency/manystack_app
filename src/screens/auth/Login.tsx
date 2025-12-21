@@ -2,7 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions, Link, NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef } from 'react';
 import {
-  ActivityIndicator,
   Image,
   ImageSourcePropType,
   StyleSheet,
@@ -29,6 +28,7 @@ const Login = () => {
   const navigate = useNavigation<NavigationProp<StackTypes>>();
   const [signIn, { isLoading }] = useLoginMutation();
   const [passShow, setPassShow] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState({
     email: false,
     password: false,
@@ -70,6 +70,7 @@ const Login = () => {
   }, [user?._id, firstLoad, userLoading]);
 
   const submitHandler = () => {
+    setLoading(true);
     let isInvalid = false;
     Object.keys(inputValue).forEach(key => {
       if (inputValue[key as keyof ILogin] === '') {
@@ -80,6 +81,7 @@ const Login = () => {
       }
     });
     if (isInvalid) {
+      setLoading(false);
       return Toast.show({
         type: 'error',
         text1: english ? 'failed to login' : 'échec de la connexion',
@@ -91,6 +93,7 @@ const Login = () => {
     signIn(inputValue)
       .unwrap()
       .then(async (res) => {
+        setLoading(false);
         Toast.show({
           type: 'success',
           text1: english ? 'Login successfully' : 'Connexion réussie',
@@ -105,6 +108,7 @@ const Login = () => {
       }
       )
       .catch(err => {
+        setLoading(false);
         Toast.show({
           type: 'error',
           text1: english ? 'Login failed' : 'Échec de la connexion',
@@ -207,18 +211,16 @@ const Login = () => {
             style={{
               paddingHorizontal: 25,
             }}>
-            <GradientButton handler={() => submitHandler()}>
-              {
-                isLoading ? <ActivityIndicator size="small" color="#FFFFFF" /> : <Text
-                  style={{
-                    color: 'white',
-                    textAlign: 'center',
-                    fontWeight: 700,
-                    fontSize: 18,
-                  }}>
-                  {english ? 'Login' : 'Connexion'}
-                </Text>
-              }
+            <GradientButton isLoading={loading} handler={() => submitHandler()}>
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: 700,
+                  fontSize: 18,
+                }}>
+                {english ? 'Login' : 'Connexion'}
+              </Text>
             </GradientButton>
           </View>
 
