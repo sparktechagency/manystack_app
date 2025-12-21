@@ -1,7 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import {
-  ActivityIndicator,
   Alert,
   Image,
   ImageSourcePropType,
@@ -68,7 +67,10 @@ const InterventionCreateUpdateForm = () => {
         setError(prev => ({ ...prev, [key]: false }));
       }
     });
-    if (invalid) return;
+    if (invalid) {
+      setLoading(false);
+      return;
+    }
     const formData = new FormData();
     Object.keys(inputValue).forEach(key => {
       formData.append(key, inputValue[key as keyof ICreateInterVention]);
@@ -81,8 +83,8 @@ const InterventionCreateUpdateForm = () => {
     if (Object.values(location as any).some(value => value === undefined)) {
       return Toast.show({
         type: 'error',
-        text1: english?'Error':'Erreur',
-        text2: english?'Please enable location':'Veuillez activer votre localisation',
+        text1: english ? 'Error' : 'Erreur',
+        text2: english ? 'Please enable location' : 'Veuillez activer votre localisation',
       });
     }
     formData.append('latitude', location?.latitude);
@@ -335,19 +337,15 @@ const InterventionCreateUpdateForm = () => {
         </View>
         <View style={{ paddingHorizontal: 25, marginTop: 20, marginBottom: 120 }}>
           <GradientButton isLoading={loading} handler={() => submitHandler()}>
-            {isLoading || updating ? (
-              <ActivityIndicator size="small" color="white" />
-            ) : (
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: '700',
-                  fontSize: 18,
-                }}>
-                Sauvegarder
-              </Text>
-            )}
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontWeight: '700',
+                fontSize: 18,
+              }}>
+              Sauvegarder
+            </Text>
           </GradientButton>
         </View>
       </KeyboardAwareScrollView>
