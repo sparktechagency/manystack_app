@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import RenderHTML from 'react-native-render-html';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import BackButton from '../../components/sheard/BackButton';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useTermsAndConditionsQuery } from '../../redux/Apis/settingApis';
@@ -10,7 +11,7 @@ const TermsAndConditions = () => {
   const { width, english } = useGlobalContext();
   const { data } = useTermsAndConditionsQuery(undefined);
   return (
-    <>
+    <SafeAreaView>
       <BackButton text={t('termsAndConditions', english)} />
       <View style={{ paddingHorizontal: 20, marginTop: 8 }}>
         <RenderHTML
@@ -19,7 +20,8 @@ const TermsAndConditions = () => {
             html: data?.data?.content || '<p>Privacy Policy</p>',
           }}
         />
-      </View></>
+      </View>
+    </SafeAreaView>
   );
 };
 

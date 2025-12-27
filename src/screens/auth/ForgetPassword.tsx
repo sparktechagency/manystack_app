@@ -50,7 +50,7 @@ const ForgetPassword = () => {
     const timer = setTimeout(() => {
       setLoading(false);
       clearTimeout(timer);
-    }, 1000);
+    }, 1500);
   };
 
   return (

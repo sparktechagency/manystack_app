@@ -1,4 +1,4 @@
-import { useRoute } from '@react-navigation/native';
+import { NavigationProp, ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Purchases, { PurchasesOffering, PurchasesPackage } from 'react-native-purchases';
@@ -14,6 +14,7 @@ const RevenueCatSubscription = () => {
   const [processingPackageId, setProcessingPackageId] = useState<string | null>(null);
   const [activeProductIds, setActiveProductIds] = useState<string[]>([]);
   const { params }: any = useRoute();
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const { data } = useGetProfileQuery(undefined);
   useEffect(() => {
     const apiKey = Platform.OS === 'ios'
@@ -49,6 +50,7 @@ const RevenueCatSubscription = () => {
       if (result && result.customerInfo) {
         await RNRestart.restart();
       }
+      await RNRestart.restart();
     } catch (error) {
     } finally {
       setProcessingPackageId(null);
@@ -105,7 +107,7 @@ const RevenueCatSubscription = () => {
               <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 4 }}>
                 {pack.product.priceString}
               </Text>
-              <Text style={{ fontSize: 14, marginBottom: 4 }}>{pack.product.description || "Manage finance, invoices, expenses, and PDFs with source access."}</Text>
+              <Text style={{ fontSize: 14, marginBottom: 4 }}>{"Gérez vos finances, factures, dépenses et fichiers PDF avec accès à la source."}</Text>
 
               {isActive ? (
                 <>
@@ -141,6 +143,25 @@ const RevenueCatSubscription = () => {
             </View>
           );
         })}
+        <View
+          style={{
+            marginTop: 24,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            gap: 24,
+            flexWrap: 'wrap',
+          }}>
+          <TouchableOpacity onPress={() => navigation.navigate('PrivacyPolicy')}>
+            <Text style={{ color: '#2563eb', textDecorationLine: 'underline', fontWeight: '500' }}>
+              Privacy Policy
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('TermsAndConditions')}>
+            <Text style={{ color: '#2563eb', textDecorationLine: 'underline', fontWeight: '500' }}>
+              Terms & Conditions
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );

@@ -110,7 +110,7 @@ const Profile = () => {
     });
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 1500);
     return () => clearTimeout(timer);
   };
   return (
@@ -143,6 +143,8 @@ const Profile = () => {
                   </Text>
                   <View style={{ position: 'relative' }}>
                     <TextInput
+                      multiline={false}
+                      numberOfLines={1}
                       value={inputValue['first name']}
                       onChangeText={text => {
                         setInputValue({ ...inputValue, ['first name']: text });
@@ -164,6 +166,8 @@ const Profile = () => {
                   </Text>
                   <View style={{ position: 'relative' }}>
                     <TextInput
+                      multiline={false}
+                      numberOfLines={1}
                       value={inputValue['last name']}
                       onChangeText={text => {
                         setInputValue({ ...inputValue, ['last name']: text });

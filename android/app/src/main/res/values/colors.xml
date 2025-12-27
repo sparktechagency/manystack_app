@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="ic_launcher_background">#FFFFFF</color>
+    <color name="status_bar_color">#1E1E1E</color>
+    <color name="status_bar_icon_light">#FFFFFF</color>
+    <color name="status_bar_icon_dark">#000000</color>
 </resources>

@@ -3,7 +3,6 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import {
-  ActivityIndicator,
   Image,
   ImageSourcePropType,
   Platform,
@@ -15,7 +14,7 @@ import {
 import CountryPicker from 'react-native-country-picker-modal';
 import { Dropdown } from 'react-native-element-dropdown';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Address from '../../components/sheard/Address';
 import GradientButton from '../../components/sheard/GradientButton';
 import { Colors } from '../../constant/colors';
@@ -39,7 +38,7 @@ const InvoiceCreateUpdateForm = () => {
   const [isSubmitLoading, setIsSubmitLoading] = React.useState(false);
   const { width, themeColors, user, english, height } = useGlobalContext();
   const navigation = useNavigation();
-
+  const { top, bottom } = useSafeAreaInsets();
   const [address, setAddress] = React.useState<IAddress>({
     streetName: params?.params?.address?.streetName,
     city: params?.params?.address?.city,
@@ -142,7 +141,10 @@ const InvoiceCreateUpdateForm = () => {
         navigation.goBack();
         setIsSubmitLoading(false);
       });
-
+    const timer = setTimeout(() => {
+      setIsSubmitLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
   };
   const formatDate = (date?: Date) => {
     if (!date) return '00/00/000';
@@ -161,7 +163,7 @@ const InvoiceCreateUpdateForm = () => {
   };
 
   return (
-    <SafeAreaView>
+    <View style={{ paddingTop: top, paddingBottom: bottom, }}>
       <BackButton text={params?.params?.id ? t('updateInvoice', english) : t('createInvoice', english)} />
       <KeyboardAwareScrollView bottomOffset={62}
         showsHorizontalScrollIndicator={false}
@@ -406,7 +408,7 @@ const InvoiceCreateUpdateForm = () => {
           );
         })}
 
-        <View style={{ paddingHorizontal: 25, marginBottom: 120 }}>
+        <View style={{ paddingHorizontal: 25, marginBottom: 140 }}>
           <GradientButton isLoading={isSubmitLoading} handler={() => submitHandler()}>
             <Text
               style={{
@@ -420,7 +422,7 @@ const InvoiceCreateUpdateForm = () => {
           </GradientButton>
         </View>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

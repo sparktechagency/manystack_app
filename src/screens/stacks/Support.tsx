@@ -40,7 +40,7 @@ const Support = () => {
     });
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 1500);
     return () => clearTimeout(timer);
   };
   return (

@@ -179,6 +179,8 @@ const SignUp = () => {
                         setInputValue({ ...inputValue, ['first name']: text });
                         setError({ ...error, ['first name']: false });
                       }}
+                      multiline={false}
+                      numberOfLines={1}
                       placeholder={`${t('enter', english)} ${t(
                         'firstName',
                         english,
@@ -198,6 +200,8 @@ const SignUp = () => {
                   </Text>
                   <View style={{ position: 'relative' }}>
                     <TextInput
+                      multiline={false}
+                      numberOfLines={1}
                       value={inputValue['last name']}
                       onChangeText={text => {
                         setInputValue({ ...inputValue, ['last name']: text });
