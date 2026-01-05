@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BackButton from '../../components/sheard/BackButton';
@@ -17,7 +17,7 @@ const TermsAndConditions = () => {
         <RenderHTML
           contentWidth={width}
           source={{
-            html: data?.data?.content || '<p>Privacy Policy</p>',
+            html: data?.data?.content || '<p>Terms and Conditions</p>',
           }}
         />
       </View>
@@ -26,5 +26,3 @@ const TermsAndConditions = () => {
 };
 
 export default TermsAndConditions;
-
-const styles = StyleSheet.create({});

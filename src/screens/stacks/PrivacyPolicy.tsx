@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BackButton from '../../components/sheard/BackButton';
@@ -8,7 +8,7 @@ import { usePrivacyPolicyQuery } from '../../redux/Apis/settingApis';
 import { t } from '../../utils/translate';
 const PrivacyPolicy = () => {
   const { width, english } = useGlobalContext();
-  const { data, isLoading } = usePrivacyPolicyQuery(undefined);
+  const { data } = usePrivacyPolicyQuery(undefined);
   return (
     <SafeAreaView>
       <BackButton text={t('PrivacyPolicy', english)} />
@@ -25,5 +25,3 @@ const PrivacyPolicy = () => {
 };
 
 export default PrivacyPolicy;
-
-const styles = StyleSheet.create({});

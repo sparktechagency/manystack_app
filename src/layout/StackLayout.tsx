@@ -204,9 +204,6 @@ const StackLayout = () => {
         component={PrivacyPolicy}
         options={{
           headerShown: false,
-          title: t('privacyPolicy', english),
-          headerTitleAlign: 'center',
-          headerBackground: () => null,
         }}
       />
       <Stack.Screen
