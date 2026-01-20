@@ -92,7 +92,7 @@ const InvoiceCreateUpdateForm = () => {
     address: 'Dhaka',
     services: 'web development',
     date: params?.params?.date,
-    status: params?.params?.status,
+    status: params?.params?.status || "UNPAID",
   });
   const { createInvoiceHandler, isLoading } = useCreateInvoice();
   const { updateInvoiceHandler, isLoading: updateLoading } = useUpdateInvoice();

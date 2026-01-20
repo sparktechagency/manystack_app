@@ -7,8 +7,8 @@ export const genderData = [
   { label: 'Autres', value: 'OTHERS' },
 ];
 export const paymentStatus = [
-  { label: 'Payé', value: 'PAID' },
-  { label: 'Impayé', value: 'UNPAID' },
+  { label: 'Réglé', value: 'PAID' },
+  { label: 'En attente', value: 'UNPAID' },
 ];
 export const interventionFilter = [
   { label: 'PLP', value: 'PLP' },
