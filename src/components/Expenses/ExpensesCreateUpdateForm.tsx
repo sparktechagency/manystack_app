@@ -132,8 +132,8 @@ const ExpensesCreateUpdateForm = () => {
                   name={key}
                   data={[
                     { label: 'Équipement', value: 'Équipement' },
-                    { label: 'Fuel', value: 'Carburant' },
-                    { label: 'Vehicle', value: 'Véhicule' },
+                    { label: 'Carburant', value: 'Carburant' },
+                    { label: 'Véhicule', value: 'Véhicule' },
                   ]}
                   // data={[
                   // { label: 'Equipment', value: 'Equipment' },
