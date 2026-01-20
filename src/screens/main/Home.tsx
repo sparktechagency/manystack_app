@@ -29,13 +29,13 @@ const Home = () => {
       key={8}
     />,
     <ProfitCard
-      title="Intervention"
+      title="Interventions"
       count={`${data?.data?.totalInterventions || 0}` || '0'}
       percentage={(data?.data?.interventionChange || 0) || '0%'}
       key={3}
     />,
     <ProfitCard
-      title={english ? 'Income' : 'Chiffre d’Affaire'}
+      title={english ? 'Income' : "Chiffre d’Affaires"}
       count={`${currency}${data?.data?.totalIncome || 0}`}
       percentage={data?.data?.incomeChange || '0%'}
       key={3}
@@ -69,7 +69,7 @@ const Home = () => {
     if (isLoading || isLoadingHome) {
       return;
     }
-    if (!dataProfile?.data?.subscription?.isActive) {
+    if (dataProfile?.data?.subscription?.isActive) {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,

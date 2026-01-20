@@ -81,7 +81,7 @@ export const translations = {
   terms_and_conditions: { en: 'Terms & Conditions', fr: 'Termes et conditions' },
   privacy_policy: { en: 'Privacy Policy', fr: 'Politique de confidentialité' },
   logout: { en: 'Logout', fr: 'Se déconnecter' },
-  profit: { en: 'Profit', fr: 'Bénéfice' },
+  profit: { en: 'Profit', fr: 'Bénéfices' },
   income: { en: 'Income', fr: 'Revenu' },
   today_highlights: { en: 'Today Highlights', fr: 'Interventions du jour' },
   total_intervention: { en: 'Total Intervention', fr: 'Intervention totale' },
