@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import RenderHTML from 'react-native-render-html';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BackButton from '../../components/sheard/BackButton';
@@ -12,14 +12,14 @@ const PrivacyPolicy = () => {
   return (
     <SafeAreaView>
       <BackButton text={t('PrivacyPolicy', english)} />
-      <View style={{ paddingHorizontal: 20, marginTop: 8 }}>
+      <ScrollView style={{ paddingHorizontal: 20, marginTop: 8 }}>
         <RenderHTML
           contentWidth={width}
           source={{
             html: data?.data?.content || '<p>Privacy Policy</p>',
           }}
         />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -38,7 +38,7 @@ import GradientButton from '../sheard/GradientButton';
 const InvoiceDetails = () => {
   const { params }: any = useRoute();
   const navigation = useNavigation<NavigationProp<StackTypes>>();
-  const { themeColors, user, height, english } = useGlobalContext();
+  const { themeColors, user, height, english, currency } = useGlobalContext();
   const { data } = useGetInvoiceByIdQuery(params?.params?.id);
   const { deleteInvoiceHandler, isLoading } = deleteInvoice();
   const { updateInvoiceHandler, isLoading: updateInvoiceLoading } =
@@ -189,9 +189,9 @@ const InvoiceDetails = () => {
         <FlexTextOpacity
           text1={english ? 'Address :' : 'Adresse :'}
           text2={
-            user?.address?.streetName +
-            ' ' +
             user?.address?.streetNo +
+            ' ' +
+            user?.address?.streetName +
             ' ' +
             user?.address?.city +
             ' ' +
@@ -306,7 +306,7 @@ const InvoiceDetails = () => {
               </Text>
               <Text
                 style={{ color: hexToRGBA(themeColors.black as string, 0.6) }}>
-                ${service.price}
+                {currency} {service.price}
               </Text>
             </View>
           ))}
@@ -319,8 +319,8 @@ const InvoiceDetails = () => {
           color={themeColors.primary as string}
         />
         <FlexTextOpacity
-          text1={english ? 'Status :' : 'Status :'}
-          text2={invoice?.status}
+          text1={english ? 'Status :' : 'Statut :'}
+          text2={invoice?.status == "UNPAID" ? "En attente" : "Réglé"}
           color={
             invoice?.status === 'UNPAID'
               ? (themeColors.red as string)
@@ -348,11 +348,11 @@ const InvoiceDetails = () => {
               Mark As{' '}
               {english
                 ? invoice?.status === 'UNPAID'
-                  ? 'Paid'
-                  : 'Unpaid'
+                  ? 'Réglé'
+                  : ' En attente'
                 : invoice?.status === 'UNPAID'
-                  ? 'Payé'
-                  : 'Non payé'}
+                  ? 'Réglé'
+                  : 'En attente'}
             </Text>
           </GradientButton>
         </View>
