@@ -1,7 +1,23 @@
-import { NavigationProp, ParamListBase, useNavigation, useRoute } from '@react-navigation/native';
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Linking, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import Purchases, { PurchasesOffering, PurchasesPackage } from 'react-native-purchases';
+import {
+  ActivityIndicator,
+  Linking,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import Purchases, {
+  PurchasesOffering,
+  PurchasesPackage,
+} from 'react-native-purchases';
 import RNRestart from 'react-native-restart';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useGetProfileQuery } from '../../redux/Apis/userApis';
@@ -11,15 +27,18 @@ const RevenueCatSubscription = () => {
   const { top, bottom } = useSafeAreaInsets();
   const [offerings, setOfferings] = useState<PurchasesOffering | null>(null);
   const [loading, setLoading] = useState(true);
-  const [processingPackageId, setProcessingPackageId] = useState<string | null>(null);
+  const [processingPackageId, setProcessingPackageId] = useState<string | null>(
+    null,
+  );
   const [activeProductIds, setActiveProductIds] = useState<string[]>([]);
   const { params }: any = useRoute();
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const { data } = useGetProfileQuery(undefined);
   useEffect(() => {
-    const apiKey = Platform.OS === 'ios'
-      ? 'appl_tHakSyAztiXzbzeqtARsyrRdgpp'
-      : 'goog_yTkIkCOSSUxCAjntXwSjguTpAWP';
+    const apiKey =
+      Platform.OS === 'ios'
+        ? 'appl_tHakSyAztiXzbzeqtARsyrRdgpp'
+        : 'goog_yTkIkCOSSUxCAjntXwSjguTpAWP';
 
     Purchases.configure({ apiKey, appUserID: data?.data?._id });
 
@@ -77,17 +96,23 @@ const RevenueCatSubscription = () => {
 
   if (!offerings || !offerings.availablePackages.length) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: top, paddingBottom: bottom }}>
-        <Text>No subscriptions available.</Text>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingTop: top,
+          paddingBottom: bottom,
+        }}>
+        <Text>Aucun abonnement disponible.</Text>
       </View>
     );
   }
   return (
     <View style={{ flex: 1, paddingTop: top, paddingBottom: bottom }}>
-      <ScrollView contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16 }}>
-        {
-          params?.params?.show && <BackButton text={'Souscription'} />
-        }
+      <ScrollView
+        contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16 }}>
+        {params?.params?.show && <BackButton text={'Abonnement'} />}
         {offerings.availablePackages.map(pack => {
           const isActive = activeProductIds.includes(pack.product.identifier);
 
@@ -107,13 +132,19 @@ const RevenueCatSubscription = () => {
               <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 4 }}>
                 {pack.product.priceString}
               </Text>
-              <Text style={{ fontSize: 14, marginBottom: 4 }}>{"Gérez vos finances, factures, dépenses et fichiers PDF avec accès à la source."}</Text>
+              <Text style={{ fontSize: 14, marginBottom: 4 }}>
+                {
+                  'Gérez vos finances, factures, dépenses et fichiers PDF avec accès à la source.'
+                }
+              </Text>
 
               {isActive ? (
                 <>
                   <Text style={{ marginBottom: 8 }}>Forfait actuel</Text>
                   <TouchableOpacity
-                    onPress={() => openSubscriptionManagement(pack.product.identifier)}
+                    onPress={() =>
+                      openSubscriptionManagement(pack.product.identifier)
+                    }
                     style={{
                       backgroundColor: '#4b5563',
                       paddingVertical: 10,
@@ -136,7 +167,9 @@ const RevenueCatSubscription = () => {
                     alignItems: 'center',
                   }}>
                   <Text style={{ color: '#ffffff', fontWeight: '600' }}>
-                    {processingPackageId === pack.identifier ? 'Processing...' : 'Souscrire'}
+                    {processingPackageId === pack.identifier
+                      ? 'Processing...'
+                      : 'Souscrire'}
                   </Text>
                 </TouchableOpacity>
               )}
@@ -151,14 +184,26 @@ const RevenueCatSubscription = () => {
             gap: 24,
             flexWrap: 'wrap',
           }}>
-          <TouchableOpacity onPress={() => navigation.navigate('PrivacyPolicy')}>
-            <Text style={{ color: '#2563eb', textDecorationLine: 'underline', fontWeight: '500' }}>
-              Privacy Policy
+          <TouchableOpacity
+            onPress={() => navigation.navigate('PrivacyPolicy')}>
+            <Text
+              style={{
+                color: '#2563eb',
+                textDecorationLine: 'underline',
+                fontWeight: '500',
+              }}>
+              politique de confidentialité
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('TermsAndConditions')}>
-            <Text style={{ color: '#2563eb', textDecorationLine: 'underline', fontWeight: '500' }}>
-              Terms & Conditions
+          <TouchableOpacity
+            onPress={() => navigation.navigate('TermsAndConditions')}>
+            <Text
+              style={{
+                color: '#2563eb',
+                textDecorationLine: 'underline',
+                fontWeight: '500',
+              }}>
+              Conditions générales
             </Text>
           </TouchableOpacity>
         </View>
