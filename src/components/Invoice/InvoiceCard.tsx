@@ -30,10 +30,8 @@ const InvoiceCard = ({ item }: { item: IInvoice }) => {
           padding: 12,
           borderRadius: 8,
           marginBottom: 10,
-          shadowColor: '#000',
-          shadowOpacity: 0.1,
-          shadowRadius: 10,
-          elevation: 5,
+          borderWidth: 0.5,
+          borderColor: '#ccc',
         },
         { backgroundColor: themeColors.white as string },
       ]}>
