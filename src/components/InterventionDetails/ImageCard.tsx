@@ -10,11 +10,11 @@ import {
   View,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import {Close, DeleteIcon} from '../../constant/images';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {useDeleteImageMutation} from '../../redux/Apis/interventionApis';
-import {generateImageUrl} from '../../utils/baseUrls';
-import {hexToRGBA} from '../../utils/hexToRGBA';
+import { Close, DeleteIcon } from '../../constant/images';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useDeleteImageMutation } from '../../redux/Apis/interventionApis';
+import { generateImageUrl } from '../../utils/baseUrls';
+import { hexToRGBA } from '../../utils/hexToRGBA';
 interface IImageCard {
   item: {
     url: string;
@@ -24,12 +24,12 @@ interface IImageCard {
   };
   id: string;
 }
-const ImageCard = ({item, id}: IImageCard) => {
-  const {width, height, themeColors} = useGlobalContext();
+const ImageCard = ({ item, id }: IImageCard) => {
+  const { width, height, themeColors } = useGlobalContext();
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [deleteImage, {isLoading}] = useDeleteImageMutation();
+  const [deleteImage, { isLoading }] = useDeleteImageMutation();
   const handleDeleteImage = () => {
-    deleteImage({id: id, data: {imageUrl: item.url}})
+    deleteImage({ id: id, data: { imageUrl: item.url } })
       .unwrap()
       .then((res: any) => {
         Toast.show({
@@ -52,39 +52,46 @@ const ImageCard = ({item, id}: IImageCard) => {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 1)',
       }}>
       <TouchableOpacity
         activeOpacity={0.6}
         onPress={() => setModalVisible(true)}>
         <Image
-          source={{uri: generateImageUrl(item.url)}}
+          source={{ uri: generateImageUrl(item.url) }}
           style={{
-            width: (width - 60) / 2,
+            width: width,
             height: 200,
-            resizeMode: 'contain',
-            borderRadius: 6,
+            resizeMode: 'cover',
             backgroundColor: hexToRGBA(themeColors.primary as string, 0.05),
           }}
         />
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 10,
+            left: 20,
+            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+            borderRadius: 6,
+            padding: 5,
+          }}>
+          <Text style={{ color: themeColors.black as string, fontSize: 8 }}>
+            {item.location}
+          </Text>
+          <Text style={{ color: themeColors.black as string, fontSize: 8 }}>
+            {item.createdAt?.split('T')[0]}
+          </Text>
+        </View>
       </TouchableOpacity>
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 10,
-          left: 10,
-          backgroundColor: 'rgba(255, 255, 255, 0.5)',
-          width: '100%',
-        }}>
-        <Text style={{color: themeColors.black as string, fontSize: 12}}>
-          {item.location}
-        </Text>
-        <Text style={{color: themeColors.black as string, fontSize: 12}}>
-          {item.createdAt?.split('T')[0]}
-        </Text>
-      </View>
+
       <TouchableOpacity
         onPress={handleDeleteImage}
-        style={{position: 'absolute', top: 10, right: 10}}>
+        style={{
+          position: 'absolute', top: 10, right: 10,
+          zIndex: 1,
+          backgroundColor: 'rgba(255, 255, 255, 1)',
+          padding: 5, borderRadius: 5
+        }}>
         {isLoading ? (
           <ActivityIndicator
             size={'small'}
@@ -118,17 +125,17 @@ const ImageCard = ({item, id}: IImageCard) => {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
           }}>
           <Image
-            source={{uri: generateImageUrl(item.url)}}
+            source={{ uri: generateImageUrl(item.url) }}
             style={{
-              width: '100%',
-              height: '100%',
+              width: width,
+              height: height,
               resizeMode: 'contain',
             }}
           />
 
           <TouchableOpacity
             onPress={() => setModalVisible(false)}
-            style={{position: 'absolute', top: 20, right: 20}}>
+            style={{ position: 'absolute', top: 20, right: 20 }}>
             <Image
               source={Close as ImageSourcePropType}
               style={[

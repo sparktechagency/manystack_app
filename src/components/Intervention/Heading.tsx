@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import {
   Animated,
   Easing,
@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Filter} from '../../constant/images';
-import {globalStyles} from '../../constant/styles';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {useGetCategoriesQuery} from '../../redux/Apis/categoryApis';
+import { Filter } from '../../constant/images';
+import { globalStyles } from '../../constant/styles';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { useGetCategoriesQuery } from '../../redux/Apis/categoryApis';
 
 const DROPDOWN_MAX_HEIGHT = 200;
 
@@ -26,8 +26,9 @@ const Heading = ({
   show?: boolean;
   options?: string[];
 }) => {
-  const {data} = useGetCategoriesQuery(undefined);
-  const {english} = useGlobalContext();
+  const { data } = useGetCategoriesQuery(undefined);
+  console.log(data)
+  const { english } = useGlobalContext();
   const [open, setOpen] = React.useState(false);
   const animation = useRef(new Animated.Value(0)).current;
 
@@ -80,16 +81,16 @@ const Heading = ({
       <Text
         style={[
           globalStyles.inputLabel,
-          {fontWeight: 700, fontSize: 20, marginBottom: 10},
+          { fontWeight: 700, fontSize: 20, marginBottom: 10 },
         ]}>
-        {title ? title : 'Intervention'}
+        {title ? title : 'Interventions'}
       </Text>
       <View>
         {show && (
           <TouchableOpacity activeOpacity={0.7} onPress={toggleDropdown}>
             <Image
               source={Filter as ImageSourcePropType}
-              style={{width: 25, height: 25}}
+              style={{ width: 25, height: 25 }}
             />
           </TouchableOpacity>
         )}
@@ -97,7 +98,7 @@ const Heading = ({
           <Animated.View
             style={{
               shadowColor: '#0e1e25',
-              shadowOffset: {width: 0, height: 1},
+              shadowOffset: { width: 0, height: 1 },
               shadowOpacity: 0.2,
               shadowRadius: 10,
               backgroundColor: 'white',
@@ -115,23 +116,23 @@ const Heading = ({
             }}>
             {options
               ? options.map((item: string, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => handleFilter(item)}>
-                    <Text key={index} style={{marginBottom: 10}}>
-                      {item}
-                    </Text>
-                  </TouchableOpacity>
-                ))
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => handleFilter(item)}>
+                  <Text key={index} style={{ marginBottom: 10 }}>
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              ))
               : data?.categories?.map((item: any) => (
-                  <TouchableOpacity
-                    key={item._id}
-                    onPress={() => handleFilter(item.name)}>
-                    <Text key={item._id} style={{marginBottom: 10}}>
-                      {item.name}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
+                <TouchableOpacity
+                  key={item._id}
+                  onPress={() => handleFilter(item.name)}>
+                  <Text key={item._id} style={{ marginBottom: 10 }}>
+                    {item.name}
+                  </Text>
+                </TouchableOpacity>
+              ))}
           </Animated.View>
         )}
       </View>

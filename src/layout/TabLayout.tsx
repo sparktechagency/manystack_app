@@ -1,6 +1,6 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import Tabbar from '../components/Tabber/Tabbar';
 import Expanses from '../screens/main/Expanses';
 import Home from '../screens/main/Home';
@@ -14,7 +14,7 @@ const TabLayout = () => {
     <Tab.Navigator
       initialRouteName="Home"
       tabBar={props => <Tabbar {...props} />}
-      screenOptions={{headerShown: false}}>
+      screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="InterVention" component={InterVention} />
       <Tab.Screen name="Expanses" component={Expanses} />

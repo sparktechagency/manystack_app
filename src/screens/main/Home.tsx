@@ -1,5 +1,4 @@
 import { CommonActions, NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { FlatList, ImageSourcePropType, SafeAreaView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -15,14 +14,26 @@ import { useGetHomePageDataQuery, useGetProfileQuery } from '../../redux/Apis/us
 import { t } from '../../utils/translate';
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const Home = () => {
+  const [selectedMonth, setSelectedMonth] = useState<any>('')
   const navigation = useNavigation<NavigationProp<ParamListBase>>()
   const { data: dataProfile, isLoading } = useGetProfileQuery(undefined)
-  const [selectedMonth, setSelectedMonth] = useState(moment().month())
   const { english, currency, user } = useGlobalContext();
   const { data, isLoading: isLoadingHome } = useGetHomePageDataQuery(months[selectedMonth]);
   const insets = useSafeAreaInsets();
+
+  function formatToK(num: number) {
+    if (num < 1000) return num.toString();
+
+    const formatted = num / 1000;
+
+    return formatted % 1 === 0
+      ? `${formatted}K`
+      : `${formatted.toFixed(1)}K`;
+  }
+
   const elements = [
     <WellCome key={1} />,
+    // <ModalDropdown data={months} onSelect={setSelectedMonth} key={2} />,
     <MonthButton
       selectedMonth={selectedMonth}
       setSelectedMonth={setSelectedMonth}
@@ -36,13 +47,13 @@ const Home = () => {
     />,
     <ProfitCard
       title={english ? 'Income' : "Chiffre d’Affaires"}
-      count={`${currency}${data?.data?.totalIncome || 0}`}
+      count={`${currency}${formatToK(data?.data?.totalIncome || 0)}`}
       percentage={data?.data?.incomeChange || '0%'}
       key={3}
     />,
     <ProfitCard
       title={t('expanses', english)}
-      count={`${currency}${data?.data?.totalExpensesInPrice || 0}`}
+      count={`${currency}${formatToK(data?.data?.totalExpensesInPrice || 0)}`}
       percentage={`${data?.data?.expenseChange || "0%"}`}
       icon={Loss as ImageSourcePropType}
       key={1}
@@ -56,11 +67,9 @@ const Home = () => {
     <OverviewChart monthlyData={data?.data?.monthlyData || []} key={4} />,
     <Highlights
       key={5}
-      interventionCount={data?.data?.todayHighlights?.totalInterventions || '0'}
+      interventionCount={formatToK(Number(data?.data?.todayHighlights?.totalInterventions)) || '0'}
       priceCount={
-        `${currency}${Number(
-          data?.data?.todayHighlights?.totalPrice || 0,
-        ).toFixed(2)}` || '0'
+        `${currency}${formatToK(Number(data?.data?.todayHighlights?.totalPrice))}` || '0'
       }
     />,
   ];

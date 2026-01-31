@@ -197,7 +197,7 @@ const FilterByDate = ({
           {t(getAllTitleKey(), english)}
         </Text>
         <GradientButton
-          style={{ width: 70 }}
+          style={{ width: 30, height: 30, justifyContent: 'center', alignItems: 'center' }}
           handler={() => {
             if (title === 'Expenses') {
               navigate.navigate('CreateExpenses');
@@ -221,8 +221,8 @@ const FilterByDate = ({
             source={Plus as ImageSourcePropType}
             style={{
               tintColor: "white",
-              height: 20,
-              width: 20
+              height: 12,
+              width: 12
             }}
           />
         </GradientButton>

@@ -28,23 +28,24 @@ const Highlights = ({
           {
             justifyContent: 'space-between',
             marginVertical: 10,
-            gap: 20,
+            gap: 12,
             paddingVertical: 10,
           },
         ]}>
         {data?.map((item: { count: string; title: string }) => (
           <View
             style={{
-              boxShadow:
-                'rgba(14, 30, 37, 0.12) 0px 1px 0px 0px, rgba(14, 30, 37, 0.2) 0px 1px 20px 0px',
-              width: (width - 60) / 2,
-              borderRadius: 4,
+              width: (width / 2) - 16,
+              borderRadius: 10,
+              borderWidth: 1,
+              backgroundColor: hexToRGBA(themeColors.black as string, 0.04),
+              borderColor: '#ccc',
               padding: 20,
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
             }}
-            key={item.title}>
+            key={item?.title}>
             <Text
               style={{
                 fontSize: 22,
@@ -52,7 +53,7 @@ const Highlights = ({
                 fontWeight: 700,
                 lineHeight: 48,
               }}>
-              {item.count}
+              {item?.count}
             </Text>
             <Text
               numberOfLines={1}
@@ -60,7 +61,7 @@ const Highlights = ({
                 fontSize: 16,
                 color: hexToRGBA(themeColors.black as string, 0.5),
               }}>
-              {item.title}
+              {item?.title}
             </Text>
           </View>
         ))}

@@ -1,6 +1,6 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FilterByDate from '../../components/Intervention/FilterByDate';
 import Heading from '../../components/Intervention/Heading';
 import Interventions from '../../components/Intervention/Interventions';
@@ -34,16 +34,16 @@ const InterVention = () => {
   };
   return (
     <SafeAreaView>
-      <View style={{paddingBottom: 62}}>
+      <View style={{ paddingBottom: 62 }}>
         <Heading setSearch={setSearch} key={1} />
         <FlatList
           refreshing={refreshing}
           onRefresh={onRefresh}
           keyExtractor={(item, index) => index.toString()}
           data={elements}
-          renderItem={({item}) => item}
+          renderItem={({ item }) => item}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{gap: 15, paddingHorizontal: 20}}
+          contentContainerStyle={{ gap: 15, paddingHorizontal: 20 }}
           ListEmptyComponent={
             <PrettyCard
               title="No Interventions"

@@ -1,4 +1,4 @@
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import React from 'react';
 import {
@@ -9,22 +9,22 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {DeleteIcon, DownloadPdf, Edit, logo} from '../../constant/images';
-import {useDeleteExpenses} from '../../hooks/expensesApiCall';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {IExpenses} from '../../types/DataTypes';
-import {StackTypes} from '../../types/ScreenPropsTypes';
-import {downloadButton} from '../../utils/DownloadPdf';
-import {hexToRGBA} from '../../utils/hexToRGBA';
-import {CardStyles} from '../Intervention/InterventionsCards';
+import { DeleteIcon, DownloadPdf, Edit, logo } from '../../constant/images';
+import { useDeleteExpenses } from '../../hooks/expensesApiCall';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { IExpenses } from '../../types/DataTypes';
+import { StackTypes } from '../../types/ScreenPropsTypes';
+import { downloadButton } from '../../utils/DownloadPdf';
+import { hexToRGBA } from '../../utils/hexToRGBA';
+import { CardStyles } from '../Intervention/InterventionsCards';
 
-const ExpensesCards = ({item}: {item: IExpenses}) => {
+const ExpensesCards = ({ item }: { item: IExpenses }) => {
   const navigation = useNavigation<NavigationProp<StackTypes>>();
-  const {handleDeleteExpenses, isLoading} = useDeleteExpenses();
-  const {themeColors, currency} = useGlobalContext();
+  const { handleDeleteExpenses, isLoading } = useDeleteExpenses();
+  const { themeColors, currency } = useGlobalContext();
   return (
     <View
-      style={[CardStyles.card, {backgroundColor: themeColors.white as string}]}>
+      style={[CardStyles.card, { backgroundColor: themeColors.white as string, flex: 1 }]}>
       <View
         style={{
           maxWidth: '60%',
@@ -60,7 +60,7 @@ const ExpensesCards = ({item}: {item: IExpenses}) => {
           {item.expenseCategory}
         </Text>
         <Text
-          style={[CardStyles.amount, {color: themeColors.primary as string}]}>
+          style={[CardStyles.amount, { color: themeColors.primary as string }]}>
           {currency}
           {item.price.toFixed(2)}
         </Text>
@@ -145,7 +145,7 @@ const ExpensesCards = ({item}: {item: IExpenses}) => {
         {item.images && item.images.length > 0 ? (
           <>
             <Image
-              source={{uri: item?.images[0]?.url}}
+              source={{ uri: item?.images[0]?.url }}
               style={CardStyles.image}
               resizeMode="cover"
             />

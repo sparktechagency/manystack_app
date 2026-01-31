@@ -8,3 +8,4 @@ const CreateExpenses = () => {
 };
 
 export default CreateExpenses;
+

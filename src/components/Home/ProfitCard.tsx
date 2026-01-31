@@ -24,6 +24,8 @@ const ProfitCard = ({
           justifyContent: 'space-between',
           backgroundColor: hexToRGBA(themeColors.black as string, 0.04),
           padding: 20,
+          borderWidth: 0.5,
+          borderColor: '#ccc',
           paddingVertical: 30,
           borderRadius: 10,
         },

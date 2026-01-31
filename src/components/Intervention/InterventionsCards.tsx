@@ -13,10 +13,11 @@ import {
   Switch,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { Checkbox, DeleteIcon, Edit, eye, logo, Minus } from '../../constant/images';
+import { DeleteIcon, Edit, eye, logo } from '../../constant/images';
 import {
   updateIntervention,
   useDeleteIntervention,
@@ -33,6 +34,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
     useDeleteIntervention();
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const { themeColors, currency } = useGlobalContext();
+  const { width } = useWindowDimensions()
   const toggleSwitch = async () => {
     const data = new FormData();
     data.append('status', item.status === 'PAID' ? 'UNPAID' : 'PAID');
@@ -51,9 +53,38 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
 
   return (
     <View
-      style={[CardStyles.card, { backgroundColor: themeColors.white as string,}]}>
+      style={[CardStyles.card, { backgroundColor: themeColors.white as string, }]}>
+      <View
+        style={{
+          backgroundColor: item.status === 'UNPAID'
+            ? hexToRGBA('#FFD599', 0.8)
+            : hexToRGBA('#11EB4259', 0.8),
+          padding: 5,
+          borderRadius: 5,
+          position: 'absolute',
+          right: 5,
+          top: 5,
+          zIndex: 1,
+        }}
+      >
+        <Text style={{
+          color: '#111',
+          fontSize: 10,
+          fontWeight: 'bold',
+        }}>{item.status}</Text>
+        {/* <Image
+              source={item?.status === "UNPAID" ? Minus as ImageSourcePropType : Checkbox as ImageSourcePropType}
+              style={{
+                height: 20,
+                width: 20,
+                tintColor: item.status === 'UNPAID'
+                  ? hexToRGBA(themeColors.red as string, 0.9)
+                  : hexToRGBA(themeColors.green as string, 0.9),
+              }}
+            /> */}
+      </View>
       <View style={{
-        width:"60%",
+        width: "60%",
       }}>
         <View style={CardStyles.headerRow}>
           <Text
@@ -66,18 +97,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
             {item.interventionId}
           </Text>
 
-          <View>
-            <Image
-              source={item?.status === "UNPAID" ? Minus as ImageSourcePropType : Checkbox as ImageSourcePropType}
-              style={{
-                height: 20,
-                width: 20,
-                tintColor: item.status === 'UNPAID'
-                  ? hexToRGBA(themeColors.red as string, 0.9)
-                  : hexToRGBA(themeColors.green as string, 0.9),
-              }}
-            />
-          </View>
+          ¥
         </View>
         <Text
           style={[
@@ -172,10 +192,16 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
             )}
           </TouchableOpacity>
           {updating ? (
-            <ActivityIndicator
-              size="small"
-              color={themeColors.primary as string}
-            />
+            <View style={{
+              width: 65,
+              height: 30,
+              borderRadius: 15,
+              backgroundColor: '#bbb2b2ff' as string,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <ActivityIndicator size="small" color={themeColors.primary as string} />
+            </View>
           ) : (
             <Switch
               trackColor={{
@@ -199,6 +225,8 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
           CardStyles.imageContainer,
           {
             backgroundColor: hexToRGBA(themeColors.primary as string, 0.1),
+            width: width / 3,
+            height: width / 3,
           },
         ]}>
         {item.images && item.images.length > 0 ? (
@@ -241,6 +269,8 @@ export const CardStyles = StyleSheet.create({
     elevation: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
   headerRow: {
     flexDirection: 'row',
@@ -276,10 +306,9 @@ export const CardStyles = StyleSheet.create({
     fontSize: 14,
   },
   imageContainer: {
-    marginTop: 10,
-    width: 110,
-    height: 130,
+    height: '100%',
     borderRadius: 10,
+    width: '40%',
     overflow: 'hidden',
     position: 'relative',
   },
@@ -294,6 +323,7 @@ export const CardStyles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 6,
+    backgroundColor: '#1111117a',
   },
   imageOverlayText: {
     color: 'white',

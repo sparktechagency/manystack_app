@@ -19,7 +19,7 @@ const OverviewChart = ({ monthlyData }: Props) => {
   const mapMonthlyDataToBarData = (monthlyData: MonthlyData[]) => {
     return monthlyData.flatMap(item => [
       {
-        value: item.income <0 ? 0 : item.income,
+        value: item.income < 0 ? 0 : item.income,
         label: item.month,
         spacing: 2,
         labelWidth: 30,
@@ -27,12 +27,12 @@ const OverviewChart = ({ monthlyData }: Props) => {
         frontColor: '#017FF4',
       },
       {
-        value: item.expenses <0 ? 0 : item.expenses,
+        value: item.expenses < 0 ? 0 : item.expenses,
         frontColor: '#4CAF50',
         spacing: 2,
       },
       {
-        value: item.profit <0 ? 0 : item.profit,
+        value: item.profit < 0 ? 0 : item.profit,
         frontColor: '#F2C94C',
       },
     ]);
@@ -48,7 +48,9 @@ const OverviewChart = ({ monthlyData }: Props) => {
 
 
   const renderTitle = () => (
-    <View style={{ marginVertical: 10 }}>
+    <View style={{
+      marginVertical: 10,
+    }}>
       <View
         style={{
           flexDirection: 'row',
@@ -119,6 +121,7 @@ const OverviewChart = ({ monthlyData }: Props) => {
         paddingBottom: 10,
         borderRadius: 20,
         paddingHorizontal: 6,
+        borderWidth: 0.5, borderColor: '#ccc'
       }}>
       {renderTitle()}
 
