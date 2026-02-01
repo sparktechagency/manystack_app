@@ -1,6 +1,9 @@
 // tab icons
+import Bill from '../asset/bill.png';
+import Binary from '../asset/binary.png';
 import Calender from '../asset/calendar.png';
 import Camera from '../asset/Camera.png';
+import Camera2 from '../asset/camera2.png';
 import Checkbox from '../asset/checkbox.png';
 import Close from '../asset/close.png';
 import DeleteIcon from '../asset/delete.png';
@@ -23,6 +26,7 @@ import eye from '../asset/eye.png';
 import eyeSlash from '../asset/eyeSlash.png';
 import Filter from '../asset/filter.png';
 import FullLogo from '../asset/fullLogo.png';
+import HeartBeat from '../asset/heart-beat.png';
 import Back from '../asset/icon/back.png';
 import Drawer from '../asset/icon/Drawer.png';
 import Expanses from '../asset/icon/Expanses.png';
@@ -58,16 +62,15 @@ export const TabIcons = {
   Expanses,
 };
 export {
-  Back, Calender,
-  Camera, Checkbox, Close,
+  Back, Bill, Binary, Calender,
+  Camera, Camera2, Checkbox, Close,
   DeleteIcon,
   DownloadPdf,
   Edit,
   eye,
   eyeSlash,
   Filter,
-  FullLogo,
-  logo,
+  FullLogo, HeartBeat, logo,
   Loss, Minus, Plus,
   Profile,
   Profit,

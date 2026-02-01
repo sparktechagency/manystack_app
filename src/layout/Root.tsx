@@ -3,21 +3,21 @@ import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import Toast from 'react-native-toast-message';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { Provider } from 'react-redux';
 import GlobalContextProvider from '../providers/GlobalContextProvider';
 import { store } from '../redux/store';
+import { initRevenueCat } from '../services/revenuecat';
 import DrawerLayout from './DrawerLayout';
 const Root = () => {
 
   const isDarkMode = useColorScheme() === 'dark';
-
+  initRevenueCat();
   return (
     <KeyboardProvider>
       <NavigationContainer>
         <StatusBar barStyle="dark-content"
-        backgroundColor="transparent" 
-        translucent={true}
+          backgroundColor="transparent"
+          translucent={true}
         // backgroundColor={Colors.lighter} 
         />
         <Provider store={store}>
