@@ -8,7 +8,7 @@ import MonthButton from '../../components/Home/MonthButton';
 import OverviewChart from '../../components/Home/OverviewChart';
 import ProfitCard from '../../components/Home/ProfitCard';
 import WellCome from '../../components/Home/WellCome';
-import { Loss } from '../../constant/images';
+import { CartCard, Loss } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetHomePageDataQuery, useGetProfileQuery } from '../../redux/Apis/userApis';
 import { t } from '../../utils/translate';
@@ -55,11 +55,12 @@ const Home = () => {
       title={t('expanses', english)}
       count={`${currency}${formatToK(data?.data?.totalExpensesInPrice || 0)}`}
       percentage={`${data?.data?.expenseChange || "0%"}`}
-      icon={Loss as ImageSourcePropType}
+      image={Loss as ImageSourcePropType}
       key={1}
     />,
     <ProfitCard
       title={t('profit', english)}
+      image={CartCard as ImageSourcePropType}
       count={`${currency}${data?.data?.totalProfit || 0}`}
       percentage={data?.data?.profitChange || '0%'}
       key={2}

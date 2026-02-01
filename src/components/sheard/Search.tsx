@@ -6,21 +6,24 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {SearchIcon} from '../../constant/images';
-import {useGlobalContext} from '../../providers/GlobalContextProvider';
-import {hexToRGBA} from '../../utils/hexToRGBA';
-import {t} from '../../utils/translate';
+import { SearchIcon } from '../../constant/images';
+import { useGlobalContext } from '../../providers/GlobalContextProvider';
+import { hexToRGBA } from '../../utils/hexToRGBA';
+import { t } from '../../utils/translate';
 interface SearchProps {
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
 }
-const Search = ({search, setSearch}: SearchProps) => {
-  const {themeColors, english} = useGlobalContext();
+const Search = ({ search, setSearch }: SearchProps) => {
+  const { themeColors, english } = useGlobalContext();
   return (
     <View
       style={{
         position: 'relative',
         marginTop: 6,
+        borderWidth: 1,
+        borderColor: hexToRGBA(themeColors.primary as string, 0.07),
+        borderRadius: 8,
         backgroundColor: hexToRGBA(themeColors.primary as string, 0.07),
       }}>
       <Image
@@ -44,7 +47,7 @@ const Search = ({search, setSearch}: SearchProps) => {
           borderRadius: 8,
           paddingLeft: 40,
         }}
-        // onSubmitEditing={() => { console.log('submit') }}
+      // onSubmitEditing={() => { console.log('submit') }}
       />
     </View>
   );

@@ -4,6 +4,7 @@ import Binary from '../asset/binary.png';
 import Calender from '../asset/calendar.png';
 import Camera from '../asset/Camera.png';
 import Camera2 from '../asset/camera2.png';
+import CartCard from '../asset/cart-card.png';
 import Checkbox from '../asset/checkbox.png';
 import Close from '../asset/close.png';
 import DeleteIcon from '../asset/delete.png';
@@ -63,7 +64,7 @@ export const TabIcons = {
 };
 export {
   Back, Bill, Binary, Calender,
-  Camera, Camera2, Checkbox, Close,
+  Camera, Camera2, CartCard, Checkbox, Close,
   DeleteIcon,
   DownloadPdf,
   Edit,

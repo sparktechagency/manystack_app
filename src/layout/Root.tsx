@@ -9,7 +9,6 @@ import { store } from '../redux/store';
 import { initRevenueCat } from '../services/revenuecat';
 import DrawerLayout from './DrawerLayout';
 const Root = () => {
-
   const isDarkMode = useColorScheme() === 'dark';
   initRevenueCat();
   return (

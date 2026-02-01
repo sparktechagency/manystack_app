@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageSourcePropType, Text, View } from 'react-native';
+import { Image, ImageSourcePropType, Text, View } from 'react-native';
 import { globalStyles } from '../../constant/styles';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { hexToRGBA } from '../../utils/hexToRGBA';
@@ -8,12 +8,12 @@ const ProfitCard = ({
   title,
   count,
   percentage,
-  icon,
+  image,
 }: {
   title: string;
   count: string;
   percentage: string;
-  icon?: ImageSourcePropType;
+  image?: ImageSourcePropType;
 }) => {
   const { themeColors } = useGlobalContext();
   return (
@@ -28,10 +28,20 @@ const ProfitCard = ({
           borderColor: '#ccc',
           paddingVertical: 30,
           borderRadius: 10,
+          position: 'relative',
+          overflow: 'hidden',
         },
       ]}>
-      <View
-      >
+      {image && <Image
+        source={image}
+        style={{
+          position: 'absolute',
+          top: 20,
+          right: 0,
+          width: 150,
+          height: 70
+        }} resizeMode="contain" />}
+      <View>
         <Text
           style={[
             globalStyles.inputLabel,

@@ -292,7 +292,7 @@ export default function PaywallScreen() {
         )}
 
       {/* FOOTER LINKS */}
-      {/* <View style={styles.footerLinks}>
+      <View style={styles.footerLinks}>
         <Pressable
           onPress={() => navigation.navigate('PrivacyPolicy')}
         >
@@ -307,7 +307,7 @@ export default function PaywallScreen() {
             Conditions générales
           </Text>
         </Pressable>
-      </View> */}
+      </View>
     </ScrollView>
   );
 }
