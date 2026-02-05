@@ -79,7 +79,7 @@ const Home = () => {
     if (isLoading || isLoadingHome) {
       return;
     }
-    if (dataProfile?.data?.subscription?.isActive) {
+    if (!dataProfile?.data?.subscription?.isActive) {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,

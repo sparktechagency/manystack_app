@@ -45,6 +45,7 @@ export default function PaywallScreen() {
   }, []);
 
   const loadOfferings = async () => {
+
     try {
       const offerings = await Purchases.getOfferings();
 
@@ -98,7 +99,7 @@ export default function PaywallScreen() {
   const restore = async () => {
     try {
       await Purchases.restorePurchases();
-      Alert.alert('Restauré', 'Achats restaurés');
+      // Alert.alert('Restauré', 'Achats restaurés');
       // Refresh offerings after restore
       await loadOfferings();
     } catch {
@@ -140,7 +141,7 @@ export default function PaywallScreen() {
       </View>
     );
   }
-
+  // console.log(packages)
   return (
     <ScrollView
       contentContainerStyle={[
@@ -249,14 +250,18 @@ export default function PaywallScreen() {
                 <Text style={styles.planTitle}>
                   {pkg.product.title}
                 </Text>
-                {isActive && (
-                  <Text style={styles.activeLabel}>Forfait actuel</Text>
-                )}
+                <Text style={styles.planType}>
+                  {pkg.packageType}
+                </Text>
               </View>
               <Text style={styles.planPrice}>
                 {pkg.product.priceString}
               </Text>
+              {isActive && (
+                <Text style={styles.activeLabel}>Forfait actuel</Text>
+              )}
             </Pressable>
+            {/* </Text>mailto:siyamoffice0273@gmail.com */}
 
             {/* Show manage button for active subscriptions */}
             {isActive && (
@@ -401,10 +406,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    position: 'relative',
   },
   planTitle: {
     fontSize: 16,
     fontWeight: '600',
+  },
+  planType: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: '#64748B',
   },
   planPrice: {
     marginTop: 6,
@@ -414,8 +425,10 @@ const styles = StyleSheet.create({
   activeLabel: {
     fontSize: 12,
     color: '#10B981',
+    alignSelf: "flex-start",
     fontWeight: '600',
     backgroundColor: '#D1FAE5',
+    marginTop: 4,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 6,
