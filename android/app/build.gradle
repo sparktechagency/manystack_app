@@ -86,7 +86,7 @@ packagingOptions {
         applicationId "com.shaharulsiyam.fibrepro"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 49
+        versionCode 50
         versionName "1.0.14"
         missingDimensionStrategy "store", "play"
     }
