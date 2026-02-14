@@ -138,6 +138,7 @@ export default function PaywallScreen() {
           { paddingTop: top, paddingBottom: bottom, padding: 20 },
         ]}>
         <Text style={styles.emptyText}>Aucun abonnement disponible.</Text>
+        <Text onPress={() => handleBackPress()} style={styles.emptyText}>back</Text>
       </View>
     );
   }
@@ -150,7 +151,7 @@ export default function PaywallScreen() {
       ]}
     >
       {/* HEADER */}
-      <View style={styles.header}>
+      {data?.data?.subscription?.isActive && <View style={styles.header}>
         <Pressable
           style={styles.buttonStyle}
           onPress={handleBackPress}
@@ -167,7 +168,7 @@ export default function PaywallScreen() {
         >
           <Text style={styles.buttonText}>Restaurer</Text>
         </Pressable>
-      </View>
+      </View>}
 
       <Text style={styles.title}>FibrePro</Text>
       <Text style={styles.subtitle}>
@@ -480,5 +481,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#64748B',
     textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 20,
+    fontWeight: '600',
+
   },
 });
