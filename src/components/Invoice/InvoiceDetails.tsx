@@ -345,11 +345,10 @@ const InvoiceDetails = () => {
                 fontWeight: 700,
                 fontSize: 18,
               }}>
-              Mark As{' '}
               {english
                 ? invoice?.status === 'UNPAID'
                   ? 'Réglé'
-                  : ' En attente'
+                  : 'En attente'
                 : invoice?.status === 'UNPAID'
                   ? 'Réglé'
                   : 'En attente'}

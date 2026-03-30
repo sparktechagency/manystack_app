@@ -1,6 +1,6 @@
 import { CommonActions, NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, ImageSourcePropType, SafeAreaView } from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FloatingPlus from '../../components/Home/FloatingPlus';
 import Highlights from '../../components/Home/Highlights';
@@ -8,7 +8,6 @@ import MonthButton from '../../components/Home/MonthButton';
 import OverviewChart from '../../components/Home/OverviewChart';
 import ProfitCard from '../../components/Home/ProfitCard';
 import WellCome from '../../components/Home/WellCome';
-import { CartCard, Loss } from '../../constant/images';
 import { useGlobalContext } from '../../providers/GlobalContextProvider';
 import { useGetHomePageDataQuery, useGetProfileQuery } from '../../redux/Apis/userApis';
 import { t } from '../../utils/translate';
@@ -55,12 +54,12 @@ const Home = () => {
       title={t('expanses', english)}
       count={`${currency}${formatToK(data?.data?.totalExpensesInPrice || 0)}`}
       percentage={`${data?.data?.expenseChange || "0%"}`}
-      image={Loss as ImageSourcePropType}
+      // image={Loss as ImageSourcePropType}
       key={1}
     />,
     <ProfitCard
       title={t('profit', english)}
-      image={CartCard as ImageSourcePropType}
+      // image={CartCard as ImageSourcePropType}
       count={`${currency}${data?.data?.totalProfit || 0}`}
       percentage={data?.data?.profitChange || '0%'}
       key={2}
@@ -79,6 +78,7 @@ const Home = () => {
     if (isLoading || isLoadingHome) {
       return;
     }
+    //change back to subscription screen if subscription is active
     if (!dataProfile?.data?.subscription?.isActive) {
       navigation.dispatch(
         CommonActions.reset({

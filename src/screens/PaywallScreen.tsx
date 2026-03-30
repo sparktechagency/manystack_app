@@ -120,6 +120,8 @@ export default function PaywallScreen() {
   const handleBackPress = () => {
     if (navigation.canGoBack()) {
       navigation.goBack();
+    } else {
+      navigation.navigate('Tabs', { screen: 'Home' });
     }
   };
 

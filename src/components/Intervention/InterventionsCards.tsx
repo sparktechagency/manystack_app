@@ -71,7 +71,7 @@ const InterventionsCards = ({ item }: { item: IIntervention }) => {
           color: '#111',
           fontSize: 10,
           fontWeight: 'bold',
-        }}>{item.status}</Text>
+        }}>{item.status === 'PAID' ? 'Réglé' : 'En attente'}</Text>
         {/* <Image
               source={item?.status === "UNPAID" ? Minus as ImageSourcePropType : Checkbox as ImageSourcePropType}
               style={{
