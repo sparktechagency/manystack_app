@@ -78,7 +78,6 @@ const Home = () => {
     if (isLoading || isLoadingHome) {
       return;
     }
-    //change back to subscription screen if subscription is active
     if (!dataProfile?.data?.subscription?.isActive) {
       navigation.dispatch(
         CommonActions.reset({
