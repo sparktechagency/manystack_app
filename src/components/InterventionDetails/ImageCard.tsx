@@ -53,6 +53,8 @@ const ImageCard = ({ item, id }: IImageCard) => {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(255, 255, 255, 1)',
+        borderRadius: 10,
+        overflow: 'hidden',
       }}>
       <TouchableOpacity
         activeOpacity={0.6}

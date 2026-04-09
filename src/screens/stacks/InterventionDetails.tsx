@@ -36,75 +36,77 @@ const InterventionDetails = () => {
             alignItems: 'center',
           }}>
           <ActivityIndicator size="large" color="blue" />
-        </View> : <>
-          <Text
-            style={{
-              marginTop: 20,
-              fontSize: 16,
-              fontWeight: 600,
-              color: themeColors.primary as string,
-            }}>
-            {data?.intervention?.interventionId}
-          </Text>
-
-          <FlexTextOpacity
-            text1="Date :"
-            text2={data?.intervention?.createdAt?.split('T')[0]}
-          />
-          <FlexTextOpacity
-            text1="Catégorie :"
-            text2={data?.intervention?.category?.name}
-          />
-          <FlexTextOpacity
-            text1="Prix :"
-            text2={`${currency}${data?.intervention?.price}`}
-            color={themeColors.primary as string}
-          />
-          <FlexTextOpacity text1="Note :" text2={data?.intervention?.note} />
-          <FlatList
-            data={data?.intervention?.images ?? []}
-            numColumns={2}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <ImageCard key={item} item={item} id={data?.intervention?._id} />
-            )}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-              gap: 15,
-              paddingVertical: 0,
-              paddingHorizontal: 0,
-              paddingBottom: 170,
-              marginTop: 20,
-            }}
-          />
-          <View
-            style={{
-              paddingHorizontal: 25,
-              position: 'absolute',
-              bottom: 100,
-              width: width,
-              paddingVertical: 16,
-              // backgroundColor: hexToRGBA(themeColors.white as string, 0.9),
-            }}>
-            <GradientButton
-              handler={() => {
-                downloadButton(
-                  `api/intervention/download-pdf/${data?.intervention?._id}`,
-                  'Intervention',
-                );
+        </View> :
+          <>
+            <Text
+              style={{
+                marginTop: 20,
+                fontSize: 16,
+                fontWeight: 600,
+                color: themeColors.primary as string,
               }}>
-              <Text
-                style={{
-                  color: 'white',
-                  textAlign: 'center',
-                  fontWeight: 700,
-                  fontSize: 18,
+              {data?.intervention?.interventionId}
+            </Text>
+
+            <FlexTextOpacity
+              text1="Date :"
+              text2={data?.intervention?.createdAt?.split('T')[0]}
+            />
+            <FlexTextOpacity
+              text1="Catégorie :"
+              text2={data?.intervention?.category?.name}
+            />
+            <FlexTextOpacity
+              text1="Prix :"
+              text2={`${currency}${data?.intervention?.price}`}
+              color={themeColors.primary as string}
+            />
+            <FlexTextOpacity text1="Note :" text2={data?.intervention?.note} />
+            <FlatList
+              data={data?.intervention?.images ?? []}
+              // numColumns={1}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <ImageCard key={item} item={item} id={data?.intervention?._id} />
+              )}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                gap: 15,
+                paddingVertical: 0,
+                paddingHorizontal: 0,
+                paddingBottom: 170,
+                marginTop: 20,
+              }}
+            />
+            {/* button */}
+            <View
+              style={{
+                marginHorizontal: "auto",
+                marginBottom: 20,
+                marginTop: 20,
+                width: width - 50,
+                paddingVertical: 16,
+              }}>
+              <GradientButton
+                handler={() => {
+                  downloadButton(
+                    `api/intervention/download-pdf/${data?.intervention?._id}`,
+                    'Intervention',
+                  );
                 }}>
-                Exporter un PDF
-              </Text>
-            </GradientButton>
-          </View>
-        </>
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: 700,
+                    fontSize: 18,
+                  }}>
+                  Exporter un PDF
+                </Text>
+              </GradientButton>
+            </View>
+
+          </>
       }
 
     </View>
